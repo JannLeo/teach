@@ -1,0 +1,45 @@
+diff --git a/examples/expected_output/tables.html b/examples/output/tables.html
+index 70fde47e..dfaca94c 100644
+--- a/examples/expected_output/tables.html
++++ b/examples/output/tables.html
+@@ -1,38 +1 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <title>Test</title>
+-</head>
+-
+-<body>
+-    <table>
+-        <thead>
+-            <tr>
+-                <th>Tables</th>
+-                <th>Are</th>
+-                <th>Cool</th>
+-            </tr>
+-        </thead>
+-        <tbody>
+-            <tr>
+-                <td>here</td>
+-                <td>is</td>
+-                <td>data</td>
+-            </tr>
+-            <tr>
+-                <td>here</td>
+-                <td>is</td>
+-                <td>data</td>
+-            </tr>
+-            <tr>
+-                <td>here</td>
+-                <td>is also</td>
+-                <td><strong>bolded data</strong></td>
+-            </tr>
+-        </tbody>
+-    </table>
+-</body>
+-
+-</html>
++IMPLEMENT_THIS
+\ No newline at end of file

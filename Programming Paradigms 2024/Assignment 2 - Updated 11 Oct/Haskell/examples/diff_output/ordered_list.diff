@@ -1,0 +1,30 @@
+diff --git a/examples/expected_output/ordered_list.html b/examples/output/ordered_list.html
+index 54025dcf..dfaca94c 100644
+--- a/examples/expected_output/ordered_list.html
++++ b/examples/output/ordered_list.html
+@@ -1,23 +1 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <title>Test</title>
+-</head>
+-
+-<body>
+-    <ol>
+-        <li>Item 1</li>
+-        <ol>
+-            <li>Sub Item 1</li>
+-            <li>Sub Item 2</li>
+-            <li>Sub Item 3</li>
+-        </ol>
+-        <li><strong>Bolded Item 2</strong></li>
+-        <li>Item 3</li>
+-        <li>Item 4</li>
+-    </ol>
+-</body>
+-
+-</html>
++IMPLEMENT_THIS
+\ No newline at end of file

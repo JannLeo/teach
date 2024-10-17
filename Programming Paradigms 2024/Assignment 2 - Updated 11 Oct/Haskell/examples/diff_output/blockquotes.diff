@@ -1,0 +1,23 @@
+diff --git a/examples/expected_output/blockquotes.html b/examples/output/blockquotes.html
+index 02666f27..dfaca94c 100644
+--- a/examples/expected_output/blockquotes.html
++++ b/examples/output/blockquotes.html
+@@ -1,16 +1 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <title>Test</title>
+-</head>
+-
+-<body>
+-    <blockquote>
+-        <p>This is a block quote.</p>
+-        <p>It can <strong>span</strong> multiple lines.</p>
+-    </blockquote>
+-</body>
+-
+-</html>
++IMPLEMENT_THIS
+\ No newline at end of file

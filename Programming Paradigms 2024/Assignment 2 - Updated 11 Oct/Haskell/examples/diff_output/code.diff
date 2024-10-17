@@ -1,0 +1,24 @@
+diff --git a/examples/expected_output/code.html b/examples/output/code.html
+index 57fbd649..dfaca94c 100644
+--- a/examples/expected_output/code.html
++++ b/examples/output/code.html
+@@ -1,17 +1 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <title>Test</title>
+-</head>
+-
+-<body>
+-    <pre><code class="language-haskell">main :: IO ()
+-main = do
+-putStrLn "Never gonna give you up"
+-putStrLn "Never gonna let you down"
+-putStrLn "Never gonna run around and desert you"</code></pre>
+-</body>
+-
+-</html>
++IMPLEMENT_THIS
+\ No newline at end of file
