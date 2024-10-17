@@ -191,6 +191,103 @@ Markdown 中有六种不同的修饰符，它们用于改变文本的显示方�
 
 你需要编写解析器来识别这些修饰符，并将它们解析为相应的代数数据类型（ADT），然后在后续的部分中使用这些数据生成 HTML 输出。每个修饰符都有其特定的语法格式，确保解析逻辑能够严格匹配这些格式。
 
+![image-20241018002320065](READEME.assets/image-20241018002320065.png)
+
+这段代码定义了一个名为 `MarkdownElement` 的数据类型，用于表示不同类型的 Markdown 元素结构。它使用 Haskell 的代数数据类型 (Algebraic Data Type, ADT) 来定义各种 Markdown 语法元素，如标题、段落、块引用等。以下是逐行的解释：
+
+### 逐行解释
+1. **`data MarkdownElement =`**  
+   这行定义了一个数据类型 `MarkdownElement`，用于表示 Markdown 文档的不同元素。每种元素类型对应一个不同的构造器（类似“子类型”）。
+
+2. **`Heading Int String`**  
+   - 表示标题元素，例如 `# Heading` 或 `## Subheading`。
+   - `Heading` 是构造器，`Int` 表示标题的级别（例如 1 表示一级标题，2 表示二级标题等）。
+   - `String` 表示标题的内容，例如 `"Introduction"`。
+   - 例如：`Heading 2 "Overview"` 表示一个二级标题，标题内容为 `"Overview"`。
+
+3. **`Paragraph String`**  
+   - 表示段落元素。
+   - `Paragraph` 是构造器，`String` 表示段落的文本内容。
+   - 例如：`Paragraph "This is the first paragraph."` 表示一个包含 `"This is the first paragraph."` 内容的段落。
+
+4. **`Blockquote String`**  
+   - 表示块引用元素，例如 Markdown 中以 `>` 开头的引用内容。
+   - `Blockquote` 是构造器，`String` 表示引用的文本内容。
+   - 例如：`Blockquote "This is a quote."` 表示一个包含 `"This is a quote."` 的块引用。
+
+5. **`OrderedList [String]`**  
+   - 表示有序列表元素。
+   - `OrderedList` 是构造器，`[String]` 表示一个列表，包含多个字符串，每个字符串代表一个列表项。
+   - 例如：`OrderedList ["Item 1", "Item 2", "Item 3"]` 表示一个包含三个列表项的有序列表。
+
+6. **`CodeBlock String String`**  
+   - 表示代码块元素，例如 Markdown 中以三重反引号包裹的代码块（```` ``` ````）。
+   - `CodeBlock` 是构造器，包含两个 `String`：
+     - 第一个 `String` 表示代码块的语言类型，例如 `"haskell"` 或 `"python"`。
+     - 第二个 `String` 表示代码的实际内容。
+   - 例如：`CodeBlock "python" "print('Hello World')"` 表示一个 Python 代码块，内容为 `print('Hello World')`。
+
+7. **`deriving (Show)`**  
+   - 这部分表示为 `MarkdownElement` 派生 `Show` 类型类。
+   - 这样做的好处是，可以让 `MarkdownElement` 自动实现 `Show`，从而可以将 `MarkdownElement` 类型的值打印到控制台，便于调试和输出。
+   - 例如：`show (Heading 2 "Overview")` 会返回 `"Heading 2 \"Overview\""`。
+
+### 总结
+- `MarkdownElement` 数据类型包含了 Markdown 的多种元素，包括标题、段落、块引用、有序列表和代码块。
+- 通过定义不同的构造器，可以方便地将 Markdown 文档的不同部分结构化，便于后续的处理和转换（如将 Markdown 转换为 HTML）。
+- `deriving (Show)` 可以让我们直接打印这些数据类型的值，方便调试。
+
+![image-20241018002123778](READEME.assets/image-20241018002123778.png)
+
+这段代码实现了一个解析 Markdown 标题的解析器 `headingParser`，其目的是解析以 `#` 开头的标题（类似 Markdown 中的 `# Heading 1`）。
+
+### 逐行解释
+1. **`headingParser :: String -> Maybe (MarkdownElement, String)`**  
+   这行定义了 `headingParser` 的类型签名：
+   - 它接受一个 `String` 类型的输入，表示要解析的文本。
+   - 返回一个 `Maybe (MarkdownElement, String)`，即：
+     - 如果成功解析标题，则返回 `Just (Heading, String)`，其中 `Heading` 是解析到的标题，`String` 是剩余的未解析部分。
+     - 如果解析失败，则返回 `Nothing`。
+
+2. **`headingParser input =`**  
+   定义 `headingParser` 函数，其中 `input` 是待解析的输入字符串。
+
+3. **`let (hashes, rest) = span (=='#') input`**  
+   使用 `span` 函数来处理输入字符串：
+   - `span` 会将输入字符串从头开始划分为两部分，第一部分是连续的 `#` 字符，第二部分是剩余的字符。
+   - 这里，`hashes` 是连续的 `#`，`rest` 是剩余的内容。
+   
+   例如，对于输入 `### Title`，结果是：
+   - `hashes = "###"`
+   - `rest = " Title"`
+
+4. **`in if not (null hashes) && not (null rest) && head rest == ' '`**  
+   使用 `if` 语句判断是否符合标题的条件：
+   - `not (null hashes)`：确保 `hashes` 不是空的，即至少存在一个 `#` 字符。
+   - `not (null rest)`：确保 `#` 之后还有其他内容。
+   - `head rest == ' '`：确保 `#` 后面紧跟一个空格，这是 Markdown 标题的规则。
+   
+   如果这三个条件都满足，就可以认为该行是一个有效的标题。
+
+5. **`then Just (Heading (length hashes) (drop 1 rest), "")`**  
+   如果上述条件成立，构造一个 `Just` 值：
+   - `(Heading (length hashes) (drop 1 rest), "")`：
+     - `Heading (length hashes)`：用 `length hashes` 确定标题的级别（例如 `###` 表示三级标题）。
+     - `(drop 1 rest)`：跳过空格，取标题的文本内容。
+     - `""` 表示当前没有未解析的部分，因为这个函数处理的是完整的一行。
+   
+   例如，对于输入 `### Title`，结果是：
+   
+- `Heading 3 "Title"`：表示一个三级标题，内容为 `"Title"`。
+   
+6. **`else Nothing`**  
+   如果上述条件不成立，说明输入不符合标题格式，返回 `Nothing` 表示解析失败。
+
+### 总结
+- **`headingParser`** 函数的作用是检查输入字符串是否是 Markdown 标题，并解析出标题的级别和内容。
+- 它使用 `#` 的数量来确定标题的级别，`#` 后面必须有一个空格，之后的内容才是标题的文本。
+- 如果条件不满足，则返回 `Nothing`，表示解析失败。
+
 ![已上传的图片](READEME.assets/file-sYtMfhSZlLNSoruKeclWX18z)
 
 在这部分作业中，你需要为图像、脚注引用和自由文本编写解析器函数。下面是详细的实现指导：
@@ -212,6 +309,7 @@ Markdown 图像的格式为：
 - `!` 和 `[` 之间不能有任何空格。
 
 **代码实现建议**：
+
 - 使用 Haskell 的 **解析器组合器**（parser combinators）编写一个图像解析函数，确保满足所有条件，例如：
   ```haskell
   imageParser :: Parser MarkdownElement
@@ -231,7 +329,85 @@ Markdown 图像的格式为：
     return $ Image altText url captionText
   ```
 
+> 这段代码实现了一个用于解析 Markdown 图像的解析器 `imageParser`，其目的是解析 Markdown 中表示图片的语法，例如：
+>
+> ```markdown
+> ![alt text](url "caption text")
+> ```
+>
+> 下面是逐行的详细解释：
+>
+> ### 逐行解释
+> 1. **`imageParser :: Parser MarkdownElement`**  
+>    - 这行定义了 `imageParser` 的类型签名：
+>      - 它是一个 `Parser`，返回 `MarkdownElement` 类型，用于表示解析得到的 Markdown 元素。
+>      - 解析的结果是 `Image altText url captionText`，其中 `altText` 是图片的替代文本，`url` 是图片的链接，`captionText` 是图片的描述文本。
+>
+> 2. **`imageParser = do`**  
+>    - 使用 `do` 语法来组合多个解析动作。
+>
+> 3. **`optional (many (char ' '))`**  
+>    - `optional` 表示这部分是可选的，不一定存在。
+>    - **`many (char ' ')`**：尝试解析零个或多个空格字符。
+>    - 这一步的作用是允许图像前存在任意数量的空格，但不强制要求。
+>
+> 4. **`char '!'`**  
+>    - 解析字符 `'!'`，它是 Markdown 中表示图片的开始符号。
+>
+> 5. **`char '['`**  
+>    - 解析字符 `'['`，它是 Markdown 中图像描述文本（alt text）的开始符号。
+>
+> 6. **`altText <- many (noneOf "]")`**  
+>    - 解析 `altText`（替代文本），直到遇到字符 `']'` 为止。
+>    - **`many (noneOf "]")`**：解析并收集所有不是 `']'` 的字符。
+>    - 例如，对于输入 `![example](url "caption")`，`altText` 解析结果为 `"example"`。
+>
+> 7. **`char ']'`**  
+>    - 解析字符 `']'`，它是 Markdown 中图像描述文本的结束符号。
+>
+> 8. **`char '('`**  
+>    - 解析字符 `'('`，它是 Markdown 中图像链接（URL）的开始符号。
+>
+> 9. **`url <- many (noneOf " \"")`**  
+>    - 解析 `url`（图片的链接）。
+>    - **`many (noneOf " \"")`**：解析并收集所有不是空格或者引号的字符。
+>    - 例如，对于输入 `![example](https://example.com "caption")`，`url` 解析结果为 `"https://example.com"`。
+>
+> 10. **`char ' '`**  
+>     - 解析字符 `' '`，在 URL 和描述文本之间需要有一个空格。
+>
+> 11. **`char '"'`**  
+>     - 解析字符 `'"'`，它是描述文本的开始符号。
+>
+> 12. **`captionText <- many (noneOf "\"")`**  
+>     - 解析 `captionText`（描述文本），直到遇到字符 `'"'` 为止。
+>     - **`many (noneOf "\"")`**：解析并收集所有不是 `'"'` 的字符。
+>     - 例如，对于输入 `![example](https://example.com "caption text")`，`captionText` 解析结果为 `"caption text"`。
+>
+> 13. **`char '"'`**  
+>     - 解析字符 `'"'`，它是描述文本的结束符号。
+>
+> 14. **`char ')'`**  
+>     - 解析字符 `')'`，它是 Markdown 中图像的结束符号。
+>
+> 15. **`return $ Image altText url captionText`**  
+>     - 返回解析得到的 `MarkdownElement`，即 `Image altText url captionText`：
+>       - `altText` 是替代文本。
+>       - `url` 是图片的链接。
+>       - `captionText` 是图片的描述文本。
+>
+> ### 总结
+> - **`imageParser`** 是一个用于解析 Markdown 图像的解析器。
+> - 它依次解析 Markdown 中的图像语法，包括 `!`，`[]` 中的替代文本，`()` 中的 URL 和描述文本。
+> - 最终返回一个 `Image` 数据类型，包含图像的替代文本、链接和描述文本。
+>
+> 例如，对于 Markdown 语法 `![example](https://example.com "caption text")`，解析器会返回一个 `Image` 元素，其内容为：
+> - 替代文本（`altText`）为 `"example"`。
+> - 链接（`url`）为 `"https://example.com"`。
+> - 描述文本（`captionText`）为 `"caption text"`。
+
 ### 2. 脚注引用解析 (0.5 分)
+
 脚注引用的格式类似于脚注，具体为：
 - 行首有若干个空格，然后是 `[^ℤ+]`，其中 `ℤ+` 表示正整数，后面跟着一个冒号 `:`，再接着是文本内容。
 
@@ -257,7 +433,67 @@ Markdown 图像的格式为：
     return $ FootnoteReference (read refNumber) content
   ```
 
+> 这段代码实现了一个用于解析 Markdown 脚注引用的解析器 `footnoteRefParser`，它解析类似于脚注的 Markdown 语法，如 `[^1]: 这是脚注内容`。以下是逐行的详细解释：
+>
+> ### 逐行解释
+>
+> 1. **`footnoteRefParser :: Parser MarkdownElement`**
+>    - 这是 `footnoteRefParser` 的类型签名：
+>      - 它是一个 `Parser`，用于解析 Markdown，并返回 `MarkdownElement` 类型的结果。
+>      - 具体来说，这里解析得到的是 `FootnoteReference` 类型的元素。
+>
+> 2. **`footnoteRefParser = do`**
+>    - 使用 `do` 语法块来组合多个解析动作。
+>
+> 3. **`optional (many (char ' '))`**
+>    - `optional` 表示这部分是可选的，不一定存在。
+>    - **`many (char ' ')`**：尝试解析零个或多个空格字符。
+>    - 这一步的作用是允许脚注引用的开头存在任意数量的空格，但不强制要求。
+>
+> 4. **`string "[^"`**
+>    - 解析字符串 `"[^"`，这是 Markdown 中脚注引用的标记部分。
+>    - `"[^"` 表示脚注的开始符号，其中 `[` 是开始，`^` 表示这是一个脚注。
+>
+> 5. **`refNumber <- many1 digit`**
+>    - 解析脚注引用的编号，保存为 `refNumber`：
+>    - **`many1 digit`**：解析一个或多个数字字符 (`digit`)，这些数字表示脚注的编号。
+>    - 例如，对于输入 `[^1]: 这是脚注内容`，`refNumber` 解析结果为 `"1"`。
+>
+> 6. **`string "]:"`**
+>    - 解析字符串 `"]:"`，这部分表示脚注引用的结束和脚注内容的开始。
+>    - 例如，输入 `[^1]:` 中，这部分解析 `]` 和 `:`。
+>
+> 7. **`optional (char ' ')`**
+>    - 尝试解析一个空格字符，这是可选的。
+>    - 在 `]:` 后面可能会有一个空格，以便与脚注内容之间分隔开。
+>
+> 8. **`content <- many (noneOf "\n")`**
+>    - 解析 `content`，即脚注的实际内容，直到遇到换行符为止。
+>    - **`many (noneOf "\n")`**：解析并收集所有不是换行符 (`\n`) 的字符，这些字符就是脚注的内容。
+>    - 例如，对于输入 `[^1]: 这是脚注内容`，`content` 解析结果为 `"这是脚注内容"`。
+>
+> 9. **`return $ FootnoteReference (read refNumber) content`**
+>    - 使用 `return` 将解析结果封装为 `MarkdownElement` 类型。
+>    - **`FootnoteReference (read refNumber) content`**：
+>      - 使用 `read refNumber` 将字符串类型的编号 `refNumber` 转换为整数。
+>      - 例如，对于 `[^1]: 这是脚注内容`，`refNumber` 是 `"1"`，`read refNumber` 会将其转换为 `1`。
+>      - `content` 是脚注的文本内容。
+>    - 返回一个 `FootnoteReference`，其包含编号和脚注内容。
+>
+> ### 总结
+> - **`footnoteRefParser`** 函数用于解析 Markdown 脚注引用。
+> - 它解析的目标是类似于 `[^1]: 这是脚注内容` 的格式：
+>   - `[^` 表示脚注的开始。
+>   - `1` 是脚注的编号，可以是任意一个或多个数字。
+>   - `]:` 表示脚注的结束部分。
+>   - 接下来是脚注的内容，例如 `"这是脚注内容"`。
+> - 解析成功后，返回一个 `FootnoteReference`，其中包含编号和内容的 Markdown 元素。
+>   
+>
+> 通过这个解析器，可以将 Markdown 文档中的脚注引用部分结构化为 `MarkdownElement`，以便进一步处理或转换为其他格式（例如 HTML）。
+
 ### 3. 自由文本解析 (1 分)
+
 自由文本是指不属于其他任何类型的文本。它可以包含文本修饰符，例如斜体、粗体、删除线等。
 
 **实现要求**：
@@ -272,8 +508,40 @@ Markdown 图像的格式为：
     content <- many1 (noneOf "\n")
     return $ FreeText content
   ```
+  
+  > 这段代码实现了一个用于解析 Markdown 自由文本内容的解析器 `freeTextParser`，用于解析 Markdown 中不属于特定格式（如标题、引用等）的普通文本行。
+  >
+  > ### 逐行解释
+  >
+  > 1. **`freeTextParser :: Parser MarkdownElement`**
+  >    - 这是 `freeTextParser` 的类型签名：
+  >      - 它是一个 `Parser`，用于解析 Markdown 文本并返回 `MarkdownElement` 类型的结果。
+  >      - 返回的结果是 `FreeText` 类型，用于表示一般的文本内容。
+  >
+  > 2. **`freeTextParser = do`**
+  >    - 使用 `do` 语法块来组合多个解析动作。
+  >
+  > 3. **`content <- many1 (noneOf "\n")`**
+  >    - 解析 `content`，表示自由文本内容。
+  >    - **`many1 (noneOf "\n")`**：
+  >      - `many1` 表示匹配并解析**至少一个**符合条件的字符。
+  >      - **`noneOf "\n"`** 表示解析所有**不是换行符**的字符，这意味着它会读取一行文本内容，直到遇到换行符为止。
+  >      - 例如，对于输入 `"This is a line of text"`，`content` 解析结果为 `"This is a line of text"`。
+  >
+  > 4. **`return $ FreeText content`**
+  >    - 使用 `return` 将解析结果封装为 `MarkdownElement` 类型。
+  >    - **`FreeText content`**：创建一个 `FreeText` 元素，其内容为 `content`，表示一般的文本内容。
+  >    - 例如，对于输入 `"This is a line of text"`，返回的结果是 `FreeText "This is a line of text"`。
+  >
+  > ### 总结
+  > - **`freeTextParser`** 用于解析 Markdown 文档中的普通文本内容，这些文本不属于其他特定的 Markdown 语法（如标题、引用、代码块等）。
+  > - 它解析直到遇到换行符为止的文本内容，且至少匹配一个字符。
+  > - 最终返回一个 `FreeText` 数据类型，用于表示该行的文本内容。
+  >
+  > 通过这个解析器，可以将 Markdown 文档中普通文本行的部分提取并结构化为 `MarkdownElement`，便于后续的处理或转换操作（例如将其转换为 HTML）。
 
 ### 总结
+
 - **图像解析**需要考虑替代文本、URL 和标题文本之间的格式和约束。
 - **脚注引用解析**需要处理行首的空格、脚注编号和引用内容。
 - **自由文本解析**需要捕获那些不属于其他元素的文本，并支持包含修饰符。
@@ -340,6 +608,7 @@ Markdown 中的标题有两种格式：
      ```
 
 2. **组合解析器**：
+   
    - 将不同格式的标题解析器结合起来，以处理所有可能的标题形式：
      ```haskell
      fullHeadingParser :: Parser MarkdownElement
@@ -355,76 +624,68 @@ Markdown 中的标题有两种格式：
 
 ![image-20241017232851475](READEME.assets/image-20241017232851475.png)
 
-这部分描述了如何解析 Markdown 中的标题。Markdown 标题可以通过不同的方式表示，需要根据这些规则来编写相应的解析器。
+要完成这些部分的解析器，需要分别为块引用（Blockquotes）和代码块（Code）编写解析函数。以下是每个部分的具体实现思路和 Haskell 代码示例。
 
-### 标题解析的要求 (1 分)
-Markdown 中的标题有两种格式：
+### 1. Blockquotes (块引用) - 解析器实现
+块引用以符号 `>` 开头，可能前面有零个或多个空格，紧接着是引用的内容。块引用可以包含多行，每行都需要以 `>` 开头。
 
-1. **井号 (#) 标记**：
-   - 标题由行首的若干空格（非换行符）和一个或多个井号 `#` 组成，然后至少有一个空格，再加上标题文本。
-   - 最多可以有 6 个 `#`，代表从一级标题到六级标题。例如：
-     ```
-     # Heading 1
-     ## Heading 2
-     ### Heading 3
-     #### Heading 4
-     ##### Heading 5
-     ###### Heading 6
-     ```
-   - **注意**：至少需要一个非换行空格字符，因此 `#Heading 1` 是无效的标题。
-   - 行首必须是 `#` 或空格，因此例如 `abc # Heading` 不是合法的标题。
+**实现思路：**
+- 首先解析可能存在的空格，然后解析 `>`。
+- 解析 `>` 之后的空格，紧接着解析块引用的内容，直到遇到换行符。
+- 可以使用递归或循环来处理多行的块引用。
 
-2. **替代语法**：
-   - 一级和二级标题可以使用替代语法：
-     - 在标题文本下一行添加至少两个等号 `=`（一级标题）或至少两个短横线 `-`（二级标题）。
-     - 这行只允许包含等号或短横线，不能有其他字符。例如：
-       ```
-       Alternative Heading 1
-       ======
-       
-       Heading level 2
-       ---------------
-       ```
-   - **注意**：没有其他标题级别（如三级及以下）可以使用这种替代语法。
+**Haskell 代码示例：**
+```haskell
+blockquoteParser :: Parser MarkdownElement
+blockquoteParser = do
+  optional (many (char ' '))  -- 可选的空格
+  char '>'                    -- 匹配 '>' 符号
+  optional (char ' ')         -- '>' 后面的可选空格
+  content <- many (noneOf "\n")  -- 解析直到换行符的文本
+  return $ Blockquote content  -- 返回 Blockquote 类型
+```
+- 这个代码段会解析一个块引用元素，它会跳过开头的空格，匹配 `>` 符号后面跟随的内容。
+- 需要在主解析器中添加递归逻辑以处理多行的块引用。
 
-### 实现要求
-你需要编写一个 Haskell 解析器函数来处理这两种标题格式。以下是实现建议：
+### 2. Code Block (代码块) - 解析器实现
+代码块由三重反引号 (```) 包围，可以有可选的语言标识符。
 
-1. **定义标题解析器函数**：
-   - 解析井号形式的标题：
-     ```haskell
-     headingParser :: Parser MarkdownElement
-     headingParser = do
-       optional (many (char ' '))   -- 可选的行首空格
-       hashes <- many1 (char '#')   -- 至少一个井号
-       char ' '                     -- 一个空格
-       content <- many (noneOf "\n") -- 标题内容
-       return $ Heading (length hashes) content
-     ```
-   - 解析替代语法的标题：
-     ```haskell
-     alternativeHeadingParser :: Parser MarkdownElement
-     alternativeHeadingParser = do
-       content <- many1 (noneOf "\n") -- 标题内容
-       newline
-       line <- many1 (char '=' <|> char '-') -- 解析等号或短横线
-       let level = if '=' `elem` line then 1 else 2
-       return $ Heading level content
-     ```
+**实现思路：**
+- 解析以三个反引号 (```) 开始的部分，可能有空格。
+- 接下来可能会有一个语言标识符（如 `haskell`）。
+- 解析代码内容，直到遇到三个反引号结束代码块。
 
-2. **组合解析器**：
-   - 将不同格式的标题解析器结合起来，以处理所有可能的标题形式：
-     ```haskell
-     fullHeadingParser :: Parser MarkdownElement
-     fullHeadingParser = try headingParser <|> try alternativeHeadingParser
-     ```
+**Haskell 代码示例：**
+```haskell
+codeBlockParser :: Parser MarkdownElement
+codeBlockParser = do
+  optional (many (char ' '))  -- 可选的空格
+  string "```"                -- 匹配代码块的开始符号 ```
+  lang <- optional (many (noneOf "\n")) -- 可选的语言标识符
+  newline                     -- 匹配换行符
+  code <- manyTill anySingle (string "```") -- 解析代码内容直到结尾的 ```
+  return $ CodeBlock (maybe "" id lang) code -- 返回 CodeBlock，语言可能为空
+```
+- `optional (many (noneOf "\n"))` 用来解析可能的语言标识符，例如 `haskell`。
+- `manyTill anySingle (string "```")` 用来解析代码内容，直到遇到结束的反引号。
 
-### 总结
-- 井号 `#` 标记的标题需要解析井号的数量，以确定标题的级别，然后解析标题文本。
-- 替代语法的标题需要解析标题文本，然后确认下一行是否是等号或短横线，以确定是否是一级或二级标题。
-- 通过组合解析器处理两种不同的标题格式，确保能够匹配所有有效的 Markdown 标题。
+### 3. 主解析器的调整
+在主解析器 `markdownParser` 中，需要将新实现的 `blockquoteParser` 和 `codeBlockParser` 添加到可选的解析器列表中，以便它们可以在解析 Markdown 文本时被调用。
 
-通过这些解析器函数，你可以识别和解析 Markdown 中的标题，并将它们转换为你定义的代数数据类型（ADT），用于后续的 HTML 转换。
+**主解析器调整示例：**
+```haskell
+markdownParser :: Parser [MarkdownElement]
+markdownParser = many (choice [headingParser, blockquoteParser, codeBlockParser, orderedListParser, freeTextParser])
+```
+- 在 `choice` 中添加了 `blockquoteParser` 和 `codeBlockParser`。
+- `many` 会一直重复调用这些解析器，直到所有内容都被处理完。
+
+### 小结
+1. **块引用解析器 (`blockquoteParser`)** 处理以 `>` 开头的引用文本，并且可以递归处理多行引用。
+2. **代码块解析器 (`codeBlockParser`)** 处理以三重反引号包围的代码块，包括可选的语言标识符。
+3. 将这两个解析器集成到主解析器 `markdownParser` 中，确保能够解析完整的 Markdown 文档。
+
+完成这些部分的解析器后，可以用这些解析器将 Markdown 中的块引用和代码块转换为 `MarkdownElement`，以便进一步处理或转换为 HTML 格式。
 
 ![已上传的图片](READEME.assets/file-WJHOXiWSc1MWc0jBg6GmK97y)
 
@@ -619,6 +880,7 @@ tableSeparator = do
      ```
 
 4. **缩进格式**：
+   
    - 确保 HTML 内容正确缩进，尤其是嵌套结构。例如，可以写一个辅助函数来处理缩进：
      ```haskell
      indent :: String -> String
@@ -654,6 +916,7 @@ convertADTHTML (Image altText url captionText) =
 
 ### 2. 脚注引用 (0.5 分)
 - **Markdown 转换为 HTML**：
+  
   - 脚注需要用 `<p>` 标签包裹，并且具有唯一的 `id`。
   - 例如：
     ```html
@@ -761,6 +1024,7 @@ convertADTHTML (Blockquote paragraphs) =
 
 ### 2. 代码块 (Code) (0.5 分)
 - **Markdown 转换为 HTML**：
+  
   - 代码块需要用 `<pre>` 和 `<code>` 标签包裹。
   - 如果代码块有语言标识符（例如 `haskell`），它应该包含在 `class` 属性中，前缀为 `language-`。
   - 示例：
@@ -881,18 +1145,18 @@ Markdown 中的表格需要转换为 HTML 的 `<table>` 结构，包含以下元
 2. **编写转换函数**：
    - 将 ADT 中的 `Table` 类型转换为 HTML 代码。
    - 你需要处理表格的标题行（用 `<th>` 包裹）和普通数据行（用 `<td>` 包裹）。
-    
+   
    
    **代码实现**：
    ```haskell
    convertADTHTML :: MarkdownElement -> String
    convertADTHTML (Table rows) = 
-  "<table>\n" ++ convertTableRows rows ++ "</table>"
+    "<table>\n" ++ convertTableRows rows ++ "</table>"
    
    convertTableRows :: [[String]] -> String
    convertTableRows (header:body) =
      "  <tr>\n" ++ concatMap (\cell -> "    <th>" ++ cell ++ "</th>\n") header ++ "  </tr>\n" ++
-  concatMap convertTableRow body
+    concatMap convertTableRow body
    
    convertTableRow :: [String] -> String
    convertTableRow row =
@@ -900,7 +1164,7 @@ Markdown 中的表格需要转换为 HTML 的 `<table>` 结构，包含以下元
    ```
    - `convertTableRows`：用于转换表格的所有行。第一行被视为标题行，剩余的行是普通内容。
 - `convertTableRow`：将每一行的内容用 `<tr>` 和 `<td>` 包裹。
-   
+  
 3. **详细解释**：
    - 表格中的每一行使用 `<tr>` 标签。
    - 表头行的每个单元格用 `<th>`，其余行中的单元格用 `<td>`。
@@ -1123,3 +1387,15 @@ Markdown 中的表格需要转换为 HTML 的 `<table>` 结构，包含以下元
 - **注意**：加分最多只能达到 30 分（即总成绩的 100%），所以不需要实现所有的扩展功能，只需要选择一些能够展示你能力的复杂特性。
 
 通过这些扩展功能的实现，你可以在展示 Haskell 编程、函数式编程和解析技术的理解方面脱颖而出，取得加分。
+
+## 代码分析：parser.hs
+
+### Part A: Markdown Parsing
+
+- **目标**：使用 Haskell 解析 Markdown 文本，并将其转换为抽象数据类型 (ADT)。
+- **现有实现**：在 `Parser.hs` 中，已经使用 Megaparsec 编写了用于解析 Markdown 各种元素（如标题、代码块、引用等）的函数。
+- 需要完成的部分
+  - 如果 Markdown 的其他元素还没有实现（例如，图片、脚注等），你需要补充这些解析器。
+  - 在已上传的  文件中，可能包含对 Parser.hs 的修补，你需要应用这些修补以扩展功能。例如：
+    - `headings.diff`：可能改进了标题解析的逻辑。
+    - `tables.diff`：可能包含解析 Markdown 表格的逻辑。
