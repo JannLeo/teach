@@ -19,6 +19,10 @@ const markdownInput = document.getElementById(
     "markdown-input",
 ) as HTMLTextAreaElement;
 const checkbox = document.querySelector('input[name="checkbox"]')!;
+const saveButton = document.getElementById('save-button')!;
+const titleInput = document.getElementById('title-input')!;
+const pageTitle = document.getElementById('page-title')!;
+const updateTitleButton = document.getElementById("update-title")!;
 
 type Action = (_: State) => State;
 
@@ -44,6 +48,14 @@ const input$: Observable<Action> = fromEvent<KeyboardEvent>(
 const checkboxStream$: Observable<Action> = fromEvent(checkbox, "change").pipe(
     map((event) => (event.target as HTMLInputElement).checked),
     map((value) => (s) => ({ ...s, renderHTML: value })),
+);
+
+const titleInputStream$: Observable<Action> = fromEvent(titleInput, 'input').pipe(
+    map(() => (titleInput as HTMLInputElement).value),
+    map((newTitle) => {
+        pageTitle.textContent = newTitle || 'Markdown to HTML Converter';
+        return (s) => s;
+    })
 );
 
 function getHTML(s: State): Observable<State> {
@@ -75,8 +87,13 @@ const initialState: State = {
 };
 
 function main() {
+    // if (titleInput != null) {
+    //     console.log('元素找到了！');
+    // } else {
+    //     console.log('元素未找到。');
+    // }
     // Subscribe to the input Observable to listen for changes
-    const subscription = merge(input$, checkboxStream$)
+    const subscription = merge(input$, checkboxStream$, titleInputStream$)
         .pipe(
             map((reducer: Action) => {
                 // Reset Some variables in the state in every tick
@@ -108,10 +125,14 @@ function main() {
                     htmlOutput.textContent = value.HTML;
                 }
             }
-        });
+        }); 
+        
+        console.log(titleInput);  console.log(pageTitle); 
+        console.log(pageTitle.textContent);
 }
 if (typeof window !== "undefined") {
     window.onload = function () {
         main();
     };
 }
+
