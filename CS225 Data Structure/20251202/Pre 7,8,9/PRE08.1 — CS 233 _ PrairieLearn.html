@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)https://us.prairielearn.com/pl/course_instance/174688/instance_question/477123538/ -->
+<html lang="en" class="fontawesome-i2svg-active fontawesome-i2svg-complete"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="cookie-domain" content=".us.prairielearn.com">
+    <title> PRE08.1 — CS 233 |  PrairieLearn</title>
+    <style type="text/css">:host,:root{--fa-font-solid:normal 900 1em/1 "Font Awesome 6 Free";--fa-font-regular:normal 400 1em/1 "Font Awesome 6 Free";--fa-font-light:normal 300 1em/1 "Font Awesome 6 Pro";--fa-font-thin:normal 100 1em/1 "Font Awesome 6 Pro";--fa-font-duotone:normal 900 1em/1 "Font Awesome 6 Duotone";--fa-font-duotone-regular:normal 400 1em/1 "Font Awesome 6 Duotone";--fa-font-duotone-light:normal 300 1em/1 "Font Awesome 6 Duotone";--fa-font-duotone-thin:normal 100 1em/1 "Font Awesome 6 Duotone";--fa-font-brands:normal 400 1em/1 "Font Awesome 6 Brands";--fa-font-sharp-solid:normal 900 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-regular:normal 400 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-light:normal 300 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-thin:normal 100 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-duotone-solid:normal 900 1em/1 "Font Awesome 6 Sharp Duotone";--fa-font-sharp-duotone-regular:normal 400 1em/1 "Font Awesome 6 Sharp Duotone";--fa-font-sharp-duotone-light:normal 300 1em/1 "Font Awesome 6 Sharp Duotone";--fa-font-sharp-duotone-thin:normal 100 1em/1 "Font Awesome 6 Sharp Duotone"}svg:not(:host).svg-inline--fa,svg:not(:root).svg-inline--fa{overflow:visible;box-sizing:content-box}.svg-inline--fa{display:var(--fa-display,inline-block);height:1em;overflow:visible;vertical-align:-.125em}.svg-inline--fa.fa-2xs{vertical-align:.1em}.svg-inline--fa.fa-xs{vertical-align:0}.svg-inline--fa.fa-sm{vertical-align:-.0714285705em}.svg-inline--fa.fa-lg{vertical-align:-.2em}.svg-inline--fa.fa-xl{vertical-align:-.25em}.svg-inline--fa.fa-2xl{vertical-align:-.3125em}.svg-inline--fa.fa-pull-left{margin-right:var(--fa-pull-margin,.3em);width:auto}.svg-inline--fa.fa-pull-right{margin-left:var(--fa-pull-margin,.3em);width:auto}.svg-inline--fa.fa-li{width:var(--fa-li-width,2em);top:.25em}.svg-inline--fa.fa-fw{width:var(--fa-fw-width,1.25em)}.fa-layers svg.svg-inline--fa{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.fa-layers-counter,.fa-layers-text{display:inline-block;position:absolute;text-align:center}.fa-layers{display:inline-block;height:1em;position:relative;text-align:center;vertical-align:-.125em;width:1em}.fa-layers svg.svg-inline--fa{transform-origin:center center}.fa-layers-text{left:50%;top:50%;transform:translate(-50%,-50%);transform-origin:center center}.fa-layers-counter{background-color:var(--fa-counter-background-color,#ff253a);border-radius:var(--fa-counter-border-radius,1em);box-sizing:border-box;color:var(--fa-inverse,#fff);line-height:var(--fa-counter-line-height,1);max-width:var(--fa-counter-max-width,5em);min-width:var(--fa-counter-min-width,1.5em);overflow:hidden;padding:var(--fa-counter-padding,.25em .5em);right:var(--fa-right,0);text-overflow:ellipsis;top:var(--fa-top,0);transform:scale(var(--fa-counter-scale,.25));transform-origin:top right}.fa-layers-bottom-right{bottom:var(--fa-bottom,0);right:var(--fa-right,0);top:auto;transform:scale(var(--fa-layers-scale,.25));transform-origin:bottom right}.fa-layers-bottom-left{bottom:var(--fa-bottom,0);left:var(--fa-left,0);right:auto;top:auto;transform:scale(var(--fa-layers-scale,.25));transform-origin:bottom left}.fa-layers-top-right{top:var(--fa-top,0);right:var(--fa-right,0);transform:scale(var(--fa-layers-scale,.25));transform-origin:top right}.fa-layers-top-left{left:var(--fa-left,0);right:auto;top:var(--fa-top,0);transform:scale(var(--fa-layers-scale,.25));transform-origin:top left}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-2xs{font-size:.625em;line-height:.1em;vertical-align:.225em}.fa-xs{font-size:.75em;line-height:.0833333337em;vertical-align:.125em}.fa-sm{font-size:.875em;line-height:.0714285718em;vertical-align:.0535714295em}.fa-lg{font-size:1.25em;line-height:.05em;vertical-align:-.075em}.fa-xl{font-size:1.5em;line-height:.0416666682em;vertical-align:-.125em}.fa-2xl{font-size:2em;line-height:.03125em;vertical-align:-.1875em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:var(--fa-li-margin,2.5em);padding-left:0}.fa-ul>li{position:relative}.fa-li{left:calc(-1 * var(--fa-li-width,2em));position:absolute;text-align:center;width:var(--fa-li-width,2em);line-height:inherit}.fa-border{border-color:var(--fa-border-color,#eee);border-radius:var(--fa-border-radius,.1em);border-style:var(--fa-border-style,solid);border-width:var(--fa-border-width,.08em);padding:var(--fa-border-padding,.2em .25em .15em)}.fa-pull-left{float:left;margin-right:var(--fa-pull-margin,.3em)}.fa-pull-right{float:right;margin-left:var(--fa-pull-margin,.3em)}.fa-beat{animation-name:fa-beat;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-bounce{animation-name:fa-bounce;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1))}.fa-fade{animation-name:fa-fade;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-beat-fade{animation-name:fa-beat-fade;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-flip{animation-name:fa-flip;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-shake{animation-name:fa-shake;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin{animation-name:fa-spin;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,2s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin-reverse{--fa-animation-direction:reverse}.fa-pulse,.fa-spin-pulse{animation-name:fa-spin;animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,steps(8))}@media (prefers-reduced-motion:reduce){.fa-beat,.fa-beat-fade,.fa-bounce,.fa-fade,.fa-flip,.fa-pulse,.fa-shake,.fa-spin,.fa-spin-pulse{animation-delay:-1ms;animation-duration:1ms;animation-iteration-count:1;transition-delay:0s;transition-duration:0s}}@keyframes fa-beat{0%,90%{transform:scale(1)}45%{transform:scale(var(--fa-beat-scale,1.25))}}@keyframes fa-bounce{0%{transform:scale(1,1) translateY(0)}10%{transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{transform:scale(1,1) translateY(var(--fa-bounce-rebound,-.125em))}64%{transform:scale(1,1) translateY(0)}100%{transform:scale(1,1) translateY(0)}}@keyframes fa-fade{50%{opacity:var(--fa-fade-opacity,.4)}}@keyframes fa-beat-fade{0%,100%{opacity:var(--fa-beat-fade-opacity,.4);transform:scale(1)}50%{opacity:1;transform:scale(var(--fa-beat-fade-scale,1.125))}}@keyframes fa-flip{50%{transform:rotate3d(var(--fa-flip-x,0),var(--fa-flip-y,1),var(--fa-flip-z,0),var(--fa-flip-angle,-180deg))}}@keyframes fa-shake{0%{transform:rotate(-15deg)}4%{transform:rotate(15deg)}24%,8%{transform:rotate(-18deg)}12%,28%{transform:rotate(18deg)}16%{transform:rotate(-22deg)}20%{transform:rotate(22deg)}32%{transform:rotate(-12deg)}36%{transform:rotate(12deg)}100%,40%{transform:rotate(0)}}@keyframes fa-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.fa-rotate-90{transform:rotate(90deg)}.fa-rotate-180{transform:rotate(180deg)}.fa-rotate-270{transform:rotate(270deg)}.fa-flip-horizontal{transform:scale(-1,1)}.fa-flip-vertical{transform:scale(1,-1)}.fa-flip-both,.fa-flip-horizontal.fa-flip-vertical{transform:scale(-1,-1)}.fa-rotate-by{transform:rotate(var(--fa-rotate-angle,0))}.fa-stack{display:inline-block;vertical-align:middle;height:2em;position:relative;width:2.5em}.fa-stack-1x,.fa-stack-2x{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0;z-index:var(--fa-stack-z-index,auto)}.svg-inline--fa.fa-stack-1x{height:1em;width:1.25em}.svg-inline--fa.fa-stack-2x{height:2em;width:2.5em}.fa-inverse{color:var(--fa-inverse,#fff)}.fa-sr-only,.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.fa-sr-only-focusable:not(:focus),.sr-only-focusable:not(:focus){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.svg-inline--fa .fa-primary{fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)}.svg-inline--fa .fa-secondary{fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-primary{opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-secondary{opacity:var(--fa-primary-opacity,1)}.svg-inline--fa mask .fa-primary,.svg-inline--fa mask .fa-secondary{fill:#000}</style><link href="./PRE08.1 — CS 233 _ PrairieLearn_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./PRE08.1 — CS 233 _ PrairieLearn_files/bootstrap-icons.css" rel="stylesheet">
+    <link href="./PRE08.1 — CS 233 _ PrairieLearn_files/colors.css" rel="stylesheet">
+    <link href="./PRE08.1 — CS 233 _ PrairieLearn_files/local.css" rel="stylesheet">
+    <script src="./PRE08.1 — CS 233 _ PrairieLearn_files/jquery.min.js"></script>
+    <script src="./PRE08.1 — CS 233 _ PrairieLearn_files/bootstrap.bundle.min.js"></script>
+    <script src="./PRE08.1 — CS 233 _ PrairieLearn_files/all.min.js"></script>
+    <script src="./PRE08.1 — CS 233 _ PrairieLearn_files/application-R3BCQBZK.js"></script> <script src="./PRE08.1 — CS 233 _ PrairieLearn_files/navbarClient-7FLGATRR.js"></script>
+   <script src="./PRE08.1 — CS 233 _ PrairieLearn_files/question-EKSL3NTZ.js"></script>
+        
+        <script defer="" src="./PRE08.1 — CS 233 _ PrairieLearn_files/startup.js"></script>
+        <script>
+          document.urlPrefix = '/pl/course_instance/174688';
+        </script>
+        
+              
+              <link href="./PRE08.1 — CS 233 _ PrairieLearn_files/pl-checkbox.css" rel="stylesheet">
+<link href="./PRE08.1 — CS 233 _ PrairieLearn_files/pl-code.css" rel="stylesheet">
+<link href="./PRE08.1 — CS 233 _ PrairieLearn_files/pl-hidden-hints.css" rel="stylesheet">
+
+<script type="text/javascript" src="./PRE08.1 — CS 233 _ PrairieLearn_files/PrairieUtil.js"></script>
+<script type="text/javascript" src="./PRE08.1 — CS 233 _ PrairieLearn_files/clipboard.min.js"></script>
+            
+      <script src="./PRE08.1 — CS 233 _ PrairieLearn_files/core.js" charset="UTF-8"></script><style>                      .htmx-indicator{opacity:0}                      .htmx-request .htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                      .htmx-request.htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                    </style><script src="./PRE08.1 — CS 233 _ PrairieLearn_files/tex.js" charset="UTF-8"></script><script src="./PRE08.1 — CS 233 _ PrairieLearn_files/menu.js" charset="UTF-8"></script><script src="./PRE08.1 — CS 233 _ PrairieLearn_files/svg.js" charset="UTF-8"></script><style type="text/css" id="ctre_styles">
+			#ctre_wnd {
+				position: fixed; bottom: 0; right: 10px;
+				background: #fff; box-shadow: 0px 0px 40px rgba(0,0,0,0.15);
+				border-radius: 3px 3px 0 0;
+				z-index: 2147483647;
+			}
+
+			@media (prefers-color-scheme: dark) {
+				#ctre_wnd { background: #000; box-shadow: 0px 0px 40px rgba(255,255,255,0.15); }
+			}
+			</style><script src="./PRE08.1 — CS 233 _ PrairieLearn_files/tex(1).js" charset="UTF-8"></script><script src="./PRE08.1 — CS 233 _ PrairieLearn_files/assistive-mml.js" charset="UTF-8"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-SVG-styles">
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+</style></head>
+      <body data-new-gr-c-s-check-loaded="14.1222.0" data-gr-ext-installed="">
+        
+    
+
+    <div class="container-fluid bg-primary">
+      <a href="https://us.prairielearn.com/pl/course_instance/174688/instance_question/477123538/#content" class="d-inline-flex p-2 m-2 text-white visually-hidden-focusable">
+        Skip to main content
+      </a>
+    </div>
+
+    
+
+    <nav class="navbar navbar-dark bg-dark navbar-expand-md" aria-label="Global navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="https://us.prairielearn.com/pl" aria-label="Homepage">
+          <span class="navbar-brand-label">PrairieLearn</span>
+          <span class="navbar-brand-hover-label">
+            Go home <svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fa fa-angle-right" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+          </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation" data-bs-target=".navbar-collapse" data-bs-toggle="collapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="course-nav" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav mr-auto me-auto" id="main-nav">
+            
+    <li class="nav-item navbar-text mr-4 me-4">
+      CS 233, Sp25
+    </li>
+
+    <li class="nav-item ">
+      <a class="nav-link" href="https://us.prairielearn.com/pl/course_instance/174688/assessments">Assessments</a>
+    </li>
+    <li class="nav-item ">
+      <a class="nav-link" href="https://us.prairielearn.com/pl/course_instance/174688/gradebook">Gradebook</a>
+    </li>
+
+    
+          <li class="nav-item ">
+            <a class="nav-link" href="https://us.prairielearn.com/pl/course_instance/174688/assessment_instance/9601130">
+              PRE08
+            </a>
+          </li>
+        
+  
+          </ul>
+
+          
+          
+    <ul class="nav navbar-nav" id="username-nav" data-access-as-administrator="false" data-view-type="student" data-authn-course-role="None" data-authn-course-instance-role="None" data-has-instructor-access="">
+      <li class="nav-item dropdown mb-2 mb-md-0 mr-2 me-2">
+        <button class="btn nav-link dropdown-toggle" id="navbarDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+          Che Liu
+          
+        </button>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-end" aria-labelledby="navbarDropdown">
+          
+           
+          
+          
+                <a class="dropdown-item" href="https://us.prairielearn.com/pl/request_course">
+                  Course Requests
+                </a>
+              
+          <a class="dropdown-item" href="https://us.prairielearn.com/pl/settings">Settings</a>
+          <a class="dropdown-item news-item-link" href="https://us.prairielearn.com/pl/course_instance/174688/news_items" title="News" aria-label="News">
+            News
+            
+          </a>
+
+          <a class="dropdown-item" href="https://us.prairielearn.com/pl/logout">Log out</a>
+        </div>
+      </li>
+    </ul>
+  
+        </div>
+      </div>
+    </nav>
+
+    
+    <div class="mb-3">
+       
+    </div>
+  
+        
+        <main id="content" class="container">
+          
+          <div class="row">
+            <div class="col-lg-9 col-sm-12">
+              
+    <div class="question-container" data-grading-method="Internal" data-variant-id="115275014" data-variant-token="YWFlYjM4MDUxY2IwNjAyNDIzZWIwZTc4ZDlkYjQ3YjUwNTEwODBjNTI2OWQ0YTUwNTNhMWRmNmVhMjQ2NTg5NA.m71ke1y3.eyJ2YXJpYW50SWQiOiIxMTUyNzUwMTQifQ">
+      
+      
+      
+            <form class="question-form" name="question-form" method="POST" autocomplete="off" data-original-form-data="__variant_id=115275014">
+              
+    <div class="card mb-4 question-block">
+      <div class="card-header bg-primary text-white d-flex align-items-center">
+        <h1>
+          PRE08.1. 08 Text and Videos
+        </h1>
+        
+      </div>
+      <div class="card-body question-body"><h2>Videos</h2>
+<iframe id="kmsembed-1_99rjxx7v" style="width:25vh" src="./PRE08.1 — CS 233 _ PrairieLearn_files/26883701.html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<iframe id="kmsembed-1_74ku70qa" style="width:25vh" src="./PRE08.1 — CS 233 _ PrairieLearn_files/99753341.html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<iframe id="kmsembed-1_wwyfpxgs" style="width:25vh" src="./PRE08.1 — CS 233 _ PrairieLearn_files/26883701(1).html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<iframe id="kmsembed-1_yolaae6r" style="width:25vh" src="./PRE08.1 — CS 233 _ PrairieLearn_files/26883701(2).html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<p>Video credits: Geoffrey Herman, Text credits: Geoffrey Herman</p>
+
+<iframe id="kmsembed-1_i6ji8ash" style="width:25vh" src="./PRE08.1 — CS 233 _ PrairieLearn_files/26883701(3).html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+
+
+<h2>The Big Picture</h2>
+<p>MIPS Control Instructions (branches (<code>beq</code> and <code>bne</code>) and jumps (<code>j</code> and <code>jr</code>)) are the instructions that we can use to build control structures such as conditional statements, loops, and function calls. Notice how all of these instructions change our Program Counter (PC) to something other than PC+4. Instructions that can change PC to something other than PC+4 are used to affect the flow of our programs and let us create more complex algorithms.</p><p>Load Upper Immediate (<code>lui</code>) is a useful instruction for constructing 32-bit immediate values. Set if Less Than (<code>slt</code> and <code>slti</code>) is a useful instruction for performing branches that require less than or greater than comparisons. We use labels in assembly code so that we don't need to manually calculate the offsets or addresses for our branch and jump instructions.</p>
+
+<p>Supplemental Optional Reading: Patterson &amp; Hennessy 2.6 and 2.9</p>
+
+
+<h1>Control Instructions</h1>
+<p>For simple programs, like the following, the Program Counter (<code>PC</code>) increments by 4 (<code>PC = PC+4</code>) for arithmetic/logical instructions to point to the address of the next instruction of the program stored in memory. For example, in the code below, the C program (left) should progress sequentially through the instructions, assigning first to <code>x</code>, then to <code>w</code>, and then to <code>y</code>. The equivalent MIPS assembly program (right) accomplishes this sequential behavior by storing each 32-bit machine code instruction in 4 consecutive memory addresses storing with (hypothetically) address <code>0x04000000</code>. <code>PC</code> would start with the address <code>0x04000000</code> stored in it to execute the <code>add</code> instruction. <code>PC</code> would increment by 4 to <code>0x04000004</code> so that it points to the <code>and</code> instruction next.</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-cf876929-54a2-4fd3-b203-1516f8adb9ad" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>x<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>y<span style="color: #BBB"> </span><span style="color: #666">+</span><span style="color: #BBB"> </span>z;
+w<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>x<span style="color: #BBB"> </span><span style="color: #666">&amp;</span><span style="color: #BBB"> </span>z;
+y<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>x<span style="color: #BBB"> </span><span style="color: #666">^</span><span style="color: #BBB"> </span>w;
+<span style="color: #BBB">            </span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+        <div class="col-sm-9">
+            <div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-be81c5f5-4cc6-4c2e-96f2-fb462b7cc18b" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$7</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># stored in inst memory addr 0x04000000</span>
+and<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$7</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># stored in inst memory addr 0x04000004</span>
+xor<span style="color: #BBB">  </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># stored in inst memory addr 0x04000008</span>
+<span style="color: #BBB">            </span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+    </div>
+</div>
+
+<p>This behavior is sufficient if we only want to implement arthmetic/logical instructions, but is insufficient to implement <span style="color:blue">control</span> structures such as conditionals (e.g., <code style="color:blue">if</code>) and loops (e.g., <code style="color:blue">for</code>). To make these control structures work, we need to change <code>PC</code> by either skipping instructions (i.e., incrementing <code>PC</code> by more than 4) or returning back to previous instructions (i.e., decrementing <code>PC</code>). Let's discuss four MIPS instructions that modify <code>PC</code> rather to create <span style="color:blue">control</span> structures.</p>
+
+<div class="alert alert-info" role="alert">
+You can tell an instruction is a control instruction because it assigns to <code>PC</code> (i.e., of the form <code>PC =</code>) rather than the register file (i.e., of the form <code>R[rd] =</code> or <code>R[rt] =</code>)
+</div>
+
+<h3>Conditional Branches</h3>
+<p>Conditional instructions Branch on Equal (<code>beq</code>) and Branch on Not Equal (<code>bne</code>) are used to implement conditional <span style="color:blue">control</span> structures such as <code style="color:blue">if</code> and the conditional portion of a <code style="color:blue">for (initialize; conditional; increment)</code> loop declaration. These control structures choose between two possible next instructions to execute.</p>
+
+<table style="border-collapse: collapse; width: 96.6667%;" border="1" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr style="height: 52px;">
+            <th style="width: 17.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Name</th>
+            <th style="width: 7.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Mnemonic</th>
+            <th style="width: 20%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Assembly Format</th>
+            <th style="width: 35%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Operation (In Verilog)</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Format/<br>Notes</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Opcode/<br>Funct</th>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code>beq</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code>beq $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code>if(R[rs] == R[rt])</code><br><code>&nbsp; PC=PC+4+BranchAddr</code><br><code>else</code><br><code>&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;"><p>I / (4)</p></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">4<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Not Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code>bne</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code>bne $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code>if(R[rs] != R[rt])</code><br><code>&nbsp; PC=PC+4+BranchAddr</code><br><code>else</code><br><code>&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (4)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">5<sub>hex</sub></td>
+        </tr>
+    </tbody>
+</table>
+<ol>
+    <li>May cause overflow exception</li>
+    <li><code>SignExtImm = { {16{inst[15]}}, inst[15:0] }</code></li>
+    <li><code>ZeroExtImm = { {16{1'b0}}, inst[15:0] }</code></li>
+    <li><code>BranchAddr = { {14{immediate[15]}}, immediate, 2’b0 }</code></li>
+</ol>
+
+<p>The MIPS reference guide tells us that both instructions are I-type instructions that treat the two registers as sources of data. The two branch read the data from two registers <code>R[rs]</code> and <code>R[rt]</code> and compare their values. For <code>beq</code>, if these two registers are equal (the condition is true) the instruction will branch (i.e., increment <code>PC</code> to a value other than <code>PC+4</code>). If these two registers are not equal (the condition is false), <code>beq</code> will do the default behavior (<code>PC=PC+4</code>). For <code>bne</code>, if these two registers are not equal (the condition is true), the instruction will branch (i.e., increment <code>PC</code> to a value other than <code>PC+4</code>). If these two registers are equal (the condition is false), <code>bne</code> will do the default behavior (<code>PC=PC+4</code>).</p>
+
+<p>Where we branch to when the conditional is true for both instructions is determined by <code>BranchAddr</code>, which is determined by the immediate field (footnote 4). <code>BranchAddr</code> is a sign-extended immediate field (i.e., the <code>14{immediate[15]}</code>) that has been shifted to the left by 2 (i.e., the <code>2'b0</code>). The immediate field is sign-extended so that it is treated like a signed number, so that we can increment or decrement <code>PC</code>. We shift the signed immediate field to the left by 2, because all instructions must be stored at addresses that are divisible by 4 in the instruction memory (<code>&lt;&lt; 2 == *4</code>). In other words, multiplying the immediate field by 4 ensures that the instruction we branch to can be a valid instruction.</p>
+
+<h5>Examples</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-df308fc0-9bdc-47c4-9bce-a12405607cf2" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$9</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000000</span>
+beq<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">2</span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000004</span>
+xor<span style="color: #BBB">  </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$7</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000008</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x0400000C</span>
+or<span style="color: #BBB">   </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$9</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000010</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p>If <code>R[5] == R[4]</code>, the next instruction to execute would be the <code>or</code> instruction. <code>PC = PC+4+(2*4) = PC+12</code>, which means <code>PC = 0x04000004+0xC = 0x04000010</code>.</p>
+<p>If <code>R[5] != R[4]</code>, the next instruction to execute would be the <code>xor</code> instruction, because <code>PC=PC+4</code>, which means <code>PC = 0x04000004+0x4 = 0x04000008</code>.</p>
+        </div>
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-e96b0f03-a62b-40eb-9fc5-b598d75735e9" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$9</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000000</span>
+bne<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span>-2<span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000004</span>
+xor<span style="color: #BBB">  </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$7</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000008</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x0400000C</span>
+or<span style="color: #BBB">   </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$9</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000010</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p>If <code>R[5] != R[4]</code>, the next instruction to execute would be the <code>add</code> instruction. <code>PC = PC+4+(-2*4) = PC-4</code>, which means <code>PC = 0x04000004-0x4 = 0x04000000</code>.</p>
+<p>If <code>R[5] == R[4]</code>, the next instruction to execute would be the <code>xor</code> instruction, because <code>PC=PC+4</code>, which means <code>PC = 0x04000004+0x4 = 0x04000008</code>.</p>
+        </div>
+    </div>
+</div>
+
+<h3>Unconditional Branches (a.k.a. Jumps)</h3>
+<p>Unconditional branch instructions Jump (<code>j</code>) and Jump Register (<code>jr</code>) can be used to implement unconditional <span style="color:blue">control</span> structures such as jumping over an <code>else</code> when an <code>if</code> is true, jumping back to the top of a loop after an iteration, or jumping back from a function (i.e., <code style="color:blue">return</code>).</p>
+
+<table style="border-collapse: collapse; width: 96.6667%;" border="1" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr style="height: 52px;">
+            <th style="width: 17.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Name</th>
+            <th style="width: 7.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Mnemonic</th>
+            <th style="width: 20%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Assembly Format</th>
+            <th style="width: 35%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Operation (In Verilog)</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Format/<br>Notes</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Opcode/<br>Funct</th>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code>j</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code>j address</code> or <code>j label</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code>PC=JumpAddr</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">J / (5)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">2<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump Register</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code>jr</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code>jr $rs</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code>PC=R[rs]</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 08<sub>hex</sub></td>
+        </tr>
+    </tbody>
+</table>
+<ol>
+    <li>May cause overflow exception</li>
+    <li><code>SignExtImm = { {16{inst[15]}}, inst[15:0] }</code></li>
+    <li><code>ZeroExtImm = { {16{1'b0}}, inst[15:0] }</code></li>
+    <li><code>BranchAddr = { {14{immediate[15]}}, immediate, 2'b0 }</code></li>
+    <li><code>JumpAddr = { PC+4[31:28], address, 2'b0 }</code></li>
+</ol>
+
+<h5>Jump (<code>j</code>)</h5>
+<p>The MIPS reference guide tells us that the <code>j</code> instruction is a J-type instruction. J-type instructions have only an opcode and an <span style="color:#00aa00">address</span> field.</p> 
+
+<p></p><div class="container-fluid">
+    <img src="./PRE08.1 — CS 233 _ PrairieLearn_files/j-type.png" alt="" class="img-fluid mx-auto d-block">
+</div><p></p>
+
+<p>Where we jump is determined by <code>JumpAddr</code>, which is determined by the <span style="color:#00aa00">address</span> field (footnote 5). <code>JumpAddr</code> has 3 parts. <code>2'b0</code> shifts the <span style="color:#00aa00">address</span> field to the left by 2 so that whatever value is stored in address will always be a multiple of 4. <span style="color:#00aa00">address</span> primarily determines what address we go to next. <code>PC+4[31:28]</code> is a necessary evil given the limitations of our 32-bit machine encode width. All addresses are 32 bits, but a left-shifted <span style="color:#00aa00">address</span> field is only 28 bits. We need 4 more bits. Since most programs are small, it's likely that the 4 most-significant bits of <code>PC</code> will not change when we jump, so we constrain <code>j</code> instructions to keep the same 4 most-significant bits of <code>PC</code>.</p>
+
+<h5>Examples</h5>
+<div class="alert alert-info" role="alert">
+Notice how the 4 most significant-bits of the instruction memory addresses don't change in these examples!
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-ba607a74-14df-41ed-bc62-161b01e89195" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span>
+<span style="">6</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>beq<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">2</span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000000</span>
+xor<span style="color: #BBB">  </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$7</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000004</span>
+j<span style="color: #BBB">    </span>0x04000010<span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000008</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x0400000C</span>
+or<span style="color: #BBB">   </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$9</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000010</span>
+<span style="color: #BBB">            </span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>This is an example of an <code style="color:blue">if-else</code> conditional. <span style="color:blue">If</span> the <code>beq</code> is true, it will branch over the <code>xor</code> and <code>j</code> to the <code>add</code> instruction. <span style="color:blue">Else</span> when <code>beq</code> is false, the code will execute the <code>xor</code> instruction and then jump over the <code>add</code> to the <code>or</code>. We execute either the <code>xor</code> or the <code>add</code> but never both.</p>
+        </div>
+        <div class="col-sm-6">
+            <div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-a74b29e8-e4e0-453f-822a-c297e5125ad3" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>bne<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">2</span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000000</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000004</span>
+j<span style="color: #BBB">    </span>0x04000000<span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x04000008</span>
+or<span style="color: #BBB">   </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$9</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem addr 0x0400000C</span>
+<span style="color: #BBB">            </span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>This is an example of a loop. <span style="color:blue">If</span> the <code>bne</code> is false, it executes the <code>add</code> and then jumps back to the <code>bne</code> to perform another iteration. The loop ends when <code>bne</code> is true, branching to the <code>or</code>.</p>
+        </div>
+    </div>
+</div>
+
+<h5>Jump Register (<code>jr</code>)</h5>
+<p>The MIPS reference guide tells us that the <code>jr</code> instruction is an R-type instruction, but we use only one register as a source (<code>$rs</code>). <code>jr</code> simply copies <code>R[rs]</code> into <code>PC</code>, which means that <code>R[rs]</code> must be a valid address in the instruction memory (i.e., divisible by 4).</p>
+
+<p>The main reason to use <code>jr</code> is to return from a function call. Function calls may exist very far away in memory or are dynamic (i.e., multiple places may call our function), so we store the address we want to return to in a register. We use <code>jr</code> to return to that location at the end of the function. We can't use <code>j</code> because it will always jump to the one location. <code>jr</code> can jump to a variable location.</p>
+
+<h5>Examples</h5>
+<p>You may have noticed that we typically give you the following starter code for questions in PrairieLearn. The last line is either <code>jr $31</code> or <code>jr $ra</code>. We call your code as a function from a main function that you can't see and the <code>jr $31</code> returns to the main function.</p> 
+
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-cf36fb7c-403c-4da8-944c-d08fe2dbad6f" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style=""> 1</span>
+<span style=""> 2</span>
+<span style=""> 3</span>
+<span style=""> 4</span>
+<span style=""> 5</span>
+<span style=""> 6</span>
+<span style=""> 7</span>
+<span style=""> 8</span>
+<span style=""> 9</span>
+<span style="">10</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>.globl<span style="color: #BBB">  </span>mips_asm
+mips_asm:
+<span style="color: #60A0B0; font-style: italic"># Do not touch the code above</span>
+<span style="color: #60A0B0; font-style: italic"># We use the above to call your code as a function</span>
+<span style="color: #60A0B0; font-style: italic"># Write your MIPS assembly code below</span>
+
+
+<span style="color: #60A0B0; font-style: italic"># Do not touch the code below</span>
+<span style="color: #60A0B0; font-style: italic"># We use the code below to return from your code</span>
+<span style="color: #BBB">  </span>jr<span style="color: #BBB">   </span><span style="color: #BB60D5">$31</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<hr>
+<h1>Other Useful Instructions</h1>
+<p>The Set-if-Less-Than (<code>slt</code> and <code>slti</code>) and Load Upper Immediate (<code>lui</code>) instructions are some useful instructions that help make the <span style="color:blue;">control</span> instructions more powerful.</p>
+
+<h3>Set-if-Less-Than (<code>slt</code> and <code>slti</code>)</h3>
+<p>Set if Less Than <code>slt</code> and Set if Less Than Immediate <code>slti</code> enable comparisons such as <code>if (x &lt; y)</code> or <code>if (x &gt; 0)</code>, respectively, when used in tandem with <code>beq</code> or <code>bne</code>.</p>
+
+<table style="border-collapse: collapse; width: 96.6667%;" border="1" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr style="height: 52px;">
+            <th style="width: 17.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Name</th>
+            <th style="width: 7.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Mnemonic</th>
+            <th style="width: 20%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Assembly Format</th>
+            <th style="width: 35%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Operation (In Verilog)</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Format/<br>Notes</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Opcode/<br>Funct</th>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">slt</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">slt $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=(R[rs]&lt;R[rt]) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 2a<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than Immediate</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">slti</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">slti $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=(R[rs]&lt;SignExtImm) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">a<sub>hex</sub></td>
+        </tr>
+    </tbody>
+</table>
+<ol>
+    <li>May cause overflow exception</li>
+    <li><code>SignExtImm = { {16{inst[15]}}, inst[15:0] }</code></li>
+</ol>
+
+<p><code>slt</code> is an R-type instruction, comparing two registers, while <code>slti</code> is an I-type instruction, comparing a register with an immediate. Both instructions are expressed in the MIPS reference guide using the ternary operator (<code>? 1 : 0</code>), which indicates that the value 1 is assigned to the destination register when the condition in parentheses is true and the value 0 is assigned when the condition is false.</p>
+
+<h5>Examples</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f898e414-682f-45e2-be5f-4112782691f2" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>slt<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span>
+beq<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$0</span>,<span style="color: #BBB"> </span><span style="color: #40A070">4</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p>This code checks if <code>R[5]&lt;R[6]</code>. If true <code>R[1]=1</code>. <code>beq</code> then branches depending on whether <code>R[1]==R[0]</code> (i.e., <code>R[1]==0</code>). If this second conditional is true, that means that the previous comparison was false and we take the branch to skip 4 instructions. These two instructions together create a "Branch on Greater Than or Equal" sequence (i.e., if <code>R[5]≥R[6]</code>, branch).</p>
+        </div>
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-e10a7728-b2ef-4ad2-8f37-eadf226531bc" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>slt<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span>
+bne<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$0</span>,<span style="color: #BBB"> </span><span style="color: #40A070">4</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p>This code checks if <code>R[5]&lt;R[6]</code>. If true <code>R[1]=1</code>. <code>bne</code> then branches depending on whether <code>R[1]!=R[0]</code> (i.e., <code>R[1]!=0</code>). If this second conditional is true, that means that the previous comparison was also true and we take the branch to skip 4 instructions. These two instructions together create a "Branch on Less Than" sequence (i.e., if <code>R[5]&lt;R[6]</code>, branch).</p>
+        </div>
+    </div>
+</div>
+
+<h3>Load Upper Immediate</h3>
+<p>If we want to construct a 32-bit constant value, there is no direct way to do that yet. We can use arithmetic or bitwise logical instructions to easily a value to the 16 least-significant bits (or the lower bits). For example, <code>addi $4, $0, 0x1543</code> would assign <code>$4</code> the value <code>0x00001543</code>. Load Upper Immediate (<code>lui</code>) provides a way to directly assign a constant value to the 16 most-significant bits (or the upper bits) of a register. 32-bit constants can be useful for constructing 32-bit addresses (e.g., for using with <code>jr</code>) or for just creating large magnitude integers for mathematics.</p>
+
+<table style="border-collapse: collapse; width: 96.6667%;" border="1" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr style="height: 52px;">
+            <th style="width: 17.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Name</th>
+            <th style="width: 7.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Mnemonic</th>
+            <th style="width: 20%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Assembly Format</th>
+            <th style="width: 35%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Operation (In Verilog)</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Format/<br>Notes</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Opcode/<br>Funct</th>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Upper Imm</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lui</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lui $rt, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={imm, 16'b0};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I</td>
+            <td style="width: 5%; vertical-align: middle;">f<sub>hex</sub></td>
+        </tr>
+    </tbody>
+</table>
+
+<p><code>lui</code> is an I-type instruction that assigns the 16-bit immediate value to the 16 most-significant bits and 16 bits of 0 to the 16 least-significant bits of <code>rt</code> (i.e., <code>R[rt] = {imm, 16'b0}</code>). The <code>{ }</code> notation is wire concatenation, bundling the two 16-bit signals into 1, 32-bit signal.</p>
+
+<h5>Examples</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f04e5b1c-11a3-415f-9e6a-8f55ca29b42f" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>lui<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span>0x1001
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p>This code constructs the 32-bit constant <code>0x10010000</code> and assigns it to <code>R[1]</code> (i.e., <code>R[1] = 0x10010000</code>).</p>
+        </div>
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-a418e4e4-85e8-4607-a534-76e77e761c6e" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>lui<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span>0xcafe
+ori<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span>0x0233
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p>This code first assigns <code>0xcafe0000</code> to <code>R[1]</code> (i.e., <code>R[1] = 0xcafe0000</code>). It then appends <code>0x0233</code> and assigns to <code>R[4]</code> (i.e., <code>R[4] = 0xcafe0233</code>), creating an a complex 32-bit constant.</p>
+        </div>
+    </div>
+</div>
+<hr>
+<h1>Implementing the Control Instructions (and other instructions)</h1>
+<p>Let's first discuss how to implement the control instructions (<code>beq</code>, <code>bne</code>, <code>j</code>, and <code>jr</code>)</p>
+<table style="border-collapse: collapse; width: 96.6667%;" border="1" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">beq</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">beq $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">if(R[rs] == R[rt])</code><br><code class="mips">&nbsp; PC=PC+4+BranchAddr</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;"><p>I / (4)</p></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">4<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Not Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">bne</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">bne $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">if(R[rs] != R[rt])</code><br><code class="mips">&nbsp; PC=PC+4+BranchAddr</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (4)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">5<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">j</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">j address</code> or <code class="mips">j label</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">PC=JumpAddr</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">J / (5)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">2<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump Register</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">jr</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">jr $rs</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">PC=R[rs]</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 08<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Upper Imm</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lui</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lui $rt, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={imm, 16'b0};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I</td>
+            <td style="width: 5%; vertical-align: middle;">f<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">slt</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">slt $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=(R[rs]&lt;R[rt]) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 2a<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than Immediate</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">slti</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">slti $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=(R[rs]&lt;SignExtImm) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">a<sub>hex</sub></td>
+        </tr>
+    </tbody>
+</table>
+<ol>
+    <li>May cause overflow exception</li>
+    <li><code class="mips">SignExtImm = { {16{inst[15]}}, inst[15:0] }</code></li>
+    <li><code class="mips">ZeroExtImm = { {16{1'b0}}, inst[15:0] }</code></li>
+    <li><code class="mips">BranchAddr = { {14{immediate[15]}}, immediate, 2'b0 }</code></li>
+    <li><code class="mips">JumpAddr = { PC+4[31:28], address, 2'b0 }</code></li>
+</ol>
+
+<p>Notice that all of these instructions assign only to <code>PC</code>. In combination with our prior instructions, we now have 4 possible values that can be assign to <code>PC</code>. Since we have 4 options to choose from, we can use a 32-bit wide 4:1 mux to choose between these options. We will use a new <span style="color:blue;">control</span> signal from the MIPS instruction decoder <code>control_type</code> to control this multiplexer.</p>
+
+<table class="table-striped table-bordered table-condensed">
+    <tbody><tr>
+        <td><code>control_type</code></td>
+        <td>Assignment</td>
+        <td>Notes</td>
+    </tr>
+    <tr>
+        <td style="text-align: center;">00</td>
+        <td><code>PC=PC+4</code></td>
+        <td>Used for all of the arithmetic/logical instructions and when the branch condition is False for <code>beq</code> and <code>bne</code> (i.e., when the branch is not taken). Already implemented, just route through the <code>control_type</code> mux.</td>
+    </tr>
+    <tr>
+        <td style="text-align: center;">01</td>
+        <td><code>PC=PC+4+BranchAddr</code></td>
+        <td><p>Used when the branch condition is True for <code>beq</code> and <code>bne</code> (i.e., when the branch is taken). Implement using sign extender on the immediate and then left shifting by 2 to create <code>BranchAddr</code> ((bottom-right) and then add that to <code>PC+4</code> (top-left). Schematic uses the signal name and a broken wire rather than drawing the wire to keep the schematic cleaner, pretend they are connected. Route through the <code>control_type</code> mux.</p></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;">10</td>
+        <td><code>PC=JumpAddr</code></td>
+        <td>Used when its a <code>j</code> instruction. Implementation: Take 26 most-significiant bits from the instruction memory and then concatenate with the 4 most-significant bits of <code>PC+4</code> and 2 bits of 0 <code>2'b0</code>. Concatenations are shown in the top middle of the diagram. Notice how <code>PC+4[31:28]</code> is added from the left indicating that it is being concatenated to the most-significant bits, while <code>2'b0</code> is added from the right indicating that it is being concatenated to the least-significant bits. Route this new bus through the <code>control_type</code> mux.</td>
+    </tr>
+    <tr>
+        <td style="text-align: center;">11</td>
+        <td><code>PC=R[rs]</code></td>
+        <td>Used when it is a <code>jr</code> instruction. Already implemented, route <code>R[rs]</code> through the <code>control_type</code> mux.</td>
+    </tr>
+</tbody></table>
+
+<div class="container-fluid">
+    <img src="./PRE08.1 — CS 233 _ PrairieLearn_files/annotated_MIPS_control_datapath.png" alt="" class="img-fluid mx-auto d-block">
+</div>
+
+<h5><code>beq</code> and <code>bne</code> implementation notes</h5>
+<p>To implement the conditional portion of the branch instructions (i.e., <code>R[rs]==R[rt]</code> or <code>R[rs]!=R[rt]</code>), we will use the ALU flags. With a little algebra, the branch conditions can also be expressed as <code>(R[rs]-R[rt])==0</code> or <code>(R[rs]-R[rt])!=0</code>. Consequently, we can set <code>alu_op</code> to subtraction, which will in turn cause the <code>zero</code> flag to be 1 when the 2 registers are equal and 0 when the 2 registers are not equal. We route the <code>zero</code> flag back to the MIPS instruction decoder so that it can modify <code>control_type</code> to correctly choose whether branch instructions go to <code>PC+4</code> (<code>control_type == 00</code>) or <code>PC+4+BranchAddr</code> (<code>control_type == 01</code>). How to do that exactly is an exercise left to students to do in lab.</p>
+
+<h5><code>lui</code> implementation</h5>
+<p><code>lui</code> is implemented with wire concatenation, just like zero extension. For zero-extension, <code>16'b0</code> is drawn as coming from the left, indicating that the bits are concatenated to the most-significant bits of the 16-bit immediate field. For <code>lui</code>, <code>16'b0</code> is drawn as coming from the right, indicating that the bits are concatenated to the least-significant bits of the 16-bit immediate field. Since we want to write to <code>R[rt]</code>, we place a new mux in front of the <code>W_data</code> port, routing the old value (ALU's <code>out</code>) through the 0 input and the new <code>lui</code> bus through the 1 input. Finally, we add the <span style="color:blue;">control</span> signal to the MIPS instruction decoder.</p>
+
+<h5><code>slt</code> and <code>slti</code> implementation</h5>
+<p>Like <code>beq</code> and <code>bne</code>, <code>slt</code> and <code>slti</code> have a conditional structure. Whenever you have a conditional structure, the ALU flags will likely be helpful. We will illustrate only how to implement <code>slt</code>, because <code>slti</code> is almost identical.</p>
+
+<p>To implement the conditional portion of the <code>slt</code> instruction (i.e., <code>R[rs]&gt;R[rt]</code>), we can use some algebra to rewrite the conditional to <code>R[rs]-R[rt]&lt;0</code>. If we set <code>alu_op</code> to subtraction, the <code>negative</code> flag will tell us what value to assign to <code>R[rd]</code>. When <code>negative</code> is 1, we assign 0x00000001. When <code>negative</code> is 0, we assign 0x00000000. We can append <code>31'b0</code> as the most-significant bits of our assignment value and use <code>negative</code> as the least-significant bit of our 32-bit data. Since we want to write to <code>R[rd]</code> we place a mux on a bus that heads toward <code>W_data</code>. We route the old value (ALU's <code>out</code>) through the 0 input and the new <code>slt</code> bus through the 1 input. Finally, we add the <span style="color:blue;">control</span> signal to the MIPS instruction decoder.</p>
+
+<p><code>slti</code> will use the same datapath, but there will be small changes in the <span style="color:blue;">control</span> signal values.</p>
+
+<div class="container-fluid">
+    <img src="./PRE08.1 — CS 233 _ PrairieLearn_files/annotated_MIPS_control_datapath2.png" alt="" class="img-fluid mx-auto d-block">
+</div>
+
+<div class="alert alert-info" role="alert">
+Notice how we implemented <code>slt</code> and <code>lui</code> by routing existing datapath signals through data input 0 of the new muxes and the new datapath contents through the other data inputs of the new muxes. We also named the <span style="color:blue;">control</span> signals to match the instruction. This design pattern lets us easily merge many new instructions without worrying about them conflicting because we can set the <span style="color:blue;">signal</span> that matches the current instruction to 1 and all other <span style="color:blue;">control</span> signals to 0 most of the time. For example, when executing the <code>slt</code> instruction, we set <code style="color: blue;">slt</code> to 1 and <code style="color:blue;">lui</code> to 0. The <code style="color:blue;">slt</code> mux chooses the <code>slt</code> data and the <code style="color: blue;">lui</code> mux does as well.
+</div>
+<hr>
+<h1>Machine Code for Control Instructions</h1>
+<p>The machine code encodings for <code>jr</code>, <code>lui</code>, <code>slt</code>, and<code>slti</code> are straightforward R-type and I-type encodings, so we will not discuss them. <code>beq</code>, <code>bne</code>, and <code>j</code> can be a little confusing.</p>
+<table style="border-collapse: collapse; width: 96.6667%;" border="1" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">beq</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">beq $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">if(R[rs] == R[rt])</code><br><code class="mips">&nbsp; PC=PC+4+BranchAddr</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;"><p>I / (4)</p></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">4<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Not Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">bne</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">bne $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">if(R[rs] != R[rt])</code><br><code class="mips">&nbsp; PC=PC+4+BranchAddr</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (4)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">5<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">j</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">j address</code> or <code class="mips">j label</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">PC=JumpAddr</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">J / (5)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">2<sub>hex</sub></td>
+        </tr>
+    </tbody>
+</table>
+<ol>
+    <li>May cause overflow exception</li>
+    <li><code class="mips">SignExtImm = { {16{inst[15]}}, inst[15:0] }</code></li>
+    <li><code class="mips">ZeroExtImm = { {16{1'b0}}, inst[15:0] }</code></li>
+    <li><code class="mips">BranchAddr = { {14{immediate[15]}}, immediate, 2'b0 }</code></li>
+    <li><code class="mips">JumpAddr = { PC+4[31:28], address, 2'b0 }</code></li>
+</ol>
+
+<h5><code>beq</code> and <code>bne</code> machine code</h5>
+<p>Unlike all other I-type instructions you have seen so far, <code>beq</code> and <code>bne</code> do not make an assignment, so they order the registers as <code>$rs, $rt, imm</code>. Other than that, translate the assembly code like other I-type instructions</p>
+<h5>Examples</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f79a557e-dc3a-45af-a67e-891da5bb722b" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>bne<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$0</span>,<span style="color: #BBB"> </span><span style="color: #40A070">24</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<ul>
+    <li>Convert operands to binary: <code style="color: blue;">opcode</code>=000101, <code style="color:#00aa00">rs</code>=00001, <code style="color:#00aa00">rt</code>=00000, <code style="color:#00aa00">imm</code>=0000 0000 0001 1000.</li>
+    <li>Concatenate the binary: 000101 00001 00000 0000 0000 0001 1000</li>
+</ul>
+        </div>
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f3562359-8ae7-42b6-b372-f08d50d82315" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>beq<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span>-5
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<ul>
+    <li>Convert operands to binary: <code style="color: blue;">opcode</code>=000100, <code style="color:#00aa00">rs</code>=00101, <code style="color:#00aa00">rt</code>=00100, <code style="color:#00aa00">imm</code>=1111 1111 1111 1011.</li>
+    <li>Concatenate the binary: 000100 00101 00100 1111 1111 1111 1011</li>
+</ul>
+        </div>
+    </div>
+</div>
+
+<h5><code>j</code> machine code</h5>
+<p><code>j</code> instructions use a 32-bit consant address in assembly code, but the <code style="color:#00aa00">address</code> field is only 26 bits. To find the <code style="color:#00aa00">address</code> field binary, we need to decompose the 32-bit constant using <code>JumpAddr</code>. Remove the 4 most-significant bits because those come from <code>PC+4[31:28]</code> and remove the 2 least-significant bits because those come from <code>2'b0</code>. You can get the <code style="color:blue;">opcode</code> from the reference guide.</p>
+<h5>Examples</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-cbe106a9-4965-45d8-b1b2-47f844bfb932" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>j<span style="color: #BBB">  </span>0x10010000
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<ul>
+    <li>Strip off the 4 most-significant bits: 0x0010000 (0000 0000 0001 0000 0000 0000 0000)</li>
+    <li>Shift to the right by two bits: <code style="color:#00aa00">address</code> = 00 0000 0000 0100 0000 0000 0000</li>
+    <li>Concatenate with <code style="color:blue;">opcode</code>: 000010 00 0000 0000 0100 0000 0000 0000</li>
+</ul>
+        </div>
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-b3a91826-8acf-4f9c-9242-9e7aed890b2f" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>j<span style="color: #BBB">  </span>0x04004248
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<ul>
+    <li>Strip off the 4 most-significant bits: 0x4004248 (0100 0000 0000 0100 0010 0100 1000)</li>
+    <li>Shift to the right by two bits: <code style="color:#00aa00">address</code> = 01 0000 0000 0001 0000 1001 0010</li>
+    <li>Concatenate with <code style="color:blue;">opcode</code>: 000010 01 0000 0000 0001 0000 1001 0010</li>
+</ul>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h1>Labels</h1>
+<p>Labels make assembly coding easier when using the <span style="color:blue;">control</span> instructions (and other instructions we will discuss later). A label is a human readable placeholder for a 32-bit address for the memory. A label is a string that is not a reserved word such as an assembly instruction. For example the label (<code>infinite</code>) in the code below. When followed by a colon, the label indicates which address should be remembered by the assembler. In the example below, <code>infinite</code> will be a placeholder for the address of the <code>j</code> instruction (hypothetically address <code>0x04004001C</code>). The assembler then replaces all instances of the label without a colon so that the assembly code jumps or branches to the desired address (hypothetically <code>j infinite</code> would become <code>j 0x04004001C</code>).</p>
+
+<p>Labels must begin with a letter and may include letters, numbers, and a few other characters like understore ('_') and hyphen ('-').</p>
+
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-daa8bf30-2299-49b3-a357-f432d80a469c" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>infinite:
+<span style="color: #BBB">   </span>j<span style="color: #BBB">  </span>infinite
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<h5>Examples</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-edd85098-8f23-44c2-9a75-53b2470272bf" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span>
+<span style="">6</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>loop:<span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># inst mem address 0x04004004</span>
+<span style="color: #BBB">   </span>beq<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span>end_loop
+<span style="color: #BBB">   </span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span>
+<span style="color: #BBB">   </span>j<span style="color: #BBB">  </span>loop
+end_loop:
+<span style="color: #BBB">   </span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$7</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$8</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>The assembler turns <code>beq  $5, $6, end_loop</code> into <code>beq  $5, $6, 1</code> so that it skips to <code>add  $7, $5, $8</code> when the conditional is true.</p>
+<p>The assembler turns <code>j  loop</code> into <code>j 0x04004004</code></p>
+        </div>
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f6578729-ef4e-42f3-9a78-9a87148ea118" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #007020; font-weight: bold">do</span>:
+<span style="color: #BBB">   </span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$3</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>
+<span style="color: #BBB">   </span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$2</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$3</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span>
+<span style="color: #BBB">   </span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$2</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span>
+<span style="color: #BBB">   </span>beq<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$0</span>,<span style="color: #BBB"> </span><span style="color: #007020; font-weight: bold">do</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>The assembler turns <code>beq  $1, $0, do</code> into <code>beq  $1, $0, -4</code> so that it branches back to <code>do:</code> when the conditional is true.</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h1>Translating C code to MIPS assembly</h1>
+<h3><code>if</code> statements</h3>
+<p>An <code style="color:blue;">if</code> statement falls through to the body of the conditional when the conditional is True and branches over the body of the conditional when the conditional is False. The branch instructions have the opposite behavior: they fall through to the next instruction (<code>PC=PC+4</code>) when False and branch somewhere else (<code>PC=PC+4+BranchAddr</code>) when the conditional is True. Therefore, we typically invert the condition of the <code style="color:blue;">if</code> statement when converting to MIPS assembly.</p>
+
+<h5>Examples</h5>
+<p>Let's allocate <code>x</code> to <code>$4</code> and <code>y</code> to <code>$5</code></p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<p style="text-align: center;"><strong>C code</strong></p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-b16d47ed-d581-450c-b574-d8baf35e416d" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #007020; font-weight: bold">if</span><span style="color: #BBB"> </span>(x<span style="color: #BBB"> </span><span style="color: #666">==</span><span style="color: #BBB"> </span><span style="color: #40A070">0</span>)<span style="color: #BBB"> </span>{
+<span style="color: #BBB">    </span>x<span style="color: #666">++</span>;
+}
+y<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span><span style="color: #40A070">5</span>;
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+        <div class="col-sm-6">
+<p style="text-align: center;"><strong>MIPS assembly</strong></p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-d59c97c7-0138-452b-91a3-923339fd4691" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># invert == to !=</span>
+<span style="color: #BBB">   </span>bne<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$0</span>,<span style="color: #BBB"> </span>skip_if<span style="color: #BBB"> </span><span style="color: #60A0B0; font-style: italic"># if (x == 0)</span>
+<span style="color: #BBB">   </span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">       </span><span style="color: #60A0B0; font-style: italic"># x++</span>
+skip_if:
+<span style="color: #BBB">   </span>addi<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$0</span>,<span style="color: #BBB"> </span><span style="color: #40A070">5</span><span style="color: #BBB">       </span><span style="color: #60A0B0; font-style: italic"># y = 5</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-fd4836c3-bfa5-4e14-9146-2443c4fd7165" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #007020; font-weight: bold">if</span><span style="color: #BBB"> </span>(x<span style="color: #BBB"> </span><span style="color: #666">&lt;</span><span style="color: #BBB"> </span><span style="color: #40A070">0</span>)<span style="color: #BBB"> </span>{
+<span style="color: #BBB">    </span>x<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span><span style="color: #666">-</span>x;
+}
+y<span style="color: #BBB"> </span><span style="color: #666">+=</span><span style="color: #BBB"> </span>x;
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-ec37221c-96f0-4fe7-96d0-351a50b38fc2" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span>
+<span style="">6</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># invert &lt; to ≥</span>
+<span style="color: #BBB">   </span>slt<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$0</span>
+<span style="color: #BBB">   </span>beq<span style="color: #BBB">  </span><span style="color: #BB60D5">$1</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$0</span>,<span style="color: #BBB"> </span>skip_if<span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># if (x &lt; 0)</span>
+<span style="color: #BBB">   </span>sub<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$0</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span><span style="color: #BBB">       </span><span style="color: #60A0B0; font-style: italic"># x = -x</span>
+skip_if:
+<span style="color: #BBB">   </span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span><span style="color: #BBB">       </span><span style="color: #60A0B0; font-style: italic"># y += x</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+    </div></div>
+
+<h3><code>while</code> loop</h3>
+<p>A <code style="color:blue;">while</code> loop falls through to the body of the loop when the conditional is True and branches out of the loop when the conditional is False. The branch instructions have the opposite behavior: they fall through to the next instruction (<code>PC=PC+4</code>) when False and branch somewhere else (<code>PC=PC+4+BranchAddr</code>) when the conditional is True. Therefore, we typically invert the condition of the <code style="color:blue;">while</code> statement when converting to MIPS assembly.</p>
+
+<p>The loop also needs to unconditionally jump back to the conditional after each loop iteration.</p>
+
+<h5>Examples</h5>
+<p>Let's allocate <code>x</code> to <code>$4</code> and <code>y</code> to <code>$5</code></p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<p style="text-align: center;"><strong>C code</strong></p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f7b43d47-f6ff-4b7f-bfb5-fee905f7695d" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #007020; font-weight: bold">while</span><span style="color: #BBB"> </span>(x<span style="color: #BBB"> </span><span style="color: #666">!=</span><span style="color: #BBB"> </span>y)<span style="color: #BBB"> </span>{
+<span style="color: #BBB">    </span>x<span style="color: #666">++</span>;
+}
+y<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span><span style="color: #40A070">2</span><span style="color: #666">*</span>x;
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+        <div class="col-sm-6">
+<p style="text-align: center;"><strong>MIPS assembly</strong></p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-bc19f188-219b-4860-a515-bf338f075c5e" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span>
+<span style="">6</span>
+<span style="">7</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #BBB">   </span><span style="color: #60A0B0; font-style: italic"># invert != to ==</span>
+<span style="color: #007020; font-weight: bold">while</span>:
+<span style="color: #BBB">   </span>beq<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span>end_loop<span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># while (x != y)</span>
+<span style="color: #BBB">   </span>add<span style="color: #BBB">  </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">         </span><span style="color: #60A0B0; font-style: italic"># x++</span>
+<span style="color: #BBB">   </span>j<span style="color: #BBB">    </span><span style="color: #007020; font-weight: bold">while</span>
+end_loop:
+<span style="color: #BBB">   </span>mul<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #40A070">2</span><span style="color: #BBB">         </span><span style="color: #60A0B0; font-style: italic"># y = 2*x</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+    </div>
+</div>
+
+
+
+<div>
+    <details class="pl-hidden-hint rounded">
+        <summary>Partial MIPS Reference Guide with Explainer</summary>
+        
+<h2>Core Instruction Set</h2>
+<table style="border-collapse: collapse; width: 96.6667%; height: 304px;" border="1" cellspacing="0" cellpadding="0">
+    <caption>List of MIPS instructions for CS 233</caption>
+    <tbody>
+        <tr style="height: 52px;">
+            <th style="width: 17.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Name</th>
+            <th style="width: 7.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Mnemonic</th>
+            <th style="width: 20%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Assembly Format</th>
+            <th style="width: 35%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Operation (In Verilog)</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Format/<br>Notes</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Opcode/<br>Funct</th>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Add</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">add</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">add $rd, $rs, $rt</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rd]=R[rs]+R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R / (1)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 20<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Add Immediate</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">addi</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">addi $rt, $rs, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rt]=R[rs] + SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (1,2)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">8<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Add Immediate Unsigned</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">addiu</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">addiu $rt, $rs, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rt]=R[rs] + SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">9<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Add Unsigned</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">addu</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">addu $rd, $rs, $rt</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rd]=R[rs]+R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 21<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">And</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">and</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">and $rd, $rs, $rt</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rd]=R[rs] &amp; R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 24<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">And Immediate</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">andi</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">andi $rt, $rs, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rt]=R[rs] &amp; ZeroExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (3)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">c<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">beq</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">beq $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">if(R[rs] == R[rt])</code><br><code class="mips">&nbsp; PC=PC+4+BranchAddr</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;"><p>I / (4)</p></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">4<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Not Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">bne</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">bne $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">if(R[rs] != R[rt])</code><br><code class="mips">&nbsp; PC=PC+4+BranchAddr</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (4)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">5<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">j</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">j address</code> or <code class="mips">j label</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">PC=JumpAddr</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">J / (5)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">2<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump and Link</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">jal</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">jal address</code> or <code class="mips">jal label</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[31]=PC+4;</code> <code class="mips">PC=JumpAddr</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">J / (5)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">3<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump Register</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">jr</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">jr $rs</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">PC=R[rs]</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 08<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Byte&nbsp;</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lb</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lb $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={ {24{M[R[rs]+SignExtImm](7)}}, M[R[rs]+SignExtImm](7:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">20<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Byte Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lbu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lbu $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={24’b0, M[R[rs]+SignExtImm](7:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">24<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Halfword&nbsp;</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lh</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lh $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={ {26{M[R[rs]+SignExtImm](15)}}, M[R[rs]+SignExtImm](15:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">21<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Halfword Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lhu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lhu $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={16’b0,M[R[rs]+SignExtImm](15:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">25<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Upper Imm</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lui</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lui $rt, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={imm, 16'b0};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I</td>
+            <td style="width: 5%; vertical-align: middle;">f<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Word</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lw</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lw $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=M[R[rs]+SignExtImm];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">23<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Move From Coprocessor 0</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">mfc0</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">mfc0 $rt, $rd</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=CPR[0,rd];</code> <code class="mips">PC=PC+4</code> (<code class="mips">$rs = 0</code>)&nbsp;</td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">10<sub>hex</sub> / 0</td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Move To Coprocessor 0</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">mtc0</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">mtc0 $rt, $rd</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">CPR[0,rd]=R[rt];</code> <code class="mips">PC=PC+4</code> (<code class="mips">$rs = 4</code>)</td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">10<sub>hex</sub> / 0</td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Nor</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">nor</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">nor $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=~(R[rs] | R[rt]);</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 27<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Or</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">or</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">or $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rs] | R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 25<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Or Immediate</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">ori</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">ori $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=R[rs] | ZeroExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (3)</td>
+            <td style="width: 5%; vertical-align: middle;">d<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">slt</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">slt $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=(R[rs]&lt;R[rt]) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 2a<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than Immediate</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">slti</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">slti $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=(R[rs]&lt;SignExtImm) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">a<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than Immediate Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sltiu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sltiu $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=(R[rs]&lt;SignExtImm) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2, 6)</td>
+            <td style="width: 5%; vertical-align: middle;">b<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sltu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sltu $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=(R[rs]&lt;R[rt]) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R / (6)</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 2b<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Shift Left Logical</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sll</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sll $rd, $rt, shamt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rt]&lt;&lt;shamt;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 00<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Shift Right Arithmetic</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sra</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sra $rd, $rt, shamt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rt]&gt;&gt;shamt;</code> (arithmetic) <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 03<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Shift Right Logical</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">srl</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">srl $rd, $rt, shamt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rt]&gt;&gt;shamt;</code> (logical) <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 02<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Store Byte</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sb</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sb $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">M[R[rs]+SignExtImm](7:0)=R[rt](7:0);</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">28<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Store Halfword</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sh</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sh $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">M[R[rs]+SignExtImm](15:0)=R[rt](15:0);</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">29<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Store Word</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sw</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sw $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">M[R[rs]+SignExtImm]=R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">2b<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Subtract</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sub</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sub $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rs]-R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R / (1)</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 22<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Subtract Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">subu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">subu $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rs]-R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 23<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Xor</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">xor</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">xor $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rs]^R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 26<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Xor Immediate</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">xori</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">xori $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=R[rs]^ZeroExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (3)</td>
+            <td style="width: 5%; vertical-align: middle;">e<sub>hex</sub></td>
+        </tr>
+    </tbody>
+</table>
+<ol>
+    <li>May cause overflow exception</li>
+    <li><code class="mips">SignExtImm = { {16{inst[15]}}, inst[15:0] }</code></li>
+    <li><code class="mips">ZeroExtImm = { {16{1'b0}}, inst[15:0] }</code></li>
+    <li><code class="mips">BranchAddr = { {14{immediate[15]}}, immediate, 2'b0 }</code></li>
+    <li><code class="mips">JumpAddr = { PC+4[31:28], address, 2'b0 }</code></li>
+    <li>Operands considered unsigned numbers (vs. 2's complement)</li>
+    <li>Atomic test &amp; set pair; <code class="mips">R[rt] = 1</code> if pair atomic, <code class="mips">0</code> if not atomic</li>
+</ol>
+<h2>How to Read the Core Instructions Table</h2>
+<p>The NAME, MNEMONIC columns tell you a descriptive name (add or add immediate) and a short mnemonic that you will use in your assembly programs (<code class="mips">add</code> or <code class="mips">addi</code>).</p>
+<p>The FORMAT column tells you what basic instruction format the instruction uses for its machine code. See next section for more information on instruction formats.</p>
+<p>The OPERATION column provides a Verilog description of what the instruction should ultimately implement. Values on the right are taken from immediately before the positive clock edge and are assigned to the value on the left immediately after the next positive clock edge. <code class="mips">R[ ]</code> refers to the contents of a register in the register file. <code class="mips">M[ ]</code> refers to the contents of a memory address in the data memory. <code class="mips">PC</code> refers to the Program Counter's contents. All other signal names are explained in the footnotes indicated by the numbers in parentheses. Reminder: Curly braces (i.e., <code class="mips">{ }</code>) are used for concatenating wires into a bus.</p>
+<p>The OPCODE/FUNCT column has either one or two numbers represented in 6-bit hexadecimal (i.e., 0 means 00 0000 and 20<sub>hex&nbsp;</sub>means 10 0000). If the instruction format is R, then the first number is the 6-bit opcode and the second number is the 6-bit funct code. If the instruction format is I or J, then the number is the 6-bit opcode - these instruction formats do not have a funct code.</p>
+
+<p>You will need to know only these three basic instruction formats. All MIPS instructions are encoded as 32-bit pieces of data that can be parsed into smaller fields. The names of the fields and which bits are allocated to each field are shown in the figure. One important thing to notice is that the order of fields in the instruction formats do not match the order of fields in the Verilog or MIPS assembly. For example, if you had the instruction <code class="mips">add $5, $3, $8</code>, you would be assigning your data to <code class="mips">R[5]</code>. The <code class="mips">add</code> instruction's Verilog is <code class="mips">R[rd] = R[rs] + R[rt]</code>. Consequently, <code class="mips">$5</code> is <code class="mips">rd</code>, <code class="mips">$3</code> is <code class="mips">rs</code>, and <code class="mips">$8</code> is <code class="mips">rt</code>, so that the Verilog and assembly mnemonic match.</p>
+
+<h2>Notes on Assembly Format Norms</h2>
+<ul>
+    <li><code class="mips">$r<strong>s</strong></code> is a <strong>s</strong>ource register exclusively, <code class="mips">$r<strong>d</strong></code> is a <strong>d</strong>estination register exclusively, <code class="mips">$r<strong>t</strong></code> <strong>t</strong>ransitions between being a source and a destination register</li>
+    <li>Assignment generally goes to the left for instructions that do not use the data memory (e.g., <code class="mips">add $rd, $rs, $rt</code> is assigning to <code class="mips">$rd</code>. <code class="mips">lui $rt, imm</code> is assigning to <code class="mips">$rt</code>)</li>
+    <li>If multiple registers are used as sources, <code class="mips">$rs</code> is listed first, <code class="mips">$rt</code> is listed second (e.g., <code class="mips">or $rd, $rs, $rt</code> has two sources as does <code class="mips">beq $rs, $rt, imm</code>)</li>
+    <li>Any instruction that reads from (e.g., <code class="mips">lb</code> or <code class="mips">lw</code>), or writes to (e.g., <code class="mips">sb</code> or <code class="mips">sw</code>), data memory treats <code class="mips">R[rs]</code> as a base address pointer and <code class="mips">imm</code> as an offset from that base pointer. This <strong>base+offset</strong> behavior is indicated by the <code class="mips">imm($rs)</code> notation, where the address of the data to be read from or written to in data memory is always <code class="mips">R[rs]+SignExtImm</code>. Consequently, all data memory instructions use the <code class="mips">$rt, imm($rs)</code> format. <code class="mips">$rt</code> transitions from being a source or a destination.</li>
+</ul>
+<h2>Converting MIPS Assembly to Machine Code</h2>
+<ol>
+    <li>Find the MIPS assembly instruction in the Core Instruction Set table</li>
+    <li>Use the second-to-last column to identify the instruction's machine code format. The format will be either R, I, or J. Use the Basic Instruction Format figures to identify the fields you need for that instruction format.</li>
+    <li>If it's I-type or J-type format, use the last column to find the opcode (e.g., <code class="mips">andi</code> has opcode c<sub>hex</sub> and <code class="mips">jal</code> has opcode 3<sub>hex</sub>) and convert the hexadecimal opcode to 6-bit unsigned binary (e.g., e<sub>hex</sub> becomes 001110 and 23<sub>hex</sub> becomes 100011).&nbsp; If it's R-type format, use the last column to find the opcode (first number) and funct code (second number) (e.g., <code class="mips">jr</code> has opcode 0 and funct code 08<sub>hex</sub> and <code class="mips">mfc0</code> has opcode 10<sub>hex</sub> and funct code 0) and convert both to 6-bit unsigned binary.</li>
+    <li>If it's J-type format, take the 32-bit instruction memory address signified by the label, strip off the 4 most-significant bits (they will be added back in by <code class="mips">PC+4[31:28]</code>) and strip off the 2 least-significant bits (they will be added back in by <code class="mips">2'b0</code>), leaving you with the 26-bit address field for the J-type instruction.</li>
+    <li>If it's I-type or R-type format, use the Assembly Format column to map the fields of the assembly code to the fields of the instruction format. Convert <code class="mips">$rs</code>, <code class="mips">$rt</code>, <code class="mips">$rd</code>, and <code class="mips">shamt</code> fields into 5-bit unsigned binary (e.g., <code class="mips">$rs</code> = <code class="mips">$6</code> becomes 00110 and <code class="mips">shamt</code> = 12 becomes 01100). Convert the immediate field into 16-bit 2's complement representation (e.g., imm = 24 becomes 0000 0000 0001 1000 and imm = -1 becomes 1111 1111 1111 1111). Any field that is not specified by the Assembly Format column should be all 0s (e.g., <code class="mips">shamt</code> should 00000 for <code class="mips">add</code> and <code class="mips">rs</code> should be 00000 for <code class="mips">lui</code>).</li>
+    <li>Concatenate all of the fields of your instruction format together as shown in the Basic Instruction Formats diagram. Example: <code class="mips">or $8, $15, $20</code> is an R-type instruction with opcode = 000000 (0<sub>hex</sub>), funct code = 100101 (25<sub>hex</sub>), <code class="mips">$rs</code> = <code class="mips">$15</code> = 01111, <code class="mips">$rt</code> = <code class="mips">$20</code> = 10100, <code class="mips">$rd</code> = <code class="mips">$8</code> = 01000, <code class="mips">shamt</code> = 00000, so the machine code would be 000000 01111 10100 01000 00000 100101.</li>
+</ol>
+
+<h4>Examples</h4>
+<p><code class="mips">add $5, $3, $8</code> maps to machine code 000000&nbsp; &nbsp;00011&nbsp; &nbsp; 01000&nbsp; &nbsp; 00101&nbsp; &nbsp;00000&nbsp; &nbsp;100000</p>
+<p><code class="mips">addi $5, $3, -8</code> maps to machine code 001000&nbsp; &nbsp;00011&nbsp; &nbsp; 00101&nbsp; &nbsp; 1111111111111000</p>
+<p><code class="mips">j 0x0000000c</code> maps to machine code 000010&nbsp; &nbsp;00000000000000000000000011</p>
+
+<h2>Pseudoinstructions</h2>
+<p>Instructions that you can use when writing assembly code but are not real instructions. These instructions will be converted into real instructions by the assembler. These instructions do not have opcodes or instruction formats because they cannot be translated directly into machine code.</p>
+<table style="border-collapse: collapse; width: 85.926%; height: 304px;" border="1" cellspacing="0" cellpadding="0">
+    <caption>List of MIPS Pseudoinstructions for CS 233</caption>
+    <tbody>
+        <tr style="height: 52px;">
+            <th scope="col">Name</th>
+            <th scope="col">Mnemonic</th>
+            <th scope="col">Assembly Format</th>
+            <th style="width: 35%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Operation (In Verilog)</th>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch on Equal (Immediate)</td>
+            <td><code class="mips">beq</code></td>
+            <td><code class="mips">beq $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] == SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch Less Than</td>
+            <td><code class="mips">blt</code></td>
+            <td><code class="mips">blt $rs, $rt, label</code><br>OR<br><code class="mips">blt $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] &lt; R[rt])</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+8</code><br>OR<br><code class="mips">if(R[rs] &lt; SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch Greater Than</td>
+            <td><code class="mips">bgt</code></td>
+            <td><code class="mips">bgt $rs, $rt, label</code><br>OR<br><code class="mips">bgt $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] &gt; R[rt])</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+8</code><br>OR<br><code class="mips">if(R[rs] &gt; SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch Less Than or Equal</td>
+            <td><code class="mips">ble</code></td>
+            <td><code class="mips">ble $rs, $rt, label</code><br>OR<br><code class="mips">ble $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] &lt;= R[rt])</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+8</code><br>OR<br><code class="mips">if(R[rs] &lt;= SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch Greater Than or Equal</td>
+            <td><code class="mips">bge</code></td>
+            <td><code class="mips">bge $rs, $rt, label</code><br>OR<br><code class="mips">bge $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] &gt;= R[rt])</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+8</code><br>OR<br><code class="mips">if(R[rs] &gt;= SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Load Immediate</td>
+            <td><code class="mips">li</code></td>
+            <td><code class="mips">li $rt, imm</code></td>
+            <td><code class="mips">R[rt]=immediate;</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Move</td>
+            <td><code class="mips">move</code></td>
+            <td><code class="mips">move $rd, $rs</code></td>
+            <td><code class="mips">R[rd]=R[rs];</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Not</td>
+            <td><code class="mips">not</code></td>
+            <td><code class="mips">not $rd, $rs</code></td>
+            <td><code class="mips">R[rd]=~R[rs]</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Multiply</td>
+            <td><code class="mips">mul</code></td>
+            <td><code class="mips">mul $rd, $rs, $rt</code><br>OR<br><code class="mips">mul $rt, $rs, imm</code></td>
+            <td><code class="mips">R[rd]=R[rs]*R[rt];</code> <code class="mips">PC=PC+4</code><br>OR<br><code class="mips">R[rt]=R[rs]*SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Divide (Integer division)</td>
+            <td><code class="mips">div</code></td>
+            <td><code class="mips">div $rd, $rs, $rt</code><br>OR<br><code class="mips">div $rt, $rs, imm</code></td>
+            <td><code class="mips">R[rd]=R[rs]/R[rt];</code> <code class="mips">PC=PC+4</code><br>OR<br><code class="mips">R[rt]=R[rs]/SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Remainder (Modulus)</td>
+            <td><code class="mips">rem</code></td>
+            <td><code class="mips">rem $rd, $rs, $rt</code><br>OR<br><code class="mips">rem $rt, $rs, imm</code></td>
+            <td><code class="mips">R[rd]=R[rs]%R[rt];</code> <code class="mips">PC=PC+4</code><br>OR<br><code class="mips">R[rt]=R[rs]%SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+    </tbody>
+</table>
+<p>Note: How branch pseudoinstructions get turned into real machine code can vary based on which constants or registers are used. For example, <code class="mips">beq $5, 4, label</code> would assemble to <code class="mips">ori $1, $0, 4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; beq $1, $5, label</code> but <code class="mips">beq $5, 0xdeadbeef, label</code>would assemble to <code class="mips">lui $1, $0, 0xdead &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ori $1, $1, 0xbeef &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; beq $1, $5, label</code>. Consequently, we cannot easily say how much <code class="mips">PC</code> should increment after branch pseudoinstructions. Rather than specifically indicate how much <code class="mips">PC</code> would increment, we write <code class="mips">PC=NextInstructionInProgram</code>, where <code class="mips">NextInstructionInProgram</code> is address of the instruction in your program that appears after the branch pseudoinstruction in the assembly.</p>
+
+
+    </details>
+</div>
+
+<h2>Mark as read</h2>
+<fieldset class="d-block"><legend class="visually-hidden">Checkbox options</legend>
+
+    <div class="form-check d-flex align-items-center py-1 gap-2">
+        <input class="form-check-input mt-0 flex-shrink-0" type="checkbox" name="read" value="a" id="read-a">
+
+        <label class="form-check-label d-flex align-items-center" for="read-a">
+            <div class="pl-checkbox-key-label">(a)</div>
+            <div class="ml-1 mr-1 pl-checkbox-answer ms-1 me-1">I've read this!</div>
+        </label>
+
+            
+    </div>
+    
+<span class="form-inline d-flex flex-row flex-wrap align-items-center">
+    <span class="input-group pl-checkbox">
+        <span> <small class="form-text text-muted">Select all possible options that apply.</small> </span>
+        <button type="button" class="btn btn-light btn-sm" data-toggle="popover" data-html="true" data-content="You must select at least 1 option. You will receive a score of 100% if you select all options that are true and no options that are false. Otherwise, you will receive a score of 0%." data-placement="auto" data-bs-content="You must select at least 1 option. You will receive a score of 100% if you select all options that are true and no options that are false. Otherwise, you will receive a score of 0%." data-bs-html="true" data-bs-placement="auto" data-bs-toggle="popover" aria-label="Checkbox" data-bs-original-title="Checkbox">
+            <svg class="svg-inline--fa fa-circle-question" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-question" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg><!-- <i class="fa fa-question-circle" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+        </button>
+    </span>
+</span>
+
+
+
+
+
+
+</fieldset></div>
+      
+      <div class="card-footer" id="question-panel-footer">
+        <input type="hidden" name="__csrf_token" value="YTc1ODNmYzgzZDk4YTQ2NmFlMTVkOWRlMWVjZTgyNTk5YTNkOTQ4YzY0N2U3NTFkYTJiZmE1OTE1YmYxYWY0ZQ.m71ke1x9.eyJ1cmwiOiIvcGwvY291cnNlX2luc3RhbmNlLzE3NDY4OC9pbnN0YW5jZV9xdWVzdGlvbi80NzcxMjM1MzgvIiwiYXV0aG5fdXNlcl9pZCI6IjQ1MDI5MzkifQ">
+        <div id="question-panel-footer-content">
+      <div class="row">
+        <div class="col d-flex justify-content-between">
+          <span class="d-flex align-items-center">
+            
+                  <button class="btn btn-info question-save disable-on-submit order-2" name="__action" value="save">
+                    Save only
+                  </button>
+                
+            
+                  <button class="btn btn-primary question-grade disable-on-submit order-1 mr-1 me-1" name="__action" value="grade">
+                    Save &amp; Grade
+                    <small class="font-italic ml-2 ms-2 fst-italic">Unlimited attempts</small>
+                  </button>
+                
+            
+          </span>
+          <span class="d-flex">
+             <input type="hidden" name="__variant_id" value="115275014"> 
+            
+            
+          </span>
+        </div>
+      </div>
+      
+    </div>
+      </div>
+    
+    </div>
+  
+            </form>
+          
+
+      <div class="card mb-4 grading-block d-none">
+        <div class="card-header bg-secondary text-white">
+          <h2>Correct answer</h2>
+        </div>
+        <div class="card-body answer-body"></div>
+      </div>
+
+      
+    </div>
+    
+  
+            </div>
+
+            <div class="col-lg-3 col-sm-12">
+              
+    <div class="card mb-4" id="assessment-score-panel">
+      <div class="card-header bg-secondary">
+        <h2>
+          <a class="text-white" href="https://us.prairielearn.com/pl/course_instance/174688/assessment_instance/9601130/">
+            PRE 08
+          </a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-center">
+          <a class="btn btn-info" href="https://us.prairielearn.com/pl/course_instance/174688/assessment_instance/9601130/">
+            Assessment overview
+          </a>
+        </div>
+      </div>
+      <table class="table table-sm" aria-label="Assessment score">
+        <tbody>
+          <tr>
+            <td>Total points:</td>
+            <td>
+              0/70
+            </td>
+          </tr>
+          <tr>
+            <td>Score:</td>
+            <td class="align-middle">
+    <div class="progress border border-success " style="min-width: 5em; max-width: 20em;">
+      <div class="progress-bar bg-success" style="width: 0%">
+        
+      </div>
+      <div class="d-flex flex-column justify-content-center text-center" style="width: 100%">
+        0%
+      </div>
+    </div>
+  </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+              
+    <div class="card mb-4" id="question-score-panel">
+      <div class="card-header bg-secondary text-white">
+        <h2>Question PRE08.1</h2>
+      </div>
+      
+    <table class="table table-sm two-column-description-no-header" aria-label="Question score" id="question-score-panel-content">
+      <tbody>
+        
+        
+              
+                      <tr>
+                        <td>Value:</td>
+                        <td>
+    1
+    <button type="button" class="btn btn-xs js-value-popover" data-toggle="popover" data-container="body" data-html="true" data-content="
+        &lt;p&gt;
+          This question awards partial credit if you continue getting closer to the correct answer.
+        &lt;/p&gt;
+      
+        &lt;p&gt;
+          If you score 100% on your next submission, you will be awarded an additional
+          1 point.
+        &lt;/p&gt;
+      
+        &lt;p class=&quot;mb-0&quot;&gt;
+          If you score less than 100% on your next submission, you will be awarded an additional
+          &lt;code&gt;1 * score / 100&lt;/code&gt; points.
+        &lt;/p&gt;
+      " data-placement="auto" data-bs-container="body" data-bs-content="
+        &lt;p&gt;
+          This question awards partial credit if you continue getting closer to the correct answer.
+        &lt;/p&gt;
+      
+        &lt;p&gt;
+          If you score 100% on your next submission, you will be awarded an additional
+          1 point.
+        &lt;/p&gt;
+      
+        &lt;p class=&quot;mb-0&quot;&gt;
+          If you score less than 100% on your next submission, you will be awarded an additional
+          &lt;code&gt;1 * score / 100&lt;/code&gt; points.
+        &lt;/p&gt;
+      " data-bs-html="true" data-bs-placement="auto" data-bs-toggle="popover">
+      <svg class="svg-inline--fa fa-circle-question" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-question" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg><!-- <i class="fa fa-question-circle" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+    </button>
+  </td>
+                      </tr>
+                    
+              
+            
+        
+        <tr>
+          <td>Total points:</td>
+          <td>
+            
+    <span class="text-nowrap">
+      —
+      <small>/<span class="text-muted">1</span></small>
+    </span>
+  
+          </td>
+        </tr>
+        
+              <tr>
+                <td colspan="2" class="text-right">
+                  <small>
+                    Auto-graded question
+                  </small>
+                </td>
+              </tr>
+            
+      </tbody>
+    </table>
+  
+      
+    </div>
+  
+              
+    <div class="text-center mb-2">
+      
+      <button id="question-nav-prev" class="btn btn-primary mb-3 disabled" disabled="">
+        Previous question
+      </button>
+    
+      
+    <a id="question-nav-next" class="btn btn-primary mb-3" href="https://us.prairielearn.com/pl/course_instance/174688/instance_question/477123540/">
+      Next question
+    </a>
+  
+    </div>
+  
+              
+    <div class="card mb-4" id="attach-file-panel">
+      <div class="card-header bg-secondary text-white d-flex align-items-center">
+        <svg class="svg-inline--fa fa-paperclip" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z"></path></svg><!-- <i class="fas fa-paperclip"></i> Font Awesome fontawesome.com -->
+        <h2>&nbsp;Personal Notes</h2>
+      </div>
+      <div class="card-body"><i>No attached notes</i></div>
+      
+            <div class="card-footer">
+              
+                      
+    <div>
+      <button class="btn btn-xs btn-secondary" type="button" data-toggle="collapse" data-target="#attachFileCollapse" aria-expanded="false" aria-controls="attachFileCollapse" data-bs-target="#attachFileCollapse" data-bs-toggle="collapse">
+        Attach a file <svg class="svg-inline--fa fa-square-caret-down" aria-hidden="true" focusable="false" data-prefix="far" data-icon="square-caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M384 432c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0zm64-16c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320zM224 352c-6.7 0-13-2.8-17.6-7.7l-104-112c-6.5-7-8.2-17.2-4.4-25.9s12.5-14.4 22-14.4l208 0c9.5 0 18.2 5.7 22 14.4s2.1 18.9-4.4 25.9l-104 112c-4.5 4.9-10.9 7.7-17.6 7.7z"></path></svg><!-- <i class="far fa-caret-square-down"></i> Font Awesome fontawesome.com -->
+      </button>
+      <div class="collapse" id="attachFileCollapse">
+        <form class="attach-file-form mb-3" name="attach-file-form" method="POST" enctype="multipart/form-data">
+          <p class="small mt-3">
+            Attached files will be saved here for your reference. These files act as personal notes
+            and can be used for your own review purposes. They are not used for grading.
+          </p>
+          <div class="form-group mb-3">
+            <div class="custom-file">
+              <label class="custom-file-label form-label" for="attachFileInput">Choose file</label><input type="file" name="file" class="custom-file-input form-control" id="attachFileInput">
+              
+              <small class="form-text text-muted">
+                Max file size: 10 MB
+              </small>
+            </div>
+          </div>
+          <div class="form-group mb-0 mb-3">
+            <input type="hidden" name="__action" value="attach_file">
+            <input type="hidden" name="__variant_id" value="115275014">
+            <input type="hidden" name="__csrf_token" value="YTc1ODNmYzgzZDk4YTQ2NmFlMTVkOWRlMWVjZTgyNTk5YTNkOTQ4YzY0N2U3NTFkYTJiZmE1OTE1YmYxYWY0ZQ.m71ke1x9.eyJ1cmwiOiIvcGwvY291cnNlX2luc3RhbmNlLzE3NDY4OC9pbnN0YW5jZV9xdWVzdGlvbi80NzcxMjM1MzgvIiwiYXV0aG5fdXNlcl9pZCI6IjQ1MDI5MzkifQ">
+            <button type="submit" class="btn btn-primary" disabled="">Attach file</button>
+          </div>
+        </form>
+
+        <script>
+          $(() => {
+            // Only enable the "submit" button if a file is selected.
+            const form = document.querySelector('form.attach-file-form');
+            const fileInput = form.querySelector('#attachFileInput');
+            const submitButton = form.querySelector('button[type="submit"]');
+            fileInput.addEventListener('change', (e) => {
+              submitButton.disabled = fileInput.files.length === 0;
+            });
+          });
+        </script>
+      </div>
+    </div>
+  
+                      
+    <div>
+      <button class="btn btn-xs btn-secondary" type="button" data-toggle="collapse" data-target="#attachTextCollapse" aria-expanded="false" aria-controls="attachTextCollapse" data-bs-target="#attachTextCollapse" data-bs-toggle="collapse">
+        Add text note <svg class="svg-inline--fa fa-square-caret-down" aria-hidden="true" focusable="false" data-prefix="far" data-icon="square-caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M384 432c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0zm64-16c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320zM224 352c-6.7 0-13-2.8-17.6-7.7l-104-112c-6.5-7-8.2-17.2-4.4-25.9s12.5-14.4 22-14.4l208 0c9.5 0 18.2 5.7 22 14.4s2.1 18.9-4.4 25.9l-104 112c-4.5 4.9-10.9 7.7-17.6 7.7z"></path></svg><!-- <i class="far fa-caret-square-down"></i> Font Awesome fontawesome.com -->
+      </button>
+      <div class="collapse" id="attachTextCollapse">
+        <form method="POST" class="attach-text-form">
+          <p class="small mt-3">
+            Attached personal notes will be saved here for your reference. These notes can be used
+            for your own review purposes. They are not used for grading.
+          </p>
+          <input class="form-control" aria-label="Text filename" name="filename" value="notes.txt">
+          <div class="form-group mb-3">
+            <textarea class="form-control" rows="5" aria-label="Text contents" name="contents" placeholder="Type or paste text here"></textarea>
+          </div>
+          <input type="hidden" name="__variant_id" value="115275014">
+          <input type="hidden" name="__csrf_token" value="YTc1ODNmYzgzZDk4YTQ2NmFlMTVkOWRlMWVjZTgyNTk5YTNkOTQ4YzY0N2U3NTFkYTJiZmE1OTE1YmYxYWY0ZQ.m71ke1x9.eyJ1cmwiOiIvcGwvY291cnNlX2luc3RhbmNlLzE3NDY4OC9pbnN0YW5jZV9xdWVzdGlvbi80NzcxMjM1MzgvIiwiYXV0aG5fdXNlcl9pZCI6IjQ1MDI5MzkifQ">
+          <button class="btn btn-small btn-primary" name="__action" value="attach_text">
+            Add note
+          </button>
+        </form>
+      </div>
+    </div>
+  
+                    
+            </div>
+          
+    </div>
+  
+              
+            </div>
+          </div>
+        </main>
+      
+    
+  </body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;limited&quot;,&quot;isActive&quot;:false,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

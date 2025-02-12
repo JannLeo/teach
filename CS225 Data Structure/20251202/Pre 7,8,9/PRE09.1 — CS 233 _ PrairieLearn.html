@@ -1,0 +1,2735 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)https://us.prairielearn.com/pl/course_instance/174688/instance_question/477191489/ -->
+<html lang="en" class="fontawesome-i2svg-active fontawesome-i2svg-complete"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="cookie-domain" content=".us.prairielearn.com">
+    <title> PRE09.1 — CS 233 |  PrairieLearn</title>
+    <style type="text/css">:host,:root{--fa-font-solid:normal 900 1em/1 "Font Awesome 6 Free";--fa-font-regular:normal 400 1em/1 "Font Awesome 6 Free";--fa-font-light:normal 300 1em/1 "Font Awesome 6 Pro";--fa-font-thin:normal 100 1em/1 "Font Awesome 6 Pro";--fa-font-duotone:normal 900 1em/1 "Font Awesome 6 Duotone";--fa-font-duotone-regular:normal 400 1em/1 "Font Awesome 6 Duotone";--fa-font-duotone-light:normal 300 1em/1 "Font Awesome 6 Duotone";--fa-font-duotone-thin:normal 100 1em/1 "Font Awesome 6 Duotone";--fa-font-brands:normal 400 1em/1 "Font Awesome 6 Brands";--fa-font-sharp-solid:normal 900 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-regular:normal 400 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-light:normal 300 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-thin:normal 100 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-duotone-solid:normal 900 1em/1 "Font Awesome 6 Sharp Duotone";--fa-font-sharp-duotone-regular:normal 400 1em/1 "Font Awesome 6 Sharp Duotone";--fa-font-sharp-duotone-light:normal 300 1em/1 "Font Awesome 6 Sharp Duotone";--fa-font-sharp-duotone-thin:normal 100 1em/1 "Font Awesome 6 Sharp Duotone"}svg:not(:host).svg-inline--fa,svg:not(:root).svg-inline--fa{overflow:visible;box-sizing:content-box}.svg-inline--fa{display:var(--fa-display,inline-block);height:1em;overflow:visible;vertical-align:-.125em}.svg-inline--fa.fa-2xs{vertical-align:.1em}.svg-inline--fa.fa-xs{vertical-align:0}.svg-inline--fa.fa-sm{vertical-align:-.0714285705em}.svg-inline--fa.fa-lg{vertical-align:-.2em}.svg-inline--fa.fa-xl{vertical-align:-.25em}.svg-inline--fa.fa-2xl{vertical-align:-.3125em}.svg-inline--fa.fa-pull-left{margin-right:var(--fa-pull-margin,.3em);width:auto}.svg-inline--fa.fa-pull-right{margin-left:var(--fa-pull-margin,.3em);width:auto}.svg-inline--fa.fa-li{width:var(--fa-li-width,2em);top:.25em}.svg-inline--fa.fa-fw{width:var(--fa-fw-width,1.25em)}.fa-layers svg.svg-inline--fa{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.fa-layers-counter,.fa-layers-text{display:inline-block;position:absolute;text-align:center}.fa-layers{display:inline-block;height:1em;position:relative;text-align:center;vertical-align:-.125em;width:1em}.fa-layers svg.svg-inline--fa{transform-origin:center center}.fa-layers-text{left:50%;top:50%;transform:translate(-50%,-50%);transform-origin:center center}.fa-layers-counter{background-color:var(--fa-counter-background-color,#ff253a);border-radius:var(--fa-counter-border-radius,1em);box-sizing:border-box;color:var(--fa-inverse,#fff);line-height:var(--fa-counter-line-height,1);max-width:var(--fa-counter-max-width,5em);min-width:var(--fa-counter-min-width,1.5em);overflow:hidden;padding:var(--fa-counter-padding,.25em .5em);right:var(--fa-right,0);text-overflow:ellipsis;top:var(--fa-top,0);transform:scale(var(--fa-counter-scale,.25));transform-origin:top right}.fa-layers-bottom-right{bottom:var(--fa-bottom,0);right:var(--fa-right,0);top:auto;transform:scale(var(--fa-layers-scale,.25));transform-origin:bottom right}.fa-layers-bottom-left{bottom:var(--fa-bottom,0);left:var(--fa-left,0);right:auto;top:auto;transform:scale(var(--fa-layers-scale,.25));transform-origin:bottom left}.fa-layers-top-right{top:var(--fa-top,0);right:var(--fa-right,0);transform:scale(var(--fa-layers-scale,.25));transform-origin:top right}.fa-layers-top-left{left:var(--fa-left,0);right:auto;top:var(--fa-top,0);transform:scale(var(--fa-layers-scale,.25));transform-origin:top left}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-2xs{font-size:.625em;line-height:.1em;vertical-align:.225em}.fa-xs{font-size:.75em;line-height:.0833333337em;vertical-align:.125em}.fa-sm{font-size:.875em;line-height:.0714285718em;vertical-align:.0535714295em}.fa-lg{font-size:1.25em;line-height:.05em;vertical-align:-.075em}.fa-xl{font-size:1.5em;line-height:.0416666682em;vertical-align:-.125em}.fa-2xl{font-size:2em;line-height:.03125em;vertical-align:-.1875em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:var(--fa-li-margin,2.5em);padding-left:0}.fa-ul>li{position:relative}.fa-li{left:calc(-1 * var(--fa-li-width,2em));position:absolute;text-align:center;width:var(--fa-li-width,2em);line-height:inherit}.fa-border{border-color:var(--fa-border-color,#eee);border-radius:var(--fa-border-radius,.1em);border-style:var(--fa-border-style,solid);border-width:var(--fa-border-width,.08em);padding:var(--fa-border-padding,.2em .25em .15em)}.fa-pull-left{float:left;margin-right:var(--fa-pull-margin,.3em)}.fa-pull-right{float:right;margin-left:var(--fa-pull-margin,.3em)}.fa-beat{animation-name:fa-beat;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-bounce{animation-name:fa-bounce;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1))}.fa-fade{animation-name:fa-fade;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-beat-fade{animation-name:fa-beat-fade;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-flip{animation-name:fa-flip;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-shake{animation-name:fa-shake;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin{animation-name:fa-spin;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,2s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin-reverse{--fa-animation-direction:reverse}.fa-pulse,.fa-spin-pulse{animation-name:fa-spin;animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,steps(8))}@media (prefers-reduced-motion:reduce){.fa-beat,.fa-beat-fade,.fa-bounce,.fa-fade,.fa-flip,.fa-pulse,.fa-shake,.fa-spin,.fa-spin-pulse{animation-delay:-1ms;animation-duration:1ms;animation-iteration-count:1;transition-delay:0s;transition-duration:0s}}@keyframes fa-beat{0%,90%{transform:scale(1)}45%{transform:scale(var(--fa-beat-scale,1.25))}}@keyframes fa-bounce{0%{transform:scale(1,1) translateY(0)}10%{transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{transform:scale(1,1) translateY(var(--fa-bounce-rebound,-.125em))}64%{transform:scale(1,1) translateY(0)}100%{transform:scale(1,1) translateY(0)}}@keyframes fa-fade{50%{opacity:var(--fa-fade-opacity,.4)}}@keyframes fa-beat-fade{0%,100%{opacity:var(--fa-beat-fade-opacity,.4);transform:scale(1)}50%{opacity:1;transform:scale(var(--fa-beat-fade-scale,1.125))}}@keyframes fa-flip{50%{transform:rotate3d(var(--fa-flip-x,0),var(--fa-flip-y,1),var(--fa-flip-z,0),var(--fa-flip-angle,-180deg))}}@keyframes fa-shake{0%{transform:rotate(-15deg)}4%{transform:rotate(15deg)}24%,8%{transform:rotate(-18deg)}12%,28%{transform:rotate(18deg)}16%{transform:rotate(-22deg)}20%{transform:rotate(22deg)}32%{transform:rotate(-12deg)}36%{transform:rotate(12deg)}100%,40%{transform:rotate(0)}}@keyframes fa-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.fa-rotate-90{transform:rotate(90deg)}.fa-rotate-180{transform:rotate(180deg)}.fa-rotate-270{transform:rotate(270deg)}.fa-flip-horizontal{transform:scale(-1,1)}.fa-flip-vertical{transform:scale(1,-1)}.fa-flip-both,.fa-flip-horizontal.fa-flip-vertical{transform:scale(-1,-1)}.fa-rotate-by{transform:rotate(var(--fa-rotate-angle,0))}.fa-stack{display:inline-block;vertical-align:middle;height:2em;position:relative;width:2.5em}.fa-stack-1x,.fa-stack-2x{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0;z-index:var(--fa-stack-z-index,auto)}.svg-inline--fa.fa-stack-1x{height:1em;width:1.25em}.svg-inline--fa.fa-stack-2x{height:2em;width:2.5em}.fa-inverse{color:var(--fa-inverse,#fff)}.fa-sr-only,.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.fa-sr-only-focusable:not(:focus),.sr-only-focusable:not(:focus){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.svg-inline--fa .fa-primary{fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)}.svg-inline--fa .fa-secondary{fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-primary{opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-secondary{opacity:var(--fa-primary-opacity,1)}.svg-inline--fa mask .fa-primary,.svg-inline--fa mask .fa-secondary{fill:#000}</style><link href="./PRE09.1 — CS 233 _ PrairieLearn_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./PRE09.1 — CS 233 _ PrairieLearn_files/bootstrap-icons.css" rel="stylesheet">
+    <link href="./PRE09.1 — CS 233 _ PrairieLearn_files/colors.css" rel="stylesheet">
+    <link href="./PRE09.1 — CS 233 _ PrairieLearn_files/local.css" rel="stylesheet">
+    <script src="./PRE09.1 — CS 233 _ PrairieLearn_files/jquery.min.js"></script>
+    <script src="./PRE09.1 — CS 233 _ PrairieLearn_files/bootstrap.bundle.min.js"></script>
+    <script src="./PRE09.1 — CS 233 _ PrairieLearn_files/all.min.js"></script>
+    <script src="./PRE09.1 — CS 233 _ PrairieLearn_files/application-R3BCQBZK.js"></script> <script src="./PRE09.1 — CS 233 _ PrairieLearn_files/navbarClient-7FLGATRR.js"></script>
+   <script src="./PRE09.1 — CS 233 _ PrairieLearn_files/question-EKSL3NTZ.js"></script>
+        
+        <script defer="" src="./PRE09.1 — CS 233 _ PrairieLearn_files/startup.js"></script>
+        <script>
+          document.urlPrefix = '/pl/course_instance/174688';
+        </script>
+        
+              
+              <link href="./PRE09.1 — CS 233 _ PrairieLearn_files/pl-hidden-hints.css" rel="stylesheet">
+<link href="./PRE09.1 — CS 233 _ PrairieLearn_files/pl-code.css" rel="stylesheet">
+<link href="./PRE09.1 — CS 233 _ PrairieLearn_files/pl-checkbox.css" rel="stylesheet">
+
+<script type="text/javascript" src="./PRE09.1 — CS 233 _ PrairieLearn_files/PrairieUtil.js"></script>
+<script type="text/javascript" src="./PRE09.1 — CS 233 _ PrairieLearn_files/clipboard.min.js"></script>
+            
+      <script src="./PRE09.1 — CS 233 _ PrairieLearn_files/core.js" charset="UTF-8"></script><style>                      .htmx-indicator{opacity:0}                      .htmx-request .htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                      .htmx-request.htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                    </style><script src="./PRE09.1 — CS 233 _ PrairieLearn_files/tex.js" charset="UTF-8"></script><script src="./PRE09.1 — CS 233 _ PrairieLearn_files/menu.js" charset="UTF-8"></script><script src="./PRE09.1 — CS 233 _ PrairieLearn_files/svg.js" charset="UTF-8"></script><style type="text/css" id="ctre_styles">
+			#ctre_wnd {
+				position: fixed; bottom: 0; right: 10px;
+				background: #fff; box-shadow: 0px 0px 40px rgba(0,0,0,0.15);
+				border-radius: 3px 3px 0 0;
+				z-index: 2147483647;
+			}
+
+			@media (prefers-color-scheme: dark) {
+				#ctre_wnd { background: #000; box-shadow: 0px 0px 40px rgba(255,255,255,0.15); }
+			}
+			</style><script src="./PRE09.1 — CS 233 _ PrairieLearn_files/tex(1).js" charset="UTF-8"></script><script src="./PRE09.1 — CS 233 _ PrairieLearn_files/assistive-mml.js" charset="UTF-8"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-SVG-styles">
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+</style></head>
+      <body data-new-gr-c-s-check-loaded="14.1222.0" data-gr-ext-installed="">
+        
+    
+
+    <div class="container-fluid bg-primary">
+      <a href="https://us.prairielearn.com/pl/course_instance/174688/instance_question/477191489/#content" class="d-inline-flex p-2 m-2 text-white visually-hidden-focusable">
+        Skip to main content
+      </a>
+    </div>
+
+    
+
+    <nav class="navbar navbar-dark bg-dark navbar-expand-md" aria-label="Global navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="https://us.prairielearn.com/pl" aria-label="Homepage">
+          <span class="navbar-brand-label">PrairieLearn</span>
+          <span class="navbar-brand-hover-label">
+            Go home <svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fa fa-angle-right" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+          </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation" data-bs-target=".navbar-collapse" data-bs-toggle="collapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="course-nav" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav mr-auto me-auto" id="main-nav">
+            
+    <li class="nav-item navbar-text mr-4 me-4">
+      CS 233, Sp25
+    </li>
+
+    <li class="nav-item ">
+      <a class="nav-link" href="https://us.prairielearn.com/pl/course_instance/174688/assessments">Assessments</a>
+    </li>
+    <li class="nav-item ">
+      <a class="nav-link" href="https://us.prairielearn.com/pl/course_instance/174688/gradebook">Gradebook</a>
+    </li>
+
+    
+          <li class="nav-item ">
+            <a class="nav-link" href="https://us.prairielearn.com/pl/course_instance/174688/assessment_instance/9602377">
+              PRE09
+            </a>
+          </li>
+        
+  
+          </ul>
+
+          
+          
+    <ul class="nav navbar-nav" id="username-nav" data-access-as-administrator="false" data-view-type="student" data-authn-course-role="None" data-authn-course-instance-role="None" data-has-instructor-access="">
+      <li class="nav-item dropdown mb-2 mb-md-0 mr-2 me-2">
+        <button class="btn nav-link dropdown-toggle" id="navbarDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+          Che Liu
+          
+        </button>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-end" aria-labelledby="navbarDropdown">
+          
+           
+          
+          
+                <a class="dropdown-item" href="https://us.prairielearn.com/pl/request_course">
+                  Course Requests
+                </a>
+              
+          <a class="dropdown-item" href="https://us.prairielearn.com/pl/settings">Settings</a>
+          <a class="dropdown-item news-item-link" href="https://us.prairielearn.com/pl/course_instance/174688/news_items" title="News" aria-label="News">
+            News
+            
+          </a>
+
+          <a class="dropdown-item" href="https://us.prairielearn.com/pl/logout">Log out</a>
+        </div>
+      </li>
+    </ul>
+  
+        </div>
+      </div>
+    </nav>
+
+    
+    <div class="mb-3">
+       
+    </div>
+  
+        
+        <main id="content" class="container">
+          
+          <div class="row">
+            <div class="col-lg-9 col-sm-12">
+              
+    <div class="question-container" data-grading-method="Internal" data-variant-id="115289230" data-variant-token="MmRkYjkxODRkMDc0MzYwYmFhNDI1MjUwNzc0MjQzMDkxNzRlNDU1NzE0NWRhNGJlMDkyODkxZGQ5N2QxZTk1ZA.m71kdw60.eyJ2YXJpYW50SWQiOiIxMTUyODkyMzAifQ">
+      
+      
+      
+            <form class="question-form" name="question-form" method="POST" autocomplete="off" data-original-form-data="__variant_id=115289230">
+              
+    <div class="card mb-4 question-block">
+      <div class="card-header bg-primary text-white d-flex align-items-center">
+        <h1>
+          PRE09.1. 09 Text and Videos
+        </h1>
+        
+      </div>
+      <div class="card-body question-body"><h2>Videos</h2>
+<iframe id="kmsembed-1_cuyr5r60" style="width:25vh" src="./PRE09.1 — CS 233 _ PrairieLearn_files/99753341.html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<iframe id="kmsembed-1_vigghn8a" style="width:25vh" src="./PRE09.1 — CS 233 _ PrairieLearn_files/99753341(1).html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<p>Video credits: Geoffrey Herman, Text credits: Geoffrey Herman</p>
+
+<h2>The Big Picture</h2>
+<p>The register file is super fast but it is too small to store all the data we might need for our programs. Consequently, we have the LARGE but slow data memory to help store that extra data. We use the load (e.g., <code>lw</code> and <code>lb</code>) and store (e.g., <code>sw</code> and <code>sb</code>) instructions to move data between the register file and the data memory. We store pointers in the register file to point to where our data is in the memory.</p>
+<p>Instructions to move data to/from the data memory are optimized for manipulating data structures like arrays and stacks. If we have a pointer to the start of these data structures, we can calculate the location of all elements of those data structures from that one pointer using <code>base+offset</code> addressing.</p>
+<p>When manipulating a variable allocated to the data memory (e.g., an element of an array), you need to first load it from the data memory to the register file, then perform your state manipulation, and finally store your data back in the data memory.</p>
+
+<p>Supplemental Optional Reading: Patterson &amp; Hennessy 2.6 and 2.9</p>
+
+<h1>Storing Data in the Data Memory</h1>
+
+<h3>Data Memory Facts</h3>
+<table class="table-striped table-bordered table-condensed" style="margin: 0 auto;">
+    <tbody><tr>
+        <th>Register File</th><th>Data Memory</th>
+    </tr>
+    <tr>
+        <td>5-bit <span style="color:#00aa00">address</span></td><td>32-bit <span style="color:#00aa00">address</span></td>
+    </tr>
+    <tr>
+        <td>2<sup>5</sup> (32) addresses (registers)</td><td>2<sup>32</sup> (4,294,967,296) addresses (Bytes)</td>
+    </tr>
+    <tr>
+        <td>Each address stores 32 bits of <span style="color:red">data</span></td><td>Each address stores 8 bits (1 Byte) of <span style="color:red">data</span></td>
+    </tr>
+    <tr>
+        <td>Stores total of 1KB of <span style="color:red">data</span></td><td>Stores total of 4GB of <span style="color:red">data</span></td>
+    </tr>
+    <tr>
+        <td>2 read ports, 1 write port</td><td>1 read port, 1 write port with shared <span style="color:#00aa00">address</span> input</td>
+    </tr>
+</tbody></table>
+
+<p>We schematically draw the data memory in this class as the following. It has one 32-bit <span style="color:#00aa00;">address</span> input (<code style="color:#00aa00">addr[31:0]</code>). The <span style="color:#00aa00;">address</span> input indicates both where to write <span style="color:red;">data</span> (<code style="color:red;">data_in[31:0]</code>) when enabled, and where <span style="color:red;">data</span> (<code style="color:red;">data_out[31:0]</code> was read from in the data memory. There are two write enable inputs <code style="color:blue;">word_we</code> and <code style="color:blue;">byte_we</code> that enable writing data of different bit widths to the data memory. We explain why later in the "Storing Data in the Data Memory" sub-section.</p>
+<div class="container-fluid">
+    <img src="./PRE09.1 — CS 233 _ PrairieLearn_files/data memory.png" alt="" class="img-fluid mx-auto d-block">
+</div>
+
+<h3>Why Use a Data Memory</h3>
+<p>We use a data memory to store large amounts of data and to create variables with different levels of scope. In contrast, the register file is typically used for temporary variables with limited scope. Examples:
+
+</p><div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-a4d6cb8a-a761-42a1-b120-f66b1f218133" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span>
+<span style="">6</span>
+<span style="">7</span>
+<span style="">8</span>
+<span style="">9</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">int</span><span style="color: #BBB"> </span><span style="color: #06287E">sum_array</span>(<span style="color: #902000">int</span><span style="color: #BBB"> </span>array[],<span style="color: #BBB"> </span><span style="color: #902000">int</span><span style="color: #BBB"> </span>N)<span style="color: #BBB"> </span>{
+<span style="color: #BBB">    </span><span style="color: #902000">int</span><span style="color: #BBB"> </span>sum<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span><span style="color: #40A070">0</span>;
+
+<span style="color: #BBB">    </span><span style="color: #007020; font-weight: bold">for</span><span style="color: #BBB"> </span>(<span style="color: #902000">int</span><span style="color: #BBB"> </span>i<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span><span style="color: #40A070">0</span>;<span style="color: #BBB"> </span>i<span style="color: #BBB"> </span><span style="color: #666">&lt;</span><span style="color: #BBB"> </span>N;<span style="color: #BBB"> </span>i<span style="color: #666">++</span>){
+<span style="color: #BBB">        </span>sum<span style="color: #BBB"> </span><span style="color: #666">+=</span><span style="color: #BBB"> </span>array[i];
+<span style="color: #BBB">    </span>}
+<span style="color: #BBB">    </span><span style="color: #007020; font-weight: bold">return</span><span style="color: #BBB"> </span>sum;
+}
+<span style="color: #BBB">            </span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p><code>array</code> is a potentially large array with N elements, where N could easily exceed the 32 registers of the register file. It needs to be allocated/stored in the data memory. Also, <code>array</code> is likely used in another function, so the scope of <code>array</code> transcends the function <code>inc_array</code>. In contrast <code>sum</code> is a small, local, temporary variable, so it should be allocated/stored in the register file. No other function knows that <code>sum</code> exists and <code>sum</code> can be overwritten without consequence once the function call is done (<code>sum</code> could be stored in a different variable by the callee function if it wants to keep the value from <code>sum</code>).</p>
+        </div>
+        <div class="col-sm-6">
+            <div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-d8781033-468e-4c16-b3cd-f1968f5ceb26" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style=""> 1</span>
+<span style=""> 2</span>
+<span style=""> 3</span>
+<span style=""> 4</span>
+<span style=""> 5</span>
+<span style=""> 6</span>
+<span style=""> 7</span>
+<span style=""> 8</span>
+<span style=""> 9</span>
+<span style="">10</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">void</span><span style="color: #BBB"> </span><span style="color: #06287E">make_upper</span>(<span style="color: #902000">char</span><span style="color: #BBB"> </span>string[])<span style="color: #BBB"> </span>{
+<span style="color: #BBB">    </span><span style="color: #902000">int</span><span style="color: #BBB"> </span>i<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span><span style="color: #40A070">0</span>;
+<span style="color: #BBB">    </span><span style="color: #007020; font-weight: bold">while</span><span style="color: #BBB"> </span>(string[i]<span style="color: #BBB"> </span><span style="color: #666">!=</span><span style="color: #BBB"> </span><span style="color: #40A070">0</span>)<span style="color: #BBB"> </span>{
+<span style="color: #BBB">        </span><span style="color: #007020; font-weight: bold">if</span><span style="color: #BBB"> </span>(string[i]<span style="color: #BBB"> </span><span style="color: #666">&gt;</span><span style="color: #BBB"> </span><span style="color: #40A070">96</span><span style="color: #BBB"> </span><span style="color: #666">&amp;&amp;</span><span style="color: #BBB"> </span>string<span style="color: #BBB"> </span>[i]<span style="color: #BBB"> </span><span style="color: #666">&lt;</span><span style="color: #BBB"> </span><span style="color: #40A070">123</span>)
+<span style="color: #BBB">            </span>string[i]<span style="color: #BBB"> </span><span style="color: #666">-=</span><span style="color: #BBB"> </span><span style="color: #40A070">32</span>;
+<span style="color: #BBB">        </span>i<span style="color: #666">++</span>;
+<span style="color: #BBB">    </span>}
+<span style="color: #BBB">    </span><span style="color: #007020; font-weight: bold">return</span>;
+}
+<span style="color: #BBB">            </span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p><code>string</code> is a potentially large array with an unknown number of elements and could easily exceed the 1KB of the register file. It needs to be allocated/stored in the data memory. Also, <code>string</code> is likely used in another function, so the scope of <code>string</code> transcends the function <code>inc_array</code>. In contrast <code>i</code> is a small, local, temporary variable, so it should be allocated/stored in the register file. No other function knows that <code>i</code> exists and <code>i</code> can be overwritten without consequence once the function call is done.</p>
+        </div>
+    </div>
+</div>
+
+<h3>Storing Data in the Data Memory</h3>
+<p>Different data types have different sizes.</p> 
+<table class="table-striped table-bordered table-condensed" style="margin: 0 auto;">
+    <tbody><tr>
+        <th>Data Size</th><th>Data Type(s)</th><th>Alignment</th>
+    </tr>
+    <tr>
+        <td>1 Byte (8 bits)</td><td><code>char</code>, <code>bool</code></td><td>Can start at any address</td>
+    </tr>
+    <tr>
+        <td>2 Bytes (16 bits)<br>1 Half Word</td><td><code>short</code></td><td>Must start at an address that is evenly divisible by 2 (i.e., addr % 2 == 0)</td>
+    </tr>
+    <tr>
+        <td>4 Bytes (32 bits)<br>1 Word&lt;</td><td><code>int</code>, <code>float</code></td><td>Must start at an address that is evenly divisible by 4 (i.e., addr % 4 == 0)</td>
+    </tr>
+    <tr>
+        <td>8 Bytes (64 bits)<br>1 Double Word</td><td><code>long</code>, <code>double</code></td><td>Must start at an address that is evenly divisible by 8 (i.e., addr % 8 == 0)</td>
+    </tr>
+</tbody></table>
+
+<p>Because each data memory address stores only 1 Byte, data types that are larger than 1 Byte are stored across multiple addresses using a Little Endian ordering. MIPS requires that the address where data is stored in memory (i.e., the first or smallest address in Little Endian ordering) "aligns" with its data size.</p>
+
+<p>The data memory will correspondingly have different mechanisms for storing or reading different types of data. For example, it could have a <code>byte_we</code> that would be 1 when storing 1 Byte and a separet <code>word_we</code> that would be 1 when storing 4 Bytes (or 1 word).</p>
+
+<h3>Storing Arrays in the Data Memory</h3>
+<p>Arrays store many variables of the same type contiguously in memory: each element is stored immediately after the previous element of the array. Arrays are allocated to data memory using base+offset indexing. In other words, <code>int array[10];</code> tells us two things: 1) <code>array</code> is a pointer to the starting address of the array in data memory (i.e., the base) and 2) space is allocated in the data memory for 10 <code>int</code> (4*10 = 40 addresses) are contiguously allocated to <code>array</code>. The address for each element of <code>array</code> can be determined by multiplying the array index (i.e., the number in the <code>[]</code> by its data size (i.e., the offset) and adding to the base pointer.</p>
+
+<h5>Examples</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-a1059d7e-4767-4da1-80fd-204044f26990" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">int</span><span style="color: #BBB"> </span>A[<span style="color: #40A070">5</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>{<span style="color: #40A070">9</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xcafe0233</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0x1625</span>,<span style="color: #BBB"> </span><span style="color: #40A070">3</span>,<span style="color: #BBB"> </span><span style="color: #40A070">22</span>};
+<span style="color: #BBB">            </span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>
+</p><p>Because of its data type, <code>A</code> could be allocated starting at any address that is divisible 4. <code>A</code> would be stored across 5*4 = 20 addresses. If the starting address of <code>A</code> was <code>0x70000000</code>, <code>A[3]</code> would be at address <code>0x70000000 + 3*4 = 0x7000000C</code>. A visualization of the array is below. The ... above and below the arrays indicates that the data memory extends beyond just the elements of the array.</p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000000</td><td class="memory-data">0x09</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000001</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000002</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000003</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000004</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000005</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000006</td><td class="memory-data">0xfe</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000007</td><td class="memory-data">0xca</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000008</td><td class="memory-data">0x25</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000009</td><td class="memory-data">0x16</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000A</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000B</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x7000000C</td><td class="memory-data">0x03</td><td rowspan="4" style="vertical-align: middle;">A[3]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x7000000D</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x7000000E</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x7000000F</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000010</td><td class="memory-data">0x16</td><td rowspan="4" style="vertical-align: middle;">A[4]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000011</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000012</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000013</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm-6">
+            <div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-ed593dc6-31dd-4afd-8c2d-ce92173ab0ee" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">short</span><span style="color: #BBB"> </span>S[<span style="color: #40A070">7</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>{<span style="color: #40A070">1</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xABCD</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xEF</span>,<span style="color: #BBB"> </span><span style="color: #40A070">5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">10</span>,<span style="color: #BBB"> </span><span style="color: #40A070">4</span>,<span style="color: #BBB"> </span><span style="color: #40A070">3</span>};
+<span style="color: #BBB">            </span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>Because of its data type, <code>S</code> could be allocated starting at any address that is divisible 2. <code>S</code> would be stored across 7*2 = 14 addresses. If the starting address of <code>S</code> was <code>0x70000096</code>, <code>S[4]</code> would be at address <code>0x70000096 + 4*2 = 0x7000009E</code>. A visualization of the array is below. The ... above and below the arrays indicates that the data memory extends beyond just the elements of the array.</p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>S[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000096</td><td class="memory-data">0x01</td><td rowspan="2" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000097</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000098</td><td class="memory-data">0xCD</td><td rowspan="2" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000099</td><td class="memory-data">0xAB</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009A</td><td class="memory-data">0xEF</td><td rowspan="2" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009B</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x7000009C</td><td class="memory-data">0x05</td><td rowspan="2" style="vertical-align: middle;">A[3]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x7000009D</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009E</td><td class="memory-data">0x0A</td><td rowspan="2" style="vertical-align: middle;">A[4]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009F</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x700000A0</td><td class="memory-data">0x04</td><td rowspan="2" style="vertical-align: middle;">A[5]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x700000A1</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x700000A2</td><td class="memory-data">0x03</td><td rowspan="2" style="vertical-align: middle;">A[6]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x700000A3</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info" role="alert">
+Notice how the Byte addressibility of the data memory compresses the storage space of smaller data types. Data memory is optimized to store <code>char</code> data. 
+</div>
+
+<style>
+    .memory-data{
+        border-style: solid;
+        border-color: black;
+        border-left-width: 1pt;
+        border-right-width: 1pt;
+        border-top-width: 1pt;
+        border-bottom-width: 1pt;
+        color: red;
+    }
+</body></html></style>
+<hr>
+<h1>Data Movement Instructions</h1>
+<p>Instructions that move data between the register file and the data memory are called data movement instructions.</p>
+<ul>
+    <li><strong>Store instructions</strong>: Instructions that copy data from the register file to the data memory. Examples: store word (<code>sw</code>) and store byte (<code>sb</code>).</li>
+    <li><strong>Load instructions</strong>: Instructions that copy data from data memory to the register file. Examples: load word (<code>lw</code>) and load byte (<code>lb</code>).</li>
+</ul>
+
+<table style="border-collapse: collapse; width: 96.6667%; height: 304px;" border="1" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr style="height: 52px;">
+            <th style="width: 17.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Name</th>
+            <th style="width: 7.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Mnemonic</th>
+            <th style="width: 20%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Assembly Format</th>
+            <th style="width: 35%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Operation (In Verilog)</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Format/<br>Notes</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Opcode/<br>Funct</th>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Byte&nbsp;</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lb</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lb $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={ {24{M[R[rs]+SignExtImm](7)}}, M[R[rs]+SignExtImm](7:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">20<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Byte Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lbu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lbu $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={24’b0, M[R[rs]+SignExtImm](7:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">24<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Word</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lw</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lw $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=M[R[rs]+SignExtImm];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">23<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Store Byte</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sb</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sb $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">M[R[rs]+SignExtImm](7:0)=R[rt](7:0);</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">28<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Store Word</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sw</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sw $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">M[R[rs]+SignExtImm]=R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">2b<sub>hex</sub></td>
+        </tr>
+    </tbody>
+</table>
+<ol>
+    <li>May cause overflow exception</li>
+    <li><code class="mips">SignExtImm = { {16{inst[15]}}, inst[15:0] }</code></li>
+</ol>
+
+<h5>Interpreting the MIPS reference guide</h5>
+<div class="alert alert-info" role="alert">
+Whatever is inside a <code>[]</code> is considered an <span style="color:#00aa00">address</span>. <code>M[]</code> indicates the <span style="color: red;">data</span> stored in the data memory at an <span style="color:#00aa00">address</span>.
+</div>
+
+<p><code>M[R[rs]+SignExtImm]</code> is a form of <code>base+offset</code> addressing. <code>R[rs]</code> is a base register that stores a 32-bit address (e.g., <code>0x70000096</code>). <code>SignExtImm</code> is an offset from that address that can be useful for accessing specific elements of indexed data structures like arrays. The load and store instructions use the assembly format <code>$rt, imm($rs)</code>, where <code>imm($rs)</code> indicates that the <code>base+offset</code> addressing will be performed with the <code>$rs</code> and <code>imm</code> fields.</p>
+
+<p><code>M[R[rs]+SignExtImm](7:0)</code> means to consider only the 8 least-significant bits of the <span style="color:red;">data</span> port of the data memory.</p>
+
+<p><code>{24’b0, M[R[rs]+SignExtImm](7:0)}</code> means zero-extend the 8 least-significant bits of the <span style="color:red;">data</span> read from the data memory.</p>
+
+<p><code>{ {24{M[R[rs]+SignExtImm](7)}}, M[R[rs]+SignExtImm](7:0)}</code> means sign-extend the 8 least-significant bits of the <span style="color:red;">data</span> read from the data memory.</p>
+
+<h5>Examples</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-fb6a149f-cad9-41b7-9c9d-81fc8caab207" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">int</span><span style="color: #BBB"> </span>A[<span style="color: #40A070">3</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>{<span style="color: #40A070">9</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xcafe0233</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0x1625</span>};
+<span style="color: #902000">int</span><span style="color: #BBB"> </span>x<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>A[<span style="color: #40A070">2</span>];
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>Suppose that the array <code>A</code> was declared as above and that the register file and data memory have the initial states shown below. The base pointer of array <code>A</code> is stored in <code>$3</code> because <code>R[3] == 0x70000000</code>, the first address of the array. Let's suppose that <code>x</code> is a temp variable that is register allocated to <code>$2</code>. We could translate the second line of the C program to the following assembly code.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-db095ded-f5cd-4434-be54-842e414c4395" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>lw<span style="color: #BBB">   </span><span style="color: #BB60D5">$2</span>,<span style="color: #BBB"> </span><span style="color: #40A070">8</span><span style="color: #666">(</span><span style="color: #BB60D5">$3</span><span style="color: #666">)</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>We use a load instruction, because we are copying data from the data memory to the register file. We use <code>lw</code> because <code>int</code> are word sized. <code>$2</code> is the destination. <code>$3</code> is our base pointer. <code>8</code> is the address offset <code>A[2]</code>: because <code>int</code> are 4 Bytes large, we multiply the index (2) by the size of the data (4) to get the offset (8). <code>R[3]+SignExtImm</code> = <code>0x70000000+8</code> = <code>0x70000008</code>, the address of <code>A[2]</code>. Since we are copying a word of data, <code>M[0x70000008]</code> gives <code>0x00001625</code> based on Little Endian ordering.</p>
+        </div>
+        <div class="col-sm-6">
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-e11c3f30-13b1-42fb-9eb0-49c7745ce76b" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">char</span><span style="color: #BBB"> </span>C[<span style="color: #40A070">7</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>{<span style="color: #40A070">1</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xAB</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xCD</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xEF</span>,<span style="color: #BBB"> </span><span style="color: #40A070">5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">20</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0</span>};
+C[<span style="color: #40A070">5</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>y;
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>Suppose that the array <code>C</code> was declared as above and that the register file and data memory have the initial states shown below. The base pointer of array <code>C</code> is stored in <code>$2</code> because <code>R[2] == 0x70000096</code>, the first address of the array. Let's suppose that <code>y</code> is a temp variable that is register allocated to <code>$3</code>. We could translate the second line of the C program to the following assembly code.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f9bbe005-6059-44e6-8c73-c18bc2b36774" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>sb<span style="color: #BBB">   </span><span style="color: #BB60D5">$3</span>,<span style="color: #BBB"> </span><span style="color: #40A070">5</span><span style="color: #666">(</span><span style="color: #BB60D5">$2</span><span style="color: #666">)</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>We use a store instruction, because we are copying data from the register file to the data memory. We use <code>sb</code> because <code>char</code> are Byte sized. <code>$3</code> is the source of the data. <code>$2</code> is our base pointer. <code>5</code> is the address offset of <code>C[5]</code>: because <code>char</code> are 1 Byte large, we multiply the index (5) by the size of the data (1) to get the offset (5). Only the 8 least-significant bits of <code>$3</code> (i.e., <code>0x01</code>) are copied to the data memory. <code>R[2]+SignExtImm</code> = <code>0x70000096+5</code> = <code>0x7000009B</code>, the address of <code>C[5]</code>.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Register File Initial</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x00000008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x70000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+<p><strong>Register File Final</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x00001625</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x70000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Data Memory</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000000</td><td class="memory-data">0x09</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000001</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000002</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000003</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000004</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000005</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000006</td><td class="memory-data">0xfe</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000007</td><td class="memory-data">0xca</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000008</td><td class="memory-data">0x25</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000009</td><td class="memory-data">0x16</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000A</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000B</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Register File</strong>
+</p><table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010420</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x70000096</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x81040001</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Data Memory Initial</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr>
+    <th>Address</th><th style="color: red;">Data</th><th>C[i]</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000096</td><td class="memory-data">0x01</td><td>C[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000097</td><td class="memory-data">0xAB</td><td>C[1]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000098</td><td class="memory-data">0xCD</td><td>C[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000099</td><td class="memory-data">0xEF</td><td>C[3]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009A</td><td class="memory-data">0x05</td><td>C[4]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009B</td><td class="memory-data">0x14</td><td>C[5]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009C</td><td class="memory-data">0x00</td><td>C[6]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+<p><strong>Data Memory Final</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr>
+    <th>Address</th><th style="color: red;">Data</th><th>C[i]</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000096</td><td class="memory-data">0x01</td><td>C[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000097</td><td class="memory-data">0xAB</td><td>C[1]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000098</td><td class="memory-data">0xCD</td><td>C[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000099</td><td class="memory-data">0xEF</td><td>C[3]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009A</td><td class="memory-data">0x05</td><td>C[4]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009B</td><td class="memory-data">0x01</td><td>C[5]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000009C</td><td class="memory-data">0x00</td><td>C[6]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+        </div>
+    </div>
+</div>
+
+<div class="alert-info">
+The load and store instructions use a physical analogy in their formatting: the register file on the left and the data memory on the right. Unlike all other instructions, we do not assign to the left for store instructions. Store instructions assign to the data memory on the right with the register on the left serving as a source rather than a destination. (We're sorry for any confusion this will cause...we didn't invent this assembly syntax...).
+</div>
+
+<h3>Implementing the Load and Store Instructions</h3>
+<p>The datapath diagram below illustrates our implementation of the <code>lw</code>, <code>lbu</code>, <code>sw</code>, and <code>sb</code> instructions. Notice the register file on the left and the data memory on the right, matching the physical layout of the assembly instructions of the load and store instructions.</p>
+
+<div class="container-fluid">
+    <img src="./PRE09.1 — CS 233 _ PrairieLearn_files/MIPS_datapath_full.png" alt="" class="img-fluid mx-auto d-block">
+</div>
+
+<p>We calculate the base+offset addressing sent to the data memory for all instructions by taking the data from <code>$rs</code> as the base pointer address and then choosing the <code>SignExtImm</code> with the <code>alu_src2</code> mux and then performing addition with the ALU, resulting in <code>R[rs]+SignExtImm</code>. This value is sent to the <code style="color:#00aa00">addr</code> input of the data memory.</p>
+
+<div class="container-fluid">
+    <img src="./PRE09.1 — CS 233 _ PrairieLearn_files/mem_address_zoom.png" alt="" class="img-fluid mx-auto d-block">
+</div>
+
+<h5><code>sw</code> and <code>sb</code> implementation</h5>
+<p>To copy data from <code>R[rt]</code> to the data memory, we connect the <code>B_data</code> read port directly to the data memory <code>data_in</code>. We use the control signals <code style="color: blue;">word_we</code> and <code style="color: blue;">byte_we</code> to differentiate between <code>sw</code> and <code>sb</code>.</p>
+
+<table class="table-condensed table-striped table-condensed" style="margin: 0 auto;">
+    <tbody><tr>
+        <td>word_we</td><td>byte_we</td><td>Data memory behavior</td>
+    </tr>
+    <tr>
+        <td>0</td><td>0</td><td>Do not store anything</td>
+    </tr>
+    <tr>
+        <td>0</td><td>1</td><td><code>sb</code></td>
+    </tr>
+    <tr>
+        <td>1</td><td>0</td><td><code>sw</code></td>
+    </tr>
+    <tr>
+        <td>1</td><td>1</td><td>ERROR!!! Don't do this!</td>
+    </tr>
+</tbody></table>
+
+<div class="container-fluid">
+    <img src="./PRE09.1 — CS 233 _ PrairieLearn_files/sw_and_sb.png" alt="" class="img-fluid mx-auto d-block">
+</div>
+
+<h5><code>lb</code> and <code>lbu</code> implementation</h5>
+<p>For <code>lw</code>, we nee to copy all 32 bits read from the data memory to <code>R[rt]</code>. We route <code>data_out[31:0]</code> from the data memory to the <code>W_data</code> port of the register file (set <code style="color: blue;">byte_load</code>=0, <code style="color: blue;">mem_read</code>=1, and <code style="color: blue;">lui</code>=0).</p>
+
+<p>For <code>lbu</code>, we need to copy 8 bits from the data memory and then zero-extend those bits by appending 24'b0 to the most significant bits and store the copied data to <code>R[rt]</code>. The process for how we accomplish this is a little complicated. Because the MIPS data memory uses word alignment when reading 32 bits, it always reads at addresses that are evenly divisible by 4. In other words, it ignores the 2 least-significant bits of the address field (i.e., <code>out[1:0]</code>). In Little Endian ordering, the least significant Byte of <code>data_out[31:0]</code> (i.e., <code>data_out[7:0]</code>) corresponds comes first (i.e., the address ends in 00). The remaining addresses in the word correspond to the following subsets of wires.</p>
+
+<table class="table-condensed table-striped table-condensed" style="margin: 0 auto;">
+    <tbody><tr>
+        <td>out[1:0]</td><td><code>data_out</code> wires</td>
+    </tr>
+    <tr>
+        <td>00</td><td><code>data_out[7:0]</code></td>
+    </tr>
+    <tr>
+        <td>01</td><td><code>data_out[15:8]</code></td>
+    </tr>
+    <tr>
+        <td>10</td><td><code>data_out[23:16]</code></td>
+    </tr>
+    <tr>
+        <td>11</td><td><code>data_out[31:24]</code></td>
+    </tr>
+</tbody></table>
+
+<p>The table above translates to the 4:1 mux to the right of the data memory. The mux chooses exactly one Byte from <code>data_out[31:0]</code>. The chosen Byte is zero-extended by concatenating <code>24'b0</code> to the left. The Byte is routed to <code>W_data</code> port of the register file (set <code style="color: blue;">byte_load</code>=1, <code style="color: blue;">mem_read</code>=1, and <code style="color: blue;">lui</code>=0).</p>
+
+<div class="container-fluid">
+    <img src="./PRE09.1 — CS 233 _ PrairieLearn_files/lw_and_lb.png" alt="" class="img-fluid mx-auto d-block">
+</div>
+<style>
+    .memory-data{
+        border-style: solid;
+        border-color: black;
+        border-left-width: 1pt;
+        border-right-width: 1pt;
+        border-top-width: 1pt;
+        border-bottom-width: 1pt;
+        color: red;
+    }</body></html></style>
+<hr>
+<h1>Data Movement Instruction Examples</h1>
+<h3>Load vs. Store</h3>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-ef835f31-c85f-4f3e-bb75-c495100c76e3" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">int</span><span style="color: #BBB"> </span>A[<span style="color: #40A070">3</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>{<span style="color: #40A070">9</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xCAFE0233</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0x1625</span>};
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>Suppose that the array <code>A</code> was declared as above and that the register file and data memory have the initial states shown below. The base pointer of array <code>A</code> is stored in <code>$3</code> because <code>R[3] == 0x70000000</code>, the first address of the array. Let's suppose that <code>x</code> is a temp variable that is register allocated to <code>$2</code>.</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<p>Suppose we wanted to perform the following operation in C code.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f1475245-00cb-4029-8c77-de893a893944" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">int</span><span style="color: #BBB"> </span>x<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>A[<span style="color: #40A070">1</span>];
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>This would translate to the following assembly code. We use a load instruction, because we are copying data from the data memory to the register file. We use <code>lw</code> because <code>int</code> are word sized. <code>$2</code> is the destination. The address stored in <code>$3</code> is our base pointer. <code>4</code> is the address offset for <code>A[1]</code> because <code>int</code> are 4 Bytes large, we multiply the index (1) by the size of the data (4) to get the offset (4). <code>R[3]+SignExtImm</code> = <code>0x70000000+4</code> = <code>0x70000004</code>, the address of <code>A[1]</code>. Since we are copying a word of data, <code>M[0x70000004]</code> gives <code>0xCAFE0233</code> based on Little Endian ordering.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-c837876a-8a0a-4090-b4a2-e10895a816f3" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>lw<span style="color: #BBB">   </span><span style="color: #BB60D5">$2</span>,<span style="color: #BBB"> </span><span style="color: #40A070">4</span><span style="color: #666">(</span><span style="color: #BB60D5">$3</span><span style="color: #666">)</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+        <div class="col-sm-6">
+<p>Suppose we wanted to perform the following operation in C code.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f4fd60bd-ee7c-421c-874f-fe48ec97e2a7" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>A[<span style="color: #40A070">0</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>x;
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>This would translate to the following assembly code. We use a store instruction, because we are copying data from the register file to the data memory. We use <code>sw</code> because <code>int</code> are word sized. <code>$2</code> is the source of the copied data. The address stored in <code>$3</code> is our base pointer. <code>0</code> is the address offset for <code>A[0]</code> because <code>int</code> are 4 Bytes large, we multiply the index (0) by the size of the data (4) to get the offset (0). <code>R[3]+SignExtImm</code> = <code>0x70000000+0</code> = <code>0x70000000</code>, the address of <code>A[0]</code>. Since we are copying a word of data, <code>M[0x70000000]</code> becomes <code>0x00000008</code> based on Little Endian ordering.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-e1997546-9b5b-4809-9b9a-ecf322e8f9cc" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>sw<span style="color: #BBB">   </span><span style="color: #BB60D5">$2</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0</span><span style="color: #666">(</span><span style="color: #BB60D5">$3</span><span style="color: #666">)</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Register File Initial</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x00000008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x70000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+<p><strong>Register File Final</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0xCAFE0233</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x70000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Data Memory</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000000</td><td class="memory-data">0x09</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000001</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000002</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000003</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000004</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000005</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000006</td><td class="memory-data">0xFE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000007</td><td class="memory-data">0xCA</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000008</td><td class="memory-data">0x25</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000009</td><td class="memory-data">0x16</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000A</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000B</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Register File</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x00000008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x70000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Data Memory Initial</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000000</td><td class="memory-data">0x09</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000001</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000002</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000003</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000004</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000005</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000006</td><td class="memory-data">0xFE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000007</td><td class="memory-data">0xCA</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000008</td><td class="memory-data">0x25</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000009</td><td class="memory-data">0x16</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000A</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000B</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+<p><strong>Data Memory Final</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000000</td><td class="memory-data">0x08</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000001</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000002</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000003</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000004</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000005</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000006</td><td class="memory-data">0xFE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000007</td><td class="memory-data">0xCA</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000008</td><td class="memory-data">0x25</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000009</td><td class="memory-data">0x16</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000A</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000B</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<h3>Word vs. Byte</h3>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-e6f861d0-7191-4c1d-9ccc-a3799ec822c0" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">int</span><span style="color: #BBB"> </span>A[<span style="color: #40A070">3</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>{<span style="color: #40A070">9</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xCAFE0233</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0x1625</span>};
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>Suppose that the array <code>A</code> was declared as above and that the register file and data memory have the initial states shown below. The base pointer of array <code>A</code> is stored in <code>$3</code> because <code>R[3] == 0x10010008</code>, the first address of the array.</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<p>Suppose we wrote the following MIPS assembly code.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-cc269c04-bc29-4cc7-aa12-eaef2c819dd7" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>lw<span style="color: #BBB">   </span><span style="color: #BB60D5">$2</span>,<span style="color: #BBB"> </span><span style="color: #40A070">6</span><span style="color: #666">(</span><span style="color: #BB60D5">$3</span><span style="color: #666">)</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>This assembly code would take the address stored in <code>$3</code> as its base pointer and then add the constant 6 to it. The instruction would try to read from <code>R[3]+SignExtImm</code> = <code>0x10010008+6</code> = <code>0x1001000E</code>. Unfortunately, this address is not evenly divisible by 4, so this instruction would result in an "addresss unaligned error". Because of the error, what happens next will depend on what error correction (called exception handling) the hardware and the operating system support. What gets stored in the destination register is unknown (<code>R[2] = 0x????????</code>).</p>
+        </div>
+        <div class="col-sm-6">
+<p>Suppose we wrote the following MIPS assembly code.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-cfee214e-d98d-4c09-8d23-78c8f40d4f73" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>lbu<span style="color: #BBB">  </span><span style="color: #BB60D5">$2</span>,<span style="color: #BBB"> </span><span style="color: #40A070">6</span><span style="color: #666">(</span><span style="color: #BB60D5">$3</span><span style="color: #666">)</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>This assembly code would take the address stored in <code>$3</code> as its base pointer and then add the constant 6 to it. The instruction would try to read from <code>R[3]+SignExtImm</code> = <code>0x10010008+6</code> = <code>0x1001000E</code>. It can read from this address because, Bytes can be aligned with any address. The Byte at <code>0x1001000E</code> (<code>0xFE</code>) would be copied from the data memory, get zero extended, and stored in the destination register (<code>R[2] = 0x000000FE</code>).</p>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Register File Initial</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x00000008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x10010008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+<p><strong>ADDRESS UNLAIGNED ERROR!!</strong></p>
+<p><strong>Register File Final</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x????????</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x10010008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Data Memory</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x10010008</td><td class="memory-data">0x09</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x10010009</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x1001000A</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x1001000B</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x1001000C</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x1001000D</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x1001000E</td><td class="memory-data">0xFE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x1001000F</td><td class="memory-data">0xCA</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x10010010</td><td class="memory-data">0x25</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x10010011</td><td class="memory-data">0x16</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x10010012</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x10010013</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Register File Initial</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x00000008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x10010008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+<p><strong>Register File Final</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x10010000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x000000FE</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0x10010008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Data Memory</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000000</td><td class="memory-data">0x09</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000001</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000002</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000003</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000004</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000005</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000006</td><td class="memory-data">0xFE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x70000007</td><td class="memory-data">0xCA</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000008</td><td class="memory-data">0x25</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x70000009</td><td class="memory-data">0x16</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000A</td><td class="memory-data">0x00</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x7000000B</td><td class="memory-data">0x00</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info" role="alert">
+Note: The example on the right above is essentially type casting a portion of an <code>int</code> to be a <code>char</code>. For example, it could be executing the line of C code <code>unsigned char x = (unsigned char) (A[2] &gt;&gt; 16);</code>.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>More Word vs Byte</h5>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-a56eb282-bc1d-42e0-8595-4a8f4c6a40dc" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><span style="color: #902000">int</span><span style="color: #BBB"> </span>A[<span style="color: #40A070">3</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>{<span style="color: #40A070">0x12345678</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xCAFE0233</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0xDEADBEEF</span>};
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>Suppose that the array <code>A</code> was declared as above and that the register file and data memory have the initial states shown below. The base pointer of array <code>A</code> is stored in <code>$1</code> because <code>R[1] == 0x04000014</code>, the first address of the array.</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<p>Suppose we wrote the following MIPS assembly code.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-c0ca495b-663c-4caa-8362-737d90e1d34c" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>sw<span style="color: #BBB">   </span><span style="color: #BB60D5">$3</span>,<span style="color: #BBB"> </span><span style="color: #40A070">4</span><span style="color: #666">(</span><span style="color: #BB60D5">$1</span><span style="color: #666">)</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>This assembly code would take the address stored in <code>$1</code> as its base pointer and then add the constant 4 to it. The instruction would write to the word of data starting at <code>R[1]+SignExtImm</code> = <code>0x04000014+4</code> = <code>0x04000018</code>. So the instruction would copy the whole word of data from $3 to the data memory (<code>M[0x04000018] = 0xF00DD00D</code>) using Little Endian ordering.</p>
+        </div>
+        <div class="col-sm-6">
+<p>Suppose we wrote the following MIPS assembly code.</p>
+<div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-bfee314f-de92-49d4-a711-1c8ad153a48f" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>sb<span style="color: #BBB">   </span><span style="color: #BB60D5">$3</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #666">(</span><span style="color: #BB60D5">$1</span><span style="color: #666">)</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+<p>This assembly code would take the address stored in <code>$1</code> as its base pointer and then add the constant 1 to it. The instruction would write to the Byte at <code>R[1]+SignExtImm</code> = <code>0x04000014+1</code> = <code>0x04000015</code>. So the instruction would copy the least-significant Byte of data from $3 to the data memory (<code>M[0x04000015] = 0x0D</code>).</p>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+<p><strong>Register File</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x04000014</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x00000008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0xF00DD00D</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Initial Data Memory</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000014</td><td class="memory-data">0x78</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000015</td><td class="memory-data">0x56</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000016</td><td class="memory-data">0x34</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000017</td><td class="memory-data">0x12</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x04000018</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x04000019</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x0400001A</td><td class="memory-data">0xFE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x0400001B</td><td class="memory-data">0xCA</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001C</td><td class="memory-data">0xEF</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001D</td><td class="memory-data">0xBE</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001E</td><td class="memory-data">0xAD</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001F</td><td class="memory-data">0xDE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+<p><strong>Final Data Memory</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000014</td><td class="memory-data">0x78</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000015</td><td class="memory-data">0x56</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000016</td><td class="memory-data">0x34</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000017</td><td class="memory-data">0x12</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x04000018</td><td class="memory-data">0x0D</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x04000019</td><td class="memory-data">0xD0</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x0400001A</td><td class="memory-data">0x0D</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x0400001B</td><td class="memory-data">0xF0</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001C</td><td class="memory-data">0xEF</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001D</td><td class="memory-data">0xBE</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001E</td><td class="memory-data">0xAD</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001F</td><td class="memory-data">0xDE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Register File</strong></p>
+<table class="table-condensed table-striped" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Addr</th><th style="color: red;">Data</th>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$0</td><td class="memory-data">0x00000000</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$1</td><td class="memory-data">0x04000014</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$2</td><td class="memory-data">0x00000008</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">$3</td><td class="memory-data">0xF00DD00D</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td>
+</tr>
+</tbody></table>
+        </div>
+        <div class="col-sm">
+<p><strong>Initial Data Memory</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000014</td><td class="memory-data">0x78</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000015</td><td class="memory-data">0x56</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000016</td><td class="memory-data">0x34</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000017</td><td class="memory-data">0x12</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x04000018</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x04000019</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x0400001A</td><td class="memory-data">0xFE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x0400001B</td><td class="memory-data">0xCA</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001C</td><td class="memory-data">0xEF</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001D</td><td class="memory-data">0xBE</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001E</td><td class="memory-data">0xAD</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001F</td><td class="memory-data">0xDE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+<p><strong>Final Data Memory</strong></p>
+<table class="table-condensed" style="margin: 0 auto;">
+<tbody><tr style="background-color:#eeeeee;">
+    <th style="color:#00aa00;">Address</th><th style="color: red;">Data</th><th>A[i]</th>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000014</td><td class="memory-data">0x78</td><td rowspan="4" style="vertical-align: middle;">A[0]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000015</td><td class="memory-data">0x0D</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000016</td><td class="memory-data">0x34</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x04000017</td><td class="memory-data">0x12</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x04000018</td><td class="memory-data">0x33</td><td rowspan="4" style="vertical-align: middle;">A[1]</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x04000019</td><td class="memory-data">0x02</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x0400001A</td><td class="memory-data">0xFE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">0x0400001B</td><td class="memory-data">0xCA</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001C</td><td class="memory-data">0xEF</td><td rowspan="4" style="vertical-align: middle;">A[2]</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001D</td><td class="memory-data">0xBE</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001E</td><td class="memory-data">0xAD</td>
+</tr>
+<tr>
+    <td style="color:#00aa00;">0x0400001F</td><td class="memory-data">0xDE</td>
+</tr>
+<tr style="background-color:#eeeeee;">
+    <td style="color:#00aa00;">...</td><td class="memory-data">...</td><td></td>
+</tr>
+</tbody></table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>C to MIPS assembly coding examples</h3>
+<p>Translate the following C code example to MIPS assembly, assuming that each array's base point is allocated to <code>$4</code> and <code>$5-$9</code> may be used for temporary storage. Because the array indices in these examples are constants, we can use the constant immediate offset for indexing the arrays.</p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<p>Given a short array <code>short S[10];</code>, translate the following code.</p>
+<p><strong>C code</strong>
+</p><div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-ad484322-712d-494f-a4c7-3a25dcbdbf40" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>S[<span style="color: #40A070">0</span>]<span style="color: #666">++</span>;
+S[<span style="color: #40A070">1</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>S[<span style="color: #40A070">2</span>]<span style="color: #BBB"> </span><span style="color: #666">+</span><span style="color: #BBB"> </span>S[<span style="color: #40A070">3</span>];
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p></p><p><strong>MIPS assembly code</strong>
+</p><div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-f66028a5-ecb7-4521-9d57-b3463b741cd2" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span>
+<span style="">6</span>
+<span style="">7</span>
+<span style="">8</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>lh<span style="color: #BBB">   </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># copy S[0] to register file</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># increment the copy of S[0]</span>
+sh<span style="color: #BBB">   </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># store the copy back to S[0]</span>
+
+lh<span style="color: #BBB">   </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">4</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># copy S[2] to regfile, 2*2 = 4 offset</span>
+lh<span style="color: #BBB">   </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">6</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># copy S[3] to regfile, 3*2 = 5 offset</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span><span style="color: #BBB"> </span><span style="color: #60A0B0; font-style: italic"># add copies of S[2] and S[3] </span>
+sh<span style="color: #BBB">   </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">2</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># store sum into S[1]</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        <p></p></div>
+        <div class="col-sm-6">
+<p>Given a char array <code>char C[10];</code>, translate the following code.</p>
+<p><strong>C code</strong>
+</p><div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-ca9ff349-2135-4aa7-b7c2-b497cc28dd0a" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>C[<span style="color: #40A070">0</span>]<span style="color: #666">++</span>;
+C[<span style="color: #40A070">1</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>C[<span style="color: #40A070">2</span>]<span style="color: #BBB"> </span><span style="color: #666">+</span><span style="color: #BBB"> </span>C[<span style="color: #40A070">3</span>];
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p></p><p><strong>MIPS assembly code</strong>
+</p><div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-a9eb2ea5-3f9d-4004-991e-4714efb56bab" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span>
+<span style="">6</span>
+<span style="">7</span>
+<span style="">8</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>lb<span style="color: #BBB">   </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># copy S[0] to regfile, 0*2 = 0 offset</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># increment the copy of S[0]</span>
+sb<span style="color: #BBB">   </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># store the copy back to S[0]</span>
+
+lb<span style="color: #BBB">   </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #40A070">2</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># copy C[2] to regfile, 2*1 = 2 offset</span>
+lb<span style="color: #BBB">   </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">3</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># copy C[3] to regfile, 3*1 = 3 offset</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span><span style="color: #BBB"> </span><span style="color: #60A0B0; font-style: italic"># add copies of S[2] and S[3] </span>
+sb<span style="color: #BBB">   </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #666">(</span><span style="color: #BB60D5">$4</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># store sum into S[1], 1*1 = 1 offset</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        <p></p></div>
+    </div>
+</div>
+
+<p>Translate the following C code example to MIPS assembly, assuming that each array's base point is allocated to <code>$4</code> and <code>$5-$9</code> may be used for temporary storage. Because the array index in these examples are variables, we cannot use the constant immediate offset for indexing the arrays. We instead manually calculate the base+offset and store a temporary pointer in a temporary pointer that points directly to our target array element. The load and store instructions are I-type instructions and cannot take a third variable argument.</p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+<p>Given an int array <code>int A[10];</code> and a variable <code>i</code> that is register allocated to <code>$12</code>.</p>
+<p><strong>C code</strong>
+</p><div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-a6932aa2-81e4-405d-ab4d-cc4ef132dc53" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>A[i<span style="color: #666">+</span><span style="color: #40A070">1</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>A[i]<span style="color: #BBB"> </span><span style="color: #666">+</span><span style="color: #BBB"> </span><span style="color: #40A070">1</span>;
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p></p><p><strong>MIPS assembly code</strong>
+</p><div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-e5710987-7b5f-4290-be59-93099671f811" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span>
+<span style="">6</span>
+<span style="">7</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>mul<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$12</span>,<span style="color: #BBB"> </span><span style="color: #40A070">4</span><span style="color: #BBB"> </span><span style="color: #60A0B0; font-style: italic"># multiple index by data size to get the offset</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span><span style="color: #BBB"> </span><span style="color: #60A0B0; font-style: italic"># add based pointer to the offset, </span>
+<span style="color: #BBB">                </span><span style="color: #60A0B0; font-style: italic"># to get a temporary pointer to A[i]</span>
+lw<span style="color: #BBB">   </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0</span><span style="color: #666">(</span><span style="color: #BB60D5">$5</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># copy A[i] to register file</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># increment the copy of A[i]</span>
+sw<span style="color: #BBB">   </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">4</span><span style="color: #666">(</span><span style="color: #BB60D5">$5</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># store the copy back to A[i+1]</span>
+<span style="color: #BBB">                </span><span style="color: #60A0B0; font-style: italic"># use the constant offset to add the constant 1*4</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        <p></p></div>
+        <div class="col-sm-6">
+<p>Given a char array <code>char C[10];</code> and a variable <code>i</code> that is register allocated to <code>$12</code>.</p>
+<p><strong>C code</strong>
+</p><div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-c2070834-4a08-49ab-9b7d-025cb39f638b" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>C[i<span style="color: #666">+</span><span style="color: #40A070">1</span>]<span style="color: #BBB"> </span><span style="color: #666">=</span><span style="color: #BBB"> </span>C[i]<span style="color: #BBB"> </span><span style="color: #666">+</span><span style="color: #BBB"> </span><span style="color: #40A070">1</span>;
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+
+<p></p><p><strong>MIPS assembly code</strong>
+</p><div class="pl-code mb-3 " style="--pl-code-background-color: #f0f0f0; --pl-code-line-number-color: #666666;">
+    <div id="pl-code-fe409cda-c3db-4c35-abb0-5794d2551324" class="rounded"><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span style="">1</span>
+<span style="">2</span>
+<span style="">3</span>
+<span style="">4</span>
+<span style="">5</span>
+<span style="">6</span>
+<span style="">7</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span>mul<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$12</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB"> </span><span style="color: #60A0B0; font-style: italic"># multiple index by data size to get the offset</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$5</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$4</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$5</span><span style="color: #BBB"> </span><span style="color: #60A0B0; font-style: italic"># add based pointer to the offset, </span>
+<span style="color: #BBB">                </span><span style="color: #60A0B0; font-style: italic"># to get a temporary pointer to C[i]</span>
+lb<span style="color: #BBB">   </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">0</span><span style="color: #666">(</span><span style="color: #BB60D5">$5</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># copy A[i] to register file</span>
+add<span style="color: #BBB">  </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># increment the copy of C[i]</span>
+sb<span style="color: #BBB">   </span><span style="color: #BB60D5">$6</span>,<span style="color: #BBB"> </span><span style="color: #40A070">1</span><span style="color: #666">(</span><span style="color: #BB60D5">$5</span><span style="color: #666">)</span><span style="color: #BBB">  </span><span style="color: #60A0B0; font-style: italic"># store the copy back to C[i+1]</span>
+<span style="color: #BBB">                </span><span style="color: #60A0B0; font-style: italic"># use the constant offset to add the constant 1*1</span>
+</pre></div></td></tr></tbody></table></div>
+</div>
+
+</div>
+        <p></p></div>
+    </div>
+</div>
+
+<style>
+    .memory-data{
+        border-style: solid;
+        border-color: black;
+        border-left-width: 1pt;
+        border-right-width: 1pt;
+        border-top-width: 1pt;
+        border-bottom-width: 1pt;
+        color: red;
+    }
+</body></html></style>
+<hr>
+
+<div>
+    <details class="pl-hidden-hint rounded">
+        <summary>Partial MIPS Reference Guide with Explainer</summary>
+        
+<h2>Core Instruction Set</h2>
+<table style="border-collapse: collapse; width: 96.6667%; height: 304px;" border="1" cellspacing="0" cellpadding="0">
+    <caption>List of MIPS instructions for CS 233</caption>
+    <tbody>
+        <tr style="height: 52px;">
+            <th style="width: 17.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Name</th>
+            <th style="width: 7.5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Mnemonic</th>
+            <th style="width: 20%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Assembly Format</th>
+            <th style="width: 35%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Operation (In Verilog)</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Format/<br>Notes</th>
+            <th style="width: 5%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Opcode/<br>Funct</th>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Add</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">add</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">add $rd, $rs, $rt</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rd]=R[rs]+R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R / (1)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 20<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Add Immediate</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">addi</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">addi $rt, $rs, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rt]=R[rs] + SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (1,2)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">8<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Add Immediate Unsigned</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">addiu</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">addiu $rt, $rs, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rt]=R[rs] + SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">9<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Add Unsigned</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">addu</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">addu $rd, $rs, $rt</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rd]=R[rs]+R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 21<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">And</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">and</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">and $rd, $rs, $rt</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rd]=R[rs] &amp; R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 24<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">And Immediate</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">andi</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">andi $rt, $rs, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[rt]=R[rs] &amp; ZeroExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (3)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">c<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">beq</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">beq $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">if(R[rs] == R[rt])</code><br><code class="mips">&nbsp; PC=PC+4+BranchAddr</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;"><p>I / (4)</p></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">4<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Branch on Not Equal</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">bne</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">bne $rs, $rt, imm</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">if(R[rs] != R[rt])</code><br><code class="mips">&nbsp; PC=PC+4+BranchAddr</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+4</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">I / (4)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">5<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">j</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">j address</code> or <code class="mips">j label</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">PC=JumpAddr</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">J / (5)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">2<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump and Link</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">jal</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">jal address</code> or <code class="mips">jal label</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">R[31]=PC+4;</code> <code class="mips">PC=JumpAddr</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">J / (5)</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">3<sub>hex</sub></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td style="width: 17.5%; height: 28px; vertical-align: middle;">Jump Register</td>
+            <td style="width: 7.5%; height: 28px; vertical-align: middle;"><code class="mips">jr</code></td>
+            <td style="width: 20%; height: 28px; vertical-align: middle;"><code class="mips">jr $rs</code></td>
+            <td style="width: 35%; height: 28px; vertical-align: middle;"><code class="mips">PC=R[rs]</code></td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">R</td>
+            <td style="width: 5%; height: 28px; vertical-align: middle;">0 / 08<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Byte&nbsp;</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lb</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lb $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={ {24{M[R[rs]+SignExtImm](7)}}, M[R[rs]+SignExtImm](7:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">20<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Byte Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lbu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lbu $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={24’b0, M[R[rs]+SignExtImm](7:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">24<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Halfword&nbsp;</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lh</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lh $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={ {26{M[R[rs]+SignExtImm](15)}}, M[R[rs]+SignExtImm](15:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">21<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Halfword Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lhu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lhu $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={16’b0,M[R[rs]+SignExtImm](15:0)};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">25<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Upper Imm</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lui</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lui $rt, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]={imm, 16'b0};</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I</td>
+            <td style="width: 5%; vertical-align: middle;">f<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Load Word</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">lw</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">lw $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=M[R[rs]+SignExtImm];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">23<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Move From Coprocessor 0</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">mfc0</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">mfc0 $rt, $rd</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=CPR[0,rd];</code> <code class="mips">PC=PC+4</code> (<code class="mips">$rs = 0</code>)&nbsp;</td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">10<sub>hex</sub> / 0</td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Move To Coprocessor 0</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">mtc0</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">mtc0 $rt, $rd</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">CPR[0,rd]=R[rt];</code> <code class="mips">PC=PC+4</code> (<code class="mips">$rs = 4</code>)</td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">10<sub>hex</sub> / 0</td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Nor</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">nor</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">nor $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=~(R[rs] | R[rt]);</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 27<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Or</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">or</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">or $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rs] | R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 25<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Or Immediate</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">ori</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">ori $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=R[rs] | ZeroExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (3)</td>
+            <td style="width: 5%; vertical-align: middle;">d<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">slt</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">slt $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=(R[rs]&lt;R[rt]) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 2a<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than Immediate</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">slti</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">slti $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=(R[rs]&lt;SignExtImm) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">a<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than Immediate Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sltiu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sltiu $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=(R[rs]&lt;SignExtImm) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2, 6)</td>
+            <td style="width: 5%; vertical-align: middle;">b<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Set if Less Than Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sltu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sltu $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=(R[rs]&lt;R[rt]) ? 1 : 0;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R / (6)</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 2b<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Shift Left Logical</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sll</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sll $rd, $rt, shamt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rt]&lt;&lt;shamt;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 00<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Shift Right Arithmetic</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sra</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sra $rd, $rt, shamt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rt]&gt;&gt;shamt;</code> (arithmetic) <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 03<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Shift Right Logical</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">srl</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">srl $rd, $rt, shamt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rt]&gt;&gt;shamt;</code> (logical) <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 02<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Store Byte</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sb</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sb $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">M[R[rs]+SignExtImm](7:0)=R[rt](7:0);</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">28<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Store Halfword</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sh</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sh $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">M[R[rs]+SignExtImm](15:0)=R[rt](15:0);</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">29<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Store Word</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sw</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sw $rt, imm($rs)</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">M[R[rs]+SignExtImm]=R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (2)</td>
+            <td style="width: 5%; vertical-align: middle;">2b<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Subtract</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">sub</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">sub $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rs]-R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R / (1)</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 22<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Subtract Unsigned</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">subu</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">subu $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rs]-R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 23<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Xor</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">xor</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">xor $rd, $rs, $rt</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rd]=R[rs]^R[rt];</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">R</td>
+            <td style="width: 5%; vertical-align: middle;">0 / 26<sub>hex</sub></td>
+        </tr>
+        <tr>
+            <td style="width: 17.5%; vertical-align: middle;">Xor Immediate</td>
+            <td style="width: 7.5%; vertical-align: middle;"><code class="mips">xori</code></td>
+            <td style="width: 20%; vertical-align: middle;"><code class="mips">xori $rt, $rs, imm</code></td>
+            <td style="width: 35%; vertical-align: middle;"><code class="mips">R[rt]=R[rs]^ZeroExtImm;</code> <code class="mips">PC=PC+4</code></td>
+            <td style="width: 5%; vertical-align: middle;">I / (3)</td>
+            <td style="width: 5%; vertical-align: middle;">e<sub>hex</sub></td>
+        </tr>
+    </tbody>
+</table>
+<ol>
+    <li>May cause overflow exception</li>
+    <li><code class="mips">SignExtImm = { {16{inst[15]}}, inst[15:0] }</code></li>
+    <li><code class="mips">ZeroExtImm = { {16{1'b0}}, inst[15:0] }</code></li>
+    <li><code class="mips">BranchAddr = { {14{immediate[15]}}, immediate, 2'b0 }</code></li>
+    <li><code class="mips">JumpAddr = { PC+4[31:28], address, 2'b0 }</code></li>
+    <li>Operands considered unsigned numbers (vs. 2's complement)</li>
+    <li>Atomic test &amp; set pair; <code class="mips">R[rt] = 1</code> if pair atomic, <code class="mips">0</code> if not atomic</li>
+</ol>
+<h2>How to Read the Core Instructions Table</h2>
+<p>The NAME, MNEMONIC columns tell you a descriptive name (add or add immediate) and a short mnemonic that you will use in your assembly programs (<code class="mips">add</code> or <code class="mips">addi</code>).</p>
+<p>The FORMAT column tells you what basic instruction format the instruction uses for its machine code. See next section for more information on instruction formats.</p>
+<p>The OPERATION column provides a Verilog description of what the instruction should ultimately implement. Values on the right are taken from immediately before the positive clock edge and are assigned to the value on the left immediately after the next positive clock edge. <code class="mips">R[ ]</code> refers to the contents of a register in the register file. <code class="mips">M[ ]</code> refers to the contents of a memory address in the data memory. <code class="mips">PC</code> refers to the Program Counter's contents. All other signal names are explained in the footnotes indicated by the numbers in parentheses. Reminder: Curly braces (i.e., <code class="mips">{ }</code>) are used for concatenating wires into a bus.</p>
+<p>The OPCODE/FUNCT column has either one or two numbers represented in 6-bit hexadecimal (i.e., 0 means 00 0000 and 20<sub>hex&nbsp;</sub>means 10 0000). If the instruction format is R, then the first number is the 6-bit opcode and the second number is the 6-bit funct code. If the instruction format is I or J, then the number is the 6-bit opcode - these instruction formats do not have a funct code.</p>
+
+<p>You will need to know only these three basic instruction formats. All MIPS instructions are encoded as 32-bit pieces of data that can be parsed into smaller fields. The names of the fields and which bits are allocated to each field are shown in the figure. One important thing to notice is that the order of fields in the instruction formats do not match the order of fields in the Verilog or MIPS assembly. For example, if you had the instruction <code class="mips">add $5, $3, $8</code>, you would be assigning your data to <code class="mips">R[5]</code>. The <code class="mips">add</code> instruction's Verilog is <code class="mips">R[rd] = R[rs] + R[rt]</code>. Consequently, <code class="mips">$5</code> is <code class="mips">rd</code>, <code class="mips">$3</code> is <code class="mips">rs</code>, and <code class="mips">$8</code> is <code class="mips">rt</code>, so that the Verilog and assembly mnemonic match.</p>
+
+<h2>Notes on Assembly Format Norms</h2>
+<ul>
+    <li><code class="mips">$r<strong>s</strong></code> is a <strong>s</strong>ource register exclusively, <code class="mips">$r<strong>d</strong></code> is a <strong>d</strong>estination register exclusively, <code class="mips">$r<strong>t</strong></code> <strong>t</strong>ransitions between being a source and a destination register</li>
+    <li>Assignment generally goes to the left for instructions that do not use the data memory (e.g., <code class="mips">add $rd, $rs, $rt</code> is assigning to <code class="mips">$rd</code>. <code class="mips">lui $rt, imm</code> is assigning to <code class="mips">$rt</code>)</li>
+    <li>If multiple registers are used as sources, <code class="mips">$rs</code> is listed first, <code class="mips">$rt</code> is listed second (e.g., <code class="mips">or $rd, $rs, $rt</code> has two sources as does <code class="mips">beq $rs, $rt, imm</code>)</li>
+    <li>Any instruction that reads from (e.g., <code class="mips">lb</code> or <code class="mips">lw</code>), or writes to (e.g., <code class="mips">sb</code> or <code class="mips">sw</code>), data memory treats <code class="mips">R[rs]</code> as a base address pointer and <code class="mips">imm</code> as an offset from that base pointer. This <strong>base+offset</strong> behavior is indicated by the <code class="mips">imm($rs)</code> notation, where the address of the data to be read from or written to in data memory is always <code class="mips">R[rs]+SignExtImm</code>. Consequently, all data memory instructions use the <code class="mips">$rt, imm($rs)</code> format. <code class="mips">$rt</code> transitions from being a source or a destination.</li>
+</ul>
+<h2>Converting MIPS Assembly to Machine Code</h2>
+<ol>
+    <li>Find the MIPS assembly instruction in the Core Instruction Set table</li>
+    <li>Use the second-to-last column to identify the instruction's machine code format. The format will be either R, I, or J. Use the Basic Instruction Format figures to identify the fields you need for that instruction format.</li>
+    <li>If it's I-type or J-type format, use the last column to find the opcode (e.g., <code class="mips">andi</code> has opcode c<sub>hex</sub> and <code class="mips">jal</code> has opcode 3<sub>hex</sub>) and convert the hexadecimal opcode to 6-bit unsigned binary (e.g., e<sub>hex</sub> becomes 001110 and 23<sub>hex</sub> becomes 100011).&nbsp; If it's R-type format, use the last column to find the opcode (first number) and funct code (second number) (e.g., <code class="mips">jr</code> has opcode 0 and funct code 08<sub>hex</sub> and <code class="mips">mfc0</code> has opcode 10<sub>hex</sub> and funct code 0) and convert both to 6-bit unsigned binary.</li>
+    <li>If it's J-type format, take the 32-bit instruction memory address signified by the label, strip off the 4 most-significant bits (they will be added back in by <code class="mips">PC+4[31:28]</code>) and strip off the 2 least-significant bits (they will be added back in by <code class="mips">2'b0</code>), leaving you with the 26-bit address field for the J-type instruction.</li>
+    <li>If it's I-type or R-type format, use the Assembly Format column to map the fields of the assembly code to the fields of the instruction format. Convert <code class="mips">$rs</code>, <code class="mips">$rt</code>, <code class="mips">$rd</code>, and <code class="mips">shamt</code> fields into 5-bit unsigned binary (e.g., <code class="mips">$rs</code> = <code class="mips">$6</code> becomes 00110 and <code class="mips">shamt</code> = 12 becomes 01100). Convert the immediate field into 16-bit 2's complement representation (e.g., imm = 24 becomes 0000 0000 0001 1000 and imm = -1 becomes 1111 1111 1111 1111). Any field that is not specified by the Assembly Format column should be all 0s (e.g., <code class="mips">shamt</code> should 00000 for <code class="mips">add</code> and <code class="mips">rs</code> should be 00000 for <code class="mips">lui</code>).</li>
+    <li>Concatenate all of the fields of your instruction format together as shown in the Basic Instruction Formats diagram. Example: <code class="mips">or $8, $15, $20</code> is an R-type instruction with opcode = 000000 (0<sub>hex</sub>), funct code = 100101 (25<sub>hex</sub>), <code class="mips">$rs</code> = <code class="mips">$15</code> = 01111, <code class="mips">$rt</code> = <code class="mips">$20</code> = 10100, <code class="mips">$rd</code> = <code class="mips">$8</code> = 01000, <code class="mips">shamt</code> = 00000, so the machine code would be 000000 01111 10100 01000 00000 100101.</li>
+</ol>
+
+<h4>Examples</h4>
+<p><code class="mips">add $5, $3, $8</code> maps to machine code 000000&nbsp; &nbsp;00011&nbsp; &nbsp; 01000&nbsp; &nbsp; 00101&nbsp; &nbsp;00000&nbsp; &nbsp;100000</p>
+<p><code class="mips">addi $5, $3, -8</code> maps to machine code 001000&nbsp; &nbsp;00011&nbsp; &nbsp; 00101&nbsp; &nbsp; 1111111111111000</p>
+<p><code class="mips">j 0x0000000c</code> maps to machine code 000010&nbsp; &nbsp;00000000000000000000000011</p>
+
+<h2>Pseudoinstructions</h2>
+<p>Instructions that you can use when writing assembly code but are not real instructions. These instructions will be converted into real instructions by the assembler. These instructions do not have opcodes or instruction formats because they cannot be translated directly into machine code.</p>
+<table style="border-collapse: collapse; width: 85.926%; height: 304px;" border="1" cellspacing="0" cellpadding="0">
+    <caption>List of MIPS Pseudoinstructions for CS 233</caption>
+    <tbody>
+        <tr style="height: 52px;">
+            <th scope="col">Name</th>
+            <th scope="col">Mnemonic</th>
+            <th scope="col">Assembly Format</th>
+            <th style="width: 35%; height: 52px; vertical-align: middle; text-align: left;" scope="col">Operation (In Verilog)</th>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch on Equal (Immediate)</td>
+            <td><code class="mips">beq</code></td>
+            <td><code class="mips">beq $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] == SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch Less Than</td>
+            <td><code class="mips">blt</code></td>
+            <td><code class="mips">blt $rs, $rt, label</code><br>OR<br><code class="mips">blt $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] &lt; R[rt])</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+8</code><br>OR<br><code class="mips">if(R[rs] &lt; SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch Greater Than</td>
+            <td><code class="mips">bgt</code></td>
+            <td><code class="mips">bgt $rs, $rt, label</code><br>OR<br><code class="mips">bgt $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] &gt; R[rt])</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+8</code><br>OR<br><code class="mips">if(R[rs] &gt; SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch Less Than or Equal</td>
+            <td><code class="mips">ble</code></td>
+            <td><code class="mips">ble $rs, $rt, label</code><br>OR<br><code class="mips">ble $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] &lt;= R[rt])</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+8</code><br>OR<br><code class="mips">if(R[rs] &lt;= SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Branch Greater Than or Equal</td>
+            <td><code class="mips">bge</code></td>
+            <td><code class="mips">bge $rs, $rt, label</code><br>OR<br><code class="mips">bge $rs, imm, label</code></td>
+            <td><code class="mips">if(R[rs] &gt;= R[rt])</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=PC+8</code><br>OR<br><code class="mips">if(R[rs] &gt;= SignExtImm)</code><br><code class="mips">&nbsp; PC=label</code><br><code class="mips">else</code><br><code class="mips">&nbsp; PC=NextInstructionInProgram</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Load Immediate</td>
+            <td><code class="mips">li</code></td>
+            <td><code class="mips">li $rt, imm</code></td>
+            <td><code class="mips">R[rt]=immediate;</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Move</td>
+            <td><code class="mips">move</code></td>
+            <td><code class="mips">move $rd, $rs</code></td>
+            <td><code class="mips">R[rd]=R[rs];</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Not</td>
+            <td><code class="mips">not</code></td>
+            <td><code class="mips">not $rd, $rs</code></td>
+            <td><code class="mips">R[rd]=~R[rs]</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Multiply</td>
+            <td><code class="mips">mul</code></td>
+            <td><code class="mips">mul $rd, $rs, $rt</code><br>OR<br><code class="mips">mul $rt, $rs, imm</code></td>
+            <td><code class="mips">R[rd]=R[rs]*R[rt];</code> <code class="mips">PC=PC+4</code><br>OR<br><code class="mips">R[rt]=R[rs]*SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Divide (Integer division)</td>
+            <td><code class="mips">div</code></td>
+            <td><code class="mips">div $rd, $rs, $rt</code><br>OR<br><code class="mips">div $rt, $rs, imm</code></td>
+            <td><code class="mips">R[rd]=R[rs]/R[rt];</code> <code class="mips">PC=PC+4</code><br>OR<br><code class="mips">R[rt]=R[rs]/SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+        <tr style="height: 28px;">
+            <td>Remainder (Modulus)</td>
+            <td><code class="mips">rem</code></td>
+            <td><code class="mips">rem $rd, $rs, $rt</code><br>OR<br><code class="mips">rem $rt, $rs, imm</code></td>
+            <td><code class="mips">R[rd]=R[rs]%R[rt];</code> <code class="mips">PC=PC+4</code><br>OR<br><code class="mips">R[rt]=R[rs]%SignExtImm;</code> <code class="mips">PC=PC+4</code></td>
+        </tr>
+    </tbody>
+</table>
+<p>Note: How branch pseudoinstructions get turned into real machine code can vary based on which constants or registers are used. For example, <code class="mips">beq $5, 4, label</code> would assemble to <code class="mips">ori $1, $0, 4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; beq $1, $5, label</code> but <code class="mips">beq $5, 0xdeadbeef, label</code>would assemble to <code class="mips">lui $1, $0, 0xdead &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ori $1, $1, 0xbeef &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; beq $1, $5, label</code>. Consequently, we cannot easily say how much <code class="mips">PC</code> should increment after branch pseudoinstructions. Rather than specifically indicate how much <code class="mips">PC</code> would increment, we write <code class="mips">PC=NextInstructionInProgram</code>, where <code class="mips">NextInstructionInProgram</code> is address of the instruction in your program that appears after the branch pseudoinstruction in the assembly.</p>
+
+
+    </details>
+</div>
+
+<h2>Mark as read</h2>
+<fieldset class="d-block"><legend class="visually-hidden">Checkbox options</legend>
+
+    <div class="form-check d-flex align-items-center py-1 gap-2">
+        <input class="form-check-input mt-0 flex-shrink-0" type="checkbox" name="read" value="a" id="read-a">
+
+        <label class="form-check-label d-flex align-items-center" for="read-a">
+            <div class="pl-checkbox-key-label">(a)</div>
+            <div class="ml-1 mr-1 pl-checkbox-answer ms-1 me-1">I've read this!</div>
+        </label>
+
+            
+    </div>
+    
+<span class="form-inline d-flex flex-row flex-wrap align-items-center">
+    <span class="input-group pl-checkbox">
+        <span> <small class="form-text text-muted">Select all possible options that apply.</small> </span>
+        <button type="button" class="btn btn-light btn-sm" data-toggle="popover" data-html="true" data-content="You must select at least 1 option. You will receive a score of 100% if you select all options that are true and no options that are false. Otherwise, you will receive a score of 0%." data-placement="auto" data-bs-content="You must select at least 1 option. You will receive a score of 100% if you select all options that are true and no options that are false. Otherwise, you will receive a score of 0%." data-bs-html="true" data-bs-placement="auto" data-bs-toggle="popover" aria-label="Checkbox" data-bs-original-title="Checkbox">
+            <svg class="svg-inline--fa fa-circle-question" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-question" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg><!-- <i class="fa fa-question-circle" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+        </button>
+    </span>
+</span>
+
+
+
+
+
+
+</fieldset></div>
+      
+      <div class="card-footer" id="question-panel-footer">
+        <input type="hidden" name="__csrf_token" value="YWIxOWI4Y2U4YmJkM2ExZjZiMzU5OWM5N2E2MjhiNjQzZWUwNzliNjNkYTc3NTFhMGIzY2M1NTc1ODQ5NjBkYQ.m71kdw53.eyJ1cmwiOiIvcGwvY291cnNlX2luc3RhbmNlLzE3NDY4OC9pbnN0YW5jZV9xdWVzdGlvbi80NzcxOTE0ODkvIiwiYXV0aG5fdXNlcl9pZCI6IjQ1MDI5MzkifQ">
+        <div id="question-panel-footer-content">
+      <div class="row">
+        <div class="col d-flex justify-content-between">
+          <span class="d-flex align-items-center">
+            
+                  <button class="btn btn-info question-save disable-on-submit order-2" name="__action" value="save">
+                    Save only
+                  </button>
+                
+            
+                  <button class="btn btn-primary question-grade disable-on-submit order-1 mr-1 me-1" name="__action" value="grade">
+                    Save &amp; Grade
+                    <small class="font-italic ml-2 ms-2 fst-italic">Unlimited attempts</small>
+                  </button>
+                
+            
+          </span>
+          <span class="d-flex">
+             <input type="hidden" name="__variant_id" value="115289230"> 
+            
+            
+          </span>
+        </div>
+      </div>
+      
+    </div>
+      </div>
+    
+    </div>
+  
+            </form>
+          
+
+      <div class="card mb-4 grading-block d-none">
+        <div class="card-header bg-secondary text-white">
+          <h2>Correct answer</h2>
+        </div>
+        <div class="card-body answer-body"></div>
+      </div>
+
+      
+    </div>
+    
+  
+            </div>
+
+            <div class="col-lg-3 col-sm-12">
+              
+    <div class="card mb-4" id="assessment-score-panel">
+      <div class="card-header bg-secondary">
+        <h2>
+          <a class="text-white" href="https://us.prairielearn.com/pl/course_instance/174688/assessment_instance/9602377/">
+            PRE 09
+          </a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-center">
+          <a class="btn btn-info" href="https://us.prairielearn.com/pl/course_instance/174688/assessment_instance/9602377/">
+            Assessment overview
+          </a>
+        </div>
+      </div>
+      <table class="table table-sm" aria-label="Assessment score">
+        <tbody>
+          <tr>
+            <td>Total points:</td>
+            <td>
+              0/100
+            </td>
+          </tr>
+          <tr>
+            <td>Score:</td>
+            <td class="align-middle">
+    <div class="progress border border-success " style="min-width: 5em; max-width: 20em;">
+      <div class="progress-bar bg-success" style="width: 0%">
+        
+      </div>
+      <div class="d-flex flex-column justify-content-center text-center" style="width: 100%">
+        0%
+      </div>
+    </div>
+  </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+              
+    <div class="card mb-4" id="question-score-panel">
+      <div class="card-header bg-secondary text-white">
+        <h2>Question PRE09.1</h2>
+      </div>
+      
+    <table class="table table-sm two-column-description-no-header" aria-label="Question score" id="question-score-panel-content">
+      <tbody>
+        
+        
+              
+                      <tr>
+                        <td>Value:</td>
+                        <td>
+    1
+    <button type="button" class="btn btn-xs js-value-popover" data-toggle="popover" data-container="body" data-html="true" data-content="
+        &lt;p&gt;
+          This question awards partial credit if you continue getting closer to the correct answer.
+        &lt;/p&gt;
+      
+        &lt;p&gt;
+          If you score 100% on your next submission, you will be awarded an additional
+          1 point.
+        &lt;/p&gt;
+      
+        &lt;p class=&quot;mb-0&quot;&gt;
+          If you score less than 100% on your next submission, you will be awarded an additional
+          &lt;code&gt;1 * score / 100&lt;/code&gt; points.
+        &lt;/p&gt;
+      " data-placement="auto" data-bs-container="body" data-bs-content="
+        &lt;p&gt;
+          This question awards partial credit if you continue getting closer to the correct answer.
+        &lt;/p&gt;
+      
+        &lt;p&gt;
+          If you score 100% on your next submission, you will be awarded an additional
+          1 point.
+        &lt;/p&gt;
+      
+        &lt;p class=&quot;mb-0&quot;&gt;
+          If you score less than 100% on your next submission, you will be awarded an additional
+          &lt;code&gt;1 * score / 100&lt;/code&gt; points.
+        &lt;/p&gt;
+      " data-bs-html="true" data-bs-placement="auto" data-bs-toggle="popover">
+      <svg class="svg-inline--fa fa-circle-question" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-question" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg><!-- <i class="fa fa-question-circle" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+    </button>
+  </td>
+                      </tr>
+                    
+              
+            
+        
+        <tr>
+          <td>Total points:</td>
+          <td>
+            
+    <span class="text-nowrap">
+      —
+      <small>/<span class="text-muted">1</span></small>
+    </span>
+  
+          </td>
+        </tr>
+        
+              <tr>
+                <td colspan="2" class="text-right">
+                  <small>
+                    Auto-graded question
+                  </small>
+                </td>
+              </tr>
+            
+      </tbody>
+    </table>
+  
+      
+    </div>
+  
+              
+    <div class="text-center mb-2">
+      
+      <button id="question-nav-prev" class="btn btn-primary mb-3 disabled" disabled="">
+        Previous question
+      </button>
+    
+      
+    <a id="question-nav-next" class="btn btn-primary mb-3" href="https://us.prairielearn.com/pl/course_instance/174688/instance_question/477191491/">
+      Next question
+    </a>
+  
+    </div>
+  
+              
+    <div class="card mb-4" id="attach-file-panel">
+      <div class="card-header bg-secondary text-white d-flex align-items-center">
+        <svg class="svg-inline--fa fa-paperclip" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z"></path></svg><!-- <i class="fas fa-paperclip"></i> Font Awesome fontawesome.com -->
+        <h2>&nbsp;Personal Notes</h2>
+      </div>
+      <div class="card-body"><i>No attached notes</i></div>
+      
+            <div class="card-footer">
+              
+                      
+    <div>
+      <button class="btn btn-xs btn-secondary" type="button" data-toggle="collapse" data-target="#attachFileCollapse" aria-expanded="false" aria-controls="attachFileCollapse" data-bs-target="#attachFileCollapse" data-bs-toggle="collapse">
+        Attach a file <svg class="svg-inline--fa fa-square-caret-down" aria-hidden="true" focusable="false" data-prefix="far" data-icon="square-caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M384 432c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0zm64-16c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320zM224 352c-6.7 0-13-2.8-17.6-7.7l-104-112c-6.5-7-8.2-17.2-4.4-25.9s12.5-14.4 22-14.4l208 0c9.5 0 18.2 5.7 22 14.4s2.1 18.9-4.4 25.9l-104 112c-4.5 4.9-10.9 7.7-17.6 7.7z"></path></svg><!-- <i class="far fa-caret-square-down"></i> Font Awesome fontawesome.com -->
+      </button>
+      <div class="collapse" id="attachFileCollapse">
+        <form class="attach-file-form mb-3" name="attach-file-form" method="POST" enctype="multipart/form-data">
+          <p class="small mt-3">
+            Attached files will be saved here for your reference. These files act as personal notes
+            and can be used for your own review purposes. They are not used for grading.
+          </p>
+          <div class="form-group mb-3">
+            <div class="custom-file">
+              <label class="custom-file-label form-label" for="attachFileInput">Choose file</label><input type="file" name="file" class="custom-file-input form-control" id="attachFileInput">
+              
+              <small class="form-text text-muted">
+                Max file size: 10 MB
+              </small>
+            </div>
+          </div>
+          <div class="form-group mb-0 mb-3">
+            <input type="hidden" name="__action" value="attach_file">
+            <input type="hidden" name="__variant_id" value="115289230">
+            <input type="hidden" name="__csrf_token" value="YWIxOWI4Y2U4YmJkM2ExZjZiMzU5OWM5N2E2MjhiNjQzZWUwNzliNjNkYTc3NTFhMGIzY2M1NTc1ODQ5NjBkYQ.m71kdw53.eyJ1cmwiOiIvcGwvY291cnNlX2luc3RhbmNlLzE3NDY4OC9pbnN0YW5jZV9xdWVzdGlvbi80NzcxOTE0ODkvIiwiYXV0aG5fdXNlcl9pZCI6IjQ1MDI5MzkifQ">
+            <button type="submit" class="btn btn-primary" disabled="">Attach file</button>
+          </div>
+        </form>
+
+        <script>
+          $(() => {
+            // Only enable the "submit" button if a file is selected.
+            const form = document.querySelector('form.attach-file-form');
+            const fileInput = form.querySelector('#attachFileInput');
+            const submitButton = form.querySelector('button[type="submit"]');
+            fileInput.addEventListener('change', (e) => {
+              submitButton.disabled = fileInput.files.length === 0;
+            });
+          });
+        </script>
+      </div>
+    </div>
+  
+                      
+    <div>
+      <button class="btn btn-xs btn-secondary" type="button" data-toggle="collapse" data-target="#attachTextCollapse" aria-expanded="false" aria-controls="attachTextCollapse" data-bs-target="#attachTextCollapse" data-bs-toggle="collapse">
+        Add text note <svg class="svg-inline--fa fa-square-caret-down" aria-hidden="true" focusable="false" data-prefix="far" data-icon="square-caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M384 432c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0zm64-16c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320zM224 352c-6.7 0-13-2.8-17.6-7.7l-104-112c-6.5-7-8.2-17.2-4.4-25.9s12.5-14.4 22-14.4l208 0c9.5 0 18.2 5.7 22 14.4s2.1 18.9-4.4 25.9l-104 112c-4.5 4.9-10.9 7.7-17.6 7.7z"></path></svg><!-- <i class="far fa-caret-square-down"></i> Font Awesome fontawesome.com -->
+      </button>
+      <div class="collapse" id="attachTextCollapse">
+        <form method="POST" class="attach-text-form">
+          <p class="small mt-3">
+            Attached personal notes will be saved here for your reference. These notes can be used
+            for your own review purposes. They are not used for grading.
+          </p>
+          <input class="form-control" aria-label="Text filename" name="filename" value="notes.txt">
+          <div class="form-group mb-3">
+            <textarea class="form-control" rows="5" aria-label="Text contents" name="contents" placeholder="Type or paste text here"></textarea>
+          </div>
+          <input type="hidden" name="__variant_id" value="115289230">
+          <input type="hidden" name="__csrf_token" value="YWIxOWI4Y2U4YmJkM2ExZjZiMzU5OWM5N2E2MjhiNjQzZWUwNzliNjNkYTc3NTFhMGIzY2M1NTc1ODQ5NjBkYQ.m71kdw53.eyJ1cmwiOiIvcGwvY291cnNlX2luc3RhbmNlLzE3NDY4OC9pbnN0YW5jZV9xdWVzdGlvbi80NzcxOTE0ODkvIiwiYXV0aG5fdXNlcl9pZCI6IjQ1MDI5MzkifQ">
+          <button class="btn btn-small btn-primary" name="__action" value="attach_text">
+            Add note
+          </button>
+        </form>
+      </div>
+    </div>
+  
+                    
+            </div>
+          
+    </div>
+  
+              
+            </div>
+          </div>
+        </main>
+      
+    
+  </body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;limited&quot;,&quot;isActive&quot;:false,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
