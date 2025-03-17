@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)https://us.prairielearn.com/pl/course_instance/174688/instance_question/495533205/ -->
+<html lang="en" class="fontawesome-i2svg-active fontawesome-i2svg-complete"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="cookie-domain" content=".us.prairielearn.com">
+    <title> PRE14.1 — CS 233 |  PrairieLearn</title>
+    <style type="text/css">:host,:root{--fa-font-solid:normal 900 1em/1 "Font Awesome 6 Free";--fa-font-regular:normal 400 1em/1 "Font Awesome 6 Free";--fa-font-light:normal 300 1em/1 "Font Awesome 6 Pro";--fa-font-thin:normal 100 1em/1 "Font Awesome 6 Pro";--fa-font-duotone:normal 900 1em/1 "Font Awesome 6 Duotone";--fa-font-duotone-regular:normal 400 1em/1 "Font Awesome 6 Duotone";--fa-font-duotone-light:normal 300 1em/1 "Font Awesome 6 Duotone";--fa-font-duotone-thin:normal 100 1em/1 "Font Awesome 6 Duotone";--fa-font-brands:normal 400 1em/1 "Font Awesome 6 Brands";--fa-font-sharp-solid:normal 900 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-regular:normal 400 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-light:normal 300 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-thin:normal 100 1em/1 "Font Awesome 6 Sharp";--fa-font-sharp-duotone-solid:normal 900 1em/1 "Font Awesome 6 Sharp Duotone";--fa-font-sharp-duotone-regular:normal 400 1em/1 "Font Awesome 6 Sharp Duotone";--fa-font-sharp-duotone-light:normal 300 1em/1 "Font Awesome 6 Sharp Duotone";--fa-font-sharp-duotone-thin:normal 100 1em/1 "Font Awesome 6 Sharp Duotone"}svg:not(:host).svg-inline--fa,svg:not(:root).svg-inline--fa{overflow:visible;box-sizing:content-box}.svg-inline--fa{display:var(--fa-display,inline-block);height:1em;overflow:visible;vertical-align:-.125em}.svg-inline--fa.fa-2xs{vertical-align:.1em}.svg-inline--fa.fa-xs{vertical-align:0}.svg-inline--fa.fa-sm{vertical-align:-.0714285705em}.svg-inline--fa.fa-lg{vertical-align:-.2em}.svg-inline--fa.fa-xl{vertical-align:-.25em}.svg-inline--fa.fa-2xl{vertical-align:-.3125em}.svg-inline--fa.fa-pull-left{margin-right:var(--fa-pull-margin,.3em);width:auto}.svg-inline--fa.fa-pull-right{margin-left:var(--fa-pull-margin,.3em);width:auto}.svg-inline--fa.fa-li{width:var(--fa-li-width,2em);top:.25em}.svg-inline--fa.fa-fw{width:var(--fa-fw-width,1.25em)}.fa-layers svg.svg-inline--fa{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.fa-layers-counter,.fa-layers-text{display:inline-block;position:absolute;text-align:center}.fa-layers{display:inline-block;height:1em;position:relative;text-align:center;vertical-align:-.125em;width:1em}.fa-layers svg.svg-inline--fa{transform-origin:center center}.fa-layers-text{left:50%;top:50%;transform:translate(-50%,-50%);transform-origin:center center}.fa-layers-counter{background-color:var(--fa-counter-background-color,#ff253a);border-radius:var(--fa-counter-border-radius,1em);box-sizing:border-box;color:var(--fa-inverse,#fff);line-height:var(--fa-counter-line-height,1);max-width:var(--fa-counter-max-width,5em);min-width:var(--fa-counter-min-width,1.5em);overflow:hidden;padding:var(--fa-counter-padding,.25em .5em);right:var(--fa-right,0);text-overflow:ellipsis;top:var(--fa-top,0);transform:scale(var(--fa-counter-scale,.25));transform-origin:top right}.fa-layers-bottom-right{bottom:var(--fa-bottom,0);right:var(--fa-right,0);top:auto;transform:scale(var(--fa-layers-scale,.25));transform-origin:bottom right}.fa-layers-bottom-left{bottom:var(--fa-bottom,0);left:var(--fa-left,0);right:auto;top:auto;transform:scale(var(--fa-layers-scale,.25));transform-origin:bottom left}.fa-layers-top-right{top:var(--fa-top,0);right:var(--fa-right,0);transform:scale(var(--fa-layers-scale,.25));transform-origin:top right}.fa-layers-top-left{left:var(--fa-left,0);right:auto;top:var(--fa-top,0);transform:scale(var(--fa-layers-scale,.25));transform-origin:top left}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-2xs{font-size:.625em;line-height:.1em;vertical-align:.225em}.fa-xs{font-size:.75em;line-height:.0833333337em;vertical-align:.125em}.fa-sm{font-size:.875em;line-height:.0714285718em;vertical-align:.0535714295em}.fa-lg{font-size:1.25em;line-height:.05em;vertical-align:-.075em}.fa-xl{font-size:1.5em;line-height:.0416666682em;vertical-align:-.125em}.fa-2xl{font-size:2em;line-height:.03125em;vertical-align:-.1875em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:var(--fa-li-margin,2.5em);padding-left:0}.fa-ul>li{position:relative}.fa-li{left:calc(-1 * var(--fa-li-width,2em));position:absolute;text-align:center;width:var(--fa-li-width,2em);line-height:inherit}.fa-border{border-color:var(--fa-border-color,#eee);border-radius:var(--fa-border-radius,.1em);border-style:var(--fa-border-style,solid);border-width:var(--fa-border-width,.08em);padding:var(--fa-border-padding,.2em .25em .15em)}.fa-pull-left{float:left;margin-right:var(--fa-pull-margin,.3em)}.fa-pull-right{float:right;margin-left:var(--fa-pull-margin,.3em)}.fa-beat{animation-name:fa-beat;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-bounce{animation-name:fa-bounce;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1))}.fa-fade{animation-name:fa-fade;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-beat-fade{animation-name:fa-beat-fade;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,cubic-bezier(.4,0,.6,1))}.fa-flip{animation-name:fa-flip;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,ease-in-out)}.fa-shake{animation-name:fa-shake;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin{animation-name:fa-spin;animation-delay:var(--fa-animation-delay,0s);animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,2s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,linear)}.fa-spin-reverse{--fa-animation-direction:reverse}.fa-pulse,.fa-spin-pulse{animation-name:fa-spin;animation-direction:var(--fa-animation-direction,normal);animation-duration:var(--fa-animation-duration,1s);animation-iteration-count:var(--fa-animation-iteration-count,infinite);animation-timing-function:var(--fa-animation-timing,steps(8))}@media (prefers-reduced-motion:reduce){.fa-beat,.fa-beat-fade,.fa-bounce,.fa-fade,.fa-flip,.fa-pulse,.fa-shake,.fa-spin,.fa-spin-pulse{animation-delay:-1ms;animation-duration:1ms;animation-iteration-count:1;transition-delay:0s;transition-duration:0s}}@keyframes fa-beat{0%,90%{transform:scale(1)}45%{transform:scale(var(--fa-beat-scale,1.25))}}@keyframes fa-bounce{0%{transform:scale(1,1) translateY(0)}10%{transform:scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0)}30%{transform:scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em))}50%{transform:scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0)}57%{transform:scale(1,1) translateY(var(--fa-bounce-rebound,-.125em))}64%{transform:scale(1,1) translateY(0)}100%{transform:scale(1,1) translateY(0)}}@keyframes fa-fade{50%{opacity:var(--fa-fade-opacity,.4)}}@keyframes fa-beat-fade{0%,100%{opacity:var(--fa-beat-fade-opacity,.4);transform:scale(1)}50%{opacity:1;transform:scale(var(--fa-beat-fade-scale,1.125))}}@keyframes fa-flip{50%{transform:rotate3d(var(--fa-flip-x,0),var(--fa-flip-y,1),var(--fa-flip-z,0),var(--fa-flip-angle,-180deg))}}@keyframes fa-shake{0%{transform:rotate(-15deg)}4%{transform:rotate(15deg)}24%,8%{transform:rotate(-18deg)}12%,28%{transform:rotate(18deg)}16%{transform:rotate(-22deg)}20%{transform:rotate(22deg)}32%{transform:rotate(-12deg)}36%{transform:rotate(12deg)}100%,40%{transform:rotate(0)}}@keyframes fa-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.fa-rotate-90{transform:rotate(90deg)}.fa-rotate-180{transform:rotate(180deg)}.fa-rotate-270{transform:rotate(270deg)}.fa-flip-horizontal{transform:scale(-1,1)}.fa-flip-vertical{transform:scale(1,-1)}.fa-flip-both,.fa-flip-horizontal.fa-flip-vertical{transform:scale(-1,-1)}.fa-rotate-by{transform:rotate(var(--fa-rotate-angle,0))}.fa-stack{display:inline-block;vertical-align:middle;height:2em;position:relative;width:2.5em}.fa-stack-1x,.fa-stack-2x{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0;z-index:var(--fa-stack-z-index,auto)}.svg-inline--fa.fa-stack-1x{height:1em;width:1.25em}.svg-inline--fa.fa-stack-2x{height:2em;width:2.5em}.fa-inverse{color:var(--fa-inverse,#fff)}.fa-sr-only,.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.fa-sr-only-focusable:not(:focus),.sr-only-focusable:not(:focus){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.svg-inline--fa .fa-primary{fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)}.svg-inline--fa .fa-secondary{fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-primary{opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-secondary{opacity:var(--fa-primary-opacity,1)}.svg-inline--fa mask .fa-primary,.svg-inline--fa mask .fa-secondary{fill:#000}</style><link href="./PRE14.1 — CS 233 _ PrairieLearn_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./PRE14.1 — CS 233 _ PrairieLearn_files/bootstrap-icons.css" rel="stylesheet">
+    <link href="./PRE14.1 — CS 233 _ PrairieLearn_files/colors.css" rel="stylesheet">
+    <link href="./PRE14.1 — CS 233 _ PrairieLearn_files/local.css" rel="stylesheet">
+    <script src="./PRE14.1 — CS 233 _ PrairieLearn_files/jquery.min.js"></script>
+    <script src="./PRE14.1 — CS 233 _ PrairieLearn_files/bootstrap.bundle.min.js"></script>
+    <script src="./PRE14.1 — CS 233 _ PrairieLearn_files/all.min.js"></script>
+    <script src="./PRE14.1 — CS 233 _ PrairieLearn_files/application-AYG7YDXF.js"></script> <script src="./PRE14.1 — CS 233 _ PrairieLearn_files/navbarClient-7FLGATRR.js"></script>
+   <script src="./PRE14.1 — CS 233 _ PrairieLearn_files/question-YOBMHLHD.js"></script>
+        
+        <script defer="" src="./PRE14.1 — CS 233 _ PrairieLearn_files/startup.js"></script>
+        <script>
+          document.urlPrefix = '/pl/course_instance/174688';
+        </script>
+        
+              
+              <link href="./PRE14.1 — CS 233 _ PrairieLearn_files/pl-checkbox.css" rel="stylesheet">
+
+            
+      <script src="./PRE14.1 — CS 233 _ PrairieLearn_files/core.js" charset="UTF-8"></script><style>                      .htmx-indicator{opacity:0}                      .htmx-request .htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                      .htmx-request.htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                    </style><script src="./PRE14.1 — CS 233 _ PrairieLearn_files/tex.js" charset="UTF-8"></script><script src="./PRE14.1 — CS 233 _ PrairieLearn_files/menu.js" charset="UTF-8"></script><script src="./PRE14.1 — CS 233 _ PrairieLearn_files/svg.js" charset="UTF-8"></script><script src="./PRE14.1 — CS 233 _ PrairieLearn_files/tex(1).js" charset="UTF-8"></script><style type="text/css" id="ctre_styles">
+			#ctre_wnd {
+				position: fixed; bottom: 0; right: 10px;
+				background: #fff; box-shadow: 0px 0px 40px rgba(0,0,0,0.15);
+				border-radius: 3px 3px 0 0;
+				z-index: 2147483647;
+			}
+
+			@media (prefers-color-scheme: dark) {
+				#ctre_wnd { background: #000; box-shadow: 0px 0px 40px rgba(255,255,255,0.15); }
+			}
+			</style><script src="./PRE14.1 — CS 233 _ PrairieLearn_files/assistive-mml.js" charset="UTF-8"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-SVG-styles">
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+</style></head>
+      <body data-new-gr-c-s-check-loaded="14.1226.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1226.0">
+        
+    
+
+    <div class="container-fluid bg-primary">
+      <a href="https://us.prairielearn.com/pl/course_instance/174688/instance_question/495533205/#content" class="visually-hidden-focusable d-inline-flex p-2 m-2 text-white">
+        Skip to main content
+      </a>
+    </div>
+
+    
+
+    <nav class="navbar navbar-dark bg-dark navbar-expand-md" aria-label="Global navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="https://us.prairielearn.com/pl" aria-label="Homepage">
+          <span class="navbar-brand-label">PrairieLearn</span>
+          <span class="navbar-brand-hover-label">
+            Go home <svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fa fa-angle-right" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+          </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="course-nav" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav me-auto" id="main-nav">
+            
+    <li class="nav-item navbar-text me-4">
+      CS 233, Sp25
+    </li>
+
+    <li class="nav-item ">
+      <a class="nav-link" href="https://us.prairielearn.com/pl/course_instance/174688/assessments">Assessments</a>
+    </li>
+    <li class="nav-item ">
+      <a class="nav-link" href="https://us.prairielearn.com/pl/course_instance/174688/gradebook">Gradebook</a>
+    </li>
+
+    
+          <li class="nav-item ">
+            <a class="nav-link" href="https://us.prairielearn.com/pl/course_instance/174688/assessment_instance/9954491">
+              PRE14
+            </a>
+          </li>
+        
+  
+          </ul>
+
+          
+          
+    <ul class="nav navbar-nav" id="username-nav" data-access-as-administrator="false" data-view-type="student" data-authn-course-role="None" data-authn-course-instance-role="None" data-has-instructor-access="">
+      <li class="nav-item dropdown mb-2 mb-md-0 me-2 ">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="https://us.prairielearn.com/pl/course_instance/174688/instance_question/495533205/#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Che Liu
+          
+        </a>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          
+           
+          
+          
+                <a class="dropdown-item" href="https://us.prairielearn.com/pl/request_course">
+                  Course Requests
+                </a>
+              
+          <a class="dropdown-item" href="https://us.prairielearn.com/pl/settings">Settings</a>
+          <a class="dropdown-item news-item-link" href="https://us.prairielearn.com/pl/course_instance/174688/news_items" aria-label="News">
+            News
+            
+          </a>
+
+          <a class="dropdown-item" href="https://us.prairielearn.com/pl/logout">Log out</a>
+        </div>
+      </li>
+    </ul>
+  
+        </div>
+      </div>
+    </nav>
+
+    
+    
+          <div class="mb-3">
+             
+          </div>
+        
+  
+        
+        <main id="content" class="container">
+          
+          <div class="row">
+            <div class="col-lg-9 col-sm-12">
+              
+    <div class="question-container" data-grading-method="Internal" data-variant-id="119240223" data-variant-token="ZjBkOGIxOTlkYzY5NjBkMDEzODUwYTAyYjc3MzlmZGVhMGY2ZmQ0YzQ0ODBhY2E5NTQ2NDYyOWExMzFjNGNhYQ.m8anhl7c.eyJ2YXJpYW50SWQiOiIxMTkyNDAyMjMifQ">
+      
+      
+      
+            <form class="question-form" name="question-form" method="POST" autocomplete="off" data-original-form-data="__variant_id=119240223">
+              
+    <div class="card mb-4 question-block">
+      <div class="card-header bg-primary text-white d-flex align-items-center">
+        <h1>
+          PRE14.1. 14 Text and Videos
+        </h1>
+        
+      </div>
+      <div class="card-body question-body"><h2>Videos</h2>
+<iframe id="kmsembed-1_hthke139" style="width:25vh" src="./PRE14.1 — CS 233 _ PrairieLearn_files/26883701.html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<iframe id="kmsembed-1_pw5lhgo9" style="width:25vh" src="./PRE14.1 — CS 233 _ PrairieLearn_files/26883701(1).html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<iframe style="width:25vh" src="./PRE14.1 — CS 233 _ PrairieLearn_files/doJpguZFTe0.html" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe><iframe id="kmsembed-1_yhbc6yzl" style="width:25vh" src="./PRE14.1 — CS 233 _ PrairieLearn_files/26883701(2).html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<iframe id="kmsembed-1_j92uv9l2" style="width:25vh" src="./PRE14.1 — CS 233 _ PrairieLearn_files/26883701(3).html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<iframe id="kmsembed-1_z4fofk41" style="width:25vh" src="./PRE14.1 — CS 233 _ PrairieLearn_files/26883701(4).html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+<iframe id="kmsembed-1_zcbpp0l0" style="width:25vh" src="./PRE14.1 — CS 233 _ PrairieLearn_files/26883701(5).html" class="kmsembed" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" allow="autoplay *; fullscreen *; encrypted-media *" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-pointer-lock allow-popups allow-modals allow-orientation-lock allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation" frameborder="0" title="Kaltura Player"></iframe>
+
+
+<p>Video credits: Geoffrey Herman, Text credits: Geoffrey Herman</p>
+
+<h2>The Big Picture</h2>
+<p>In computing, one important performance goal is completing execution of computations faster. In our single-cycle datapath, the speed of computation is limited by the amount of delay in the datapath. The system clock period must be longer than the worst-case path delay in our datapath. Because we can execute only one instruction, this clock period determines the speed of our calculations.</p><p>As we will learn later, real processors are more complicated that our single-cycle datapth, able to execute multiple instructions in parallel or taking many clock cycles to execute certain instructions. These complications mean that we must understand two competing performance goals: latency and throughput. Latency is the time it takes to complete one task. Throughput is the number of tasks we can complete in a time unit. For our single-cycle datapath, these two are the same. Usually, improving latency or throughput comes at the cost of making the other metric worse. Because our programs must execute many instructions, we generally want to optimize for throughput when designing processors.</p><p>Fun interesting video about the importance of resiliency in computing: <a href="https://youtu.be/AaZ_RSt0KP8">Effects of radiation on computing</a></p>
+
+<p>Our single-cycle datapath is inefficient because only one component is really working at a time during a clock cycle. But if we are clever/careful, we can divide our datapath into several smaller stages that we call a <strong>pipeline</strong> that allow several components to work in <strong>parallel</strong>. Creating a pipelined datapath increases throughput by allowing multiple components to act in parallel but at the cost of latency as now faster stages may need to wait for a clock edge that is dictated by slower stages.</p><p>Beyond the throughput/latency trade-off, there is one other major trade-off to having a pipelined datapath: we now need to worry about dependencies in our code. In this context, a <strong>dependency</strong> is any situation where we <strong>read</strong> data from the register file that was <strong>written</strong> there by an earlier instruction. Because we are executing parts of different instructions in parallel, it's possible that the calculations happen out of order, creating data hazards. A data hazard is a data dependency that will result in an incorrect calculation. We can use forwarding - passing the conflicting data from a later stage to an earlier stage - to safely resolve some of these data hazards.</p>
+
+<p>Sorry we don't have more text for this section ready yet.</p>
+<h2>Mark as read</h2>
+<fieldset class="d-block"><legend class="visually-hidden">Checkbox options</legend>
+
+    <div class="form-check d-flex align-items-center py-1 gap-2">
+        <input class="form-check-input mt-0 flex-shrink-0" type="checkbox" name="read" value="a" id="read-a">
+
+        <label class="form-check-label d-flex align-items-center" for="read-a">
+            <div class="pl-checkbox-key-label">(a)</div>
+            <div class="ms-1 me-1 pl-checkbox-answer">I've read this!</div>
+        </label>
+
+            
+    </div>
+    
+<div class="d-flex align-items-center gap-2">
+    <span><small class="form-text text-muted">Select all possible options that apply.</small></span>
+    <button type="button" class="btn btn-light btn-sm" data-bs-toggle="popover" data-bs-html="true" data-bs-content="You must select at least 1 option. You will receive a score of 100% if you select all options that are true and no options that are false. Otherwise, you will receive a score of 0%." data-bs-placement="auto" aria-label="Checkbox" data-bs-original-title="Checkbox">
+        <svg class="svg-inline--fa fa-circle-question" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-question" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg><!-- <i class="fa fa-question-circle" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+    </button>
+</div>
+
+
+
+
+
+
+</fieldset></div>
+      
+      <div class="card-footer" id="question-panel-footer">
+        <input type="hidden" name="__csrf_token" value="MDFlNzYxNmM2MzcyOTdmYmUzNTg3NmY3NjY3ZjlhN2Q2NzY5ZjQwNTg4NWRlMDM1OWMwNGNhYTg0ZGIzOWU5Nw.m8anhl6m.eyJ1cmwiOiIvcGwvY291cnNlX2luc3RhbmNlLzE3NDY4OC9pbnN0YW5jZV9xdWVzdGlvbi80OTU1MzMyMDUvIiwiYXV0aG5fdXNlcl9pZCI6IjQ1MDI5MzkifQ">
+        <div id="question-panel-footer-content">
+      <div class="row">
+        <div class="col d-flex justify-content-between">
+          <span class="d-flex align-items-center">
+            
+                  <button type="submit" class="btn btn-info question-save disable-on-submit order-2" name="__action" value="save">
+                    Save only
+                  </button>
+                
+            
+                  <button type="submit" class="btn btn-primary question-grade disable-on-submit order-1 me-1" name="__action" value="grade">
+                    Save &amp; Grade
+                    <small class="font-italic ms-2 fst-italic">Unlimited attempts</small>
+                  </button>
+                
+            
+          </span>
+          <span class="d-flex">
+             <input type="hidden" name="__variant_id" value="119240223"> 
+            
+            
+          </span>
+        </div>
+      </div>
+      
+    </div>
+      </div>
+    
+    </div>
+  
+            </form>
+          
+
+      <div class="card mb-4 grading-block d-none">
+        <div class="card-header bg-secondary text-white">
+          <h2>Correct answer</h2>
+        </div>
+        <div class="card-body answer-body"></div>
+      </div>
+
+      
+    </div>
+    
+  
+            </div>
+
+            <div class="col-lg-3 col-sm-12">
+              
+    <div class="card mb-4" id="assessment-score-panel">
+      <div class="card-header bg-secondary">
+        <h2>
+          <a class="text-white" href="https://us.prairielearn.com/pl/course_instance/174688/assessment_instance/9954491/">
+            PRE 14
+          </a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-center">
+          <a class="btn btn-info" href="https://us.prairielearn.com/pl/course_instance/174688/assessment_instance/9954491/">
+            Assessment overview
+          </a>
+        </div>
+      </div>
+      <table class="table table-sm" aria-label="Assessment score">
+        <tbody>
+          <tr>
+            <td>Total points:</td>
+            <td>
+              100/100
+            </td>
+          </tr>
+          <tr>
+            <td>Score:</td>
+            <td class="align-middle">
+    <div class="progress border border-success " style="min-width: 5em; max-width: 20em;">
+      <div class="progress-bar bg-success" style="width: 100%">
+        100%
+      </div>
+      <div class="d-flex flex-column justify-content-center text-center" style="width: 0%">
+        
+      </div>
+    </div>
+  </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+              
+    <div class="card mb-4" id="question-score-panel">
+      <div class="card-header bg-secondary text-white">
+        <h2>Question PRE14.1</h2>
+      </div>
+      
+    <table class="table table-sm two-column-description-no-header" aria-label="Question score" id="question-score-panel-content">
+      <tbody>
+        
+        
+              
+                      <tr>
+                        <td>Value:</td>
+                        <td>
+    1
+    <button type="button" class="btn btn-xs js-value-popover" data-bs-toggle="popover" data-bs-container="body" data-bs-html="true" data-bs-title="Explanation of question value" data-bs-content="
+        &lt;p&gt;
+          This question awards partial credit if you continue getting closer to the correct answer.
+        &lt;/p&gt;
+      
+        &lt;p&gt;
+          If you score 100% on your next submission, you will be awarded an additional
+          1 point.
+        &lt;/p&gt;
+      
+        &lt;p class=&quot;mb-0&quot;&gt;
+          If you score less than 100% on your next submission, you will be awarded an additional
+          &lt;code&gt;1 * score / 100&lt;/code&gt; points.
+        &lt;/p&gt;
+      " data-bs-placement="auto" aria-label="Explanation of question value">
+      <svg class="svg-inline--fa fa-circle-question" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-question" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg><!-- <i class="fa fa-question-circle" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+    </button>
+  </td>
+                      </tr>
+                    
+              
+            
+        
+        <tr>
+          <td>Total points:</td>
+          <td>
+            
+    <span class="text-nowrap">
+      —
+      <small>/<span class="text-muted">1</span></small>
+    </span>
+  
+          </td>
+        </tr>
+        
+              <tr>
+                <td colspan="2" class="text-right">
+                  <small>
+                    Auto-graded question
+                  </small>
+                </td>
+              </tr>
+            
+      </tbody>
+    </table>
+  
+      
+    </div>
+  
+              
+    <div class="text-center mb-2">
+      
+      <button id="question-nav-prev" class="btn btn-primary mb-3 disabled" disabled="">
+        Previous question
+      </button>
+    
+      
+    <a id="question-nav-next" class="btn btn-primary mb-3" href="https://us.prairielearn.com/pl/course_instance/174688/instance_question/495533207/">
+      Next question
+    </a>
+  
+    </div>
+  
+              
+    <div class="card mb-4" id="attach-file-panel">
+      <div class="card-header bg-secondary text-white d-flex align-items-center">
+        <svg class="svg-inline--fa fa-paperclip" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z"></path></svg><!-- <i class="fas fa-paperclip"></i> Font Awesome fontawesome.com -->
+        <h2>&nbsp;Personal Notes</h2>
+      </div>
+      <div class="card-body"><i>No attached notes</i></div>
+      
+            <div class="card-footer">
+              
+                      
+    <div>
+      <button class="btn btn-xs btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#attachFileCollapse" aria-expanded="false" aria-controls="attachFileCollapse">
+        Attach a file <svg class="svg-inline--fa fa-square-caret-down" aria-hidden="true" focusable="false" data-prefix="far" data-icon="square-caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M384 432c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0zm64-16c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320zM224 352c-6.7 0-13-2.8-17.6-7.7l-104-112c-6.5-7-8.2-17.2-4.4-25.9s12.5-14.4 22-14.4l208 0c9.5 0 18.2 5.7 22 14.4s2.1 18.9-4.4 25.9l-104 112c-4.5 4.9-10.9 7.7-17.6 7.7z"></path></svg><!-- <i class="far fa-caret-square-down"></i> Font Awesome fontawesome.com -->
+      </button>
+      <div class="collapse" id="attachFileCollapse">
+        <form class="attach-file-form mb-3" name="attach-file-form" method="POST" enctype="multipart/form-data">
+          <p class="small mt-3">
+            Attached files will be saved here for your reference. These files act as personal notes
+            and can be used for your own review purposes. They are not used for grading.
+          </p>
+          <div class="mb-3">
+            <label class="form-label" for="attachFileInput">Choose file</label>
+            <input type="file" name="file" class="form-control" id="attachFileInput">
+            <small class="form-text text-muted">
+              Max file size: 10 MB
+            </small>
+          </div>
+          <div class="mb-3">
+            <input type="hidden" name="__action" value="attach_file">
+            <input type="hidden" name="__variant_id" value="119240223">
+            <input type="hidden" name="__csrf_token" value="MDFlNzYxNmM2MzcyOTdmYmUzNTg3NmY3NjY3ZjlhN2Q2NzY5ZjQwNTg4NWRlMDM1OWMwNGNhYTg0ZGIzOWU5Nw.m8anhl6m.eyJ1cmwiOiIvcGwvY291cnNlX2luc3RhbmNlLzE3NDY4OC9pbnN0YW5jZV9xdWVzdGlvbi80OTU1MzMyMDUvIiwiYXV0aG5fdXNlcl9pZCI6IjQ1MDI5MzkifQ">
+            <button type="submit" class="btn btn-primary" disabled="">Attach file</button>
+          </div>
+        </form>
+
+        <script>
+          $(() => {
+            // Only enable the "submit" button if a file is selected.
+            const form = document.querySelector('form.attach-file-form');
+            const fileInput = form.querySelector('#attachFileInput');
+            const submitButton = form.querySelector('button[type="submit"]');
+            fileInput.addEventListener('change', (e) => {
+              submitButton.disabled = fileInput.files.length === 0;
+            });
+          });
+        </script>
+      </div>
+    </div>
+  
+                      
+    <div>
+      <button class="btn btn-xs btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#attachTextCollapse" aria-expanded="false" aria-controls="attachTextCollapse">
+        Add text note <svg class="svg-inline--fa fa-square-caret-down" aria-hidden="true" focusable="false" data-prefix="far" data-icon="square-caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M384 432c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0zm64-16c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320zM224 352c-6.7 0-13-2.8-17.6-7.7l-104-112c-6.5-7-8.2-17.2-4.4-25.9s12.5-14.4 22-14.4l208 0c9.5 0 18.2 5.7 22 14.4s2.1 18.9-4.4 25.9l-104 112c-4.5 4.9-10.9 7.7-17.6 7.7z"></path></svg><!-- <i class="far fa-caret-square-down"></i> Font Awesome fontawesome.com -->
+      </button>
+      <div class="collapse" id="attachTextCollapse">
+        <form method="POST" class="attach-text-form">
+          <p class="small mt-3">
+            Attached personal notes will be saved here for your reference. These notes can be used
+            for your own review purposes. They are not used for grading.
+          </p>
+          <input type="text" class="form-control" aria-label="Text filename" name="filename" value="notes.txt">
+          <div class="mb-3">
+            <textarea class="form-control" rows="5" aria-label="Text contents" name="contents" placeholder="Type or paste text here"></textarea>
+          </div>
+          <input type="hidden" name="__variant_id" value="119240223">
+          <input type="hidden" name="__csrf_token" value="MDFlNzYxNmM2MzcyOTdmYmUzNTg3NmY3NjY3ZjlhN2Q2NzY5ZjQwNTg4NWRlMDM1OWMwNGNhYTg0ZGIzOWU5Nw.m8anhl6m.eyJ1cmwiOiIvcGwvY291cnNlX2luc3RhbmNlLzE3NDY4OC9pbnN0YW5jZV9xdWVzdGlvbi80OTU1MzMyMDUvIiwiYXV0aG5fdXNlcl9pZCI6IjQ1MDI5MzkifQ">
+          <button type="submit" class="btn btn-sm btn-primary" name="__action" value="attach_text">
+            Add note
+          </button>
+        </form>
+      </div>
+    </div>
+  
+                    
+            </div>
+          
+    </div>
+  
+              
+            </div>
+          </div>
+        </main>
+      
+    
+  </body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;limited&quot;,&quot;isActive&quot;:false,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
