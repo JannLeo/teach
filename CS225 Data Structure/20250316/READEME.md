@@ -499,6 +499,8 @@ AVL树通过以下规则强制维持平衡：
   - `Gain O(l) height是你cat`：推测为笔误，实际应为 **“Gain O(1) height update”**（高度更新为常数时间）。
   - `Every op Must check balance`：所有操作需检查平衡性（插入和删除后）。
 
+20250321
+
 ![image-20250316160028627](READEME.assets/image-20250316160028627.png)
 
 |       **步骤**        |                         **操作说明**                         |                       **图片标注示例**                       |
