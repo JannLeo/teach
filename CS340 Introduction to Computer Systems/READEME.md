@@ -82,3 +82,194 @@
 - 线程是进程内的执行单元，多个线程共享同一进程的资源，创建和销毁开销较小，适用于需要并发执行的任务。
 
 在现代操作系统中，进程和线程通常是并行工作，共同完成复杂的任务。
+
+### allocator.c
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+// 定义内存块的结构体
+typedef struct Block {
+  size_t size;         // 当前块的大小
+  struct Block *next;  // 指向下一个块的指针
+  int free_data;       // 标志块是否空闲（1为空闲，0为已分配）
+} Block;
+
+// 定义内存对齐的常量
+#define ALIGNMENT 8
+
+// 定义内存对齐的宏，确保大小是ALIGNMENT的倍数
+#define ALIGN(size) (((size) + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1))
+
+// 定义Block结构体的大小
+#define BLOCK_SIZE sizeof(Block)
+
+// 定义内存池的大小（10MB）
+#define POOL_SIZE (1024*1024*10)
+
+// 全局变量定义
+static void *base = NULL;  // 指向内存池的基地址
+static Block *free_list = NULL;  // 空闲块链表的头指针
+static size_t used = 0;  // 已分配的内存大小
+
+// 初始化内存池，传入的newbase是内存池的起始地址
+void allocator_init(void *newbase) {
+  base = newbase;
+  free_list = NULL;  // 空闲链表为空
+  used = 0;  // 已使用的内存大小为0
+}
+
+// 重置内存池，清空空闲链表和已用内存
+void allocator_reset() {
+  free_list = NULL;
+  used = 0;
+}
+
+// 将空闲块插入到空闲链表，并按地址升序排序
+static void insert_block_sorted(Block *block) {
+  if (!free_list) {  // 如果空闲链表为空
+    free_list = block;
+    block->next = NULL;
+    return;
+  }
+  if (block < free_list) {  // 如果块地址小于链表头部
+    block->next = free_list;
+    free_list = block;
+    return;
+  }
+  Block *cur = free_list;
+  // 遍历链表，找到插入的位置
+  while (cur->next && cur->next < block) {
+    cur = cur->next;
+  }
+  block->next = cur->next;
+  cur->next = block;
+}
+
+// 合并与下一个相邻的空闲块
+static void merge_with_next(Block *block) {
+    Block *next = block->next;
+    if (!next) {
+      return;  // 如果没有下一个块，直接返回
+    }
+    // 判断当前块与下一个块是否相邻
+    char *block_end = (char*)block + BLOCK_SIZE + block->size;
+    if ((char*)next == block_end) {
+        // 合并当前块与下一个块
+        block->size += BLOCK_SIZE + next->size;
+        block->next = next->next;
+    }
+}
+
+// 尝试合并当前块与前后的空闲块
+static void try_merge(Block *block) {
+    merge_with_next(block);  // 合并当前块与下一个空闲块
+    if (block != free_list) {  // 如果当前块不是链表的头部
+      Block *prev = free_list;
+      // 遍历链表，找到当前块的前一个块
+      while (prev && prev->next && prev->next < block) {
+        prev = prev->next;
+      }
+      if (prev && prev->next == block) {
+        // 合并当前块与前一个块
+        merge_with_next(prev);
+      }
+    }
+}
+
+// 查找一个合适的空闲块，满足给定的大小
+Block* find_free_block(size_t size) {
+  Block *prev = NULL;
+  Block *cur  = free_list;
+  // 遍历空闲链表，查找符合要求的空闲块
+  while (cur) {
+    if (cur->size >= size && cur->free_data) {
+      // 如果找到的块足够大，且是空闲的
+      if (cur->size >= size + BLOCK_SIZE + ALIGNMENT) {
+        // 如果当前块的大小大于所需大小，进行拆分
+        Block *new_block = (Block *)((char*)cur + BLOCK_SIZE + size);
+        new_block->size = cur->size - size - BLOCK_SIZE;
+        new_block->free_data = 1;
+        new_block->next = cur->next;
+        cur->next = new_block;
+        cur->size = size;
+      }
+      // 移除当前块，并标记为已分配
+      if (prev) {
+        prev->next = cur->next;
+      } else {
+        free_list = cur->next;
+      }
+      cur->free_data = 0;
+      cur->next = NULL;
+      return cur;
+    }
+    prev = cur;
+    cur = cur->next;
+  }
+  return NULL;
+}
+
+// 自定义的malloc函数，分配指定大小的内存
+void *mymalloc(size_t size) {
+    if (!base || size == 0) {
+      return NULL;  // 如果内存池未初始化或请求大小为0，返回NULL
+    }
+    size = ALIGN(size);  // 确保内存对齐
+    Block *block = find_free_block(size);  // 查找空闲块
+    if (block) {
+        return (block + 1);  // 返回分配的内存地址
+    }
+    if (used + BLOCK_SIZE + size > POOL_SIZE) {
+        return NULL;  // 如果内存池空间不足，返回NULL
+    }
+    block = (Block*)((char*)base + used);  // 在内存池末尾分配新块
+    block->size = size;
+    block->free_data = 0;
+    block->next = NULL;
+    used += BLOCK_SIZE + size;  // 更新已使用的内存大小
+    return (void*)(block + 1);  // 返回内存块的实际数据地址
+}
+
+// 自定义的free函数，释放指定内存块
+void myfree(void *ptr) {
+    if (!ptr) {
+      return;  // 如果指针为空，什么都不做
+    }
+    Block *block = (Block*)ptr - 1;  // 获取块的头部
+    block->free_data = 1;  // 标记为已空闲
+    insert_block_sorted(block);  // 插入到空闲链表
+    try_merge(block);  // 尝试合并相邻的空闲块
+}
+
+// 自定义的realloc函数，重新分配内存
+void *myrealloc(void *ptr, size_t size) {
+    if (ptr == NULL) {
+        return mymalloc(size);  // 如果原指针为空，直接分配新内存
+    }
+    if (size == 0) {
+        myfree(ptr);  // 如果新大小为0，释放原内存并返回NULL
+        return NULL;
+    }
+    Block *block = (Block*)ptr - 1;  // 获取块的头部
+    size = ALIGN(size);  // 确保内存对齐
+    char *block_end = (char*)block + BLOCK_SIZE + block->size;
+    char *heap_end  = (char*)base + used;  // 获取内存池末尾地址
+    // 如果原块在内存池的末尾，直接调整其大小
+    if (block_end == heap_end) {
+      size_t diff = block->size - size;
+      block->size = size;
+      used -= diff;  // 更新已使用的内存大小
+    }
+    void *new_ptr = mymalloc(size);  // 分配新内存
+    if (new_ptr) {
+        memcpy(new_ptr, ptr, block->size < size ? block->size : size);  // 拷贝数据
+        myfree(ptr);  // 释放原内存
+    }
+    return new_ptr;  // 返回新分配的内存
+}
+
+```
+
