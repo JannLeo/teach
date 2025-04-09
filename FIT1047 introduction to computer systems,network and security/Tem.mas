@@ -1,0 +1,204 @@
+﻿//////////////////////////////////////////////////////////
+//// FIT 1047 Oct 2024, Assignment 2, Part 1d
+////
+////  Student name:Jianing Hao
+//// Student email:
+////    Student ID:
+//////////////////////////////////////////////////////////
+
+/ Main program: call the SubDigitTimer subroutine and then halt
+JnS	SubDigitTimer
+Halt
+
+//////////////////////////////////////////////////////////
+//// Task 1: Reset the display
+//////////////////////////////////////////////////////////
+
+/ TO DO: Add your subroutine for clearing the screen here
+
+SubResetDisplay, HEX 0
+
+//////////////////////////////////////////////////////////
+//// Task 2: Painting a number
+//////////////////////////////////////////////////////////
+
+/ TO DO: Add your subroutine for painting a digit below.
+
+DigitDataAddress, HEX 0
+DigitDisplayAddress, HEX 0
+SubDrawDigit, HEX 0
+
+//////////////////////////////////////////////////////////
+//// Task 3: Create a countdown timer
+//////////////////////////////////////////////////////////
+
+/ TO DO: Add your subroutine for the countdown, and any
+/        additional subroutines you implement, below.
+
+SubDigitTimer, HEX 0
+
+
+//////////////////////////////////////////////////////////
+//// Data: You don't need to change or add anything below
+//////////////////////////////////////////////////////////
+
+/ Address of the digit data
+DigitPixelsAddr, Adr DigitPixels
+
+/ The digit data:
+/ Each character is 3 pixels wide and 5 pixels high.
+/ It is represented as 15 consecutive words of memory,
+/ in "row-major order". That means that the first three
+/ words represent the top-most row of pixels, the next
+/ three words the second row, and so on.
+
+DigitPixels, HEX FFFF       / Start of character 0
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF       / Start of character 1
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX 0          / Start of character 2
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX 0
+      HEX 0          / Start of character 3
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX 0          / Start of character 4
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX 0          / Start of character 5
+      HEX 0
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX FFFF       / Start of character 6
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0          / Start of character 7
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX FFFF       / Start of character 8
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX FFFF       / Start of character 9
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX 0
+      HEX FFFF
+      HEX FFFF
+      HEX 0
+      HEX FFFF
+      HEX 0
+      HEX FFFF

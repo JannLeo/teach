@@ -1,0 +1,41 @@
+﻿Start, Jump 005
+JnS Start
+JnS Start
+JnS Start
+JnS Start
+JnS 00B
+Load 00A
+Store 002
+JnS 010
+Jump 01F
+JnS Start
+JnS Start
+Input
+Store 00A
+JumpI 00B
+JnS Start
+JnS Start
+Load 028
+Skipcond Start
+Jump 015
+JumpI 010
+Load 021
+Add 028
+Store 00F
+Load 028
+Subt 020
+Store 028
+LoadI 00F
+Subt 002
+StoreI 00F
+Jump 001
+Halt
+HEX 001
+HEX 022
+HEX 02C
+HEX 02D
+HEX 046
+HEX 00C
+HEX 058
+HEX 03A
+HEX 005
