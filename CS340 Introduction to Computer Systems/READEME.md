@@ -85,6 +85,8 @@
 
 ### allocator.c
 
+这段代码实现了一个简单的内存池分配器，通过手动管理内存块来模拟 `malloc`、`free` 和 `realloc` 等标准内存分配功能。它使用一个链表 `free_list` 来管理空闲内存块，通过内存合并和拆分来优化内存的使用和避免内存碎片问题。
+
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -273,3 +275,343 @@ void *myrealloc(void *ptr, size_t size) {
 
 ```
 
+这段代码是一个简单的 HTTP 请求解析器的实现。它主要的功能是从网络连接中读取 HTTP 请求数据，并解析出请求头、请求方法、路径、版本以及请求体（如果有的话）。代码定义了一些函数和结构体来处理 HTTP 请求的各个方面，包括读取数据、解析请求头和处理请求的各个部分。
+
+以下是您提供的 C 语言代码，已经用中文注释详细说明了每个函数和代码块的作用：
+
+```c
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
+
+#include "http.h"
+
+// 辅助函数：去除字符串前面的空格或制表符
+static char *trim_leading_spaces(char *str) {
+    while (*str == ' ' || *str == '\t') {
+        str++;  // 跳过前面的空格或制表符
+    }
+    return str;
+}
+
+/**
+ * httprequest_parse_headers
+ * 
+ * 解析 HTTP 请求的头部并将解析后的数据填充到 `req` 结构中。
+ * 返回值是从 `buffer` 中读取并解析的字节数。
+ */
+ssize_t httprequest_parse_headers(HTTPRequest *req, char *buffer, ssize_t buffer_len) {
+    // 创建一个缓冲区副本，以免修改原始缓冲区
+    char *buf_copy = malloc(buffer_len + 1);
+    if (!buf_copy) {
+        return -1;  // 内存分配失败，返回错误
+    }
+    memcpy(buf_copy, buffer, buffer_len);
+    buf_copy[buffer_len] = '\0';  // 为缓冲区副本添加结尾的空字符
+
+    // 查找 HTTP 请求头的结束标志 "\r\n\r\n"
+    char *header_end = strstr(buf_copy, "\r\n\r\n");
+    if (!header_end) {
+        free(buf_copy);
+        return -1;  // 如果没有找到请求头的结束标志，返回错误
+    }
+
+    // 计算请求头的长度，并获取请求体的位置
+    ssize_t headers_len = header_end - buf_copy + 4;
+    char *payload_ptr = buf_copy + headers_len;
+
+    // 为请求头部分分配内存
+    char *headers_section = malloc(headers_len + 1);
+    if (!headers_section) {
+        free(buf_copy);
+        return -1;
+    }
+    memcpy(headers_section, buf_copy, headers_len);
+    headers_section[headers_len] = '\0';  // 为请求头部分添加结尾的空字符
+
+    // 解析请求头的每一行
+    char *saveptr;
+    char *line = strtok_r(headers_section, "\r\n", &saveptr);
+    if (!line) {
+        free(buf_copy);
+        free(headers_section);
+        return -1;
+    }
+
+    // 解析请求行：方法、路径和版本
+    char *method = strtok(line, " ");
+    char *path = strtok(NULL, " ");
+    char *version = strtok(NULL, " ");
+    if (!method || !path || !version) {
+        free(buf_copy);
+        free(headers_section);
+        return -1;
+    }
+
+    // 将解析后的方法、路径和版本存储到 req 结构中
+    req->action = strdup(method);
+    req->path = strdup(path);
+    req->version = strdup(version);
+    req->payload = NULL;
+    req->headers = NULL;
+
+    // 确保所有 strdup() 调用成功
+    if (!req->action || !req->path || !req->version) {
+        free(buf_copy);
+        free(headers_section);
+        httprequest_destroy(req);  // 释放已经分配的内存
+        return -1;
+    }
+
+    int content_length = 0;
+    // 解析请求头中的其他字段
+    while ((line = strtok_r(NULL, "\r\n", &saveptr)) != NULL) {
+        char *colon = strchr(line, ':');
+        if (!colon) {
+            continue;  // 如果没有冒号，跳过该行
+        }
+
+        *colon = '\0';  // 分割出头部的 key 和 value
+        char *key = line;
+        char *value = colon + 1;
+        value = trim_leading_spaces(value);  // 去掉 value 前面的空格
+
+        // 创建一个新的 HeaderNode 节点并填充数据
+        HeaderNode *node = malloc(sizeof(HeaderNode));
+        if (!node) {
+            free(buf_copy);
+            free(headers_section);
+            httprequest_destroy(req);
+            return -1;
+        }
+
+        node->key = strdup(key);
+        node->value = strdup(value);
+        if (!node->key || !node->value) {
+            free(node->key);
+            free(node->value);
+            free(node);
+            httprequest_destroy(req);
+            free(buf_copy);
+            free(headers_section);
+            return -1;
+        }
+
+        node->next = req->headers;
+        req->headers = node;  // 将新的头部节点插入到头部链表的前面
+
+        // 如果头部字段是 "Content-Length"，解析其值
+        if (strcasecmp(key, "Content-Length") == 0) {
+            content_length = atoi(value);  // 将 Content-Length 转换为整数
+        }
+    }
+
+    // 如果请求体存在，根据 Content-Length 读取请求体
+    if (content_length > 0) {
+        if (headers_len + content_length > buffer_len) {
+            free(buf_copy);
+            free(headers_section);
+            httprequest_destroy(req);
+            return -1;
+        }
+
+        // 为请求体分配内存
+        char *temp_payload = malloc(content_length + 1);
+        if (!temp_payload) {
+            free(buf_copy);
+            free(headers_section);
+            httprequest_destroy(req);
+            return -1;
+        }
+
+        memcpy(temp_payload, payload_ptr, content_length);  // 将请求体复制到分配的内存中
+        temp_payload[content_length] = '\0';  // 添加结尾的空字符
+        req->payload = temp_payload;
+    }
+
+    // 释放缓冲区和请求头部分的内存
+    free(buf_copy);
+    free(headers_section);
+    return headers_len + content_length;  // 返回已处理的字节数
+}
+
+/**
+ * httprequest_read
+ * 
+ * 从套接字中读取数据并填充到 `req` 结构中。
+ * 返回从套接字读取并处理的字节数。
+ */
+#define READ_BLOCK_SIZE 4096
+
+ssize_t httprequest_read(HTTPRequest *req, int sockfd) {
+    size_t capacity = 8192;  // 初始缓冲区大小
+    char *buffer = malloc(capacity);
+    if (!buffer) {
+        return -1;  // 内存分配失败，返回错误
+    }
+
+    ssize_t total_read = 0;
+    ssize_t parse_result = -1;
+
+    while (1) {
+        // 如果缓冲区不够大，则扩展缓冲区
+        if ((size_t)total_read + READ_BLOCK_SIZE > capacity) {
+            size_t new_capacity = capacity * 2;
+            char *tmp = realloc(buffer, new_capacity);
+            if (!tmp) {
+                return -1;  // 内存重新分配失败，返回错误
+            }
+            buffer = tmp;
+            capacity = new_capacity;
+        }
+
+        // 从套接字中读取数据
+        ssize_t bytes_read = read(sockfd, buffer + total_read, READ_BLOCK_SIZE);
+        if (bytes_read < 0) {
+            free(buffer);
+            return -1;  // 读取失败，返回错误
+        }
+        if (bytes_read == 0) {
+            // 如果没有更多数据，尝试解析 HTTP 请求头
+            parse_result = httprequest_parse_headers(req, buffer, total_read);
+            free(buffer);
+            if (parse_result >= 0) {
+                return total_read;  // 如果解析成功，返回读取的字节数
+            }
+            return -1;  // 解析失败，返回错误
+        }
+
+        total_read += bytes_read;  // 累加已读取的字节数
+        parse_result = httprequest_parse_headers(req, buffer, total_read);
+        if (parse_result >= 0) {
+            free(buffer);
+            return total_read;  // 如果解析成功，返回读取的字节数
+        }
+    }
+
+    free(buffer);
+    return -1;  // 解析失败，返回错误
+}
+
+/**
+ * httprequest_get_action
+ * 
+ * 返回 HTTP 请求的动作（例如 GET、POST 等）。
+ */
+const char *httprequest_get_action(HTTPRequest *req) {
+  return req->action;
+}
+
+/**
+ * httprequest_get_header
+ * 
+ * 返回 HTTP 请求中指定 `key` 的头部字段的值。
+ */
+const char *httprequest_get_header(HTTPRequest *req, const char *key) {
+  if (!req || !key) {
+    return NULL;  // 如果请求或关键字为空，返回 NULL
+  }
+  HeaderNode *current = req->headers;
+  while (current) {
+    if (current->key && strcasecmp(current->key, key) == 0) {
+      return current->value;  // 如果找到匹配的头部字段，返回其值
+    }
+    current = current->next;
+  }
+  return NULL;  // 如果没有找到匹配的头部字段，返回 NULL
+}
+
+/**
+ * httprequest_get_path
+ * 
+ * 返回 HTTP 请求的路径（例如 "/index.html"）。
+ */
+const char *httprequest_get_path(HTTPRequest *req) {
+  if (!req) {
+    return NULL;  // 如果请求为空，返回 NULL
+  }
+  return req->path;
+}
+
+/**
+ * httprequest_destroy
+ * 
+ * 释放与 `req` 相关的所有内存。
+ */
+void httprequest_destroy(HTTPRequest *req) {
+  if (!req) { 
+    return;  // 如果请求为空，什么都不做
+  }
+  // 释放请求中各个成员的内存
+  free((void *)req->action);
+  free((void *)req->path);
+  free((void *)req->version);
+  free((void *)req->payload);
+
+  // 释放请求头链表中的所有节点
+  HeaderNode *current = req->headers;
+  while (current) {
+    HeaderNode *next = current->next;
+    if (current->key) {
+      free(current->key);  // 释放头部字段的 key
+    }  
+    if (current->value) {
+      free(current->value);  // 释放头部字段的 value
+    }
+    free(current);  // 释放当前头部节点
+    current = next;
+  }
+  req->headers = NULL;  // 设置头部为 NULL
+}
+```
+
+### 主要功能总结：
+
+1. **`httprequest_parse_headers`**：解析 HTTP 请求的头部并将信息存入 `req`。
+2. **`httprequest_read`**：从套接字读取数据并调用 `httprequest_parse_headers` 解析 HTTP 请求。
+3. **`httprequest_get_action`**：返回 HTTP 请求的动作（如 GET、POST）。
+4. **`httprequest_get_header`**：返回请求中指定头部字段的值。
+5. **`httprequest_get_path`**：返回请求的路径部分（例如 `/index.html`）。
+6. **`httprequest_destroy`**：销毁请求，释放与其相关的所有内存。
+
+代码的核心任务是通过解析 HTTP 请求的各个部分来填充 `HTTPRequest` 结构体，处理请求方法、路径、版本、头部信息和请求体。
+
+
+
+
+
+/ 获取用户输入
+      Input              / 输入X
+      STORE InputX     / 将X存储到InputX地址
+      Input              / 输入Y
+      STORE InputY     / 将Y存储到InputY地址
+      Input              / 输入操作符
+      STORE Operation  / 将操作符存储到Operation地址
+
+/ 检查操作符
+      LOAD Operation   / 加载操作符
+      SUBT ASCII_a      / 如果操作符是‘a’，执行加法
+      SKIPCOND 400      / 如果操作符是‘a’，跳转到加法子程序
+      JUMP Subtract     / 否则执行减法子程序
+
+/ 加法子程序
+Add,  LOAD InputX      / 加载X
+      ADD InputY       / 加X和Y
+      JUMP PrintResult  / 跳转并输出结果
+
+/ 减法子程序
+Subtract,  LOAD InputX  / 加载X
+           SUBT InputY  / 执行X - Y
+           JUMP PrintResult  / 跳转并输出结果
+
+/ 输出结果
+PrintResult,  Output     / 输出结果
+             HALT    / 程序结束
+
+/ ASCII 值
+ASCII_a, DEC 97     / 字符'a'的ASCII值
+InputX,  DEC 0         / 存储第一个输入X
+InputY,  DEC 0         / 存储第二个输入Y
+Operation, DEC 0       / 存储操作符（‘a’或‘s’）
+END
