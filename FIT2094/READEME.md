@@ -28,7 +28,7 @@
   > - 明白！你问得非常好！
   >    我来**一句一句解释**这三个步骤每个词到底什么意思，用**非常简单的话**告诉你：
   >
-  >   ------
+  > ------
   >
   >   ## Step 1：Entities and Keys
   >
@@ -42,7 +42,7 @@
   >   - 找出有哪些**实体**。
   >   - 给每个实体确定一个**主键**（Key），**必须能唯一识别这个实体**。
   >
-  >   ------
+  > ------
   >
   >   ## Step 2：Relationships
   >
@@ -60,7 +60,7 @@
   >   - 每条关系都要标明**最少-最多连接的数量**（基数，Cardinality）。
   >     - 比如：一个乘客可以订很多次航行（1对多），但每次航行只属于一个乘客。
   >
-  >   ------
+  > ------
   >
   >   ## Step 3：Non-key Attributes
   >
@@ -81,7 +81,7 @@
   >
   >   太好了！那我用**Ocean Odyssey**的例子，**按照Step 1 → Step 2 → Step 3的顺序**，**简单又清楚地演示一遍**！
   >
-  >   ------
+  > ------
   >
   >   # **Step 1: Entities and Keys （找实体+主键）**
   >
@@ -105,7 +105,7 @@
   >
   >   ✅ **Step 1完成**，只画出这些**实体**，每个实体里**只放主键字段**！
   >
-  >   ------
+  > ------
   >
   >   # **Step 2: Relationships （画实体之间的关系）**
   >
@@ -128,7 +128,7 @@
   >
   >   ✅ **Step 2完成**，**画出关系线，标动词，标最小最大数量（Cardinality）**！
   >
-  >   ------
+  > ------
   >
   >   # **Step 3: Non-key Attributes （加普通属性）**
   >
@@ -168,12 +168,12 @@
   >
   >   ✅ **Step 3完成**，**每个实体里面补充完所有的非主键字段（Non-key attributes）**！
   >
-  >   ------
+  > ------
   >
   >   我看完你上传的文件了！
   >    你已经**很接近正确**了，但是有**一些小问题**，我来帮你一个一个指出来（很快改就行了！）
   >
-  >   ------
+  > ------
   >
   >   # 你的现状总结：
   >
@@ -187,7 +187,7 @@
   >   | **属性细节**                       | "guardian_id"没说明是外键                                    | **小问题，可以优化一下**                           |
   >   | **Cabin主键**                      | 只有 cabin_number，没有 ship_code                            | **有错误，需要组合主键 (ship_code, cabin_number)** |
   >
-  >   ------
+  > ------
   >
   >   # 详细问题讲解（超清楚版）：
   >
@@ -202,7 +202,7 @@
   >      - 好的，我给你**超简单解释**一下：
   >         你问的 "**Cabin是什么表？**" —— **Cabin（船舱）\**是\**记录每艘船上房间（舱房）信息的表**。
   >
-  >        ------
+  >      ------
   >
   >        # Cabin 是什么？
   >
@@ -217,7 +217,7 @@
   >        - 这个房间的**住宿人数**（sleeping_capacity，比如可以住2个人）
   >        - 这个房间的**等级（舱位等级）**（cabin_class，比如Interior内部房、Balcony阳台房）
   >
-  >        ------
+  >      ------
   >
   >        # Cabin表要有什么字段？
   >
@@ -228,7 +228,7 @@
   >        | sleeping_capacity  | 这个房能住几个人                                   |
   >        | cabin_class        | 房间等级：Interior / Ocean View / Balcony / Suite  |
   >
-  >        ------
+  >      ------
   >
   >        # 为什么 Cabin 的主键是 (ship_code, cabin_number)？
   >
@@ -369,7 +369,7 @@
   >        如果想要，直接回复：「帮我画guardian关系图！」
   >         要继续吗？【直接用图让你秒懂！】
   >
-  >   ------
+  > ------
   >
   >   # 总结你需要改的地方
   >
@@ -381,14 +381,14 @@
   >   | guardian_id    | 标明是外键（FK）                                             |
   >   | 文件版式       | 如果可以的话，用Lucidchart画得更规范些（实体矩形，关系箭头直直的） |
   >
-  >   ------
+  > ------
   >
   >   # 总的评价
   >
   >   你的**方向完全正确**，只是**少了画关系线 + 小细节没处理好**。
   >    这很正常，**很多人第一次做都漏掉**，稍微改一下就完美了！
   >
-  >   ------
+  > ------
   >
   >   要不要我现在**帮你画一个正确版的第一步（补全版ER图）**，然后你可以参考着直接修改？
   >    要的话直接回我一句：「帮我画正确版！」
@@ -824,3 +824,602 @@
  我可以一边画一边告诉你怎么推导实体和关系！
  要的话告诉我：「帮我开始画OO概念模型」！
  要继续吗？
+
+![image-20250427175946639](./READEME.assets/image-20250427175946639.png)
+
+好的！继续按照【什么意思 + 详细解释 + 中英互译】整理。
+ 这张图片是一个**打分标准表（Marking Criteria）**，下面是详细解释：
+
+------
+
+## 英文原文
+
+**Marking Criteria**
+ **Items assessed**
+
+**TASK 1 [15 marks] Conceptual Model**
+
+------
+
+### 第一部分：Identification of the entities that support the case study 【5 marks】
+
+**Maximum 5 marks – Entities and Keys**
+
+- Marks awarded for each correct entity identified
+- Mark penalty for unnecessary entities included
+- Marks awarded for each correct key selected
+- Mark penalty for surrogate or foreign keys added
+
+------
+
+### 第二部分：Identification and placement of attributes to support the case study 【5 marks】
+
+**Maximum 5 marks – Attributes**
+
+- Marks awarded for each necessary attribute identified
+- Mark penalty for extra attributes included
+- Marks penalty for placement of attribute in incorrect entity
+
+------
+
+### 第三部分：Determination of relationships that support the case study 【5 marks】
+
+**Maximum 5 marks – Relationships and Cardinality**
+
+- Marks awarded for each correct relationship identified
+- Mark penalty for unnecessary relationships included
+- Mark penalty for redundant relationships included
+- Marks awarded for correct minimum and maximum cardinality for every correct relationship
+
+------
+
+## 中文翻译 + 详细解释
+
+------
+
+### 标题部分
+
+**中文翻译：**
+ **评分标准**
+ **评估项目**
+
+**任务1【15分】：概念模型**
+
+------
+
+### 第一部分：识别支持案例研究的实体 【5分】
+
+**最多5分 – 实体与主键**
+
+- **正确识别一个实体，得分**
+- **错误添加了不必要的实体，扣分**
+- **正确选择主键，得分**
+- **错误添加代理键或外键，扣分**
+
+**详细解释：**
+ 你需要在案例中正确找出哪些“实体”（比如学生、老师、课程），
+ 如果乱加一些没必要的实体，或者搞错了主键、加了不该加的外键，会被扣分。
+
+------
+
+### 第二部分：识别并正确放置属性 【5分】
+
+**最多5分 – 属性**
+
+- **正确识别必要的属性，得分**
+- **添加了不需要的额外属性，扣分**
+- **把属性放错了实体，也扣分**
+
+**详细解释：**
+ 比如在"学生"实体中应该有"学号"、"姓名"这些属性，
+ 如果你加了没用的，比如"发动机型号"，就扣分；
+ 或者把"学生姓名"错放到"课程"实体里，也扣分。
+
+------
+
+### 第三部分：确定支持案例研究的关系 【5分】
+
+**最多5分 – 关系和基数（Cardinality）**
+
+- **正确识别一个关系，得分**
+- **错误添加多余关系，扣分**
+- **添加冗余关系（本来已有的重复关系），扣分**
+- **正确标注最小和最大基数（即一对一、一对多等关系），得分**
+
+**详细解释：**
+ 比如正确建立"学生选课"的关系（一个学生可以选多门课），
+ 如果乱加比如"学生管理汽车"这种无关关系，就扣分；
+ 而且一对多、多对一的方向标注错了，也会扣分。
+
+------
+
+## 小总结（中文通俗版）
+
+- 总分15分，分三大块：**实体识别（5分）**、**属性识别（5分）**、**关系建模（5分）**。
+- 重点是：**找对、加对、放对**，否则就扣分。
+- 注意不要画多余的东西、不要放错地方、关系要清晰明确！
+
+------
+
+要不要我顺便帮你画一版简化版的打分思维导图？
+ 比如三大块→每块的得分点和扣分点一目了然！
+ 要的话告诉我，或者继续发下一张图也可以～我在！
+
+![image-20250427180134662](./READEME.assets/image-20250427180134662.png)
+
+好的，继续保持风格！
+ 下面是这张图片内容的【什么意思 + 详细解释 + 中英互译】：
+
+------
+
+## 英文原文
+
+**TASK 2 [15 marks] Normalisation**
+ Normalise the supplied case study documents and integrate the resultant relations into a logical model.
+ **[15 marks]**
+
+------
+
+### 第一部分：Maximum 12 marks – Normalisation
+
+- Marks awarded for each correct normalisation step
+- Marks awarded for correct attribute synthesis
+- Mark penalty for additional attributes or surrogate keys added during normalisation
+
+------
+
+### 第二部分：Maximum 3 marks – Dependency diagrams
+
+- Marks awarded for each correct dependency depicted within normalisation
+
+------
+
+### 第三部分：Mapping to logical model
+
+- Mark penalty for incorrect mapping of each relation to logical model
+
+------
+
+## 中文翻译 + 详细解释
+
+------
+
+### 标题部分
+
+**中文翻译：**
+ **任务2【15分】：规范化（Normalisation）**
+
+对给定的案例研究文档进行**规范化处理**，
+ 并把最终得到的**关系（relations）\**整合成\**逻辑模型（logical model）**。
+
+------
+
+### 第一部分：规范化处理 【最多12分】
+
+**原文：**
+ Maximum 12 marks – Normalisation:
+
+- Marks awarded for each correct normalisation step
+- Marks awarded for correct attribute synthesis
+- Mark penalty for additional attributes or surrogate keys added during normalisation
+
+**中文翻译：**
+ 最多12分 – 规范化过程：
+
+- **每正确完成一个规范化步骤，得分**
+- **每正确进行一次属性合成（attribute synthesis），得分**
+- **如果在规范化过程中错误地添加了额外属性或代理键（surrogate keys），扣分**
+
+**详细解释：**
+ 规范化主要是按规则把表拆分，减少冗余，提高数据一致性，比如：
+
+- 1NF（第一范式）：消除重复组
+- 2NF（第二范式）：消除部分依赖
+- 3NF（第三范式）：消除传递依赖
+
+每规范一次正确，都会给分。如果你随便加了多余字段，或乱加主键，会扣分。
+
+------
+
+### 第二部分：依赖图 【最多3分】
+
+**原文：**
+ Maximum 3 marks – Dependency diagrams:
+
+- Marks awarded for each correct dependency depicted within normalisation
+
+**中文翻译：**
+ 最多3分 – 依赖关系图：
+
+- **每正确画出一个依赖关系（Dependency），得分**
+
+**详细解释：**
+ 在规范化时，需要画出字段之间的依赖关系图，比如：
+
+- 学号 → 姓名
+- 课程编号 → 课程名
+
+正确表达出依赖关系就能拿到对应分数。
+
+------
+
+### 第三部分：映射到逻辑模型
+
+**原文：**
+ Mapping to logical model:
+
+- Mark penalty for incorrect mapping of each relation to logical model
+
+**中文翻译：**
+ 映射到逻辑模型：
+
+- **如果每个关系映射到逻辑模型时出错，扣分**
+
+**详细解释：**
+ 最后要把规范化后的结果整理成逻辑模型，比如ER图（实体关系图），
+ 如果映射错了（比如错连接了关系或者实体），就要扣分。
+
+------
+
+## 小总结（中文通俗版）
+
+- **规范化处理（12分）**：按规范拆表、合理合成属性。
+- **画依赖图（3分）**：正确描述字段之间的依赖关系。
+- **映射逻辑模型（扣分项）**：映射错误会扣分，注意关系正确连接。
+
+------
+
+要不要我顺便帮你整理一个规范化流程的超简版？
+ 比如：原始表 → 1NF → 2NF → 3NF → 依赖图 → 逻辑模型，一步步清晰走下来。
+
+要的话告诉我～
+ 也可以继续发下一张图！我随时在！
+
+![image-20250427180235416](./READEME.assets/image-20250427180235416.png)
+
+![image-20250427180254756](./READEME.assets/image-20250427180254756.png)
+
+好的，继续！
+ 这两张图一起是【TASK 3 Logical Model】部分的内容，我来帮你完整整理成【什么意思 + 详细解释 + 中英互译】：
+
+------
+
+## 英文原文
+
+**TASK 3 [55 marks] Logical Model**
+ Depict the data requirements expressed in the case study via a relational database logical model.
+ **[45 marks]**（原文标45分，但总分其实是55分，应该是有笔误）
+
+------
+
+### 第一部分：Maximum 10 marks – Relations
+
+- Marks awarded for each required relation and its attributes identified
+- Mark penalty for extra relations included
+- Mark penalty for placement of attribute in incorrect relation
+- Mark penalty for multivalued attributes included
+
+------
+
+### 第二部分：Maximum 10 marks – Primary Keys
+
+- Marks awarded for each correct assignment of a primary key
+
+------
+
+### 第三部分：Maximum 10 marks – Relationships
+
+- Marks awarded for each required relationship identified
+- Mark penalty for each incorrect minimum and maximum cardinality for each required relationship depicted
+- Mark penalty for unnecessary relationships included
+- Mark penalty for redundant relationships included
+
+------
+
+### 第四部分：Maximum 4 marks – Surrogate Key
+
+- Marks awarded for creation of at least one appropriate surrogate key
+- Marks awarded for creation of unique constraint(s) to protect natural key(s)
+
+------
+
+### 第五部分：Maximum 5 marks – Attribute Data Types
+
+- Marks awarded for each correctly identified Oracle data type
+- Marks awarded for each null constraint correctly implemented based on business rules
+
+------
+
+### 第六部分：Maximum 6 marks – Business Rules
+
+- Marks awarded for each correctly identified integrity requirement to implement case study’s business rules
+
+------
+
+## 中文翻译 + 详细解释
+
+------
+
+### 标题部分
+
+**中文翻译：**
+ **任务3【55分】：逻辑模型（Logical Model）**
+
+根据案例研究中提出的数据需求，
+ 绘制出**关系型数据库的逻辑模型**。
+
+------
+
+### 第一部分：关系（Relations）【最多10分】
+
+**原文：**
+ Marks awarded for each required relation and its attributes identified
+ Mark penalty for extra relations included
+ Mark penalty for placement of attribute in incorrect relation
+ Mark penalty for multivalued attributes included
+
+**中文翻译：**
+
+- 正确识别每个**必需的关系（表）\**和其\**属性**，得分
+- 如果加了**多余的关系**，扣分
+- 如果**把属性放错了关系（表）**，扣分
+- 如果包含**多值属性（multivalued attributes）**，扣分
+
+**详细解释：**
+ 建表时，必须把每张表和字段定义准确，不能随便增加关系，也不能一个属性属于错的表。
+
+------
+
+### 第二部分：主键（Primary Keys）【最多10分】
+
+**原文：**
+ Marks awarded for each correct assignment of a primary key
+
+**中文翻译：**
+
+- 每正确指定一个**主键（Primary Key）**，得分
+
+**详细解释：**
+ 每张表必须正确设定主键，比如学号是学生表的主键，不能漏掉也不能乱设。
+
+------
+
+### 第三部分：关系（Relationships）【最多10分】
+
+**原文：**
+ Marks awarded for each required relationship identified
+ Mark penalty for incorrect minimum and maximum cardinality for each required relationship depicted
+ Mark penalty for unnecessary relationships included
+ Mark penalty for redundant relationships included
+
+**中文翻译：**
+
+- 正确识别每个**必需的关系**（如一对多、多对多），得分
+- 错误标注**最小值、最大值（基数cardinality）**，扣分
+- 添加了**不必要的关系**，扣分
+- 添加了**冗余关系**，扣分
+
+**详细解释：**
+ 比如学生和课程之间是多对多关系，建错了方向或者多建了没必要的关系就扣分。
+
+------
+
+### 第四部分：代理键（Surrogate Key）【最多4分】
+
+**原文：**
+ Marks awarded for creation of at least one appropriate surrogate key
+ Marks awarded for creation of unique constraint(s) to protect natural key(s)
+
+**中文翻译：**
+
+- 创建了**至少一个合适的代理键（Surrogate Key）**，得分
+- 为保护自然键（Natural Key）创建了**唯一性约束（Unique Constraint）**，得分
+
+**详细解释：**
+ 有时候自然键（比如身份证号）不好直接用，系统可以增加代理键（比如自增ID），并且要加唯一性保护。
+
+------
+
+### 第五部分：属性数据类型（Attribute Data Types）【最多5分】
+
+**原文：**
+ Marks awarded for each correctly identified Oracle data type
+ Marks awarded for each null constraint correctly implemented based on business rules
+
+**中文翻译：**
+
+- 每正确指定一个**Oracle数据类型（如NUMBER、VARCHAR2）**，得分
+- 根据业务规则，正确设定**是否允许为空（null约束）**，得分
+
+**详细解释：**
+ 比如学号用字符串型，出生日期用日期型；某些字段必须非空，比如姓名。
+
+------
+
+### 第六部分：业务规则（Business Rules）【最多6分】
+
+**原文：**
+ Marks awarded for each correctly identified integrity requirement to implement case study’s business rules
+
+**中文翻译：**
+
+- 每正确识别并实现一个**业务规则下的数据完整性约束（Integrity Constraint）**，得分
+
+**详细解释：**
+ 比如，一个课程最多只能被100个学生选，或者一个账号不能重复注册，这种业务规则要用数据库约束实现。
+
+------
+
+## 小总结（中文通俗版）
+
+- **逻辑模型总分55分**，分6大块：
+  - 关系表设计正确（10分）
+  - 主键分配正确（10分）
+  - 关系与基数正确（10分）
+  - 合理使用代理键（4分）
+  - 正确指定数据类型和约束（5分）
+  - 正确实现业务规则完整性（6分）
+- **重点注意**：
+  - 不要乱加关系或字段；
+  - 主键要明确；
+  - 外键关系正确标注；
+  - 数据类型、空值要求符合业务逻辑！
+
+------
+
+要不要我帮你额外画一版超直观版总结？
+ 比如一张表格列出【得分项】【扣分项】【注意事项】，一眼清晰！
+ 要的话告诉我～
+ 也可以继续发图片继续整理！我随时跟上！
+
+![image-20250427180411468](./READEME.assets/image-20250427180411468.png)
+
+![image-20250427180421117](./READEME.assets/image-20250427180421117.png)
+
+好的，这两张图片是关于最后一部分评分标准的，我继续帮你整理成【什么意思 + 详细解释 + 中英互译】：
+
+------
+
+## 英文原文
+
+**TASK - Schema and General Requirements**
+
+------
+
+### 第一部分：Schema Generation（10 marks）
+
+Generate a schema which meets the case study data requirements from the logical model produced.
+ **[10 marks]**
+
+**注意！**
+ **This section will be awarded 0 marks if no relational model is present in your submission - please CHECK your model carefully.**
+
+------
+
+**Maximum 5 marks - Relational model generation:**
+
+- Marks awarded for correct generation of relational model from submitted logical model.
+- MUST be presented in submitted model and must match generation from the submitted logical model.
+
+**Maximum 5 marks - Schema generation:**
+
+- Marks awarded for correct generation of SQL schema file from submitted logical model.
+- Mark penalty applied for any errors generated when script run in Oracle.
+- Mark penalty for missing column comments.
+
+------
+
+### 第二部分：General Requirements（15 marks）
+
+------
+
+**Consistent use of industry standard notation and convention Met submission requirements [5 marks]**
+
+**Maximum 5 marks - Modelling standards and submission requirements:**
+
+- Marks awarded for application of Unit Conceptual and logical model notation conventions.
+- Mark penalty for showing data types on logical model.
+- Mark penalty for missing model legend and/or relationship labels.
+- Mark penalty for missing required documents and/or not adding student name to all pages submitted.
+- Mark penalty for submitting zipped file.
+
+------
+
+**Correct use of Git [10 marks]**
+
+**Maximum 10 marks - Git used appropriately:**
+
+- Marks awarded for a minimum of twelve pushes showing a clear development history as follows:
+  - Conceptual model 3 pushes
+  - Normalisation 3 pushes
+  - Logical model 6 pushes
+- Marks awarded for correct Git author details used in pushes.
+- Marks awarded for the use of meaningful commit messages (i.e., not blank or of the form "Push1").
+
+------
+
+## 中文翻译 + 详细解释
+
+------
+
+### 第一部分：模式生成（Schema Generation）【10分】
+
+**中文翻译：**
+ 根据已经生成的逻辑模型，生成一个符合案例数据需求的**关系数据库模式**。
+
+**注意：**
+ 如果提交的作业中**没有关系模型（Relational Model）**，
+ **本部分直接得0分**！一定要仔细检查你的模型！
+
+------
+
+**细分打分：**
+
+**关系模型生成（5分）**
+
+- 正确从逻辑模型生成关系模型，得分。
+- 关系模型**必须出现在提交文件里**，而且**内容必须和逻辑模型对应**。
+
+**SQL模式文件生成（5分）**
+
+- 正确从逻辑模型生成**SQL建表文件**，得分。
+- 如果提交的SQL文件在Oracle里执行报错，会扣分。
+- 如果漏写了**列注释（Column Comments）**，也会扣分。
+
+------
+
+**详细解释：**
+ 你需要先画出关系模型（比如表和字段），再根据这个关系模型写出SQL语句（建表命令），而且SQL要能正确运行，没有语法错误。
+
+------
+
+### 第二部分：通用要求（General Requirements）【15分】
+
+------
+
+#### 1. 使用标准建模符号和提交要求（5分）
+
+**中文翻译：**
+
+- 正确使用本单元规定的**概念建模和逻辑建模符号**，得分。
+- 如果逻辑模型上错误地标了数据类型，扣分。
+- 如果缺少**图例（Legend）\**或\**关系标签（Relationship Labels）**，扣分。
+- 如果缺少必要的文档或者忘了在每页写上学生姓名，扣分。
+- 如果提交了**压缩包（zip文件）**而不是单独文件，也扣分。
+
+**详细解释：**
+ 要按规定画图，不要在逻辑模型上标数据类型；
+ 文档齐全，每页有名字，不压缩打包。
+
+------
+
+#### 2. 正确使用Git（10分）
+
+**中文翻译：**
+
+- 至少要进行**12次Git提交（push）**，显示清晰的开发历史：
+  - 概念模型提交3次
+  - 规范化提交3次
+  - 逻辑模型提交6次
+- 提交记录中要有**正确的Git作者信息**。
+- **提交信息（commit messages）要有意义**，不能是空白或“Push1”这种无意义的。
+
+**详细解释：**
+ Git的提交要有条理，记录你逐步完成作业的过程，不能一次性全部提交。
+
+------
+
+## 小总结（中文通俗版）
+
+- **Schema部分（10分）**
+  - 必须提交关系模型（否则直接0分）
+  - SQL文件要能正确运行，不能出错或漏注释
+- **General部分（15分）**
+  - 建模要规范、文档要齐全
+  - Git提交要清晰、有历史、有意义的提交说明
+
+------
+
+要不要我帮你再总结一张表，把**Task 1、2、3、Schema、General总分分布**，
+ 一眼清楚各部分怎么拿分？要的话告诉我！
+ 也可以继续发新的内容继续整理～我在！
