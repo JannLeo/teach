@@ -410,55 +410,55 @@
 //	char c = get_street_letter(student1);
 //}
 // -----------------------------------------------
-#include <stdio.h>
-#include <stdlib.h>
-char* next(char* sentence,int reset) {
-	int i = 0;
-	static char* word;
-	if (reset == 1) {
-		word = sentence;
-		return word;
-	}
-	
-	while (word[i] != ' ' && word[i] != '\0') {
-		i++;
-	}
-	if (word[i] == '\0') {
-		return NULL;
-	}
-	word += (i + 1);
-	
-	return word;
-}
-void modify(char* sentence) {
-	sentence[0] = '0'+(sentence[0] - 'a' + 1) % 10;
-}
-void cut(char *a,char *b) {
-	//递归
-	if (*a == '\0' || *b == '\0') {
-		*a = '0';
-		return;
-	}
-	cut(a + 1, b + 1);
-}
-int abc() {
-	return abc() + 1;
-}
-int main() {
-	char sentence[] = "go to the beach";
-	char word[] = "overlord";
-	char* p;
-	int reset = 1;
-	do {
-		p = next(sentence, reset);
-		reset = 0;
-		if (p != NULL)
-			printf("Next: %s \n", p);
-	} while (p != NULL);
-	modify(sentence);
-	printf("Modify: %s \n", sentence);
-	cut(sentence, word);
-	printf("Cut: %s \n", sentence);
+//#include <stdio.h>
+//#include <stdlib.h>
+//char* next(char* sentence,int reset) {
+//	int i = 0;
+//	static char* word;
+//	if (reset == 1) {
+//		word = sentence;
+//		return word;
+//	}
+//	
+//	while (word[i] != ' ' && word[i] != '\0') {
+//		i++;
+//	}
+//	if (word[i] == '\0') {
+//		return NULL;
+//	}
+//	word += (i + 1);
+//	
+//	return word;
+//}
+//void modify(char* sentence) {
+//	sentence[0] = '0'+(sentence[0] - 'a' + 1) % 10;
+//}
+//void cut(char *a,char *b) {
+//	//递归
+//	if (*a == '\0' || *b == '\0') {
+//		*a = '0';
+//		return;
+//	}
+//	cut(a + 1, b + 1);
+//}
+//int abc() {
+//	return abc() + 1;
+//}
+//int main() {
+//	char sentence[] = "go to the beach";
+//	char word[] = "overlord";
+//	char* p;
+//	int reset = 1;
+//	do {
+//		p = next(sentence, reset);
+//		reset = 0;
+//		if (p != NULL)
+//			printf("Next: %s \n", p);
+//	} while (p != NULL);
+//	modify(sentence);
+//	printf("Modify: %s \n", sentence);
+//	cut(sentence, word);
+//	printf("Cut: %s \n", sentence);
 }
 // ---------------------------------------------
 //#include <stdio.h>
@@ -477,3 +477,17 @@ int main() {
 //	}
 //}
 //------------------------------------------------------
+
+#include <stdio.h>
+
+long transfrom(long p, long q, long r) {
+	long result = p - (q + r);
+	result = result ^ ((q + r) >> 63);
+	return result;
+}
+
+int main() {
+	
+}
+
+
