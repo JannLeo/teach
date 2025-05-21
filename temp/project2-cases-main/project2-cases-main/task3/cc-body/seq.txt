@@ -1,0 +1,15 @@
+0.00 X start 8080
+
+# Cached
+0.00 X curl --proxy http://localhost:8080 "http://localhost/echo/Cache-Control%3A%20private"
+0.00 X wait 0
+
+# Cached
+0.00 X curl --proxy http://localhost:8080 "http://localhost/echo/Cache-Control%3A%20private"
+0.00 X wait 1
+
+0.00 X response 0 response
+0.00 X response 1 response
+0.00 X log all.log
+
+0.25 0 stop

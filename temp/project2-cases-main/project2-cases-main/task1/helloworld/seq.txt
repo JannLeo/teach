@@ -1,0 +1,14 @@
+0.00 X start 8080
+0.00 X log empty.log
+
+0.00 X curl --proxy http://localhost:8080 http://localhost
+0.00 X wait-continue 0
+
+0.20 0 log_accept all.log
+0.10 1 log_header all.log
+0.20 2 log_length all.log
+
+0.15 3 response-continue 0 response
+0.00 X log-continue all.log
+
+0.00 X stop

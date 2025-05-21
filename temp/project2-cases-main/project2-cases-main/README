@@ -1,0 +1,36 @@
+COMP30023 2025 - Project 2
+Test cases and visible server
+
+Copying these files is not advised, as they are not finalised and won't be useful.
+
+How to read the test cases
+1. Open the directory corresponding to the test case you're interested in.
+2. Open seq.txt.
+This file contains the sequence of steps involved in the test case.
+The line numbers reported by the CI corresponds to the line number of the sequence file.
+
+Explanation of common commands
+| start <port>              | start htproxy on <port> in background                                 |
+| stop                      | stop htproxy by sending SIGINT                                        |
+| log <filename>            | verify what's written to stdout of htproxy against <filename>         |
+| log_accept <filename>     | verify "Accept" lines against <filename>                              |
+| log_header <filename>     | verify "Request tail" lines against <filename>                        |
+| log_length <filename>     | verify "Response body length" lines against <filename>                |
+| curl <...args>            | run curl command with <...args> in background (make request to proxy) |
+| wait <n>                  | wait for curl command n to finish, where n is incremented per request |
+| response <n> <filename>   | verify the response of n against <filename>                           |
+| response <n> <hash>       | verify the response of n against <hash>, the sha256 hash of response  |
+| curl-post <...args>       | make a POST request to server listening on port 80 with <...args>     |
+
+How to test
+Manually work through each command in the sequence file, from top to bottom.
+e.g. if it's "start 8080", start htproxy on port 8080
+
+When it comes to any request directed to the origin server (always on port 80),
+localhost or [::1] must be replaced with unimelb-comp30023-2025.cloud.edu.au.
+
+So `curl --proxy http://localhost:8080 http://localhost` will become
+`curl --proxy http://localhost:8080 http://unimelb-comp30023-2025.cloud.edu.au`.
+
+Note: When it comes to curl commands, you can run in the foreground,
+rather than run in background and wait(1).

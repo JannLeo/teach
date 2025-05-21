@@ -1,0 +1,50 @@
+0.00 X start 8080
+
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/0
+0.00 X wait 0
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/1
+0.00 X wait 1
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/2
+0.00 X wait 2
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/3
+0.00 X wait 3
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/4
+0.00 X wait 4
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/5
+0.00 X wait 5
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/6
+0.00 X wait 6
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/7
+0.00 X wait 7
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/8
+0.00 X wait 8
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/9
+0.00 X wait 9
+
+# Eviction occurs, new response cannot be cached
+0.00 X curl-post -X POST http://localhost/a --data '120000'
+0.00 X curl --proxy http://localhost:8080 http://localhost/a
+0.00 X wait-continue 10
+0.00 X curl-post -X POST http://localhost/a --data '1'
+0.00 X curl --proxy http://localhost:8080 http://localhost/a
+0.00 X wait 11
+
+0.00 X curl --proxy http://localhost:8080 http://localhost/echo/0
+0.00 X wait 12
+
+0.00 X response 0 response.0
+0.00 X response 1 response.1
+0.00 X response 2 response.2
+0.00 X response 3 response.3
+0.00 X response 4 response.4
+0.00 X response 5 response.5
+0.00 X response 6 response.6
+0.00 X response 7 response.7
+0.00 X response 8 response.8
+0.00 X response 9 response.9
+0.00 X response-continue 10 b7d28250f817e1e8a8584ea30736efc813858d29ea8e83d22a4c13140abd65b3
+0.00 X response 11 response.11
+0.00 X response 12 response.0
+0.00 X log all.log
+
+0.15 2 stop

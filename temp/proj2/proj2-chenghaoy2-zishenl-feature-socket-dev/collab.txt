@@ -1,0 +1,70 @@
+Collaboration Statement for Project 2 - COMP30023 (Semester 1, 2025)
+
+Group Member
+Name: Blake Liu  
+Student ID: 1468953
+
+Name: Chenghao Yang  
+Student ID: 1468958
+
+
+
+Division of Labor
+1. Blake Liu (Main network / control loop)
+- Stage 1: Completed core proxy implementation and full Stage 1 functionality.
+- Stage 2: Integrated cache checking and control into the main loop.
+- Stage 3: Added logging behavior for "GET" and "Not caching".
+- Stage 4: Implemented timestamp recording and cache expiration logic.
+
+2. Chenghao Yang (Cache system / control logic)
+- Stage 1: Assisted in implementation and initial logging utility setup.
+- Stage 2: Implemented LRU cache data structure and full cache operations.
+- Stage 3: Implemented Cache-Control parsing and permission logic.
+- Stage 4: Parsed max-age field, managed expiration status, and cache replacement logic.
+
+
+
+Expected Codebase Files
+1. main.c  
+2. proxy.c  
+3. cache.c  
+4. http_parser.c  
+5. log.c  
+6. utils.c  
+
+
+
+Division of Responsibilities
+1. Code and git environment setup: Blake Liu  
+   - .gitignore
+
+2. Blake Liu  
+   - main.c  
+   - proxy.c  
+   - log.c  
+   - Makefile  
+   - Integration
+
+3. Chenghao Yang  
+   - cache.c  
+   - http_parser.c  
+   - Testing and validation
+
+4. Shared Responsibility  
+   - utils.c
+
+
+
+Git Branching Structure
+- Main branch: `main`
+- Development branch: `dev`
+- Individual feature branches:  
+  - Blake Liu: `feature/socket-dev`  
+  - Chenghao Yang: `feature/cache-dev`  
+- Additional branches created as needed for testing or staging
+
+
+
+Signed:  
+Blake Liu
+Chenghao Yang

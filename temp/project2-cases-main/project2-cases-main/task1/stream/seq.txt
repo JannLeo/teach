@@ -1,0 +1,8 @@
+0.00 X start 8080
+
+0.00 X relay-stream
+
+0.20 1 log_length all.log
+0.00 X log-continue all.log
+
+0.00 X stop

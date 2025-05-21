@@ -1,0 +1,7 @@
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/flip
+Response body length 6
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+Serving localhost http://localhost/flip from cache

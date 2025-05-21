@@ -1,0 +1,54 @@
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/0
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/1
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/2
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/3
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/4
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/5
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/6
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/7
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/8
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/9
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+Evicting localhost http://localhost/echo/0 from cache
+GETting localhost http://localhost/a
+Response body length 120000
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/a
+Response body length 1
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+Evicting localhost http://localhost/echo/1 from cache
+GETting localhost http://localhost/echo/0
+Response body length 1

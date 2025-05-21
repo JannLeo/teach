@@ -1,0 +1,15 @@
+0.00 X start 8080
+
+0.00 X curl-post -X POST http://localhost/flip --data '0'
+0.00 X curl --proxy http://localhost:8080 http://localhost/flip
+0.00 X wait 0
+0.00 X curl-post -X POST http://localhost/flip --data '1'
+0.00 X curl --proxy http://localhost:8080 http://localhost/flip
+0.00 X wait 1
+
+# Responses should not be cached in Stage 1
+0.00 X response 0 response.false
+0.00 X response 1 response.true
+0.00 X log all.log
+
+0.20 4 stop

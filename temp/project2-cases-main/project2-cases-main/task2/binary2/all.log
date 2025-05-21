@@ -1,0 +1,14 @@
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/gen/100000
+Response body length 100000
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/gen/10000
+Response body length 10000
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+Serving localhost http://localhost/gen/100000 from cache
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+Serving localhost http://localhost/gen/10000 from cache

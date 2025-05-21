@@ -1,0 +1,4 @@
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting [::1] http://[::1]/gen/10000
+Response body length 10000

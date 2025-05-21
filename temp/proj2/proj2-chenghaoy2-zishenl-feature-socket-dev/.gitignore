@@ -1,0 +1,13 @@
+# Ignore compiled object files
+*.o
+
+# Ignore the final executable
+htproxy
+*.exe
+
+# Ignore files for test input/outputs
+*.out
+
+# Ignore OS-specific hidden files
+.DS_Store
+Thumbs.db

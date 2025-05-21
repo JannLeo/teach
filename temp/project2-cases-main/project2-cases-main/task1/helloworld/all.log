@@ -1,0 +1,4 @@
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/
+Response body length 14

@@ -1,0 +1,8 @@
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/gen-plain/102399
+Response body length 102399
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/gen-plain/102399
+Response body length 102399

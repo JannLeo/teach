@@ -1,0 +1,15 @@
+0.00 X start 8080
+
+0.00 X curl-post -X POST http://localhost/seed -H 'Content-Type: text/plain' --data '30023'
+0.00 X curl --proxy http://localhost:8080 http://localhost/gen-plain/102399
+0.00 X wait-continue 0
+0.00 X curl-post -X POST http://localhost/seed -H 'Content-Type: text/plain' --data '30024'
+0.00 X curl --proxy http://localhost:8080 http://localhost/gen-plain/102399
+0.00 X wait-continue 1
+
+# Body of 102399 means that entire response will exceed limit, so not cached
+0.00 X response-continue 0 b8599f8f1ae664c437a3d29b61b215901bdb581f4b9b36e3f77a38088bac3b07
+0.00 X response-continue 1 bc26d5579c566cc70bca75d7c6614264def44dcdadc10eb05fc28dce09c275a7
+0.00 X log all.log
+
+0.25 1 stop

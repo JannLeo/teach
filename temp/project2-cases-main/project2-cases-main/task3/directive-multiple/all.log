@@ -1,0 +1,17 @@
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/a?cache-control=must-revalidate,PRIVate
+Response body length 1
+Not caching localhost http://localhost/a?cache-control=must-revalidate,PRIVate
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/a
+Response body length 2
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/a?cache-control=must-revalidate,PRIVate
+Response body length 3
+Not caching localhost http://localhost/a?cache-control=must-revalidate,PRIVate
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+Serving localhost http://localhost/a from cache

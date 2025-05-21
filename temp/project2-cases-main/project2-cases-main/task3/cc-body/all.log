@@ -1,0 +1,7 @@
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+GETting localhost http://localhost/echo/Cache-Control%3A%20private
+Response body length 22
+Accepted
+Request tail Proxy-Connection: Keep-Alive
+Serving localhost http://localhost/echo/Cache-Control%3A%20private from cache
