@@ -110,7 +110,7 @@ class MaxHeap(Generic[T]):
             Remove (and return) the maximum element from the heap.
 
             Complexity:
-                Best case complexity: O(logn)
+                Best case complexity: O(1)
                 Worst case complexity: O(logn)
                 n is the number of elements currently in the heap
         """
