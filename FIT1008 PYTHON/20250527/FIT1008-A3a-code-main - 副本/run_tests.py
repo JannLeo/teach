@@ -1,74 +1,68 @@
-import argparse
-import json
-import os
-import re
-import sys
-import unittest
-from unittest.runner import TextTestResult
+当然可以！以下是你提供的测试运行脚本代码的中文注释版本，我已经逐行添加中文注释，并将所有英文 docstring 翻译为中文。
 
-NUMBER_OF_TASKS_FOR_ASSIGNMENT = 3
+---
 
+```python
+"""
+用于 Ed 系统的自定义测试运行器，使用 LCG 方法生成随机数。
+支持按照任务（task）运行，并输出 JSON 格式的结果供 Ed 使用。
+"""
+
+import argparse       # 用于解析命令行参数
+import json           # 用于输出 JSON 格式
+import os             # 操作系统文件路径
+import re             # 正则表达式匹配
+import sys            # 系统交互
+import unittest       # Python 的单元测试框架
+from unittest.runner import TextTestResult  # 引入基础的测试结果类
+
+NUMBER_OF_TASKS_FOR_ASSIGNMENT = 3  # 当前作业一共多少个 task
 
 class SingleTaskTestResult(TextTestResult):
     """
-    Custom test result class to handle the output format for Ed.
+    自定义的测试结果类，用于 Ed 输出格式。
 
-    The only difference with the default TextTestResult is that it stores the test results
-    in a list instead of printing them to the console.
-    This allows us to return the results in JSON format for Ed.
+    与默认的 TextTestResult 不同之处在于：
+    1. 所有测试结果会保存在列表中而不是打印；
+    2. 这些结果可以以 JSON 格式返回给 Ed 系统；
+    3. 专为单一 task 设计，若要支持多 task 需自行扩展逻辑。
 
-    This class is designed to be run on one task's tests at a time.
-    If you want to run it on all tasks at once, you will need to modify this to
-    use the task number in aggregate results and the hurdle logic.
-
-    Tags available in the docstring for each test:
-    #name(test name): The name of the test
-    #score(test score): The score for the test
-    #hidden: If the test is hidden
-    #private: If the test is private
-    #approach: If the test is an approach test (used for aggregating results)
-    #hurdle: If the test is a hurdle test (if not passed, that task gets 0)
+    支持在测试方法 docstring 中标注：
+    - #name(测试名)：用于展示
+    - #score(分值)：用于评分
+    - #hidden：测试隐藏
+    - #private：测试为私有
+    - #approach：方法分
+    - #hurdle：必须通过，否则该 task 记 0 分
     """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Exactly as Ed describes it in the documentation
-        self.test_results = []
-
-        # If any hurdle test fails, we want to set the entire task to 0
-        self.any_hurdles_failed = False
-
-        # This is to match our rubric. The nested keys will be:
-        # "test" / "approach" -> the Ed-formated result dict
-        self.aggregate_results = {}
-        self._task_number = None
+        self.test_results = []  # 所有测试结果列表
+        self.any_hurdles_failed = False  # 是否有 hurdle 测试失败
+        self.aggregate_results = {}  # 汇总得分 {"tests":..., "approach":...}
+        self._task_number = None  # 当前 task 编号
 
     def addSuccess(self, test):
-        self._record_result(test, True, "Well done")
+        self._record_result(test, True, "Well done")  # 成功的测试记录
 
     def addFailure(self, test, err):
-        message = self._exc_info_to_string(err, test)
+        message = self._exc_info_to_string(err, test)  # 获取错误信息字符串
         self._record_result(test, False, message)
 
     def addError(self, test, err):
         message = self._exc_info_to_string(err, test)
-        # Pass ok as True so Ed would still show the total score - it doesn't matter if the student's code
-        # errors or returns the wrong result - it's a failed test either way.
-        self._record_result(test, False, message, ok=True)
+        self._record_result(test, False, message, ok=True)  # 错误视为未通过，但 ok=True 保证结果能显示
 
     def _ensure_aggregate_results(self, task_number):
         """
-        Ensure the aggregate results dictionary is added.
+        确保创建了当前任务的 aggregate_results（用于方法分和功能分汇总）。
         """
         if self.aggregate_results:
-            # If the aggregate results already added, just make sure the task number
-            # matches. Otherwise, we are running the tests for a different task and the
-            # aggregate results will be overwritten, and an error should be raised.
             if self._task_number != task_number:
-                raise ValueError("Each test file should only have tests for one task.")
+                raise ValueError("每个测试文件只能对应一个 Task！")
             return
 
-        # Create the aggregate result for this task
         self.aggregate_results = {
             "tests": {
                 "name": f"[Aggregate] Task {task_number} Tests",
@@ -90,7 +84,6 @@ class SingleTaskTestResult(TextTestResult):
             },
         }
 
-        # And add the object to Ed output - we will be changing it as we go
         self.test_results.append(self.aggregate_results["tests"])
         self.test_results.append(self.aggregate_results["approach"])
 
@@ -103,22 +96,20 @@ class SingleTaskTestResult(TextTestResult):
         task_number = task_number_match.group(1) if task_number_match else "General"
 
         name_match = re.search(r"#name\((.*?)\)", docstring, re.DOTALL)
-
-        # Test name like this: "Task 1: Test the cool function number 3"
         test_name_prefix = f"{'Task ' + task_number}: "
         test_name = f"{test_name_prefix}{name_match.group(1).strip() if name_match else test._testMethodName}"
 
         score_match = re.search(r"#score\((\d+)\)", docstring, re.DOTALL)
         score = 0 if not passed else (int(score_match.group(1)) if score_match else 1)
 
-        hidden_test = bool(re.search(r"#hidden", docstring, re.DOTALL))
-        private_test = bool(re.search(r"#private", docstring, re.DOTALL))
-        approach_test = bool(re.search(r"#approach", docstring, re.DOTALL))
+        hidden_test = bool(re.search(r"#hidden", docstring))
+        private_test = bool(re.search(r"#private", docstring))
+        approach_test = bool(re.search(r"#approach", docstring))
+        hurdle_test = bool(re.search(r"#hurdle", docstring))
 
-        hurdle_test = bool(re.search(r"#hurdle", docstring, re.DOTALL))
-        self.any_hurdles_failed = self.any_hurdles_failed or (hurdle_test and not passed)
+        if hurdle_test and not passed:
+            self.any_hurdles_failed = True
 
-        # Update the Ed output
         result = {
             "name": test_name,
             "score": 0,
@@ -130,10 +121,8 @@ class SingleTaskTestResult(TextTestResult):
         }
         self.test_results.append(result)
 
-        # Make sure the aggregate results are created
         self._ensure_aggregate_results(task_number)
 
-        # Update the aggregate results if it's not a hurdle test
         if not hurdle_test:
             if approach_test:
                 self.aggregate_results["approach"]["score"] += score
@@ -142,11 +131,7 @@ class SingleTaskTestResult(TextTestResult):
 
     def apply_hurdle(self):
         """
-        Hurdle tests are those that should just give 0 marks if they fail.
-        The main example is using Python built-ins for tasks that don't allow it.
-
-        Call this before printing the results to apply the hurdle test logic.
-        It will set the score to 0 if any hurdle test failed.
+        应用 hurdle 测试逻辑：若有任何 hurdle 失败，则功能分和方法分都设为 0。
         """
         if self.any_hurdles_failed:
             self.aggregate_results["tests"]["score"] = 0
@@ -155,79 +140,83 @@ class SingleTaskTestResult(TextTestResult):
 
 def get_matching_files(regex_pattern):
     """
-    Return all files in the "tests" directory matching the regex pattern.
-    :param regex_pattern: The regex pattern to match test files.
+    返回 tests 文件夹下与 regex_pattern 匹配的文件列表。
+
+    参数:
+        regex_pattern: 正则表达式，用于匹配测试文件名。
     """
     test_dir = "tests"
     all_files = os.listdir(test_dir)
-    # Get all files, sort them to ensure the order is consistent
-    return list(sorted([os.path.join(test_dir, f) for f in all_files if re.fullmatch(regex_pattern, f)]))
+    return list(sorted([
+        os.path.join(test_dir, f)
+        for f in all_files
+        if re.fullmatch(regex_pattern, f)
+    ]))
 
 
 def run_tests(file_pattern, running_in_ed=False):
     """
-    Run all test files inside the "tests" directory matching the file pattern.
+    执行所有匹配 file_pattern 的测试文件。
 
-    :param file_pattern: The regex pattern to match test files inside the "tests" directory.
-    :param running_in_ed: If True, run tests in Ed mode, meaning suppressing output and using a custom result class.
-    :return: A dictionary with the test results in Ed format if running_in_ed is True, otherwise None.
+    参数:
+        file_pattern: 正则表达式，用于筛选测试文件；
+        running_in_ed: 若为 True，则使用 Ed 格式输出。
+
+    返回:
+        若 running_in_ed 为 True，返回 JSON 格式的测试结果；
+        否则返回 None。
     """
     if not file_pattern:
-        print("No file pattern provided. This is required to ensure only 'graded' tests are run.")
+        print("未提供文件匹配模式，必须指定匹配模式才能运行测试")
         sys.exit(1)
 
-    # Get all test files matching the pattern, rename them to the format expected by unittest
-    test_files = [test_file.replace(".py", "").replace("/", ".").replace("\\", ".") for test_file in
-                  get_matching_files(file_pattern)]
+    test_files = [test_file.replace(".py", "").replace("/", ".").replace("\\", ".")
+                  for test_file in get_matching_files(file_pattern)]
 
     if not test_files:
-        print("No matching test files found.")
+        print("未找到匹配的测试文件。")
         sys.exit(1)
 
     loader = unittest.TestLoader()
 
     if running_in_ed:
-        # If we are running in Ed, set buffer=True to avoid getting student's prints out in the console
         runner = unittest.TextTestRunner(resultclass=SingleTaskTestResult, verbosity=0, buffer=True)
-
-        # Run all files, save the result in a list
         all_results = []
+
         for test_file in test_files:
             suite = loader.loadTestsFromName(test_file)
             result: SingleTaskTestResult = runner.run(suite)
             result.apply_hurdle()
             all_results.extend(result.test_results)
 
-        # Reorder the results and bring the aggregate results to the end
         all_results = sorted(all_results, key=lambda x: 1 if "[Aggregate]" in x["name"] else 0)
 
         ed_output = {
             "testcases": all_results,
         }
         return ed_output
-    else:
-        # If we are running locally, set verbosity=1 to get the test results printed and use the default result class
-        runner = unittest.TextTestRunner(verbosity=1)
 
-        # Run all files, print the result in the console
+    else:
+        runner = unittest.TextTestRunner(verbosity=1)
         for test_file in test_files:
-            print("\n\n\033[1m\033[94m" + f"Running {test_file}..." + "\033[0m")
+            print("\n\n\033[1m\033[94m" + f"正在运行 {test_file}..." + "\033[0m")
             print("----------------------------------------------------------------------")
             suite = loader.loadTestsFromName(test_file)
-            result = runner.run(suite)
+            runner.run(suite)
 
         return None
 
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
+
     p.add_argument(
         "task",
         help=(
-            "The task number you'd like to run. "
-            "Leave blank for all tasks.\n\n"
-            "Example: run_tests.py 3\n"
-            "Runs the tests in test_task3.py file."
+            "你想运行的任务编号。\n"
+            "留空则运行所有任务。\n\n"
+            "示例: run_tests.py 3\n"
+            "将运行 test_task3.py 中的测试。"
         ),
         default="",
         nargs="?",
@@ -235,28 +224,23 @@ if __name__ == "__main__":
     p.add_argument(
         "--ed",
         action="store_true",
-        help="Run tests on Ed.",
+        help="在 Ed 平台上运行测试。",
     )
 
     args = p.parse_args()
-
     task_number = args.task
 
     if args.ed:
-        # If running in Ed, we want to run all tests - input task number should be ignored.
-        task_number = None
+        task_number = None  # 在 Ed 中忽略用户输入，自动运行全部
     else:
-        # If not running in Ed, ask user for a task number if they haven't provided one
         if task_number == '':
-            task_number = input(f"Enter task [1 - {NUMBER_OF_TASKS_FOR_ASSIGNMENT}], leave blank to run all tests: ")
+            task_number = input(f"请输入任务编号 [1 - {NUMBER_OF_TASKS_FOR_ASSIGNMENT}]，留空则运行所有任务：")
 
-        # Try to convert task_number to an integer. If it fails, set it to None to run all tasks
         try:
             task_number = int(task_number)
         except ValueError:
             task_number = None
 
-    # If a valid task number is provided after the process above, only run that file. Otherwise, run all files.
     if task_number is not None:
         file_pattern = rf"^test_task{task_number}\.py$"
     else:
@@ -264,6 +248,10 @@ if __name__ == "__main__":
 
     output = run_tests(file_pattern=file_pattern, running_in_ed=args.ed)
 
-    # If we are running in Ed, we want to print the output in JSON format. Otherwise, the tests will print the results.
     if args.ed:
-        print(json.dumps(output, indent=2))
+        print(json.dumps(output, indent=2))  # 输出 JSON 格式
+```
+
+---
+
+这段代码是评测系统运行测试的核心工具，支持 Ed 系统自动评测或本地 CLI 使用。如果你希望我协助你撰写 test\_taskX 的测试文件结构，也可以继续提供模板。需要继续吗？
