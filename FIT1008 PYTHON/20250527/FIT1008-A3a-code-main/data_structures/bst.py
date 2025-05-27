@@ -164,7 +164,7 @@ class BinarySearchTree(Generic[K, I]):
         """
             Attempts to get an item in the tree, it uses the Key to attempt to find it
             :complexity best: O(CompK) finds the item in the root of the tree
-            :complexity worst: O(CompK * N^2) where N is the number of elements in the tree and the tree is unbalanced
+            :complexity worst: O(CompK * N) where N is the number of elements in the tree and the tree is unbalanced
             CompK is the complexity of comparing the keys
         """
         return self.get_tree_node_by_key(key).item
@@ -189,7 +189,7 @@ class BinarySearchTree(Generic[K, I]):
         """
             Attempts to insert an item into the tree, it uses the Key to insert it
             :complexity best: O(CompK) inserts the item at the root.
-            :complexity worst: O(CompK * N^2) where N is the number of elements in the tree and the tree is unbalanced
+            :complexity worst: O(CompK * N) where N is the number of elements in the tree and the tree is unbalanced
             CompK is the complexity of comparing the keys
         """
         if current is None:  # base case: at the leaf

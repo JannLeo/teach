@@ -105,7 +105,7 @@ class MinecraftBlock:
             Worst Case Complexity: O(1)
 
         Justification:
-            The comparison is based on the hardness of the blocks.
+            The comparison is based on the name of the block.
             This is a constant time operation as it involves simple arithmetic and comparison.
         """
 
