@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import Iterable
 
-from data_structures import *
+from data_structures import ArrayList
 from minecraft_block import MinecraftBlock
 
 
@@ -16,12 +16,16 @@ class Miner:
         Args:
             name (str): The name of the miner.
         Complexity:
-            Best Case Complexity: TODO
-            Worst Case Complexity: TODO
+            Best Case Complexity: O(1)
+            Worst Case Complexity: O(1)
         Justification:
-            TODO
+            two assignment operation, a constant time complexity
         """
-        raise NotImplementedError("Please implement the __init__ method")
+        if name is None or len(name) == 0:
+            raise ValueError
+
+        self.name = name
+        self.inventory = ArrayList()      # initialise ArrayList as backpack
 
     def mine(self, block: MinecraftBlock) -> None:
         """
@@ -31,24 +35,30 @@ class Miner:
             block (MinecraftBlock): The block to be mined.
 
         Complexity:
-            Best Case Complexity: TODO
-            Worst Case Complexity: TODO
+            Best Case Complexity: O(1)
+            Worst Case Complexity: O(1)
         Justification:
-            TODO
+            the time complexity of append is O(1)
         """
-        raise NotImplementedError("Please implement the mine method")
+        if not isinstance(block, MinecraftBlock):
+            raise TypeError
+
+        self.inventory.append(block.item)       # save item of this square in backpack    
 
     def clear_inventory(self) -> Iterable:
         """
         Clears the miner's inventory and returns what he had in the inventory before the clear.
 
         Complexity:
-            Best Case Complexity: TODO
-            Worst Case Complexity: TODO
+            Best Case Complexity: O(1)
+            Worst Case Complexity: O(1)
         Justification:
-            TODO
+            two assignment operation one return, constant time complexity
         """
-        raise NotImplementedError("Please implement the clear_inventory method")
+
+        old_inventory = self.inventory     # keep
+        self.inventory = ArrayList()       # create empty ArrayList as new backpack
+        return old_inventory               # return old
 
 
     def __str__(self) -> str:
