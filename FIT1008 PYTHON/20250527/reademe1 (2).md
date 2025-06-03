@@ -1582,22 +1582,8 @@ Champions   | 05-Oct-2024   | Dan Chu         | 2
 - 年龄计算（日期差）
 - 聚合函数（如 `MIN()`、`COUNT()`）
 
-------
 
-需要我帮你写出这两题的 **SQL 示例代码** 吗？
- 或者整理一份 **SQL 查询常用模板清单**？
- 随时告诉我，我来帮忙！ 🌸
 
-> 非常好问题！让我详细解释 **T5-rm-select.sql** 这份文件的作用、每个部分的含义、你需要做的事情，以及如何写出正确的 SQL 代码 ✅
->
-> ------
->
-> ## 📌 这是什么文件？（Task 5 - SQL SELECT Queries）
->
-> 这是你作业的 **Task 5: SQL 查询（SELECT语句）任务** 的代码文件。
->  你需要根据 Task 5 的要求，在 (a)、(b)、(c) 部分，**编写 SQL 查询语句**，并且：
->  ✅ 语法正确 ✅ 格式正确 ✅ 结果正确 ✅ 题目要求严格匹配 ✅ 语句以分号 `;` 结尾
->
 > ------
 >
 > ## 🔎 每个部分具体是什么？
@@ -1607,20 +1593,6 @@ Champions   | 05-Oct-2024   | Dan Chu         | 2
 > | (a)  | 查询最常用的团队信息（每个嘉年华中最常见的团队名、嘉年华日期、队长姓名、成员数量） | 编写 SQL SELECT 查询 |
 > | (b)  | 查询每个赛事项目的历史最快纪录保持者（赛事、嘉年华、时间、参赛者编号/姓名、年龄） | 编写 SQL SELECT 查询 |
 > | (c)  | 查询每个嘉年华、每个项目的报名人数和占比（含未开设项目的 Not Offered） | 编写 SQL SELECT 查询 |
->
-> ------
->
-> ## 📌 你该怎么做？（具体操作步骤）
->
-> ✅ 1️⃣ 在文件头部填写个人信息
->
-> ```sql
-> --Student ID: 你的学号
-> --Student Name: 你的名字
-> ```
->
-> ✅ 2️⃣ 根据题目要求，在对应区域写入 SQL 查询语句
->  每题必须只写 **一个完整的 SELECT 语句**（不允许写多个或分成多行执行）。
 >
 > ------
 >
@@ -1656,13 +1628,22 @@ Champions   | 05-Oct-2024   | Dan Chu         | 2
 > ### (a) 示例结构
 >
 > ```sql
-> SELECT t.team_name, c.carn_date, CONCAT(m.comp_fname, ' ', m.comp_lname) AS team_leader, COUNT(*) AS team_no_members
+> SELECT
+>   t.team_name,                             -- 队伍名称
+>   c.carn_date,                             -- 嘉年华日期
+>   CONCAT(m.comp_fname, ' ', m.comp_lname) AS team_leader, -- 队长全名
+>   COUNT(*) AS team_no_members              -- 成员人数（计数）
 > FROM team t
-> JOIN carnival c ON t.carn_date = c.carn_date
-> JOIN competitor m ON t.team_leader = m.comp_no
-> JOIN team_members tm ON t.team_id = tm.team_id
-> GROUP BY t.team_name, c.carn_date, CONCAT(m.comp_fname, ' ', m.comp_lname)
-> ORDER BY t.team_name, c.carn_date;
+> JOIN carnival c ON t.carn_date = c.carn_date  -- t表和c表用carn_date关联
+> JOIN competitor m ON t.team_leader = m.comp_no -- 找出队长信息
+> JOIN team_members tm ON t.team_id = tm.team_id -- 找出成员记录
+> GROUP BY
+>   t.team_name,
+>   c.carn_date,
+>   CONCAT(m.comp_fname, ' ', m.comp_lname)     -- 按队名、日期、队长分组
+> ORDER BY
+>   t.team_name,
+>   c.carn_date;
 > ```
 >
 > ------
@@ -1670,14 +1651,41 @@ Champions   | 05-Oct-2024   | Dan Chu         | 2
 > ### (b) 示例结构
 >
 > ```sql
-> SELECT e.eventtype_desc, c.carn_name, c.carn_date, MIN(en.entry_elapsedtime) AS record_time, comp.comp_no, comp.comp_fname || ' ' || comp.comp_lname AS competitor_name, (EXTRACT(YEAR FROM c.carn_date) - EXTRACT(YEAR FROM comp.comp_dob)) AS age
+> SELECT 
+>     e.eventtype_desc,                        -- 项目名称（比如“100米跑”、“跳远”等）
+>     c.carn_name,                             -- 嘉年华名称（活动名称）
+>     c.carn_date,                             -- 嘉年华日期
+>     MIN(en.entry_elapsedtime) AS record_time, -- 最快用时（即项目记录时间）
+>     comp.comp_no,                            -- 选手编号
+>     comp.comp_fname || ' ' || comp.comp_lname AS competitor_name, 
+>                                              -- 选手姓名（名字 + 姓氏）
+>     (EXTRACT(YEAR FROM c.carn_date) 
+>      - EXTRACT(YEAR FROM comp.comp_dob)) AS age
+>                                              -- 比赛当天选手的年龄（用年份差值计算）
+> 
 > FROM entry en
+> -- entry 是“报名和比赛成绩表”
+> 
 > JOIN event e ON en.event_id = e.event_id
+> -- 通过 event_id 找到该 entry 对应的是哪个比赛项目
+> 
 > JOIN carnival c ON e.carn_date = c.carn_date
+> -- 通过比赛项目的举办日期，找到是在哪场嘉年华举办的（carnival）
+> 
 > JOIN competitor comp ON en.comp_no = comp.comp_no
+> -- 通过选手编号 comp_no 找到具体参赛的选手信息
 > WHERE en.entry_elapsedtime IS NOT NULL
-> GROUP BY e.eventtype_desc, c.carn_name, c.carn_date, comp.comp_no, comp.comp_fname, comp.comp_lname, comp.comp_dob
+> -- 只统计有成绩（非空）的记录，即已经参加并完成比赛的
+> 
+> GROUP BY 
+>     e.eventtype_desc,                       -- 按项目
+>     c.carn_name, c.carn_date,               -- 按嘉年华和日期
+>     comp.comp_no, comp.comp_fname, comp.comp_lname, comp.comp_dob
+>                                             -- 按选手编号和姓名及出生日期分组
+>                                             
 > ORDER BY e.eventtype_desc;
+> -- 按项目名称排序输出
+> 
 > ```
 >
 > ------
@@ -1685,35 +1693,75 @@ Champions   | 05-Oct-2024   | Dan Chu         | 2
 > ### (c) 示例结构
 >
 > ```sql
-> SELECT c.carn_name, c.carn_date, e.eventtype_desc,
->        COALESCE(COUNT(en.entry_no), 'Not offered') AS num_entries,
->        ROUND(COUNT(en.entry_no) * 100.0 / SUM(COUNT(en.entry_no)) OVER (PARTITION BY c.carn_name, c.carn_date)) AS percentage
-> FROM carnival c
-> CROSS JOIN eventtype e
-> LEFT JOIN event ev ON c.carn_date = ev.carn_date AND e.eventtype_code = ev.eventtype_code
-> LEFT JOIN entry en ON ev.event_id = en.event_id
-> GROUP BY c.carn_name, c.carn_date, e.eventtype_desc
-> ORDER BY c.carn_date, num_entries DESC, e.eventtype_desc;
+> -- 查询每个嘉年华、每个项目的报名情况和比例
+> SELECT 
+>     c.carn_name,                          -- 嘉年华名称
+>     c.carn_date,                          -- 嘉年华日期
+>     e.eventtype_desc,                     -- 项目名称
+>     COALESCE(COUNT(en.entry_no), 'Not offered') AS num_entries, -- 报名人数，没人报名则显示“Not offered”
+>     ROUND(
+>         COUNT(en.entry_no) * 100.0 / 
+>         SUM(COUNT(en.entry_no)) OVER (PARTITION BY c.carn_name, c.carn_date)
+>     ) AS percentage                       -- 该项目在该嘉年华中所占的百分比
+> FROM 
+>     carnival c                            -- 所有嘉年华
+> CROSS JOIN 
+>     eventtype e                           -- 所有项目类型（与嘉年华做笛卡尔积）
+> LEFT JOIN 
+>     event ev ON c.carn_date = ev.carn_date AND e.eventtype_code = ev.eventtype_code
+>                                           -- 左连接：查出每个嘉年华是否安排了这个项目
+> LEFT JOIN 
+>     entry en ON ev.event_id = en.event_id -- 左连接：查出这个项目是否有报名
+> GROUP BY 
+>     c.carn_name, c.carn_date, e.eventtype_desc
+> ORDER BY 
+>     c.carn_date,                          -- 先按日期排序
+>     num_entries DESC,                     -- 报名多的项目排前面
+>     e.eventtype_desc;                     -- 项目名称排序（字母顺序）
+> 
 > ```
 >
 > ------
 >
-> ## 📌 总结你该做的步骤
+> ###  核心逻辑说明：
 >
-> ✅ 1️⃣ 填写学号和名字
->  ✅ 2️⃣ 在每个 `(a)` `(b)` `(c)` 区域，编写完整的 SELECT 查询语句
->  ✅ 3️⃣ 确保每个查询：
+> - 通过 `CROSS JOIN` 获取每个嘉年华和每种项目类型的组合，确保所有可能情况都被考虑；
+> - 通过 `LEFT JOIN` 查询是否实际安排了该项目，以及是否有选手报名；
+> - 使用 `COALESCE(COUNT(...), 'Not offered')` 显示报名人数，处理无数据的情况；
+> - 使用窗口函数 `SUM(COUNT(...)) OVER (...)` 统计同一嘉年华下所有项目的总报名数；
+> - 计算每个项目报名人数所占百分比，并使用 `ROUND` 函数四舍五入处理；
+> - 最后按嘉年华日期、报名人数多少及项目名称排序输出结果。
 >
-> - **只有一个 SELECT 语句**（不能分多个）
-> - **以分号结尾**（`;`）
-> - **格式美观，缩进合理**
->    ✅ 4️⃣ 确保 SQL 正确执行，无报错
+> - ## ✅ 第一个 `LEFT JOIN`（嘉年华安排了哪些项目）
 >
-> ------
+>   ```
+>   sqlCopy codeLEFT JOIN event ev 
+>     ON c.carn_date = ev.carn_date 
+>    AND e.eventtype_code = ev.eventtype_code
+>   ```
 >
-> ✅ 需要我帮你 **根据你的模型和要求，完整写出这三个 SQL 查询** 吗？
->  ✅ 或者帮你检查 SQL，确保没有问题？
->  随时告诉我，我可以帮你写好每个 SELECT！ 🚀
+>   这个连接的目的是：
+>
+>   > 从所有“嘉年华 × 项目”的组合中，**找出哪些是真的有安排这个项目的。**
+>
+>   - 如果连接不到，就说明该嘉年华没有这个项目；
+>   - 如果连接上了，就说明安排了。
+>
+>   ------
+>
+>   ## ✅ 第二个 `LEFT JOIN`（有没有人报名）
+>
+>   ```
+>   sqlCopy codeLEFT JOIN entry en 
+>     ON ev.event_id = en.event_id
+>   ```
+>
+>   这个连接进一步查：
+>
+>   > 这个项目有没有选手报名？
+>
+>   - 如果找不到报名信息，说明安排了项目但没人报；
+>   - 如果找到 entry，说明有人报了。
 
 ![image-20250603135224159](reademe1%20(2).assets/image-20250603135224159.png)
 
@@ -2157,37 +2205,83 @@ Champions   | 05-Oct-2024   | Dan Chu         | 2
 > ✅ **简化结构（示意）**：
 >
 > ```sql
+> -- 生成每个参赛队伍的完整 JSON 数据
 > SELECT JSON_OBJECT(
+>   -- 队伍ID作为JSON的"_id"字段
 >   '_id' VALUE t.team_id,
+> 
+>   -- 嘉年华名称
 >   'carn_name' VALUE c.carn_name,
+> 
+>   -- 嘉年华日期，格式为"01-Jun-2025"
 >   'carn_date' VALUE TO_CHAR(c.carn_date, 'DD-Mon-YYYY'),
+> 
+>   -- 队伍名称
 >   'team_name' VALUE t.team_name,
+> 
+>   -- 队伍领队信息，作为嵌套的JSON对象
 >   'team_leader' VALUE JSON_OBJECT(
+>       -- 领队姓名（姓+名）
 >       'name' VALUE TRIM(LEADING ' ' FROM tm.comp_fname || ' ' || tm.comp_lname),
+>       -- 领队电话
 >       'phone' VALUE tm.comp_phone,
+>       -- 领队邮箱
 >       'email' VALUE tm.comp_email
 >   ),
+> 
+>   -- 队员人数：统计成员comp_no的数量
 >   'team_no_of_members' VALUE COUNT(members.comp_no),
+> 
+>   -- 队员详细信息数组，每个成员是一个JSON对象
 >   'team_members' VALUE JSON_ARRAYAGG(
 >       JSON_OBJECT(
+>         -- 队员姓名（姓+名），若为NULL则显示"-"
 >         'competitor_name' VALUE COALESCE(TRIM(members.comp_fname || ' ' || members.comp_lname), '-'),
+>         -- 队员电话，若为NULL则显示"-"
 >         'competitor_phone' VALUE COALESCE(members.comp_phone, '-'),
+>         -- 队员所参与的项目名称，若无则显示"-"
 >         'event_type' VALUE COALESCE(e.eventtype_desc, '-'),
+>         -- 报名编号，若无则显示"-"
 >         'entry_no' VALUE COALESCE(en.entry_no, '-'),
+>         -- 比赛开始时间，格式为"HH24:MI:SS"
 >         'starttime' VALUE TO_CHAR(en.entry_starttime, 'HH24:MI:SS'),
+>         -- 比赛结束时间，格式为"HH24:MI:SS"
 >         'finishtime' VALUE TO_CHAR(en.entry_finishtime, 'HH24:MI:SS'),
+>         -- 比赛耗时，格式为"HH24:MI:SS"
 >         'elapsedtime' VALUE TO_CHAR(en.entry_elapsedtime, 'HH24:MI:SS')
 >       )
 >   )
-> ) AS team_json
+> ) AS team_json -- 整个JSON结果命名为 team_json
+> 
 > FROM team t
+> -- 将队伍表与领队信息表连接（通过队伍中的team_leader字段）
 > JOIN competitor tm ON t.team_leader = tm.comp_no
+> 
+> -- 连接嘉年华表，获取该队伍所属嘉年华的信息
 > JOIN carnival c ON t.carn_date = c.carn_date
+> 
+> -- 左连接队伍成员表，获取所有属于该队伍的成员
 > LEFT JOIN team_members tmembers ON t.team_id = tmembers.team_id
+> 
+> -- 左连接成员信息表，获取每位队员的详细资料
 > LEFT JOIN competitor members ON tmembers.comp_no = members.comp_no
+> 
+> -- 左连接报名信息表，获取成员在该队伍所属项目中的报名信息
 > LEFT JOIN entry en ON members.comp_no = en.comp_no AND en.event_id = t.event_id
+> 
+> -- 左连接比赛项目信息表，获取比赛项目名称
 > LEFT JOIN event e ON en.event_id = e.event_id
-> GROUP BY t.team_id, c.carn_name, c.carn_date, t.team_name, tm.comp_fname, tm.comp_lname, tm.comp_phone, tm.comp_email;
+> 
+> GROUP BY 
+>   t.team_id,        -- 按队伍ID分组
+>   c.carn_name,      -- 嘉年华名称
+>   c.carn_date,      -- 嘉年华日期
+>   t.team_name,      -- 队伍名称
+>   tm.comp_fname,    -- 领队名
+>   tm.comp_lname,    -- 领队姓
+>   tm.comp_phone,    -- 领队电话
+>   tm.comp_email     -- 领队邮箱
+> 
 > ```
 >
 > ✅ **每个字段必须严格匹配要求**，确保格式一致。
