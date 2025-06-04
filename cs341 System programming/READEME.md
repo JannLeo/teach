@@ -1368,68 +1368,6 @@ int panic = 1;
 
   > **“7. `for` 是一个关键字，它允许你指定‘初始化表达式’、‘循环条件’以及‘更新表达式’来实现迭代。这在语义上等价于一个 `while` 循环，但语法形式不同。”**
 
-- **详细解释**：
-
-  1. **“`for` is a keyword that allows you to iterate”**
-
-     - **中译**：
-       - “‘`for` 是一个关键字，用于实现迭代。’”
-     - **解释**：
-       - 在 C 语言里，`for` 循环提供了一种紧凑的方式来进行循环，尤其适合知道“循环变量如何初始化、何时结束、每次如何更新”的典型场景。
-
-  2. **“with an initialization condition, a loop invariant, and an update condition.”**
-
-     - **中译**：
-
-       - “‘它允许你指定：初始化表达式（initialization）、循环条件（check/loop invariant）、和更新表达式（update）。’”
-
-     - **解释**：
-
-       - 典型的 `for` 循环格式：
-
-         ```c
-         for (initialization; condition; update) {
-             // loop body
-         }
-         ```
-
-       - 具体含义：
-
-         1. **initialization**：在循环开始前执行一次，通常用来给循环变量赋初值；
-         2. **condition**（或称 loop invariant）：每次迭代前先判断该表达式是否为真（非 0）。如果为假（0），就结束循环；如果为真，就进入循环体；
-         3. **update**：在每次循环体执行完毕后执行，通常用于更新（递增/递减）循环变量或做其他“准备下一次检查”的操作。
-         4. 循环体执行完 `update` 后，会再次回到 `condition` 处做判断。
-
-  3. **“This is meant to be equivalent to a `while` loop, but with differing syntax.”**
-
-     - **中译**：
-       - “‘这在功能上相当于一个 `while` 循环，但写法（语法）不同。’”
-     - **解释**：
-       - 下面展示两种写法的等价方式：
-
-     **等价示例**
-
-     ```c
-     // for 循环形式
-     for (int i = 0; i < 10; i++) {
-         printf("%d\n", i);
-     }
-     ```
-
-     **等价的 while 写法**
-
-     ```c
-     int i = 0;                // initialization
-     while (i < 10) {          // condition
-         printf("%d\n", i);
-         i++;                  // update
-     }
-     ```
-
-     - 如上所示，`for (int i = 0; i < 10; i++) { ... }` 与 `int i = 0; while (i < 10) { ...; i++; }` 两者在功能上是等价的。
-
-下面阐述 `for` 循环常见的用法，并说明其语法糖与 `while` 语法的异同。
-
 ------
 
 ### 3.1. `for` 循环示例
@@ -1445,93 +1383,7 @@ for (int i = 0; i < 10; i++) {
 }
 ```
 
-- **中译及解析**：
-  1. **`for (initialization; check; update) { // ... }`**
-     - **中译**：
-       - “‘`for (初始化表达式; 条件检查; 更新表达式) { // 循环体 }`’”
-     - **解释**：
-       - 这是 `for` 循环的通用模板：
-         - `initialization` 在循环开始前执行一次，通常用来声明并初始化循环变量（如 `int i = 0`）；
-         - `check` 是布尔表达式，每次迭代开始前进行判断；若为真（非 0），执行循环体；若为假（0），退出循环；
-         - `update` 在循环体内部所有语句执行完毕后执行，通常用于让循环变量向下次迭代的值变化（例如 `i++`、`i += 2`、`j--` 等）。
-       - 当 `update` 完成后，程序会“循环回去”再次对 `check` 做判断，直到 `check` 为假时才真正跳出循环。
-  2. **“// Typically:”**
-     - **中译**：
-       - “‘// 通常写法：’”
-     - **解释**：
-       - 开发者在日常代码中最常见的就是把这三部分合并成一个语句的写法，简洁直观。
-  3. **`for (int i = 0; i < 10; i++) { printf("%d\n", i); }`**
-     - **中译**：
-       - “‘`for (int i = 0; i < 10; i++) { printf("%d\n", i); }`’”
-     - **解释**：
-       - **`int i = 0;`**：在循环开始前，只执行一次，声明并将循环变量 `i` 初始化为 0。
-       - **`i < 10;`**：在每次迭代前先判断 `i` 是否小于 10；如果为真，就进入循环体；如果为假（如 `i == 10`），就结束整个 `for` 循环，跳到大括号 `}` 之后执行下一条语句。
-       - **`i++`**：在循环体 `printf("%d\n", i);` 执行完毕后，再执行 `i++`，让 `i` 自增 1。
-       - 由于 `printf` 打印完毕不会改变 `i`，因此每次循环都会依次打印 `0, 1, 2, …, 9`。当 `i` 从 9 自增到 10 后，下一轮判断 `i < 10` 为假，循环结束。
-- **小结**：
-  - `for` 循环是一种结构化、语法紧凑的迭代方式，常用于“已知循环次数”或“循环变量更新简单”的场景。
-  - 它与 `while` 循环在功能上等价——只不过把“初始化、条件检查、更新”这三步连在同一句里，方便阅读且减少遗漏（例如忘写 `i++`）。
-  - 如果循环逻辑很复杂，或者“每次迭代前后要做很多事情”，有时会拆分成 `while` 形式，以便更清晰地表述每个步骤；但当符合典型“三段式”迭代时，`for` 无疑更简洁。
-
-------
-
-## 4. 本页小结
-
-通过本页图片的逐句翻译与详细解析，我们掌握了以下要点：
-
-1. **枚举手动赋值**
-   - C 允许为不同枚举成员赋相同的整数值，导致它们在 `switch` 语句中对应同一个 `case` 标签；
-   - 如果不希望出现“同值歧义”，应为所有成员设置不同数值，或者在 `switch` 中为每个成员都写出对应的 `case`。
-2. **`extern` 关键字**
-   - `extern` 只是“声明（declaration）”而非“定义（definition）”，告诉编译器“此变量的真正定义在其他目标文件或库里”；
-   - 若不使用 `extern` 就直接引用一个全局变量，编译器会报错“找不到该符号”；使用 `extern` 后，链接器会在别处查找该符号的定义。
-3. **`for` 循环**
-   - 可以在一行里指定“初始化、循环条件、更新”三部分，语法更紧凑；
-   - 与等价的 `while` 写法相比，只是语义相同、语法不同，适合循环次数或循环变量非常明确的场景。
-
-希望上述中英对照与详细解释能帮助您彻底理解图片中关于“枚举赋值、`extern` 关键字和 `for` 循环”的内容。如有进一步疑问，欢迎继续提问！
-
 ![image-20250604160234334](READEME.assets/image-20250604160234334.png)
-
-以下内容基于您提供的最新一张图片，将其中的英文原文逐句拆分，给出对应的中译，并对每一句话进行详细解释，帮助您彻底理解“`for` 循环在不同 C 标准下的形态、`for` 的执行顺序，以及为什么一般不建议使用 `goto`”等知识点。
-
-------
-
-## 1. C89 标准下的 `for` 循环与变量声明
-
-> **“```c
->  int i;
->  for (i = 0; i < 10; i++) {
->  //...
->  }
->
-> As of the C89 standard, one cannot declare variables inside the for loop initialization block. This is because there was a disagreement in the standard for how the scoping rules of a variable defined in the loop would work. It has since been resolved with more recent standards, so people can use the for loop that they know and love today
->
-> for(int i = 0; i < 10; ++i) {
->  //...
->  }
->
-> ```”**
-> 
-> ```
-
-### 1.1 英文原文与中译
-
-```c
-int i;
-for (i = 0; i < 10; i++) {
-    //...
-}
-```
-
-- **中译**：
-
-  ```c
-  int i;
-  for (i = 0; i < 10; i++) {
-      //...
-  }
-  ```
 
 > **“As of the C89 standard, one cannot declare variables inside the for loop initialization block. This is because there was a disagreement in the standard for how the scoping rules of a variable defined in the loop would work. It has since been resolved with more recent standards, so people can use the for loop that they know and love today”**
 
@@ -1545,51 +1397,14 @@ for (int i = 0; i < 10; ++i) {
 }
 ```
 
-- **中译**：
-
-  ```c
-  for (int i = 0; i < 10; ++i) {
-      //...
-  }
-  ```
-
-### 1.2 逐句详细解释
-
-1. **`int i;`**
-
-   - **中译**：
-     - “‘`int i;`’”
-   - **解释**：
-     - 在这里先提前声明了一个整型变量 `i`，并没有给它赋初值。此变量会在下文的 `for` 循环中被作为循环计数器使用。
-
-2. **`for (i = 0; i < 10; i++) { //... }`**
-
-   - **中译**：
-     - “‘`for (i = 0; i < 10; i++) { /* … */ }`’”
-   - **解释**：
-     - 在 C89 标准中，`for` 循环的“初始化（initialization）”部分不能加上类型声明，因此只能像上面这样，先将 `i` 声明在循环外，然后在 `for` 里用 `i = 0` 来给它赋初值。
-     - 语义是：
-       1. 先执行 `i = 0;`；
-       2. 判断条件 `i < 10`；
-       3. 如果为真，进入循环体执行 `//...` 处的代码；
-       4. 循环体执行完毕后再执行 `i++`，使 `i` 自增；
-       5. 回到条件判断 `i < 10`，如仍为真则重复整个过程，否则跳出循环。
-
-3. **“As of the C89 standard, one cannot declare variables inside the for loop initialization block.”**
-
-   - **中译**：
-     - “‘在 C89 标准中，不能在 `for` 循环的初始化部分声明变量。’”
-   - **解释**：
-     - C89 时代，`for` 循环的语法规定只允许写“表达式”（expression），不允许写“声明”（declaration）。因此，像 `for (int i = 0; …)` 这种写法在 C89 下会报错，编译器不识别 `int i = 0` 在这里被当作合法的初始化部分。
-
-4. **“This is because there was a disagreement in the standard for how the scoping rules of a variable defined in the loop would work.”**
+1. **“This is because there was a disagreement in the standard for how the scoping rules of a variable defined in the loop would work.”**
 
    - **中译**：
      - “‘这是因为当时标准内部对于‘如果在 `for` 循环里定义一个变量，该变量的作用域（scope）应当怎样定义’这一点存在分歧。’”
    - **解释**：
      - 当年 C89 的编写者们在“**如果允许在 `for` 循环头里声明一个变量，该变量从哪里开始可见、在哪儿结束可见**”上没有达成完全一致：有的委员会认为它只在循环体内部可见，有的则希望它在外部也能继续使用……所以最终 C89 版就干脆不允许在 `for` 循环初始化里写声明，避免“不同实现对作用域的猜测”。
 
-5. **“It has since been resolved with more recent standards, so people can use the for loop that they know and love today”**
+2. **“It has since been resolved with more recent standards, so people can use the for loop that they know and love today”**
 
    - **中译**：
 
@@ -1610,38 +1425,7 @@ for (int i = 0; i < 10; ++i) {
 
      - 这样语法更加紧凑，也避免了必须先在循环外面写一行 `int i;` 然后再给它赋值的繁琐。
 
-6. **`for(int i = 0; i < 10; ++i) { //... }`**
-
-   - **中译**：
-
-     - “‘`for(int i = 0; i < 10; ++i) { /* … */ }`’”
-
-   - **解释**：
-
-     - `int i = 0` 就在 `for` 循环头直接定义并初始化了一个整型变量 `i`，其作用域（scope）从这一行开始，直到该 `for` 循环的右花括号 `}`。
-
-     - 每次循环末尾执行 `++i`，再判断 `i < 10`，继续下一轮迭代，或在条件为假时跳出循环并销毁 `i`。
-
-     - 这种写法从 C99 以后就被完全接受，等同于下面的 C89 写法，但写法更简洁：
-
-       ```c
-       int i;
-       for (i = 0; i < 10; i++) {
-           //...
-       }
-       ```
-
-------
-
 ## 2. `for` 循环的执行顺序
-
-> **“The order of evaluation for a for loop is as follows
->
-> (a) Perform the initialization statement.
->  (b) Check the invariant. If false, terminate the loop and execute the next statement. If true, continue to the body of the loop.
->  (c) Perform the body of the loop.
->  (d) Perform the update statement.
->  (e) Jump to checking the invariant step.”**
 
 ### 2.1 英文原文与中译
 
@@ -1661,58 +1445,7 @@ for (int i = 0; i < 10; ++i) {
    (d) **执行更新语句。**
    (e) **跳回去检查循环不变量（即回到步骤 (b)）。”**
 
-### 2.2 逐句详细解释
-
-1. **“Perform the initialization statement.”**
-
-   - **中译**：
-     - “‘执行初始化语句。’”
-   - **解释**：
-     - 例如 `for (int i = 0; …; …)` 中，先执行 `int i = 0;`；或 `for (i = 0; …; …)` 中，先执行 `i = 0;`。这个初始化只做一次，并且一旦执行完毕，就不再重复执行它。
-
-2. **“Check the invariant. If false, terminate the loop and execute the next statement. If true, continue to the body of the loop.”**
-
-   - **中译**：
-
-     - “‘检查循环不变量（通常就是 `i < 10` 这样的条件）。如果条件为假，则退出整个循环，程序把控制权交到循环体结束后的第一条语句；如果条件为真，则进入循环体执行。’”
-
-   - **解释**：
-
-     - 这里的“invariant”直译是“不变量”，但在循环上下文中可以理解为“循环条件”——只要该条件始终为真，就会不断重复执行循环，否则就跳出。
-
-     - 举例：
-
-       ```c
-       for (int i = 0; i < 10; i++) {
-         // 循环体
-       }
-       ```
-
-       - 完成初始化后，先判断 `i < 10`。当 `i` 从 0、1、2 … 到 9 时这条条件都为真，就会不断进入循环体；当 `i` 自增到 10 时，`10 < 10` 为假，就会直接跳出循环到后面的语句。
-
-3. **“Perform the body of the loop.”**
-
-   - **中译**：
-     - “‘执行循环体中的代码。’”
-   - **解释**：
-     - 只要上一步条件为真，就会执行 `for` 中大括号 `{ … }` 里的所有语句。这一阶段是循环的“主体”部分，通常包含处理逻辑、读取/写入数据、调用函数等等。
-
-4. **“Perform the update statement.”**
-
-   - **中译**：
-     - “‘执行更新语句。’”
-   - **解释**：
-     - 例如 `for (int i = 0; i < 10; i++)` 中，主体执行完毕后，会执行 `i++`，让 `i` 增加 1；再回到条件一次。
-     - 更新语句可以是任何合法的表达式，比如 `i += 2`、`++i`、`j--`、调用某个更新函数等等。它的目的是为下一次循环对“不变量” 重新判断做准备。
-
-5. **“Jump to checking the invariant step.”**
-
-   - **中译**：
-     - “‘跳回去检查循环不变量（即回到步骤 (b)）。’”
-   - **解释**：
-     - 更新语句执行完毕后，程序会回到第 (b) 步骤：再一次判断条件是否为真，从而决定是否继续下一轮循环或退出。
-
-6. **整体流程小结**：
+1. **整体流程小结**：
 
    - `for` 循环的执行顺序严格按照“初始化 → 检查条件 → 循环体 → 更新语句 → 再次检查条件 → …”的顺序循环往复，直到条件为假跳出为止。
 
@@ -1731,72 +1464,6 @@ for (int i = 0; i < 10; ++i) {
 ------
 
 ## 3. `goto` 关键字与“不可滥用”原则
-
-> **“8. `goto` is a keyword that allows you to do conditional jumps. Do not use `goto` in your programs. The reason being is that it makes your code infinitely more hard to understand when strung together with multiple chains, which is called spaghetti code. It is acceptable to use in some contexts though, for example, error checking code in the Linux kernel. The keyword is usually used in kernel contexts when adding another stack frame for cleanup isn’t a good idea. The canonical example of kernel cleanup is as below.”**
-
-### 3.1 英文原文与中译
-
-> **“`goto` is a keyword that allows you to do conditional jumps. Do not use `goto` in your programs. The reason being is that it makes your code infinitely more hard to understand when strung together with multiple chains, which is called spaghetti code.”**
-
-- **中译**：
-
-  > **“`goto` 是一个关键字，用来执行条件跳转。不要在你的程序中滥用 `goto`。原因在于，如果在代码中多处串联 `goto`，就会形成所谓的“意大利面条式代码（spaghetti code）”，使得代码难以阅读和维护。’”**
-
-> **“It is acceptable to use in some contexts though, for example, error checking code in the Linux kernel. The keyword is usually used in kernel contexts when adding another stack frame for cleanup isn’t a good idea.”**
-
-- **中译**：
-
-  > **“不过，在某些特定场景下使用 `goto` 是可以接受的，比如在 Linux 内核的错误检查代码中。`goto` 在内核编程里经常被用来简化出错时的清理流程（cleanup），因为此时再开启一个新的函数/堆栈帧并不划算。”**
-
-> **“The canonical example of kernel cleanup is as below.”**
-
-- **中译**：
-
-  > **“下面给出了一个在内核中进行资源释放/错误处理的典型 `goto` 写法示例。”**
-
-```c
-void setup(void) {
-    Doe *deer;
-    Ray *drop;
-    Mi *myself;
-
-    if (!setupdoe(deer)) {
-        goto finish;
-    }
-
-    if (!setupray(drop)) {
-        goto cleanupdoe;
-    }
-
-    if (!setupmi(myself)) {
-        goto cleanupray;
-    }
-    // …
-}
-```
-
-- **中译**：
-
-  ```c
-  void setup(void) {
-      Doe *deer;
-      Ray *drop;
-      Mi *myself;
-  
-      if (!setupdoe(deer)) {
-          goto finish;
-      }
-  
-      if (!setupray(drop)) {
-          goto cleanupdoe;
-      }
-  
-      if (!setupmi(myself)) {
-          goto cleanupray;
-      }
-      // …
-  }
-  ```
 
 ### 3.2 逐句详细解释
 
@@ -1918,41 +1585,6 @@ cleanupray:
 }
 ```
 
-- **中译**（示例中省略了部分标签和清理逻辑，演示大意如下）：
-
-  ```c
-  void setup(void) {
-      Doe *deer;
-      Ray *drop;
-      Mi *myself;
-  
-      if (!setupdoe(deer)) {
-          goto finish;
-      }
-  
-      if (!setupray(drop)) {
-          goto cleanupdoe;
-      }
-  
-      if (!setupmi(myself)) {
-          goto cleanupray;
-      }
-      // 所有资源都已成功分配，可执行后续逻辑
-      // …
-  
-  finish:
-      return;
-  
-  cleanupdoe:
-      freedoe(deer);
-      goto finish;
-  
-  cleanupray:
-      freeray(drop);
-      goto cleanupdoe;
-  }
-  ```
-
 - **逐步解释**：
 
   1. 定义了三个指针：`Doe *deer; Ray *drop; Mi *myself;`，分别指代三种资源的句柄。
@@ -1966,69 +1598,7 @@ cleanupray:
   - 在内核或其他底层场景，资源分配/清理链条往往很长，而且不能轻易再开新函数（避免占用更多栈空间），此时使用 `goto` 来串联“错误分支 → 对应清理 → 统一退出”是一种常见的习惯用法。
   - 虽然一般项目中不鼓励使用 `goto`，但在这种“多步分配 + 多层回滚”的模式下，用 `goto` 能让代码结构更简洁，也更容易维护“谁失败就谁清理”。
 
-------
-
-## 4. 全文要点总结
-
-通过本次对图片中最后一段文字的**中英对照**与**逐句详细解释**，我们掌握了以下内容：
-
-1. **C89 与更高标准下 `for` 循环的区别**
-   - 在 C89 （C 1989 版）里，`for` 循环初始化部分只能写“表达式”，不能写“声明”；如果要声明循环变量，就必须先在循环外面 `int i;`，再在 `for (i = 0; …; …)` 中赋初值。
-   - 从 C99 开始，标准允许直接在 `for` 里写声明：`for (int i = 0; i < 10; i++)`，且这个 `i` 的作用域只在该 `for` 循环及其循环体内，不会泄漏到外面。
-2. **`for` 循环的执行顺序**
-   - 执行流程依次是：
-     1. 执行初始化语句；
-     2. 判断循环条件（不变量），若为假，则跳出循环；否则进入下一步；
-     3. 执行循环体内的代码；
-     4. 执行更新语句；
-     5. 跳回步骤 (2) 判断是否继续下一轮。
-3. **`goto` 的优缺点及典型用法**
-   - 一般不建议在普通应用程序中使用 `goto`，因为过度使用会使程序变成“意大利面条式代码”，逻辑混乱、维护困难。
-   - 在某些底层/内核编程场景（尤其是“多步资源分配 + 错误清理”场景）中，使用 `goto` 来实现“出错跳转 → 统一清理 → 退出”的模式是被广泛接受的做法，因为不必再写额外的清理函数、避免占用更多栈空间。
-   - 典型示例如上：在 `setup()` 中，如果某一步分配失败，就 `goto` 至相应标签执行前一步已分配资源的释放，然后再跳到最终标签 `finish` 退出。
-
-通过上述中英对照与逐句解析，您应当能够准确理解图片中“C89 条件下 `for` 循环的写法限制、现代 C99 及之后如何直接在 `for` 里声明变量、`for` 的执行流程，以及 `goto` 在内核错误清理中如何被合理使用”这些内容。如果还有其他疑问或想要更深入讨论，欢迎随时![image-20250604160525367](READEME.assets/image-20250604160525367.png)问！
-
-以下内容基于您提供的图片，将其英文原文逐句拆分，给出对应的中译，并结合示例代码做详细解释，帮助您完整理解“`if` / `else` / `else‐if`”的用法以及常见的“悬挂的 `else`”（dangling else）问题。
-
-------
-
-## 1. 示例代码（续接上文的 `goto` 清理代码）
-
-在上一张图片的末尾，我们看到 `perform_action(deer, drop, myself);` 之后，接着出现了下面这段标签式清理逻辑：
-
-```c
-    perform_action(deer, drop, myself);
-
-cleanupray:
-    cleanup(drop);
-cleanupdoe:
-    cleanup(deer);
-finish:
-    return;
-}
-```
-
-- **中译**：
-
-  ```c
-      perform_action(deer, drop, myself);
-  
-  cleanupray:
-      cleanup(drop);
-  cleanupdoe:
-      cleanup(deer);
-  finish:
-      return;
-  }
-  ```
-
-- **解释**：
-
-  - `perform_action(deer, drop, myself);` 假设是前面某些条件都满足后，进入这一行执行实际的操作。
-  - 如果在上面任何一个 `if (!setupXX(...)) goto ...;` 跳转来到 `cleanupray:`，那么会先执行 `cleanup(drop);`，然后接着“自然下落”到 `cleanupdoe:` 再执行 `cleanup(deer);`，最后跳到 `finish:` 执行 `return;` 退出函数。
-  - 如果跳到了 `cleanupdoe:`，则直接执行 `cleanup(deer);`，再顺序到 `finish: return;`。如果所有前置步骤都成功，就会跳到 `finish:` 直接 `return;` 而不做任何清理。
-  - 通过这种“标签 + `goto`”写法，可以用最少的重复代码实现“分阶段出错回滚并进行相应资源释放”的逻辑。
+![image-20250604160525367](READEME.assets/image-20250604160525367.png)
 
 ------
 
@@ -2045,155 +1615,7 @@ finish:
   >  (4) `if` 后面既有 `else if` 又有 `else`。
   >  需要注意的是：每个 `else` 会与它前面最近的、尚未匹配过的 `if` 相对应。这就可能引发一个微妙的错误，称为“悬挂的 `else`”（dangling else）问题——即编译器总会将 `else` 与最靠近它的 `if` 配对。如果中间的某个条件为真，就会执行对应的 `if` 块，然后直接跳到整个 `if…else` 结构（块）末尾，不再看后面的 `else if` 或 `else`。**
 
-------
 
-### 2.1. (1) 仅有一个独立的 `if`（Bare `if`）
-
-```c
-// (1)
-if (connect(...))
-    return -1;
-```
-
-- **中译**：
-
-  ```c
-  // （1）
-  if (connect(...))
-      return -1;
-  ```
-
-- **解释**：
-
-  - 这里只有一个简单的 `if`，不带 `else`。
-  - 如果 `connect(...)` 返回非零（或逻辑真），就会执行 `return -1;` 退出当前函数；
-  - 如果 `connect(...)` 返回 0（或逻辑假），就跳过 `return -1;`，继续执行 `if` 后面的下一条语句（循环或函数里其余逻辑）。
-
-------
-
-### 2.2. (2) `if` + `else`（`if` with an `else`）
-
-```c
-// (2)
-if (connect(...)) {
-    exit(-1);
-} else {
-    printf("Connected!");
-}
-```
-
-- **中译**：
-
-  ```c
-  // （2）
-  if (connect(...)) {
-      exit(-1);
-  } else {
-      printf("Connected!");
-  }
-  ```
-
-- **解释**：
-
-  - 如果 `connect(...)` 为真，就执行大括号 `{ exit(-1); }` 里的内容，调用 `exit(-1)` 直接退出程序；
-  - 如果 `connect(...)` 为假，就执行 `else` 后面的大括号 `{ printf("Connected!"); }`，打印“Connected!”。
-
-------
-
-### 2.3. (3) `if` + `else if`（`if` with an `else‐if`，但没有 `else`）
-
-```c
-// (3)
-if (connect(...)) {
-    exit(-1);
-} else if (bind(...)) {
-    exit(-2);
-}
-```
-
-- **中译**：
-
-  ```c
-  // （3）
-  if (connect(...)) {
-      exit(-1);
-  } else if (bind(...)) {
-      exit(-2);
-  }
-  ```
-
-- **解释**：
-
-  - 先判断 `connect(...)`：如果为真，就执行 `exit(-1)` 并结束整个程序；
-  - 如果 `connect(...)` 为假，则“跳过”第一对大括号，继续匹配最近的 `else if (bind(...))`。
-    - 如果 `bind(...)` 为真，就执行 `exit(-2)` 并结束程序；
-    - 如果 `bind(...)` 也为假，则整个 `if…else if` 块结束后，直接跳到它后面的下一条语句（因为没有 `else` 所以不会执行任何输出或退出）。
-
-- **注意“挂接”关系**：
-
-  - 这里的 `else if (bind(...))` 会与最靠近它的、尚未匹配的 `if`（也就是 `if (connect(...))`）配对。
-
-  - 如果不加大括号，将变成：
-
-    ```c
-    if (connect(...)) 
-        exit(-1);
-    else
-        if (bind(...))
-            exit(-2);
-    ```
-
-    在 C 的语法中，`else` 默认会与它最近的未配对的 `if` 搭档。
-
-  - 若不小心写成：
-
-    ```c
-    if (connect(...))
-        exit(-1);
-    if (bind(...))
-        exit(-2);
-    ```
-
-    就变成了两个独立的 `if`，没有 `else if` 结构，可能逻辑上不是想要的效果。
-
-------
-
-### 2.4. (4) `if` + `else if` + `else`（完整的多分支结构）
-
-```c
-// (4)
-if (connect(...)) {
-    exit(-1);
-} else if (bind(...)) {
-    exit(-2);
-} else {
-    printf("Successfully bound!");
-}
-```
-
-- **中译**：
-
-  ```c
-  // （4）
-  if (connect(...)) {
-      exit(-1);
-  } else if (bind(...)) {
-      exit(-2);
-  } else {
-      printf("Successfully bound!");
-  }
-  ```
-
-- **解释**：
-
-  - 先判断 `connect(...)`：
-    - 成功（真）时，执行 `exit(-1)` 并结束程序；
-    - 否则跳到 `else if`。
-  - 判断 `bind(...)`：
-    - 成功（真）时，执行 `exit(-2)` 并结束程序；
-    - 否则跳到最末尾的 `else`。
-  - 如果前两者都为假，就执行 `else` 块里的 `printf("Successfully bound!");`，打印“Successfully bound!”。
-  - 整个多分支结构保证“只会执行其中一个分支”——一旦某个分支的条件为真并执行完它的大括号内代码，整个 `if…else if…else` 块就结束，程序跳到块后继续执行。
 
 ------
 
@@ -2261,43 +1683,9 @@ if (connect(...)) {
 
 ![image-20250604160713893](READEME.assets/image-20250604160713893.png)
 
-以下内容基于您提供的最新图片，将其中的英文原文逐段拆分，给出中译，并结合示例代码做详细解析，帮助您全面理解 C 语言中的 `inline`、`restrict`、`return` 等关键字及其用法。
-
 ------
 
 ## 10. `inline` 关键字
-
-> **原文**：
->
-> > **“`inline` is a compiler keyword that tells the compiler it’s okay to omit the C function call procedure and "paste" the code in the callee. Instead, the compiler is hinted at substituting the function body directly into the calling function. This is not always recommended explicitly as the compiler is usually smart enough to know when to `inline` a function for you.”**
-
-- **中译**：
-
-  > **“`inline` 是一个编译器关键字，用来告诉编译器：可以省略正常的 C 函数调用流程，而直接将被调用函数(`callee`)的代码“粘贴”到调用位置。换句话说，它提示编译器把函数体直接插入到调用该函数的位置。通常并不需要显式地写 `inline`，因为现代编译器已经足够智能，会自动决定何时进行函数内联。”**
-
-```c
-inline int max(int a, int b) {
-    return a < b ? a : b;
-}
-
-int main() {
-    printf("Max %d", max(a, b));
-    // 等同于 printf("Max %d", a < b ? a : b);
-}
-```
-
-- **中译**：
-
-  ```c
-  inline int max(int a, int b) {
-      return a < b ? a : b;
-  }
-  
-  int main() {
-      printf("Max %d", max(a, b));
-      // 等价于 printf("Max %d", a < b ? a : b);
-  }
-  ```
 
 ### 详细解释
 
@@ -2336,19 +1724,6 @@ int main() {
    }
    ```
 
-   - **中译**：
-
-     ```c
-     inline int max(int a, int b) {
-         return a < b ? a : b;
-     }
-     
-     int main() {
-         printf("Max %d", max(a, b));
-         //  等价于： printf("Max %d", a < b ? a : b);
-     }
-     ```
-
    - **解释**：
 
      - `max` 函数本来会被编译成一个独立的函数，`main` 里调用时需要压栈、跳转、执行函数体、再跳转回 `main`。
@@ -2357,53 +1732,6 @@ int main() {
 ------
 
 ## 11. `restrict` 关键字
-
-> **原文**：
->
-> > **“`restrict` is a keyword that tells the compiler that this particular memory region shouldn’t overlap with all other memory regions. The use case for this is to tell users of the program that it is undefined behavior if the memory regions overlap. Note that `memcpy` has undefined behavior when memory regions overlap. If this might be the case in your program, consider using `memmove`.”**
-
-```c
-memcpy(void * restrict dest, const void* restrict src, size_t bytes);
-
-void add_array(int *a, int * restrict c) {
-    *a += *c;
-}
-int *a = malloc(3 * sizeof(*a));
-*a = 1; *a = 2; *a = 3;
-add_array(a + 1, a);  // Well defined
-add_array(a, a);      // Undefined
-```
-
-- **中译**：
-
-  > **“`restrict` 是一个关键字，用来告诉编译器：此指针所指向的内存区域在本次函数调用期间，与其他任何内存区域都不会重叠。这样编译器就能对代码优化更为激进。如果这些内存区域真的发生重叠，就属于未定义行为。注意，标准库函数 `memcpy` 在源区与目标区发生重叠时也是未定义行为；如果您的程序可能出现重叠拷贝，应该使用 `memmove`，它可以正确处理重叠情况。”**
-
-```c
-memcpy(void * restrict dest, const void* restrict src, size_t bytes);
-
-void add_array(int *a, int * restrict c) {
-    *a += *c;
-}
-
-int *a = malloc(3 * sizeof(*a));
-*a = 1; *a = 2; *a = 3;
-add_array(a + 1, a);  // Well defined
-add_array(a, a);      // Undefined
-```
-
-- **中译**：
-
-  ```c
-  memcpy(void * restrict dest, const void* restrict src, size_t bytes);
-  
-  void add_array(int *a, int * restrict c) {
-      *a += *c;
-  }
-  int *a = malloc(3 * sizeof(*a));
-  *a = 1; *(a+1) = 2; *(a+2) = 3;
-  add_array(a + 1, a);  // 正确：dest 与 src 不重叠
-  add_array(a, a);      // 错误：dest 与 src 重叠，属于未定义行为
-  ```
 
 ### 详细解释
 
@@ -2441,18 +1769,6 @@ add_array(a, a);      // Undefined
    add_array(a + 1, a);  // Well defined
    add_array(a, a);      // Undefined
    ```
-
-   - **中译**：
-
-     ```c
-     void add_array(int *a, int * restrict c) {
-         *a += *c;
-     }
-     int *a = malloc(3 * sizeof(*a));
-     *a = 1; *(a+1) = 2; *(a+2) = 3;
-     add_array(a + 1, a);  // 定义良好
-     add_array(a, a);      // 未定义
-     ```
 
    - **解释**：
 
