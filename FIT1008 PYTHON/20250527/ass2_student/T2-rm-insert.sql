@@ -6,8 +6,7 @@
 
 /* Comments for your marker:
 
-
-
+COALESCE(COUNT(en.entry.no),'Not Offered')  AS num_entries
 
 */
 
