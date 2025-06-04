@@ -1781,49 +1781,6 @@ cleanupray:
 
 ## 12. `return` 关键字
 
-> **原文**：
->
-> > **“`return` is a control flow operator that exits the current function. If the function is `void` then it simply exits the functions. Otherwise, another parameter follows as the return value.”**
-
-```c
-void process() {
-    if (connect(...)) {
-        return -1;
-    } else if (bind(...)) {
-        return -2;
-    }
-    return 0;
-}
-```
-
-- **中译**：
-
-  > **“`return` 是一种控制流操作符，用来退出当前函数。如果函数返回类型是 `void`，就直接结束函数；否则，`return` 后面需要跟一个表达式，作为函数的返回值。”**
-
-```c
-void process() {
-    if (connect(...)) {
-        return -1;
-    } else if (bind(...)) {
-        return -2;
-    }
-    return 0;
-}
-```
-
-- **中译**：
-
-  ```c
-  void process() {
-      if (connect(...)) {
-          return -1;
-      } else if (bind(...)) {
-          return -2;
-      }
-      return 0;
-  }
-  ```
-
 ### 详细解释
 
 1. **“`return` is a control flow operator that exits the current function.”**
@@ -1842,104 +1799,12 @@ void process() {
      - “‘否则（即函数非 `void`），`return` 后面必须跟一个表达式，该表达式的值就是函数的返回值。’”
    - **解释**：
      - 如果函数声明时写了 `int process()`、`char *foo()` 等，就必须在 `return` 后面指定一个与返回类型兼容的值。例如 `return -1;`、`return ptr;`。
-4. **示例代码解析**：
-
-```c
-void process() {
-    if (connect(...)) {
-        return -1;
-    } else if (bind(...)) {
-        return -2;
-    }
-    return 0;
-}
-```
-
-- **中译**：
-
-  ```c
-  void process() {
-      if (connect(...)) {
-          return -1;
-      } else if (bind(...)) {
-          return -2;
-      }
-      return 0;
-  }
-  ```
-
-- **解释**：
-
-  - 注意：示例代码里函数签名写的是 `void process()`，但实际上函数体里有 `return -1;`、`return -2;`、`return 0;`，都在返回整型值——这与函数的声明是不匹配的。正确的写法应当是：
-
-    ```c
-    int process() {
-        if (connect(...)) {
-            return -1;
-        } else if (bind(...)) {
-            return -2;
-        }
-        return 0;
-    }
-    ```
-
-  - 按照示例的意图：
-
-    1. 如果 `connect(...)` 返回真（表示出错），则执行 `return -1;`，函数立刻结束并将 `-1` 返回给调用者；
-    2. 否则，如果 `bind(...)` 返回真，则执行 `return -2;`，函数结束并返回 `-2`；
-    3. 如果前两者都未触发，就执行最终的 `return 0;`，表示一切正常并返回 `0`。
-
-  - 这样一来，调用方只需检查 `process()` 的返回值，便能分辨“连接出错（-1）”、“绑定出错（-2）”或“成功（0）”。
-
-------
-
-## 本页内容要点汇总
-
-通过本页图片的中英对照与详细解释，我们掌握了以下知识点：
-
-1. **`inline` 关键字**
-   - 提示编译器将函数体“粘贴”到调用处，从而消除正常调用开销；
-   - 现代编译器通常会自动决定何时进行内联优化，无需手动加 `inline`。
-2. **`restrict` 关键字**
-   - 用在指针参数声明中，告诉编译器“该指针指向的内存与其他指针不会重叠”；
-   - 如果调用时真的重叠，则进入未定义行为；编译器据此做更激进的优化；
-   - 例如：`memcpy(dest, src, n)` 与 `memmove(dest, src, n)` 的区别就在于前者要求“dest 与 src 不重叠”，后者可以正确处理重叠区域。
-3. **`return` 关键字**
-   - 用于退出当前函数，如果函数返回类型非 `void`，就必须跟一个表达式作为返回值；
-   - 函数执行 `return` 后，后续语句不再执行，控制权交回调用者；
-   - 示例中通过不同的 `return -1`、`return -2`、`return 0`，区分不同错误/成功情况。
-
-希望以上中英对照与逐句解析，能够帮助您准确理解图片中所示内容。如有任何疑问，欢迎随时提问！
 
 ![image-20250604160933870](READEME.assets/image-20250604160933870.png)
-
-下面对图片中最后两部分（“`signed`” 和 “`sizeof`”）的英文原文逐句给出中译，并结合代码示例做详细解释，帮助你彻底理解它们的含义与用法。
 
 ------
 
 ## 13. `signed` 修饰符
-
-> **原文**
->
-> > **“`signed` is a modifier which is rarely used, but it forces a type to be signed instead of unsigned. The reason that this is so rarely used is because types are signed by default and need to have the `unsigned` modifier to make them unsigned but it may be useful in cases where you want the compiler to default to a signed type such as below.”**
-
-- **中译**
-
-  > **“`signed` 是一个几乎很少会用到的修饰符，但它能强制让某个类型变成带符号（signed）而不是无符号（unsigned）。之所以很少使用，是因为大多数整数类型默认就是有符号的，如果要变成无符号，必须显式加 `unsigned`。不过在某些情况下，你可能想要显式告诉编译器默认就是带符号的，这时就可以写成下面这样。”**
-
-```c
-int count_bits_and_sign(signed representation) {
-    // ...
-}
-```
-
-- **中译**
-
-  ```c
-  int count_bits_and_sign(signed representation) {
-      // ...
-  }
-  ```
 
 ### 详细解释
 
@@ -1993,33 +1858,6 @@ int count_bits_and_sign(signed representation) {
 
 ## 14. `sizeof` 操作符
 
-> **原文**
->
-> > **“`sizeof` is an operator that is evaluated at compile-time, which evaluates to the number of bytes that the expression contains. When the compiler infers the type the following code changes as follows.”**
-
-```c
-char a = 0;
-printf("%zu", sizeof(a++));
-char a = 0;
-printf("%zu", 1);
-```
-
-> **“Which then the compiler is allowed to operate on further. The compiler must have a complete definition of the type at compile-time—not link time—or else you may get an odd error. Consider the following”**
-
-```c
-// file.c
-struct person;
-
-printf("%zu", sizeof(person));
-
-// file2.c
-struct person {
-    // Declarations
-};
-```
-
-> **“This code will not compile because `sizeof` is not able to compile `file.c` without knowing the full declaration of the `person` struct. That is typically why programmers either put the full declaration in a header file or we abstract the creation and the interaction away so that users cannot access the internals of our struct. Additionally, if the compiler knows the full length of an array object, it will use that in the expression instead of having it decay into a pointer.”**
-
 ------
 
 ### 14.1 英文原文与中译
@@ -2051,13 +1889,6 @@ printf("%zu", sizeof(a++));
 char a = 0;
 printf("%zu", 1);
 ```
-
-- **中译**：
-
-  ```c
-  char a = 0;
-  printf("%zu", 1);
-  ```
 
 - **解释**：
 
@@ -2095,20 +1926,6 @@ struct person {
 };
 ```
 
-- **中译**：
-
-  ```c
-  // file.c
-  struct person;
-  
-  printf("%zu", sizeof(person));
-  
-  // file2.c
-  struct person {
-      // 成员声明
-  };
-  ```
-
 - **解释**：
 
   - 在 `file.c` 中，写了一行前向声明（`struct person;`），并且直接使用 `sizeof(person)`。
@@ -2137,24 +1954,7 @@ struct person {
      - 但是在 `sizeof` 操作符里，数组名**不会**退化。编译器知道 `int arr[10]` 就占用 `10 * sizeof(int)` 个字节，于是 `sizeof(arr)` 就是一个常量（通常是 40（假设 `sizeof(int) == 4`））。
      - 这使得 `sizeof` 操作符对数组非常有用：它可以在编译期知道数组整体大小，不必担心退化成指针后“丢失长度信息”。
 
-------
-
-## 本页内容要点总结
-
-1. **`signed` 修饰符**
-   - 用来强制把某个类型当做“带符号”处理；由于大多数整数类型默认就是带符号，所以在实际代码里很少单独写 `signed`。唯有在你想显式说明“这个参数/字段就是带符号类型，而不要被当成无符号”时，才会见到它。
-   - 示例：`int count_bits_and_sign(signed representation) { … }` 等价于 `int count_bits_and_sign(int representation) { … }`，但更明确地提示“这里一定要带符号”。
-2. **`sizeof` 操作符**
-   - `sizeof(expr)` 和 `sizeof(type)` 都在编译阶段求值，结果是一个“字节数”的常量。
-   - 如果操作数含有副作用（如 `a++`、函数调用等），在 `sizeof` 中**并不会执行这些副作用**，只会根据表达式类型来计算字节数。
-   - **前向声明的不完整类型（incomplete type）**，在 `sizeof` 中是非法的：编译器必须在编译期就能“看到”某个类型的完整定义，才能计算它的字节大小，否则会报错。
-   - 当数组名用在 `sizeof` 中时，编译器不会退化成指针，而是直接算整个数组占用的总字节数。
-
-通过上述的中英对照与逐句解析，您应当能够彻底理解图片中有关 “`signed` 修饰符” 与 “`sizeof` 操作符” 的所有要点。如有任何后续疑问，欢迎随时提问！
-
 ![image-20250604161128911](READEME.assets/image-20250604161128911.png)
-
-下面对您提供的最新图片中的两大部分内容——“`sizeof` 与数组/指针的区别”以及“`static` 和 `struct` 的用法”——进行中英对照，并逐句做详细解释。
 
 ------
 
@@ -2172,18 +1972,6 @@ struct person {
 >
 > **原文注释**
 >  “Be careful, using sizeof for the length of a string!”
-
-### 中译
-
-```c
-char str1[] = "will be 11";
-char* str2 = "will be 8";
-
-sizeof(str1) // 11，因为它是一个数组
-sizeof(str2) // 8，因为它是一个指针
-```
-
-> “注意：用 `sizeof` 来获取字符串长度时要小心！”
 
 ### 详细解释
 
@@ -2247,46 +2035,6 @@ sizeof(str2) // 8，因为它是一个指针
 
 ## 2. `static` 修饰符
 
-> **原文**
->
-> > **“`static` is a type specifier with three meanings.”**
-> >  **“(a) When used with a global variable or function declaration it means that the scope of the variable or the function is only limited to the file.”**
-> >  **“(b) When used with a function variable, that declares that the variable has static allocation – meaning that the variable is allocated once at program startup not every time the program is run, and its lifetime is extended to that of the program.”**
-
-```c
-// visible to this file only
-static int i = 0;
-
-static int _perform_calculation(void) {
-    // ...
-}
-
-char *print_time(void) {
-    static char buffer[200];  // Shared every time a function is called
-    // ...
-}
-```
-
-### 中译
-
-> **“`static` 是一个类型说明符，有三种含义。”**
->  **“(a) 当用于全局变量或函数声明时，它表示该变量或函数的作用域仅限于当前文件（译者注：也称为‘内部链接’，其他源文件无法引用）。”**
->  **“(b) 当用于函数内部的变量声明时，它表示该变量具有**静态存储时长** —— 意味着该变量在程序启动时分配一次，而不是每次函数被调用时都分配，并且它的生命周期一直持续到程序结束。”**
-
-```c
-// 仅在本文件可见
-static int i = 0;
-
-static int _perform_calculation(void) {
-    // ...
-}
-
-char *print_time(void) {
-    static char buffer[200];  // 每次调用函数都共享同一个 buffer
-    // ...
-}
-```
-
 ### 详细解释
 
 `static` 在 C 里有三种常见用法，这里译出前两种并举例说明。第三种含义（在块作用域外使用指针或限制链接可见性）在别处会详细介绍。
@@ -2330,89 +2078,9 @@ char *print_time(void) {
        - 避免每次都 malloc/free，而把数据缓存在静态区域里；
        - 当函数需要返回一个指向内部静态缓冲区的指针时，就可以直接返回 `buffer` 的地址（要注意线程安全问题）。
 
-3. **示例代码注释解读**：
-
-   ```c
-   // visible to this file only
-   static int i = 0;
-   ```
-
-   - **中译**：
-
-     > “仅对本文件可见”
-
-   - **解释**：
-
-     - 声明了一个文件作用域的静态整型变量 `i`，它的生命周期从程序启动到结束都一直存在，但只有在声明它的那个 .c 文件里才能访问它。其他文件即使写 `extern int i;` 也无法链接成功。
-
-   ```c
-   static int _perform_calculation(void) {
-       // ...
-   }
-   ```
-
-   - **中译**：
-
-     > “仅对本文件可见的静态函数”
-
-   - **解释**：
-
-     - `_perform_calculation()` 函数前面加了 `static`，表示它的链接属性是“内部链接”（internal linkage）。该函数只能在定义它的 .c 文件内部被调用，链接器不会导出到其他 .o 文件。
-
-   ```c
-   char *print_time(void) {
-       static char buffer[200];  // Shared every time a function is called
-       // ...
-   }
-   ```
-
-   - **中译**：
-
-     > “函数内部的静态数组 `buffer`——每次调用都共用同一个缓冲区”
-
-   - **解释**：
-
-     - 这里 `buffer` 是一个局部静态数组——它在程序加载时就已“永远分配”（static allocation），后续多次调用 `print_time()` 时不会重新创建。
-     - 如果函数体里填充 `buffer` 再返回它的地址，就能在函数外部访问这个静态缓冲区。注意：每次调用都使用同一个 `buffer`，如果调用方想保留它的内容，需要自行拷贝到别的缓存。
-
 ------
 
 ## 3. `struct` 关键字
-
-> **原文**
->
-> > **“`struct` is a keyword that allows you to pair multiple types together into a new structure. C-structs are contiguous regions of memory that one can access specific elements of each memory as if they were separate variables. Note that there might be padding between elements, such that each variable is memory-aligned (starts at a memory address that is a multiple of its size).”**
-
-```c
-struct hostname {
-    const char *port;
-    const char *name;
-    const char *resource;
-}; // You need the semicolon at the end
-// Assign each individually
-struct hostname facebook;
-facebook.port = "80";
-facebook.name = "www.google.com";
-facebook.resource = "/";
-```
-
-### 中译
-
-> **“`struct` 是一个关键字，用于将多种类型“打包”到一个新的结构体类型中。C 语言中的 `struct` 占用一段连续的内存区域，你可以像访问独立变量那样访问其中的各个成员。注意，由于对齐的原因，结构体成员之间可能会插入字节填充（padding），以保证每个成员都存放在对齐边界上（例如整数或指针通常需要在它们自身大小的整数倍地址处开始）。”**
-
-```c
-struct hostname {
-    const char *port;
-    const char *name;
-    const char *resource;
-}; // 结尾必须加分号
-
-// 逐个给成员赋值
-struct hostname facebook;
-facebook.port = "80";
-facebook.name = "www.google.com";
-facebook.resource = "/";
-```
 
 ### 详细解释
 
@@ -2451,184 +2119,7 @@ facebook.resource = "/";
      - 如果一个较小成员（比如 `char c;`）后面紧跟一个需要较大对齐的成员（比如 `double d;`），编译器会自动在 `char c` 之后插入几个“填充字节”（padding），以便 `d` 能从正确对齐的地址开始。
      - 这样做可以提高 CPU 访问速度，但会使结构体的实际字节数比单纯的“各成员大小相加”要略大一些。
 
-4. **示例代码解释**：
-
-   ```c
-   struct hostname {
-       const char *port;
-       const char *name;
-       const char *resource;
-   }; // You need the semicolon at the end
-   // Assign each individually
-   struct hostname facebook;
-   facebook.port = "80";
-   facebook.name = "www.google.com";
-   facebook.resource = "/";
-   ```
-
-   - **中译**：
-
-     ```c
-     struct hostname {
-         const char *port;
-         const char *name;
-         const char *resource;
-     }; // 结尾必须加分号
-     // 逐个赋值
-     struct hostname facebook;
-     facebook.port = "80";
-     facebook.name = "www.google.com";
-     facebook.resource = "/";
-     ```
-
-   - **逐行解释**：
-
-     1. **`struct hostname { const char \*port; const char \*name; const char \*resource; };`**
-        - 声明了一个名为 `hostname` 的结构体类型，它包含三个成员：
-          - `port`：类型为 `const char *`，用于指向字符串端口号（例如 `"80"`）。
-          - `name`：类型为 `const char *`，用于指向主机名字符串（例如 `"www.google.com"`）。
-          - `resource`：类型为 `const char *`，用于指向资源路径（例如 `"/"`）。
-        - 注意在 `}` 之后必须加上分号 `;`，这是 C 语法要求。
-     2. **`struct hostname facebook;`**
-        - 声明了一个类型为 `struct hostname` 的变量 `facebook`。
-        - 编译器会在栈（或全局/静态区，视变量修饰符而定）上为 `facebook` 分配一块连续内存，大小大致是“3 × 指针大小 + 可能的填充”。
-     3. **`facebook.port = "80";`**
-        - 把字符串字面量 `"80"` 的首地址（存放在只读段）赋给 `facebook.port`，使 `facebook.port` 指向这段字面量。
-     4. **`facebook.name = "www.google.com";`**
-        - 把字符串字面量 `"www.google.com"` 的地址赋给 `facebook.name`。
-     5. **`facebook.resource = "/";`**
-        - 把字符串字面量 `"/"` 的地址赋给 `facebook.resource`。
-
-   - **注意事项**：
-
-     - 这里三条赋值语句并不在结构体定义时做初始化，而是在后面逐条给各成员赋值。如果想要在定义时立即给成员赋初值，可以用**聚合初始化**或者**结构体初始化列表**，例如：
-
-       ```c
-       struct hostname facebook = {
-           .port = "80",
-           .name = "www.google.com",
-           .resource = "/"
-       };
-       ```
-
-       这样在一行中就把三个成员都初始化了。
-
-------
-
-## 本页内容要点总结
-
-1. **`sizeof` 与数组/指针的区别**
-   - 当操作数是一个数组名时（例如 `char str1[] = "..."`），`sizeof(str1)` 返回的是整个数组在内存中所占的总字节数（包括结尾的 `'\0'`）。
-   - 当操作数是一个指针时（例如 `char *str2`），`sizeof(str2)` 返回的是指针本身所占的字节数（例如 8 字节或 4 字节），与它指向的数据长度无关。
-   - 因此切勿用 `sizeof` 来计算字符串长度，正确的方法是 `strlen(str)`。
-2. **`static` 修饰符的主要含义**
-   - **文件作用域的 `static`**：修饰全局变量或函数，表示该符号仅在本源文件（.c）内可见，其他文件无法链接访问。
-   - **函数内部的 `static`**：修饰局部变量，表示该变量具有静态存储周期——只在程序开始时分配一次，并在整个程序运行期间都保留其值，而非每次函数调用都重新创建。
-3. **`struct` 关键字与结构体**
-   - 用 `struct` 可以定义一个包含多个不同类型成员的复合数据类型，这些成员在内存中占用一段连续空间，可通过“`.`”操作符访问。
-   - 因为对齐的关系，编译器可能会在成员之间插入填充字节（padding），以保证每个成员都从它自身大小的整数倍地址开始。
-   - 定义完结构体类型后，可以声明该类型的变量，并逐个对成员进行赋值，也可以在声明时一次性用初始化列表初始化所有成员。
-
-希望以上**中英对照**与**逐句详解**能够帮助您完整理解图片中关于 “`sizeof`”、 “`static`” 以及 “`struct`” 的内容。如有其他疑问，欢迎随时提问！
-
 ![image-20250604161505608](READEME.assets/image-20250604161505608.png)
-
-**英文原文与中文翻译对照**
-
-------
-
-### 1. 静态初始化示例 / Static Initialization Example
-
-> ```c
-> // You can use static initialization in later versions of C
-> struct hostname google = {"80", "www.google.com", "/"};
-> ```
-
-**English Explanation:**
-
-- This line declares a variable named `google` of type `struct hostname` and initializes its three fields to the string literals `"80"`, `"www.google.com"`, and `"/"`.
-
-- In newer C standards (e.g., C99 and later), you are allowed to use this kind of brace-enclosed initializer to set all fields of a struct at compile time.
-
-- Presumably, the structure `hostname` is defined elsewhere (not shown in this excerpt), something like:
-
-  ```c
-  struct hostname {
-      char *port;
-      char *domain;
-      char *path;
-  };
-  ```
-
-  In that case:
-
-  - `port` gets `"80"` (the standard HTTP port),
-  - `domain` gets `"www.google.com"`, and
-  - `path` gets `"/"`.
-
-**中文翻译：**
-
-- 这行代码声明了一个类型为 `struct hostname` 的变量 `google`，并用花括号中的字符串字面量对它的三个成员进行初始化，分别是 `"80"`, `"www.google.com"` 和 `"/"`。
-
-- 在较新的 C 标准（比如 C99 及以后）中，可以在编译时使用这种用大括号括起来的初始化方式来给结构体的所有字段赋值。
-
-- 假设在别处（此处代码片段未展示），有如下的结构体定义：
-
-  ```c
-  struct hostname {
-      char *port;
-      char *domain;
-      char *path;
-  };
-  ```
-
-  那么：
-
-  - `port` 会被初始化为 `"80"`（通常表示 HTTP 的默认端口），
-  - `domain` 会被初始化为 `"www.google.com"`，
-  - `path` 会被初始化为 `"/"`。
-
-------
-
-### 2. `switch`、`case`、`default` 说明 / Explanation of `switch case default`
-
-> **原文（Excerpt from Image）：**
->
-> > **17. switch case default** Switches are essentially glorified jump statements. Meaning that you take either a byte or an integer and the control flow of the program jumps to that location. Note that, the various cases of a switch statement fall through. It means that if execution starts in one case, the flow of control will continue to all subsequent cases, until a break statement.
-
-**English Explanation:**
-
-1. **“Switches are essentially glorified jump statements.”**
-
-   - A `switch` statement lets you compare a single integer (or character, since chars promote to ints) against multiple constant values (labels). Internally, the compiler often implements a `switch` as a jump table or series of comparisons.
-   - In other words, when you write `switch (expr) { ... }`, the program “jumps” to whichever `case` label matches `expr`.
-
-2. **“Meaning that you take either a byte or an integer and the control flow of the program jumps to that location.”**
-
-   - You write something like `switch (x) { case 1: …; case 2: …; … }`. The CPU will evaluate `x`, then jump to the code under `case 1` or `case 2` accordingly.
-
-3. **“Note that, the various cases of a switch statement fall through. It means that if execution starts in one case, the flow of control will continue to all subsequent cases, until a break statement.”**
-
-   - In C, if you don’t put a `break;` at the end of a `case` block, execution “falls through” to the next `case` label.
-
-   - For example:
-
-     ```c
-     switch (i) {
-         case 1: printf("One\n");
-         case 2: printf("Two\n");
-         case 3: printf("Three\n");
-     }
-     ```
-
-     If `i == 2`, the program will print:
-
-     ```
-     Two
-     Three
-     ```
-
-     because after printing `Two`, there is no `break`, so it continues (“falls through”) into the code for `case 3`.
 
 **中文翻译：**
 
@@ -2686,16 +2177,6 @@ facebook.resource = "/";
 > }
 > ```
 
-**English Explanation:**
-
-- In the first snippet, there are three `case` labels: `INT1`, `INT2`, and `INT3` (presumably macros or consts for integer values). Under each label, they call `puts("1")`, `puts("2")`, and `puts("3")`, respectively, but **notice they omitted `break;` statements**.
-- In C, that means **fall-through** behavior. If control jumps to `case INT2`, it will execute `puts("2")`, **then continue** immediately into the code for `case INT3` and execute `puts("3")`, since there is no `break;` to stop it.
-- In the second snippet, they explicitly wrote `switch(2)`. Thus:
-  1. `case 1:` is skipped (because 2 ≠ 1).
-  2. `case 2:` matches, so it runs `puts("2");`.
-  3. Immediately after printing `"2"`, there is no `break;`, so it falls through to `case 3:` and executes `puts("3");`.
-  4. If there had been a `case 4:` below, it would also run, and so on, until either the end of the `switch` or a `break;`.
-
 **中文翻译：**
 
 - 在第一个代码片段里，有三个 `case` 标签：`INT1`、`INT2` 和 `INT3`（它们大概率是代表某些整型常量或宏）。在每个 `case` 下分别调用了 `puts("1")`、`puts("2")` 和 `puts("3")`，但是**注意它们并没有写 `break;`**。
@@ -2712,17 +2193,17 @@ facebook.resource = "/";
 
 > **原文（Excerpt from Image）：**
 >
-> > One of the more famous examples of this is Duff’s device which allows for loop unrolling. You don’t need to understand this code for the purposes of this class, but it is fun to look at [2].
-> >
+> One of the more famous examples of this is Duff’s device which allows for loop unrolling. You don’t need to understand this code for the purposes of this class, but it is fun to look at [2].
+> 
 > > ```c
-> > send(to, from, count)
-> >   register short *to, *from;
-> >   register count;
-> > {
+> >send(to, from, count)
+> > register short *to, *from;
+> > register count;
+> >   {
 > >   register n = (count + 7) / 8;
-> >   switch(count % 8) {
-> >     case 0:  do { *to = *from++;
-> >     case 7:       *to = *from++;
+> > switch(count % 8) {
+> >    case 0:  do { *to = *from++;
+> >    case 7:       *to = *from++;
 > >     case 6:       *to = *from++;
 > >     case 5:       *to = *from++;
 > >     case 4:       *to = *from++;
@@ -2730,70 +2211,9 @@ facebook.resource = "/";
 > >     case 2:       *to = *from++;
 > >     case 1:       *to = *from++;
 > >           } while(--n > 0);
-> >   }
-> > }
-> > ```
-
-**English Explanation:**
-
-1. **What Is Duff’s Device?**
-
-   - Duff’s Device is a well-known C programming trick invented by Tom Duff. It cleverly combines a `switch` statement with a `do { ... } while(--n > 0);` loop to perform **loop unrolling**.
-   - Loop unrolling is an optimization technique where you reduce the overhead of loop control (incrementing counters, checking conditions) by copying the loop body multiple times in sequence. This can improve performance, especially in older C environments or on CPUs where branching is expensive.
-
-2. **Signature:**
-
-   ```c
-   send(to, from, count)
-     register short *to, *from;
-     register count;
-   { ... }
-   ```
-
-   - This is the old K&R (Kernighan & Ritchie) style function declaration (pre-ANSI C).
-   - `to` and `from` are pointers to `short` (16-bit integers on many platforms); `count` is an integer specifying how many elements to transfer.
-
-3. **Calculating `n`:**
-
-   ```c
-   register n = (count + 7) / 8;
-   ```
-
-   - By adding 7 and dividing by 8, you compute how many “batches of eight” you will need. If `count` is not a multiple of 8, rounding up ensures that all elements get copied.
-
-4. **`switch(count % 8)`:**
-
-   - The expression `count % 8` gives a remainder between 0 and 7. This remainder tells us how many copies to do in the **first partial unrolled iteration** to align the main loop to batches of 8.
-
-5. **Cases 0 through 7 inside the switch:**
-
-   ```c
-   switch(count % 8) {
-     case 0:  do { *to = *from++;
-     case 7:       *to = *from++;
-     case 6:       *to = *from++;
-     case 5:       *to = *from++;
-     case 4:       *to = *from++;
-     case 3:       *to = *from++;
-     case 2:       *to = *from++;
-     case 1:       *to = *from++;
-           } while(--n > 0);
-   }
-   ```
-
-   - If `count % 8 == 0`, execution starts at `case 0`, and immediately enters the `do { ... } while (--n > 0);` loop, copying eight elements (`case 0` through `case 1` in sequence) each iteration.
-   - If `count % 8 == 3`, for instance, the program jumps directly to `case 3:`, copies one element (`case 3`), then proceeds to `case 2`, `case 1`, wrapping through the rest of the eight-copy block, then decrements `n` and loops again from `case 0` onward.
-   - In this fashion, the first iteration may copy fewer than eight items (to “align” the total), and subsequent iterations always copy eight items each. Ultimately all `count` elements are transferred with minimal looping overhead.
-
-6. **Fall-through Is Essential Here:**
-
-   - Notice there are **no** `break;` statements between these `case` labels. This is exactly the desired “fall-through” effect: once you start at the correct offset (`count % 8`), you fall through all the following cases in the `do { ... } while` block, copying the remaining elements in that batch of eight, then loop back and always start from `case 0` for the next batch.
-
-7. **Why It’s “Fun to Look At”:**
-
-   - Duff’s Device is regarded as a creative (if somewhat cryptic) demonstration of C’s power: mixing `switch` fall-through and loop constructs to optimize. Although modern compilers often perform similar optimizations automatically, seeing how it was done “by hand” is a classic exercise in low-level performance tricks.
-
-**中文翻译：**
+> >    }
+> >    }
+> >   ```
 
 1. **什么是 Duff’s Device？**
 
@@ -2850,27 +2270,6 @@ facebook.resource = "/";
 7. **为什么说“看看很有趣”：**
 
    - Duff’s Device 被认为是 C 语言极具创造性的使用示例（虽然可读性并不高），演示了如何手工实现循环展开，节省跳转与计数器开销。现代大多数编译器都能自动优化类似循环，但手动写出这种方式仍让人感受到编程语言底层的妙用。
-
-------
-
-## 小结 / Summary
-
-1. **静态初始化（Static Initialization）**
-   - `struct hostname google = {"80", "www.google.com", "/"};` 用大括号一次性初始化结构体各字段。
-2. **`switch-case` 以及 “贯穿” 特性（Fall-Through）**
-   - 在 C 语言中，如果在每个 `case` 之后不写 `break;`，控制流会**贯穿**到下一个 `case`。
-   - 示例：当 `switch(2)` 时，从 `case 2:` 执行 `puts("2")`，再继续进入 `case 3:`，执行 `puts("3")`。
-3. **Duff’s Device：**
-   - 是一种结合 `switch` 和 `do-while` 的技巧，用以手动循环展开。
-   - 通过 `count % 8` 的余数决定第一次拷贝多少次，使得之后的每次循环都恰好拷贝 8 个元素，减少了分支与计数的开销。
-
-希望以上详尽的中英对照解释能帮助你理解图片中展示的 C 语言代码及其背后的原理。
-
-
-
-
-
-
 
 ![image-20250604161533095](READEME.assets/image-20250604161533095.png)
 
