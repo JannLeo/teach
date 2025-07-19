@@ -1,8 +1,8 @@
 /*****PLEASE ENTER YOUR DETAILS BELOW*****/
 --T2-rm-insert.sql
 
---Student ID:
---Student Name:
+--Student ID: 34550720
+--Student Name: Haouxan Zhang
 
 /* Comments for your marker:
 
@@ -379,6 +379,7 @@ INSERT INTO COMPETITOR (
     '0280456789' );
 
 COMMIT;
+
 -- =======================================
 -- ENTRY
 -- =======================================
@@ -1010,10 +1011,11 @@ INSERT INTO ENTRY(
     4 );
 
 COMMIT;
+
+
 -- =======================================
 -- TEAM
 -- =======================================
-
 INSERT INTO TEAM (
     team_id,
     team_name,

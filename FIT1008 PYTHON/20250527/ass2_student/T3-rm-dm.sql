@@ -1,8 +1,8 @@
 --****PLEASE ENTER YOUR DETAILS BELOW****
 --T3-rm-dm.sql
 
---Student ID: 
---Student Name:
+--Student ID: 34550720
+--Student Name: Haouxan Zhang
 
 /* Comments for your marker:
 
@@ -19,6 +19,7 @@ CREATE SEQUENCE competitor_seq START with 100 increment by 5;
 CREATE SEQUENCE team_seq START with 100 increment by 5;
 
 commit;
+
 --(b)
 --Keith Rose
 insert into COMPETITOR (
@@ -133,6 +134,7 @@ insert into ENTRY (
     team_seq.CURRVAL,
     (Select char_id from CHARITY where char_name = 'RSPCA')
 );
+
 --(c)
 update ENTRY
 set event_id = 
@@ -148,7 +150,7 @@ set event_id =
     and eventtype_code = (select eventtype_code from EVENTTYPE where LOWER(eventtype_desc) = '5 km run')
 ))
 , char_id = (Select char_id from CHARITY where char_name = 'Beyond Blue')
-where --comp_no = (select comp_no from COMPETITOR where comp_phone = '0422412524')
+where
 event_id = 
 (select event_id from EVENT
     where carn_date = (select carn_date from CARNIVAL where upper(carn_name) = 'RM WINTER SERIES CAULFIELD 2025')
@@ -156,6 +158,7 @@ event_id =
 and entry_no = 77;
 
 commit;
+
 --(d)
 update ENTRY
 set team_id = NULL
@@ -182,7 +185,6 @@ event_id =
 and entry_no = 99;
 commit;
 
-
 delete from TEAM
 where team_name = 'Super Runners'
 and carn_date = (select carn_date from CARNIVAL where UPPER(carn_name) = 'RM WINTER SERIES CAULFIELD 2025')
@@ -190,13 +192,10 @@ and event_id =
 (select event_id from EVENT
     where carn_date = (select carn_date from CARNIVAL where upper(carn_name) = 'RM WINTER SERIES CAULFIELD 2025')
     and eventtype_code = (select eventtype_code from EVENTTYPE where LOWER(eventtype_desc) = '10 km run'));
-
 commit;
 
-
-
 delete from ENTRY
-where --comp_no = (select comp_no from COMPETITOR where comp_phone = '0422141112')
+where
 event_id = 
 (select event_id from EVENT
     where carn_date = (select carn_date from CARNIVAL where upper(carn_name) = 'RM WINTER SERIES CAULFIELD 2025')

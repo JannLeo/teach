@@ -1,8 +1,8 @@
 /*****PLEASE ENTER YOUR DETAILS BELOW*****/
 --T1-rm-schema.sql
 
---Student ID:
---Student Name:
+--Student ID: 34550720
+--Student Name: Haouxan Zhang
 
 /* Comments for your marker:
 
@@ -71,6 +71,8 @@ ALTER TABLE COMPETITOR ADD CONSTRAINT competitor_nk_email UNIQUE (comp_email);
 
 ALTER TABLE COMPETITOR ADD CONSTRAINT competitor_nk_phone UNIQUE (comp_phone);
 
+COMMIT;
+
 --ENTRY
 CREATE TABLE ENTRY (
     event_id           NUMERIC(6) NOT NULL,
@@ -110,6 +112,8 @@ COMMENT ON COLUMN ENTRY.char_id IS
 
 ALTER TABLE ENTRY ADD CONSTRAINT entry_pk PRIMARY KEY (event_id, entry_no);
 
+COMMIT;
+
 --TEAM
 CREATE TABLE TEAM (
     team_id    NUMERIC(3) NOT NULL,
@@ -138,7 +142,10 @@ ALTER TABLE TEAM ADD CONSTRAINT team_pk PRIMARY KEY (team_id);
 
 ALTER TABLE TEAM ADD CONSTRAINT team_nk UNIQUE (team_name, carn_date);
 
+COMMIT;
+
 -- Add all missing FK Constraints below here
+
 ALTER TABLE ENTRY
     ADD CONSTRAINT entry_comp_fk FOREIGN KEY (comp_no)
         REFERENCES COMPETITOR (comp_no);

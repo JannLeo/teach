@@ -1,8 +1,8 @@
 --****PLEASE ENTER YOUR DETAILS BELOW****
 --T4-rm-mods.sql
 
---Student ID:
---Student Name:
+--Student ID: 34550720
+--Student Name: Haouxan Zhang
 
 /* Comments for your marker:
 
@@ -31,11 +31,9 @@ select comp_no,
        comp_fname || ' ' || comp_lname as full_name,
        comp_completed_events
 from COMPETITOR
-order by comp_no;
+order by comp_completed_events DESC;
 
 commit;
-
-
 
 --(b)
 DROP TABLE ENTRY_CHARITY CASCADE CONSTRAINTS PURGE;
@@ -69,7 +67,7 @@ ALTER TABLE ENTRY_CHARITY
     ADD CONSTRAINT entry_char_char_fk FOREIGN KEY (char_id)
         REFERENCES CHARITY (char_id);
 
-INSERT INTO ENTRY_CHARITY (
+insert into ENTRY_CHARITY (
     event_id,
     entry_no,
     char_id,
@@ -79,25 +77,25 @@ INSERT INTO ENTRY_CHARITY (
     where carn_date = (select carn_date from CARNIVAL where upper(carn_name) = 'RM WINTER SERIES CAULFIELD 2025')
     and eventtype_code = (select eventtype_code from EVENTTYPE where LOWER(eventtype_desc) = '5 km run')
 ),
-(SELECT e.entry_no 
-    FROM ENTRY e
-    JOIN COMPETITOR c 
-    ON e.comp_no = c.comp_no
-    JOIN EVENT ev 
-    ON e.event_id = ev.event_id
-    JOIN EVENTTYPE et
-    ON ev.eventtype_code = et.eventtype_code
-    JOIN CARNIVAL ca
-    ON ev.carn_date = ca.carn_date
-WHERE 
+(select e.entry_no 
+    from ENTRY e
+    join COMPETITOR c 
+    on e.comp_no = c.comp_no
+    join EVENT ev 
+    on e.event_id = ev.event_id
+    join EVENTTYPE et
+    on ev.eventtype_code = et.eventtype_code
+    join CARNIVAL ca
+    on ev.carn_date = ca.carn_date
+where 
     LOWER(c.comp_fname || ' ' || c.comp_lname) = 'jackson bull'
-    AND UPPER(ca.carn_name)             = 'RM WINTER SERIES CAULFIELD 2025'
-    AND LOWER(et.eventtype_desc)       = '5 km run'),
+    and UPPER(ca.carn_name)             = 'RM WINTER SERIES CAULFIELD 2025'
+    and LOWER(et.eventtype_desc)       = '5 km run'),
 (select char_id from CHARITY where char_name = 'RSPCA'),
 70
 );
 
-INSERT INTO ENTRY_CHARITY (
+insert into ENTRY_CHARITY (
     event_id,
     entry_no,
     char_id,
@@ -107,20 +105,20 @@ INSERT INTO ENTRY_CHARITY (
     where carn_date = (select carn_date from CARNIVAL where upper(carn_name) = 'RM WINTER SERIES CAULFIELD 2025')
     and eventtype_code = (select eventtype_code from EVENTTYPE where LOWER(eventtype_desc) = '5 km run')
 ),
-(SELECT e.entry_no 
-    FROM ENTRY e
-    JOIN COMPETITOR c 
-    ON e.comp_no = c.comp_no
-    JOIN EVENT ev 
-    ON e.event_id = ev.event_id
-    JOIN EVENTTYPE et
-    ON ev.eventtype_code = et.eventtype_code
-    JOIN CARNIVAL ca
-    ON ev.carn_date = ca.carn_date
-WHERE 
+(select e.entry_no 
+    from ENTRY e
+    join COMPETITOR c 
+    on e.comp_no = c.comp_no
+    join EVENT ev 
+    on e.event_id = ev.event_id
+    join EVENTTYPE et
+    on ev.eventtype_code = et.eventtype_code
+    join CARNIVAL ca
+    on ev.carn_date = ca.carn_date
+where 
     LOWER(c.comp_fname || ' ' || c.comp_lname) = 'jackson bull'
-    AND UPPER(ca.carn_name)             = 'RM WINTER SERIES CAULFIELD 2025'
-    AND LOWER(et.eventtype_desc)       = '5 km run'),
+    and UPPER(ca.carn_name)             = 'RM WINTER SERIES CAULFIELD 2025'
+    and LOWER(et.eventtype_desc)       = '5 km run'),
 (select char_id from CHARITY where char_name = 'Beyond Blue'),
 30
 );
@@ -128,9 +126,12 @@ WHERE
 
 DESC ENTRY_CHARITY;
 
-SELECT event_id,
+select event_id,
        entry_no,
        char_id,
        percentage
-FROM ENTRY_CHARITY
-ORDER BY event_id, entry_no, char_id;
+from ENTRY_CHARITY
+order by event_id, entry_no, char_id;
+
+commit;
+

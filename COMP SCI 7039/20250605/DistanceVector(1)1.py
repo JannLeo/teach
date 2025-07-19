@@ -5,7 +5,6 @@ class Router:
         self.name = name
         self.neighbors = {}  # 直接邻居及代价
         self.dist_table = {}  # 距离表：来源 -> 目的地 -> 距离
-        # 注意这里：三元组 (next_hop, cost, hop_count)
         self.routes = {}  # 路由表：目的地 -> (下一跳, 总代价)
 
     def initialize(self, all_nodes):
@@ -23,14 +22,12 @@ class Router:
             if dest in self.neighbors:
                 self.dist_table[self.name][dest] = self.neighbors[dest]
                 # 将路由表中的路由设置为邻居节点
-                # hop_count = 1
-                self.routes[dest] = (dest, self.neighbors[dest] , 1)
+                self.routes[dest] = (dest, self.neighbors[dest])
             else:
                 # 如果当前节点不是邻居节点，则将距离表中的距离设置为无穷大
                 self.dist_table[self.name][dest] = INF
                 # 将路由表中的路由设置为None
-                # hop_count = 0 表示尚未学到任何路由
-                self.routes[dest] = (None, INF , 0)
+                self.routes[dest] = (None, INF)
         # 遍历所有邻居节点
         for neighbor in self.neighbors:
             # 初始化邻居节点的距离表
@@ -44,12 +41,12 @@ class Router:
     def get_poisoned_vector(self, to_neighbor):
         # 获取被毒化的向量
         vector = {}
-        for dest, (nexthop, cost, hopc) in self.routes.items():
+        for dest, (nexthop, cost) in self.routes.items():
             # 遍历路由表中的每个目的地址
             if dest == to_neighbor:
                 # 如果目的地址等于传入的邻居地址，则将成本设置为传入的邻居地址
                 vector[dest] = cost
-            elif nexthop == to_neighbor and hopc > 1:
+            elif nexthop == to_neighbor:
                 vector[dest] = INF  # 毒化逆转处理
             else:
                 vector[dest] = cost
@@ -69,11 +66,10 @@ class Router:
         # 初始化updated为False
         updated = False
         # 遍历路由表中的每个目的地
-        for dest, (old_hop, old_cost, old_hops) in list(self.routes.items()):
+        for dest in self.routes:
             # 初始化最小成本和最小跳数为无穷大
             min_cost = INF
             min_hop = None
-            best_hops = 0
             # 遍历邻居节点，按名称排序
             for neighbor in sorted(self.neighbors):
                 # 获取到邻居节点的成本
@@ -81,26 +77,18 @@ class Router:
                 # 获取邻居节点到目的地的成本
                 if dest == neighbor:
                     cost_from_neighbor = 0
-                    hops = 1
                 else:
-                    _, c_via, h_via = self.network[neighbor].routes[dest]
                     neighbor_router = self.network[neighbor]
                     cost_from_neighbor = min(self.dist_table.get(neighbor, {}).get(dest, INF),neighbor_router.routes.get(dest, INF)[1])
-                    cost_from_neighbor = min(
-                        self.dist_table.get(neighbor, {}).get(dest, INF),
-                        c_via
-                    )
-                    hops = h_via + 1
                 # 计算总成本
                 total = cost_to_neighbor + cost_from_neighbor
                 # 如果总成本小于最小成本，或者总成本等于最小成本且邻居节点名称小于最小跳点名称，则更新最小成本和最小跳点
                 if total < min_cost or (total == min_cost and (min_hop is None or neighbor < min_hop)):
                     min_cost = total
                     min_hop = neighbor
-                    best_hops = hops
             # 如果最小跳点和最小成本与路由表中的跳点和成本不同，则更新路由表，并将updated设为True
-            if (min_hop, min_cost) != (old_hop, old_cost):
-                self.routes[dest] = (min_hop, min_cost, best_hops)
+            if (min_hop, min_cost) != self.routes[dest]:
+                self.routes[dest] = (min_hop, min_cost)
                 updated = True
         # 遍历路由表中的每个目的地
         for dest in self.routes:
@@ -186,7 +174,7 @@ def parse_input():
 def build_network(routers, links):
     # 创建一个字典，键为路由器名称，值为Router对象
     nodes = {name: Router(name) for name in routers}
-
+    
     # 把“整个网络（名字→Router实例）”存到每个 Router 里
     for r in nodes.values():
         r.network = nodes
