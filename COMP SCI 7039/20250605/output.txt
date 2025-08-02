@@ -1,3 +1,102 @@
+<<<<<<< Updated upstream
+=======
+Distance Table of router X at t=0:
+     Y    Z
+X    3    9
+Y    INF    INF
+Z    INF    INF
+
+Distance Table of router Y at t=0:
+     X    Z
+X    INF    INF
+Y    3    4
+Z    INF    INF
+
+Distance Table of router Z at t=0:
+     X    Y
+X    INF    INF
+Y    INF    INF
+Z    9    4
+
+[DEBUG] X 从 Z 接收到向量: {'X': 9, 'Y': 4}
+[DEBUG] X 从 Y 接收到向量: {'X': 3, 'Z': 4}
+[DEBUG] Y 从 X 接收到向量: {'Y': 3, 'Z': 9}
+[DEBUG] Y 从 Z 接收到向量: {'X': 9, 'Y': 4}
+[DEBUG] Z 从 X 接收到向量: {'Y': 3, 'Z': 9}
+[DEBUG] Z 从 Y 接收到向量: {'X': 3, 'Z': 4}
+[DEBUG] X 更新路由: Y 从 ('Y', 3) → (Z,13)
+[DEBUG] X 更新路由: Z 从 ('Z', 9) → (Y,7)
+[DEBUG] Y 更新路由: X 从 ('X', 3) → (Z,13)
+[DEBUG] Y 更新路由: Z 从 ('Z', 4) → (X,12)
+[DEBUG] Z 更新路由: X 从 ('X', 9) → (Y,7)
+[DEBUG] Z 更新路由: Y 从 ('Y', 4) → (X,12)
+Distance Table of router X at t=1:
+     Y    Z
+X    3    9
+Y    INF    4
+Z    4    INF
+
+Distance Table of router Y at t=1:
+     X    Z
+X    INF    9
+Y    3    4
+Z    9    INF
+
+Distance Table of router Z at t=1:
+     X    Y
+X    INF    3
+Y    3    INF
+Z    9    4
+
+[DEBUG] X 从 Z 接收到向量: {'X': 7, 'Y': 9999}
+[DEBUG] X 从 Y 接收到向量: {'X': 13, 'Z': 9999}
+[DEBUG] Y 从 X 接收到向量: {'Y': 13, 'Z': 9999}
+[DEBUG] Y 从 Z 接收到向量: {'X': 9999, 'Y': 12}
+[DEBUG] Z 从 X 接收到向量: {'Y': 9999, 'Z': 7}
+[DEBUG] Z 从 Y 接收到向量: {'X': 9999, 'Z': 12}
+[DEBUG] X 更新路由: Y 从 ('Z', 13) → (None,9999)
+[DEBUG] X 更新路由: Z 从 ('Y', 7) → (None,9999)
+[DEBUG] Y 更新路由: X 从 ('Z', 13) → (None,9999)
+[DEBUG] Y 更新路由: Z 从 ('X', 12) → (None,9999)
+[DEBUG] Z 更新路由: X 从 ('Y', 7) → (None,9999)
+[DEBUG] Z 更新路由: Y 从 ('X', 12) → (None,9999)
+Distance Table of router X at t=2:
+     Y    Z
+X    3    9
+Y    INF    INF
+Z    INF    INF
+
+Distance Table of router Y at t=2:
+     X    Z
+X    INF    INF
+Y    3    4
+Z    INF    INF
+
+Distance Table of router Z at t=2:
+     X    Y
+X    INF    INF
+Y    INF    INF
+Z    9    4
+
+[DEBUG] X 从 Z 接收到向量: {'X': 9999, 'Y': 9999}
+[DEBUG] X 从 Y 接收到向量: {'X': 9999, 'Z': 9999}
+[DEBUG] Y 从 X 接收到向量: {'Y': 9999, 'Z': 9999}
+[DEBUG] Y 从 Z 接收到向量: {'X': 9999, 'Y': 9999}
+[DEBUG] Z 从 X 接收到向量: {'Y': 9999, 'Z': 9999}
+[DEBUG] Z 从 Y 接收到向量: {'X': 9999, 'Z': 9999}
+Routing Table of router X:
+Y,None,INF
+Z,None,INF
+
+Routing Table of router Y:
+X,None,INF
+Z,None,INF
+
+Routing Table of router Z:
+X,None,INF
+Y,None,INF
+
+>>>>>>> Stashed changes
 Distance Table of router X at t=0:
      Y    Z
 Y    3    INF
@@ -51,6 +150,7 @@ X    3    INF
 
 Distance Table of router Z at t=2:
      X    Y
+<<<<<<< Updated upstream
 X    1    INF
 
 Distance Table of router X at t=3:
@@ -77,3 +177,18 @@ Z,X,4
 Routing Table of router Z:
 X,X,1
 Y,X,4
+=======
+X    INF    INF
+[DEBUG] Z 从 X 接收到向量: {'Y': 9999, 'Z': 9999}
+Routing Table of router X:
+Y,None,INF
+Z,None,INF
+
+Routing Table of router Y:
+X,None,INF
+Z,None,INF
+
+Routing Table of router Z:
+X,None,INF
+Y,None,INF
+>>>>>>> Stashed changes

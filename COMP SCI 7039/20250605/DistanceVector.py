@@ -3,6 +3,8 @@ import sys
 INF = 9999  # "Infinity" for unreachable routes
 
 DEBUG = True  # Set to False to disable debug prints
+# 初始化时间t为0
+t = 0
 # 定义一个debug函数，用于打印调试信息
 def debug(msg):
     # 如果DEBUG为True，则打印调试信息
@@ -102,7 +104,7 @@ class Router:
     def print_distance_table(self, t, all_nodes):
         # 打印距离表
         dests = sorted(n for n in all_nodes if n != self.name)  # 对所有节点进行排序，除了自己
-        neighbors = sorted(self.dist_table.keys())  # 对邻居节点进行排序
+        neighbors = sorted(n for n in self.dist_table.keys() if n != self.name)  # 对邻居节点进行排序
         print(f"Distance Table of router {self.name} at t={t}:")  # 打印距离表标题
         print("     " + "    ".join(dests))  # 打印目标节点
         for n in neighbors:  # 遍历邻居节点
@@ -170,8 +172,7 @@ def build_network(routers, links):
     return nodes
 
 def simulate_dv(nodes):
-    # 初始化时间t为0
-    t = 0
+    global t
     # 无限循环，直到网络稳定
     while True:
         # 对每个节点按照名称排序
@@ -221,8 +222,10 @@ def apply_updates(nodes, updates):
 if __name__ == '__main__':
     routers, links, updates = parse_input()
     net = build_network(routers, links)
+    
     simulate_dv(net)
     if updates:
         apply_updates(net, updates)
+        t += 1
         simulate_dv(net)
 
