@@ -901,7 +901,93 @@ int main() {
 
 ![image-20250801131600036](reademe.assets/image-20250801131600036.png)
 
-很好！这页内容分为两部分：
+当然可以，下面是对你给出的两句话的详细解释，并提供**逐句中英互译**、术语说明及背景补充，帮助你彻底理解：
+
+------
+
+### 🟠 第一句
+
+**英文原文：**
+
+> 5. The executed process runs as the same PID and has the same parent and process group as the previous process.
+
+**中文翻译：**
+
+> 5. 被执行的进程具有与原进程相同的 PID（进程ID）、相同的父进程和相同的进程组。
+
+------
+
+#### ✅ 详细解释：
+
+这句话描述的是 **`exec` 系列函数（如 `execl`、`execv`）调用后的行为**：
+
+- 在 Unix/Linux 中，调用 `exec()` 并不会创建新进程。
+- 它只是 **用新的程序“替换”当前进程的内容**。
+- 所以：
+
+| 特性                    | 保持不变 | 说明             |
+| ----------------------- | -------- | ---------------- |
+| PID（进程号）           | 是       | 没有创建新进程   |
+| Parent（父进程）        | 是       | 还是原来的父进程 |
+| Process Group（进程组） | 是       | 所属进程组不变   |
+
+##### 举个例子：
+
+```c
+int main() {
+    printf("PID before exec: %d\n", getpid());
+    execl("/bin/ls", "ls", NULL);
+    // 如果 exec 成功，这之后的语句不会再执行
+}
+```
+
+运行前后，`ls` 命令进程用 **当前进程替代自己**，所以 PID 和父进程保持不变。
+
+------
+
+### 🟢 第二句
+
+**英文原文：**
+
+> 6. The executed process is run on the same user and group with the same working directory.
+
+**中文翻译：**
+
+> 6. 被执行的进程在相同的用户与用户组权限下运行，且工作目录也保持不变。
+
+------
+
+#### ✅ 详细解释：
+
+继续讲 `exec()` 特性——虽然程序内容被换掉了，但运行环境中的 **部分信息仍然保持不变**，包括：
+
+| 属性          | 保持不变 | 说明                                |
+| ------------- | -------- | ----------------------------------- |
+| 用户（UID）   | 是       | 仍然是原来的用户身份                |
+| 用户组（GID） | 是       | 所属的组也不变                      |
+| 工作目录      | 是       | `getcwd()` 得到的当前目录还是原来的 |
+
+##### 这意味着：
+
+- 执行权限、访问文件权限仍由原来的用户决定；
+- 如果原进程在 `/home/user/` 目录中执行，那么新程序也在这个目录下运行；
+- 如果新程序依赖某个路径或配置文件，它仍然可以正常访问。
+
+------
+
+### 🔍 总结对比（中英表格）
+
+| 英文内容               | 中文解释           | 说明                   |
+| ---------------------- | ------------------ | ---------------------- |
+| Same PID               | 相同的进程号       | 表明不是新创建的进程   |
+| Same parent            | 相同的父进程       | 不会重新建立父子关系   |
+| Same process group     | 相同的进程组       | 控制终端等逻辑保持一致 |
+| Same user & group      | 相同的用户与用户组 | 权限不发生改变         |
+| Same working directory | 相同的工作目录     | 当前路径不变           |
+
+------
+
+如果你需要，我也可以帮你画一张流程图来直观展示 `exec()` 之后哪些会保留、哪些会被替换。是否需要？
 
 ------
 
@@ -1188,20 +1274,20 @@ setenv("HOME", "/home/user", 1); // 设置 HOME 变量，1 表示强制覆盖
 
 ### 📌 指导性问题翻译如下：
 
-| 英文                                                         | 中文翻译                                                 |
-| ------------------------------------------------------------ | -------------------------------------------------------- |
-| What is one reason fork may fail?                            | `fork()` 可能失败的原因有哪些？                          |
-| Does fork copy all pages to the child?                       | `fork()` 是否复制所有内存页？（涉及写时复制）            |
-| Are file descriptors cloned between parent and child?        | 父子进程会共享文件描述符吗？                             |
-| Are file descriptions cloned?                                | 文件“描述符”和“描述项”有何区别？是否共享？               |
-| What is the difference between exec calls ending in an `l` and `v`? | `exec` 中 `l` 和 `v` 的区别是什么？（参数传递方式）      |
-| Difference between `exec` with `e` and `without e`?          | `execle()` 与 `execl()` 区别是什么？（环境变量是否传递） |
-| When does `exec` error? What happens?                        | `exec` 失败会发生什么？                                  |
-| Does `wait` only notify if a child has exited?               | `wait()` 是否只在子进程退出时返回？                      |
-| Is it an error to pass a negative value into `wait`?         | 给 `wait()` 传负值会怎样？                               |
-| How does one extract information out of the status?          | 如何从 `wait()` 的 `status` 中获取退出码？               |
-| Why may `wait` fail?                                         | `wait()` 可能失败的原因有哪些？                          |
-| What happens when a parent doesn't wait?                     | 父进程如果不 `wait()`，子进程会变成什么？（僵尸进程）    |
+| 英文                                                         | 中文翻译                                                 | 答案                                                         |
+| ------------------------------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------ |
+| What is one reason fork may fail?                            | `fork()` 可能失败的原因有哪些？                          | 系统资源不足（如内存耗尽或达到最大进程数限制 `ulimit -u`）。 |
+| Does fork copy all pages to the child?                       | `fork()` 是否复制所有内存页？（涉及写时复制）            | 不会。现代操作系统使用 **写时复制（Copy-On-Write）** 技术，仅在写入时才复制页。 |
+| Are file descriptors cloned between parent and child?        | 父子进程会共享文件描述符吗？                             | 会复制文件描述符表（整数句柄相同），指向相同的文件描述项（file description）。所以两个进程**共享文件偏移量和文件状态标志**。 |
+| Are file descriptions cloned?                                | 文件“描述符”和“描述项”有何区别？是否共享？               | 共享。**文件描述符（fd）** 是整数，而 **文件描述项（file description）** 是内核结构体（如 `struct file`）。fork 后父子进程的 fd 指向同一个文件描述项。 |
+| What is the difference between exec calls ending in an `l` and `v`? | `exec` 中 `l` 和 `v` 的区别是什么？（参数传递方式）      | `l`（list）系列以参数列表形式传参，`v`（vector）系列以参数数组形式传参。例如 `execl(path, "arg1", "arg2", NULL)` vs `execv(path, argv)`。 |
+| Difference between `exec` with `e` and `without e`?          | `execle()` 与 `execl()` 区别是什么？（环境变量是否传递） | `e` 代表 environment：`execle()` 可以显式传入环境变量数组，`execl()` 使用当前进程的环境变量。 |
+| When does `exec` error? What happens?                        | `exec` 失败会发生什么？                                  | 当目标文件不存在、无执行权限或参数非法时会失败，返回 `-1`，`errno` 会被设置，原程序继续执行。 |
+| Does `wait` only notify if a child has exited?               | `wait()` 是否只在子进程退出时返回？                      | 是。`wait()` 和 `waitpid()` 只会在**子进程终止（exit）或收到信号终止**时返回。 |
+| Is it an error to pass a negative value into `wait`?         | 给 `wait()` 传负值会怎样？                               | `wait()` 不接受参数；但 `waitpid()` 接受负值，代表等待属于该进程组的任一子进程，并不是错误。 |
+| How does one extract information out of the status?          | 如何从 `wait()` 的 `status` 中获取退出码？               | 使用宏：`WIFEXITED(status)` 判断是否正常退出，`WEXITSTATUS(status)` 获取退出码。 |
+| Why may `wait` fail?                                         | `wait()` 可能失败的原因有哪些？                          | 主要是：没有可等待的子进程（`ECHILD`），或调用被信号中断（`EINTR`）。 |
+| What happens when a parent doesn't wait?                     | 父进程如果不 `wait()`，子进程会变成什么？（僵尸进程）    | 子进程终止后会成为 **僵尸进程**（Zombie），直到父进程调用 `wait()` 获取其退出状态。若父进程提前退出，子进程将被 `init`（PID 1）接管。 |
 
 最后是三大关键词回顾：
 
