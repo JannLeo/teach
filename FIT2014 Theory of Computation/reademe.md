@@ -56,9 +56,15 @@
 
 ![image-20250814184308523](reademe.assets/image-20250814184308523.png)
 
+^(\s *[0-9]+\s *) * \s *: \s * [0-9]+\s*$
 
+![image-20250815153252384](./reademe.assets/image-20250815153252384.png)
 
+![](./reademe.assets/image-20250815153055736.png)
 
+![image-20250815150745578](./reademe.assets/image-20250815150745578.png)
+
+![image-20250815150756021](./reademe.assets/image-20250815150756021.png)
 
 ![image-20250814184324298](reademe.assets/image-20250814184324298.png)
 
