@@ -1,0 +1,124 @@
+.\" $OpenBSD$
+.\"
+.\" Copyright (c) 2023 David Gwynne <dlg@uq.edu.au>
+.\" Copyright (c) 2025 Yufeng Gao (yufeng.gao@uq.edu.au)
+.\"
+.\" Permission to use, copy, modify, and distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.Dd $Mdocdate: July 17 2025 $
+.Dt ZONE 8
+.Os
+.Sh NAME
+.Nm zone
+.Nd control process zone subsystem
+.Sh SYNOPSIS
+.Nm zone
+.Cm create
+.Ar zonename
+.Nm zone
+.Cm destroy
+.Ar zonename
+.Nm zone
+.Cm exec
+.Ar zonename
+.Ar command ...
+.Nm zone
+.Cm id
+.Op Ar zonename
+.Nm zone
+.Cm list
+.Nm zone
+.Cm chown
+.Ar zonename
+.Ar user
+.Nm zone
+.Cm chgrp
+.Ar zonename
+.Ar group
+.Sh DESCRIPTION
+The
+.Nm
+program controls the zone subsystem in the kernel.
+.Pp
+The program provides the following subcommands:
+.Bl -tag -width xxxxxx
+.It Xo
+.Nm
+.Cm create
+.Ar zonename
+.Xc
+Create a zone with the specified name.
+.It Xo
+.Nm
+.Cm destroy
+.Ar zonename
+.Xc
+Attempt to destroy the zone with the specified name.
+The zone cannot be destroyed while processes are still running in it.
+A zone may only be destroyed by a process running in the global zone.
+.It Xo
+.Nm
+.Cm exec
+.Ar zonename
+.Ar command ...
+.Xc
+Run a command inside the specified zone.
+.It Xo
+.Nm
+.Cm id
+.Op Ar zonename
+.Xc
+Print the zone identifier for the specified zone.
+If a zone name is not specified then the identifier for the current
+zone is printed.
+.It Xo
+.Nm
+.Cm list
+.Xc
+Print a list of the zone identifiers and names.
+.It Xo
+.Nm
+.Cm chown
+.Ar zonename
+.Ar user
+.Xc
+Change the ownership of the specified zone. The
+.Ar zonename
+argument is first interpreted as a name, and if not found,
+is then interpreted as a numeric zone identifier. The
+.Ar owner
+argument can either be a string or a numerical identifier.
+.It Xo
+.Nm
+.Cm chgrp
+.Ar zonename
+.Ar group
+.Xc
+Change the group of the specified zone. The
+.Ar zonename
+argument is first interpreted as a name, and if not found,
+is then interpreted as a numeric zone identifier. The
+.Ar group
+argument can either be a string or a numerical identifier.
+.El
+.Sh SEE ALSO
+.Xr pkill 1 ,
+.Xr ps 1
+.Sh HISTORY
+The
+.Nm
+program keeps getting hacked up for use in COMP3301 assignments.
+.Sh AUTHORS
+.An David Gwynne Aq Mt dlg@uq.edu.au
+.An Lachlan Tinsley Aq Mt l.tinsley@uq.edu.au
+.An Yufeng Gao Aq Mt yufeng.gao@uq.edu.au
