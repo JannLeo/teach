@@ -7,7 +7,10 @@ import edu.monash.fit2099.demo.mars.items.MartianItem;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
-
+/**
+ * Crater类表示火星地图中的陨石坑地形
+ * 这是一种特殊的地面类型，具有年龄增长机制和对进入角色的特殊影响
+ */
 public class Crater extends Ground {
 
     private int age;
@@ -34,6 +37,7 @@ public class Crater extends Ground {
         if (location.containsAnActor()) {
             Flammable flammable = location.getActorAs(Flammable.class);
             if(flammable != null){
+                // 如果角色可以燃烧，则为其添加Burning状态
                 location.getActor().addStatus(new Burning(flammable));
             }
         }

@@ -758,7 +758,124 @@ class Deer extends Animal implements Collector {
 > - 游戏层只**扩展**这些抽象（新建 `Player/Earth/Snow/BareFist` 等），不去改引擎。
 > - 入口 `Application` 把地图+角色组起来跑。
 
+# FIT2099 引擎中三个 Demo 的区别与实现难度（Markdown 版）
 
+## 概述
+
+`src/edu/monash/fit2099/demo` 下有三个演示项目：
+
+- `conwayslife`
+- `forest`
+- `mars`
+
+它们从简单到复杂，展示了 FIT2099 引擎的不同功能与用法。
+
+------
+
+## 1) `conwayslife`（康威生命游戏）
+
+**核心功能与特点**
+
+- 模拟康威生命游戏（细胞自动机）。
+- 自定义地图逻辑：`ConwayGameMap` / `ConwayLocation` 实现特殊规则。
+- 有限回合：重写 `World.stillRunning()` 与 `gameLoop()`，限制 50 回合。
+- 细胞状态：`Alive` / `Dead`。
+- 预置地图图案（如滑翔机等）。
+- 交互：玩家可用 `SleepAction` 推进回合。
+
+**关键代码示例（`ConwaysWorld.java`）**
+
+```java
+@Override
+protected final boolean stillRunning() {
+    return (numTurn != 0);
+}
+
+@Override
+protected void gameLoop() throws GameEngineException {
+    display.println("Turn's left: " + numTurn);
+    super.gameLoop();
+    numTurn--;
+}
+```
+
+**实现难度**：**中等**
+ 主要难点是规则演算与自定义地图/格子行为。
+
+------
+
+## 2) `forest`（森林）
+
+**核心功能与特点**
+
+- 简单 RPG 演示，展示基础引擎用法。
+- 战斗系统：玩家具备 `BareFist` 内置武器。
+- 敌人 AI：`HuntsmanSpider` 使用 `WanderBehaviour` 随机游走。
+- 能力系统：开启 `Abilities.CAN_ATTACK`。
+- 地图：5×5，全 `Dirt` 地形。
+
+**关键代码示例**
+
+```java
+// Player.java
+public Player(String name, char displayChar, int hitPoints) {
+    super(name, displayChar, hitPoints);
+    this.enableAbility(Abilities.CAN_ATTACK);
+    this.setIntrinsicWeapon(new BareFist());
+}
+// HuntsmanSpider.java
+public HuntsmanSpider() {
+    super("Huntsman Spider", '8', 1);
+    this.behaviours.put(999, new WanderBehaviour());
+}
+```
+
+**实现难度**：**较低**
+ 最适合入门理解 Actor/Action/Map 基本循环。
+
+------
+
+## 3) `mars`（火星）
+
+**核心功能与特点**
+
+- 更完整的 RPG 示例，系统更丰富。
+- 模块化结构：`actors/behaviours/grounds/items/...`
+- 多样地形：`Floor`、`Wall`、`LockedDoor`、`Crater` 等。
+- 物品系统：`Rocket`、`SpaceSuit`、`Stick` 等及其交互。
+- 高级行为：`FollowBehaviour`、`SpitBehaviour` 等。
+- 能力/接口：玩家实现 `Flammable`，可被“燃烧”伤害。
+- 支持多地图（从 `Application` 构图可见）。
+
+**关键代码示例（`actors/Player.java`）**
+
+```java
+public final class Player extends Actor implements Flammable {
+    @Override
+    public void burn(int damage) {
+        this.hurt(damage);
+    }
+}
+```
+
+**实现难度**：**较高**
+ 体现高级模块化设计与更丰富的交互，需要更深入掌握引擎抽象。
+
+------
+
+## 难度对比（由低到高）
+
+1. **forest（森林）**
+2. **conwayslife（康威生命游戏）**
+3. **mars（火星）**
+
+------
+
+## 总结
+
+- `forest`：入门范例，快速理解引擎基本架构与战斗循环。
+- `conwayslife`：规则驱动型示例，练习自定义地图/格子与回合控制。
+- `mars`：完整小型游戏模板，涵盖多子系统与高级行为，适合参考大型作业的结构化实现。
 
 # FIT2099项目src目录文件介绍
 
