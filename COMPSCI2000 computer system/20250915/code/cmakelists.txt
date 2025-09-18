@@ -1,0 +1,18 @@
+    # 指定 CMake 最低版本要求
+    cmake_minimum_required(VERSION 3.10)
+
+    # 定义项目名称
+    project(MyComputerSystemProject)
+
+    # 设置 C++ 标准
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+    # 查找当前目录下的所有源文件，并将它们存入 SOURCES 变量中
+    # 这个命令会自动找到 main.cpp, QuickSort.cpp, RecutsiveBinarySearch.cpp 等
+    file(GLOB_RECURSE SOURCES *.cpp)
+
+    # 创建一个可执行文件
+    # 第一个参数是生成的exe文件名，第二个参数是源文件列表
+    add_executable(main ${SOURCES})
+    

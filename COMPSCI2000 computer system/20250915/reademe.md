@@ -2,7 +2,7 @@
 
 ![image-20250915104049461](reademe.assets/image-20250915104049461.png)
 
-![image-20250915104156262](reademe.assets/image-20250915104156262.png)
+![ ](reademe.assets/image-20250915104156262.png)
 
 
 
@@ -18,7 +18,7 @@
 
 ![image-20250915104352014](reademe.assets/image-20250915104352014.png)
 
-
+![image-20250915151143440](reademe.assets/image-20250915151143440.png)
 
 ![image-20250915104403679](reademe.assets/image-20250915104403679.png)
 
@@ -211,6 +211,84 @@ int main() {
 
 这页是在说明一次“**查找与排序**（Practical 5）”的小作业，要求你在 C++ 里完成三个核心东西：
 
+> 快排（QuickSort）的基本思想是通过**分治法**（Divide and Conquer）对一个大数组进行排序，具体流程如下：
+>
+> 1. **选择枢轴**：从数组中选择一个元素作为枢轴（pivot），一般选择数组中的某个元素（比如第一个元素、最后一个元素、随机选一个元素等）。
+> 2. **分割**：将数组中的元素分为两部分，左侧部分的元素都小于枢轴，右侧部分的元素都大于枢轴。枢轴元素放在正确的位置。
+> 3. **递归排序**：递归地对左部分和右部分进行排序，直到子数组的大小为 1 或 0（这时数组已排序）。
+>
+> ### 快排的核心步骤（分治法的实现）：
+>
+> 1. **分割（partition）过程**：
+>    - 假设数组是 `a[lo...hi]`，选择枢轴元素，通常是数组的最后一个元素 `a[hi]`。
+>    - 在 `partition` 过程中，我们从数组的左端开始，遍历每个元素并与枢轴进行比较。小于枢轴的元素移到左边，大于枢轴的元素留在右边，最后将枢轴放到正确的位置（即左边所有元素小于枢轴，右边所有元素大于枢轴）。
+>    - 最终返回枢轴元素的索引 `p`，这样我们可以知道枢轴元素的最终位置，左边的部分已经排好序，右边的部分也需要排序。
+> 2. **递归（recursion）过程**：
+>    - 对枢轴元素左侧的部分（`a[lo...p-1]`）递归排序。
+>    - 对枢轴元素右侧的部分（`a[p+1...hi]`）递归排序。
+>
+> ### 快排的伪代码：
+>
+> ```cpp
+> function quicksort(a, lo, hi) {
+>     if (lo >= hi) return;  // 如果区间只有一个元素或为空，返回
+>     pivotIndex = partition(a, lo, hi);  // 划分数组，返回枢轴元素的最终位置
+>     quicksort(a, lo, pivotIndex - 1);  // 对左侧子数组递归排序
+>     quicksort(a, pivotIndex + 1, hi);  // 对右侧子数组递归排序
+> }
+> 
+> function partition(a, lo, hi) {
+>     pivot = a[hi];  // 选择最后一个元素作为枢轴
+>     i = lo;  // i 用于标记小于 pivot 的元素的边界
+>     for (j = lo; j < hi; j++) {
+>         if (a[j] < pivot) {
+>             swap(a[i], a[j]);  // 如果 a[j] 小于 pivot，交换 a[i] 和 a[j]
+>             i++;
+>         }
+>     }
+>     swap(a[i], a[hi]);  // 将枢轴元素放到正确的位置
+>     return i;  // 返回枢轴元素的索引
+> }
+> ```
+>
+> ### 详细的流程：
+>
+> 1. **选择枢轴**：我们可以选择 `a[hi]` 作为枢轴，即数组的最后一个元素。
+> 2. **划分过程**：
+>    - 从左到右遍历数组，每次遇到比枢轴小的元素，就把它交换到数组的左边。
+>    - 最后，把枢轴元素与当前左边最大元素的位置交换，这样枢轴元素就被放到了正确的位置。
+> 3. **递归**：
+>    - 对枢轴左边（`a[lo...p-1]`）和右边（`a[p+1...hi]`）的子数组分别递归排序。
+>
+> ### 快排的实现步骤：
+>
+> 1. **选择枢轴**：首先确定一个枢轴元素，常见的做法有：
+>    - 选择数组的第一个元素；
+>    - 选择数组的最后一个元素；
+>    - 选择中间元素；
+>    - 随机选择一个元素。
+> 2. **分割数组**：通过一次扫描数组，将所有小于枢轴的元素放到左侧，所有大于枢轴的元素放到右侧，最后将枢轴放到正确的位置。
+> 3. **递归排序**：递归地对左侧和右侧的子数组执行相同的操作。
+>
+> ### 时间复杂度分析：
+>
+> - **平均时间复杂度**：`O(n log n)`。在大多数情况下，快排的时间复杂度是对数级别的。
+> - **最坏时间复杂度**：`O(n^2)`。在最坏情况下（例如，数组已经是排序的或者是反向排序的），每次选择的枢轴都是最小或最大元素，导致递归的深度达到 `n`，因此时间复杂度是 `O(n^2)`。
+> - **空间复杂度**：`O(log n)`。由于递归栈的深度为 `log n`，因此空间复杂度是对数级别的。
+>
+> ### 优缺点：
+>
+> - **优点**：
+>   - 快排的平均性能非常好，排序速度很快。
+>   - 排序过程中不需要额外的空间（除了递归栈）。
+> - **缺点**：
+>   - 最坏情况下时间复杂度为 `O(n^2)`，但可以通过优化枢轴选择方法来减少这种情况的发生。
+>   - 算法不稳定，即相等的元素的相对顺序可能会改变。
+>
+> ### 代码解释：
+>
+> 代码中，`quicksortRec` 和 `partition` 是实现快排的核心。`quicksortRec` 通过递归方式对数组进行分治排序，而 `partition` 负责在每次递归时分割数组并返回枢轴的正确位置。通过这种方式，快排可以在大多数情况下高效地进行排序。
+
 # 你要做什么
 
 1. **冒泡排序**
@@ -284,91 +362,114 @@ struct BubbleSort : Sort {
     }
 };
 // QuickSort.cpp
+// 引入 Sort 基类的头文件
 #include "Sort.h"
+// 引入标准库：vector、stack 和算法
 #include <vector>
 #include <stack>
 #include <utility>
 #include <algorithm>
 
+// 定义 QuickSort 类，继承自 Sort
 struct QuickSort : Sort {
+    // 重写 sort 函数，采用 QuickSort 算法进行排序
     void sort(std::vector<int>& a) override {
-        if (a.size() < 2) return;
-        quicksortRec(a, 0, (int)a.size()-1);
-        // 若要做“非递归版”，把上一行换成 quicksortIter(a);
+        if (a.size() < 2) return;  // 如果数组大小小于 2，直接返回，因为已经有序
+        quicksortRec(a, 0, (int)a.size() - 1);  // 调用递归的 quicksort 辅助函数
+        // 如果需要使用非递归版，只需替换为 quicksortIter(a);
     }
 
 private:
+    // 辅助函数：选择段 (lo, hi) 内的枢轴元素的索引
     static int pivotIndexForSegment(int lo, int hi) {
-        int len = hi - lo + 1;
-        return (len >= 3) ? (lo + 2) : (lo + len - 1); // 长度<3时取末元素
+        int len = hi - lo + 1;  // 计算区间的长度
+        return (len >= 3) ? (lo + 2) : (lo + len - 1); // 如果长度 >= 3，选择中间元素，否则选择最后一个元素
     }
 
+    // 对数组进行划分
     static int partition(std::vector<int>& a, int lo, int hi) {
-        int pidx = std::min(pivotIndexForSegment(lo, hi), hi);
-        int pivot = a[pidx];
-        std::swap(a[pidx], a[hi]);                // Lomuto: 把主元放到末尾
-        int i = lo;
+        int pidx = std::min(pivotIndexForSegment(lo, hi), hi);  // 获取枢轴索引，确保不超出范围
+        int pivot = a[pidx];  // 获取枢轴元素
+        std::swap(a[pidx], a[hi]);  // 将枢轴移到数组末尾
+        int i = lo;  // 初始化划分的左边界
+        // 遍历数组，将小于枢轴的元素交换到左边
         for (int j = lo; j < hi; ++j) {
-            if (a[j] < pivot) std::swap(a[i++], a[j]);
+            if (a[j] < pivot) std::swap(a[i++], a[j]);  // 如果当前元素小于枢轴，交换到 i 位置
         }
-        std::swap(a[i], a[hi]);
-        return i;                                  // 返回主元最终位置
+        std::swap(a[i], a[hi]);  // 将枢轴元素放到正确的位置
+        return i;  // 返回枢轴最终位置
     }
 
+    // 递归实现的 quicksort 排序
     static void quicksortRec(std::vector<int>& a, int lo, int hi) {
-        if (lo >= hi) return;
-        int p = partition(a, lo, hi);
-        quicksortRec(a, lo, p-1);
-        quicksortRec(a, p+1, hi);
+        if (lo >= hi) return;  // 递归的终止条件：当区间为空或只包含一个元素时，返回
+        int p = partition(a, lo, hi);  // 划分数组，获取枢轴的索引
+        quicksortRec(a, lo, p - 1);  // 对左侧区间递归排序
+        quicksortRec(a, p + 1, hi);  // 对右侧区间递归排序
     }
 
-    // —— 可选挑战：非递归 quicksort ——
+    // 可选挑战：使用栈实现的非递归版 quicksort
     static void quicksortIter(std::vector<int>& a) {
-        std::stack<std::pair<int,int>> st;
-        st.push({0, (int)a.size()-1});
-        while (!st.empty()) {
-            auto [lo, hi] = st.top(); st.pop();
-            if (lo >= hi) continue;
-            int p = partition(a, lo, hi);
-            // 先压更长的区间，平均可降低栈深
-            if (p-1 - lo > hi - (p+1)) {
-                st.push({lo, p-1});
-                st.push({p+1, hi});
+        std::stack<std::pair<int, int>> st;  // 使用栈保存待排序的区间 (lo, hi)
+        st.push({0, (int)a.size() - 1});  // 将初始区间 (0, n-1) 入栈
+        while (!st.empty()) {  // 当栈不为空时继续处理
+            auto [lo, hi] = st.top(); st.pop();  // 从栈中弹出一个区间
+            if (lo >= hi) continue;  // 如果区间为空或只有一个元素，跳过
+            int p = partition(a, lo, hi);  // 划分数组并获取枢轴位置
+            // 将左右两个子区间压入栈中，优先处理较大的区间
+            if (p - 1 - lo > hi - (p + 1)) {
+                st.push({lo, p - 1});
+                st.push({p + 1, hi});
             } else {
-                st.push({p+1, hi});
-                st.push({lo, p-1});
+                st.push({p + 1, hi});
+                st.push({lo, p - 1});
             }
         }
     }
 };
-// RecursiveBinarySearch.cpp
-#include <vector>
 
-struct RecursiveBinarySearch {
-    // 题面要求的对外接口
-    bool search(std::vector<int> a, int target) {
-        if (a.empty()) return false;
-        return search(a, target, 0, (int)a.size()-1) != -1;
-    }
-
-private:
-    static int search(const std::vector<int>& a, int x, int lo, int hi) {
-        if (lo > hi) return -1;
-        int mid = lo + (hi - lo) / 2;
-        if (a[mid] == x) return mid;
-        if (x < a[mid]) return search(a, x, lo, mid - 1);
-        else            return search(a, x, mid + 1, hi);
-    }
-};
 ```
 
-> 提示
+> ### 关键步骤解析：
 >
-> - 类名、函数名、签名要和题面**一模一样**（大小写也要一致），否则评测脚本可能找不到。
-> - 快排的 `partition` 一定要**严格按“第 3 个元素作 pivot”** 的规则选主元（子数组长度不够 3 时按上面代码处理即可）。
-> - 二分查找的输入**必须是已排序数组**；可以先用你的 `BubbleSort`/`QuickSort` 排好再查。
-
-如果你把这些 `.cpp/.h` 放在同一目录下，直接执行题面那条 `g++` 命令应该能编译通过。需要我把它们拆成具体文件结构，或加一个简单的 `main.cpp` 演示用例吗？
+> 1. **栈的使用**：
+>    - 用一个栈 `st` 来模拟递归的过程。栈中的元素是区间 `(lo, hi)`，表示待排序的数组部分。
+>    - 初始时，将整个数组的区间 `(0, n-1)` 压入栈中。
+> 2. **栈操作**：
+>    - 每次从栈中弹出一个区间 `(lo, hi)`，即选取一个需要排序的数组段。
+>    - 如果该区间的大小小于等于 1（即 `lo >= hi`），说明不需要排序，跳过该区间。
+>    - 如果需要排序，则执行 `partition` 操作，返回枢轴元素 `p` 的最终位置。
+> 3. **划分过程**：
+>    - `partition(a, lo, hi)` 对数组进行划分，将元素小于枢轴的部分放在左边，大于枢轴的部分放在右边，最终返回枢轴的位置 `p`。
+>    - **划分过程**是快速排序的核心，它将问题拆分为两个子问题，分别对左右两部分排序。
+> 4. **将子区间压入栈中**：
+>    - **优先处理较大的区间**：为了优化栈的使用，减少栈的深度。我们希望较大的区间先被处理，这样栈的深度不会过大。
+>    - `if (p - 1 - lo > hi - (p + 1))` 判断左侧子区间是否大于右侧子区间。如果是，则将左侧子区间 `{lo, p-1}` 和右侧子区间 `{p+1, hi}` 分别压入栈中。
+> 5. **循环直至栈为空**：
+>    - 循环继续进行，直到栈为空，意味着所有子区间都已经被排序。
+>
+> ### 为什么需要优先处理较大的子区间？
+>
+> - **优化栈深度**：如果每次递归的栈深度较大，可能导致栈溢出或者栈操作的开销增大。通过优先处理较大的子区间，我们可以减少栈的深度，优化算法的执行。
+>   - **例子**：假设数组大小为 10，第一次划分后，假设左子区间大小为 8，右子区间大小为 2。如果先处理右子区间，那么栈的深度很小。但如果先处理左子区间，栈深度就会大很多。通过处理较大的区间，可以确保栈的深度较小。
+>
+> ### 栈实现与递归实现的比较：
+>
+> - **递归实现**：使用函数调用栈来管理递归过程，每个递归函数的参数和局部变量都存储在栈中。
+> - **栈实现**：显式地使用一个栈来保存待处理的区间，避免了递归调用栈的开销，适用于大规模数据，避免了栈溢出的风险。
+>
+> ### 优缺点：
+>
+> - **优点**：
+>   - **避免递归栈溢出**：对于非常大的数组，递归可能导致栈溢出，使用显式栈可以避免这个问题。
+>   - **控制栈的深度**：通过优先处理较大的区间，可以减少栈的深度，提高性能。
+> - **缺点**：
+>   - 相比递归实现，代码较为复杂。
+>   - 需要额外的栈空间来模拟递归过程，增加了空间开销。
+>
+> ### 总结：
+>
+> 这段代码实现了快速排序的非递归版本，通过显式使用栈来模拟递归过程。它的核心思想是不断地从栈中取出待排序的区间，对其进行排序并将子区间再次压入栈中，直到所有子区间都被处理完毕。这种方法的优势在于可以避免递归带来的栈溢出问题，适用于处理大规模数据。
 
 
 
@@ -380,27 +481,213 @@ private:
 
 ![image-20250915104900068](reademe.assets/image-20250915104900068.png)
 
-这是一次“搜索与排序”的小作业说明。要求你写一个 **main 函数**（C++，多文件提交），完成下面这些事：
-
-# 要做什么
-
-1. **输入**
-    从标准输入读入 **一行** 整数，整数之间用**空格**分隔。
-    例：`1 3 5 4 -5 100 7777 2014`
-2. **排序**
-    用 **快速排序 (Quick Sort)** 把这批数按**升序**排好。
-3. **查找**
-    用**二分查找 (Binary Search)**（**递归**实现）判断**数字 1** 是否在这个列表里。
-    注意：查找的**目标固定就是整数 1**，不是“第 1 个元素”。
-4. **输出**
-    先输出 `true` 或 `false`（表示 1 是否存在），后面接一个空格，再输出**排好序的整个列表**（元素之间仍然用空格）。
-    例：
-   - 输入：`1 3 5 4 -5 100 7777 2014`
-      排序后：`-5 1 3 4 5 100 2014 7777`，其中有 1 →
-      **输出**：`true -5 1 3 4 5 100 2014 7777`
-   - 输入：`0 3 5 4 -5 100 7777 2014`
-      排序后：`-5 0 3 4 5 100 2014 7777`，没有 1 →
-      **输出**：`false -5 0 3 4 5 100 2014 7777`
+4. - 根据你提供的图像内容，要求你编写一个程序来完成以下任务：
+       
+       1. **读取一行整数**（用空格分隔）。
+      2. **使用快速排序**对这些整数进行升序排序。
+      3. **使用二分查找**来判断 `1` 是否在排序后的列表中。
+      4. 输出结果为：
+         - **“true”**（如果 `1` 在列表中）或者 **“false”**（如果 `1` 不在列表中）。
+         - 然后输出排序后的列表。
+      
+      ### 解决步骤：
+      
+      1. **快速排序**：我们可以使用之前实现的 `QuickSort` 类。
+      2. **二分查找**：我们可以使用 `RecursiveBinarySearch` 类。
+      3. **主函数**：读取输入、排序并查找 `1`，输出结果。
+      
+      ### 代码实现
+      
+      #### 1. `Sort.h`（排序的基类）
+      
+      ```cpp
+      #ifndef SORT_H
+      #define SORT_H
+      
+      #include <vector>
+      
+      class Sort {
+      public:
+          virtual void sort(std::vector<int>& a) = 0;
+          virtual ~Sort() = default;
+      };
+      
+      #endif
+      ```
+      
+      #### 2. `QuickSort.h`（快速排序类的头文件）
+      
+      ```cpp
+      #ifndef QUICKSORT_H
+      #define QUICKSORT_H
+      
+      #include "Sort.h"
+      #include <vector>
+      #include <algorithm>
+      
+      class QuickSort : public Sort {
+      public:
+          void sort(std::vector<int>& a) override;
+      private:
+          static int partition(std::vector<int>& a, int lo, int hi);
+          static void quicksortRec(std::vector<int>& a, int lo, int hi);
+      };
+      
+      #endif
+      ```
+      
+      #### 3. `QuickSort.cpp`（快速排序类的实现）
+      
+      ```cpp
+      #include "QuickSort.h"
+      
+      void QuickSort::sort(std::vector<int>& a) {
+          if (a.size() < 2) return;
+          quicksortRec(a, 0, a.size() - 1);
+      }
+      
+      int QuickSort::partition(std::vector<int>& a, int lo, int hi) {
+          int pivot = a[hi];
+          int i = lo;
+          for (int j = lo; j < hi; ++j) {
+              if (a[j] < pivot) {
+                  std::swap(a[i], a[j]);
+                  ++i;
+              }
+          }
+          std::swap(a[i], a[hi]);
+          return i;
+      }
+      
+      void QuickSort::quicksortRec(std::vector<int>& a, int lo, int hi) {
+          if (lo >= hi) return;
+          int p = partition(a, lo, hi);
+          quicksortRec(a, lo, p - 1);
+          quicksortRec(a, p + 1, hi);
+      }
+      ```
+      
+      #### 4. `RecursiveBinarySearch.h`（二分查找类的头文件）
+      
+      ```cpp
+      #ifndef RECURSIVEBINARYSEARCH_H
+      #define RECURSIVEBINARYSEARCH_H
+      
+      #include <vector>
+      
+      class RecursiveBinarySearch {
+      public:
+          bool search(const std::vector<int>& a, int target);
+      private:
+          int search(const std::vector<int>& a, int x, int lo, int hi);
+      };
+      
+      #endif
+      ```
+      
+      #### 5. `RecursiveBinarySearch.cpp`（二分查找类的实现）
+      
+      ```cpp
+      #include "RecursiveBinarySearch.h"
+      
+      bool RecursiveBinarySearch::search(const std::vector<int>& a, int target) {
+          return search(a, target, 0, a.size() - 1) != -1;
+      }
+      
+      int RecursiveBinarySearch::search(const std::vector<int>& a, int x, int lo, int hi) {
+          if (lo > hi) return -1;
+          int mid = lo + (hi - lo) / 2;
+          if (a[mid] == x) return mid;
+          if (x < a[mid]) return search(a, x, lo, mid - 1);
+          else return search(a, x, mid + 1, hi);
+      }
+      ```
+      
+      #### 6. `main.cpp`（主程序）
+      
+      ```cpp
+      #include <iostream>
+      #include <vector>
+      #include <sstream>
+      #include "QuickSort.h"
+      #include "RecursiveBinarySearch.h"
+      
+      int main() {
+          std::string line;
+          std::getline(std::cin, line);  // 读取输入的整数列表
+          std::vector<int> nums;
+          std::stringstream ss(line);
+          int num;
+          while (ss >> num) {
+              nums.push_back(num);
+          }
+      
+          QuickSort quickSort;
+          quickSort.sort(nums);  // 使用快速排序排序
+      
+          RecursiveBinarySearch binarySearch;
+          bool found = binarySearch.search(nums, 1);  // 使用二分查找查找1是否在列表中
+      
+          std::cout << (found ? "true" : "false");  // 输出 true 或 false
+          for (int n : nums) {
+              std::cout << " " << n;  // 输出排序后的列表
+          }
+          std::cout << std::endl;
+      
+          return 0;
+      }
+      ```
+      
+      ### 解释：
+      
+      1. **QuickSort** 类实现了快速排序算法，对输入的数组进行升序排序。
+      2. **RecursiveBinarySearch** 类提供了一个递归实现的二分查找方法，用来判断 `1` 是否在排序后的列表中。
+      3. **main.cpp** 中实现了以下功能：
+         - 读取一行输入的整数并解析为一个数组。
+         - 对数组使用快速排序进行排序。
+         - 使用二分查找判断 `1` 是否在数组中。
+         - 输出 "true" 或 "false"，并输出排序后的数组。
+      
+      ### 输入输出示例：
+      
+      #### 输入：
+      
+      ```
+      1 3 5 4 -5 100 7777 2014
+      ```
+      
+      #### 输出：
+      
+      ```
+      true -5 1 3 4 5 100 2014 7777
+      ```
+      
+      #### 输入：
+      
+      ```
+      0 3 5 4 -5 100 7777 2014
+      ```
+      
+      #### 输出：
+      
+      ```
+      false -5 0 3 4 5 100 2014 7777
+      ```
+      
+      ### 文件提交：
+      
+      你需要提交以下文件：
+      
+      - `Sort.h`
+      - `BubbleSort.h`
+      - `BubbleSort.cpp`
+      - `QuickSort.h`
+      - `QuickSort.cpp`
+      - `RecursiveBinarySearch.h`
+      - `RecursiveBinarySearch.cpp`
+      - `main.cpp`
+      
+      你可以根据该结构进行提交，确保所有文件包含在内，并且程序能够正确执行。
 
 # 需要提交的文件
 
@@ -549,7 +836,7 @@ for(int i=0;i<n;i++)
 ## 例子（图中的数据）
 
 - s1：`[4, 6, 3, 4, 5, 5, 4, 5, 6, 7]`
-- s2：`[4, 5, 6, 8, 9]`
+- s2：`[4, 5, 6, 8, 9]` 
 - s2 的各个前缀：
   1. `[4]` → 在 s1 的 **0** 位置第一次出现 ⇒ 输出 `0`
   2. `[4, 5]` → 在 s1 的 **3** 位置第一次出现（s1[3..4]=4,5） ⇒ 输出 `3`
@@ -573,8 +860,73 @@ for(int i=0;i<n;i++)
 把 **s2** 当“模式串”，用 **KMP** 扫描 **s1**：
 
 - 预处理 s2 的 **前缀函数/失败函数 π**。
+
+   > - 前缀函数（Prefix Function）是用于字符串匹配算法中的一个重要概念，尤其是在 **KMP** 算法中。前缀函数的作用是用于记录字符串的每个前缀与该字符串的最长相同后缀的长度。
+   >
+   >    ### 前缀函数定义：
+   >
+   >    给定一个字符串 **s**，前缀函数是一个数组 **π**，其中 **π[i]** 表示字符串 **s** 中 **[0, i]** 子串的最长相同前后缀的长度。
+   >
+   >    - 前缀：从字符串的起始位置到某个位置的子串。
+   >    - 后缀：从字符串的某个位置到字符串末尾的子串。
+   >
+   >    例如，给定字符串 **s = "abacab"**，我们计算其前缀函数。
+   >
+   >    ### 计算前缀函数的步骤：
+   >
+   >    1. **初始化**：
+   >       - 前缀函数数组 **π** 的长度等于字符串的长度，初始时 **π[0] = 0**。
+   >    2. **逐步计算**：
+   >       - 从 **i = 1** 开始，逐一检查每个字符。
+   >       - 如果 **s[i]** 与 **s[π[i-1]]** 匹配，那么 **π[i] = π[i-1] + 1**。
+   >       - 如果不匹配，则根据 **π** 数组回退，直到找到匹配的位置或回退到0。
+   >
+   >    ### 计算示例：
+   >
+   >    假设 **s = "abacab"**，我们要计算它的前缀函数 **π**。
+   >
+   >    1. **初始化**：
+   >       - **s = "abacab"**
+   >       - **π = [0, 0, 0, 0, 0, 0]** （数组长度为6，初始化为0）
+   >    2. **计算**：
+   >       - **i = 1**: **s[1] = "b"**, **s[π[0]] = "a"** 不匹配，所以 **π[1] = 0**。
+   >       - **i = 2**: **s[2] = "a"**, **s[π[1]] = "a"** 匹配，所以 **π[2] = π[1] + 1 = 1**。
+   >       - **i = 3**: **s[3] = "c"**, **s[π[2]] = "b"** 不匹配，所以回退 **π[2] = 0**，再检查 **s[π[2]] = "a"**，不匹配，**π[3] = 0**。
+   >       - **i = 4**: **s[4] = "a"**, **s[π[3]] = "a"** 匹配，所以 **π[4] = π[3] + 1 = 1**。
+   >       - **i = 5**: **s[5] = "b"**, **s[π[4]] = "b"** 匹配，所以 **π[5] = π[4] + 1 = 2**。
+   >    3. **最终结果**：
+   >       - 计算得到的前缀函数是：**π = [0, 0, 1, 0, 1, 2]**。
+   >
+   >    ### 总结：
+   >
+   >    - 前缀函数的作用是找出每个位置前缀和后缀的最长相同部分，能够帮助我们在模式匹配时减少不必要的重复计算，极大地提升匹配效率。
+   >    - **KMP算法**利用前缀函数来优化字符串的匹配过程，避免了暴力匹配中对于已匹配部分的重复计算。
+   >
+   >    ### 代码实现：
+   >
+   >    ```cpp
+   >    vector<int> prefix_function(const string& s) {
+   >        int m = s.size();
+   >        vector<int> pi(m, 0);
+   >        for (int i = 1; i < m; ++i) {
+   >            int j = pi[i-1];
+   >            while (j > 0 && s[i] != s[j]) {
+   >                j = pi[j-1];  // 回退到前缀函数中记录的位置
+   >            }
+   >            if (s[i] == s[j]) {
+   >                ++j;
+   >            }
+   >            pi[i] = j;  // 更新前缀函数
+   >        }
+   >        return pi;
+   >    }
+   >    ```
+   >
+   >    这个函数返回的数组 **pi** 就是字符串 **s** 的前缀函数数组，可以用于字符串匹配等算法中。
+
 - 扫 s1 时维护当前已匹配前缀长度 **q**。每当 **q 增加到某个新值 t**（说明第一次匹配到长度为 t 的前缀），立即记录该前缀的**最早起点**：
    `ans[t] = i - t + 1`（i 为 s1 当前下标）。
+   
 - 若 q 达到 m（整串匹配），按 KMP 回退 `q = π[q-1]` 继续。
 
 这样当扫描结束，`ans[1..m]` 就分别是每个前缀的第一次出现位置，没出现的保持 -1。
@@ -608,7 +960,7 @@ vector<int> first_positions_of_prefixes(const vector<int>& s1, const vector<int>
         while (q > 0 && s1[i] != s2[q]) q = pi[q-1];
         if (s1[i] == s2[q]) ++q;
         if (ans[q] == -1) ans[q] = i - q + 1; // 第一次到达这个前缀长度
-        if (q == m) q = pi[q-1];              // 整个模式匹配完，按 KMP 回退
+        if (q == m) q = pi[q-1];              // 整个模式匹配完，按 KMP 回退，这一行的作用是在模式字符串完全匹配完后，按照 KMP算法 的回退规则，继续查找是否存在其他匹配的可能性。
     }
     ans.erase(ans.begin());                   // 丢弃 ans[0]
     return ans;                               // 大小为 m，对应 k=1..m
@@ -680,7 +1032,10 @@ return result;
 
 - 把各次的代价加起来：
 
+  $$
   O(n⋅1)+O(n⋅2)+⋯+O(n⋅m)=O(n⋅(1+2+⋯+m))=O(n⋅m(m+1)2)=O(nm2)O(n\cdot 1) + O(n\cdot 2) + \cdots + O(n\cdot m) = O\big(n \cdot (1+2+\cdots+m)\big) = O\big(n\cdot \tfrac{m(m+1)}{2}\big) = \boxed{O(nm^2)}
+  $$
+  
 
 （图中最后一行：*Overall complexity: O(n + 2n + … + m·n) = O(m²n)*。）
 
@@ -829,21 +1184,78 @@ static vector<int> prefix_function(const string& p) {
 }
 
 vector<int> Finder::findSubstrings(const string& s1, const string& s2) {
-    int n = (int)s1.size(), m = (int)s2.size();
-    vector<int> ans(m, -1);
-    if (m == 0) return ans;               // 若作业不考虑空串，也可直接 return {}
+    // 获取文本串 s1 和模式串 s2 的长度，并转换为 int 类型。
+        int n = (int)s1.size(), m = (int)s2.size();
 
-    vector<int> pi = prefix_function(s2);
-    int q = 0;                            // 当前已匹配的前缀长度
-    for (int i = 0; i < n; ++i) {
-        while (q > 0 && s1[i] != s2[q]) q = pi[q-1];
-        if (s1[i] == s2[q]) ++q;
-        if (q > 0 && ans[q-1] == -1)      // 第一次达到长度 q 的匹配
-            ans[q-1] = i - q + 1;
-        if (q == m)                       // 整个模式匹配完，继续寻找后续
-            q = pi[q-1];
-    }
-    return ans;
+        // 初始化答案向量 ans。
+        // 其大小设置为 m（与 s2 的长度相同），并用 -1 填充。
+        // -1 表示默认情况下，s2 的所有前缀子串都还未在 s1 中找到。
+        vector<int> ans(m, -1);
+
+        // 处理边界情况：如果模式串 s2 为空字符串。
+        // 此时它没有任何前缀子串需要查找，直接返回填充了 -1 的空向量即可。
+        if (m == 0) return ans;
+
+        // --- KMP 算法准备阶段 ---
+        // 调用 prefix_function 函数计算模式串 s2 的前缀函数（也称为“失配函数”或“部分匹配表”）。
+        // pi[i] 存储的是 s2[0...i] 这个子串的最长相等前后缀的长度。
+        // 这个表是 KMP 算法高效匹配的关键，用于在不匹配时决定模式串应该回退到哪个位置。
+        vector<int> pi = prefix_function(s2);
+
+        // --- KMP 算法匹配阶段 ---
+        // q 表示当前已经成功匹配的 s2 的前缀的长度。
+        // 例如，如果 q = 3，意味着 s2 的前 3 个字符 s2[0...2] 与 s1 的某个子串 s1[i-2...i] 完全匹配。
+        int q = 0;
+
+        // 遍历文本串 s1 的每一个字符。
+        for (int i = 0; i < n; ++i) {
+            // --- KMP 的核心：处理不匹配的情况 ---
+            // 这是一个 while 循环，用于在当前字符 s1[i] 与 s2[q] 不匹配时，
+            // 根据前缀函数 pi 来“回退”已匹配的长度 q。
+            // 循环条件：q > 0 (说明之前有部分匹配) 并且 s1[i] != s2[q] (当前字符不匹配)。
+            while (q > 0 && s1[i] != s2[q]) {
+                // 将 q 回退到 pi[q-1] 的位置。
+                // 这意味着，既然 s2[0...q-1] 的末尾部分与 s1[i-q...i-1] 匹配，
+                // 那么我们可以利用这个信息，跳过一些不可能匹配的比较。
+                // pi[q-1] 告诉我们，s2[0...q-1] 的最长相等前后缀长度是多少，
+                // 我们可以直接将模式串向右滑动，使得这个前缀对齐到 s1 中对应的后缀位置。
+                q = pi[q-1];
+            }
+
+            // --- 处理匹配的情况 ---
+            // 如果 s1 的当前字符 s1[i] 与 s2 的第 q 个字符 s2[q] 相匹配。
+            if (s1[i] == s2[q]) {
+                // 将已匹配的长度 q 加 1。
+                ++q;
+            }
+
+            // --- 核心逻辑：记录首次匹配位置 ---
+            // 这个 if 语句是本题的关键，它巧妙地利用了 KMP 的匹配过程。
+            // 条件 q > 0：说明至少有一个字符被匹配了。
+            // 条件 ans[q-1] == -1：说明对于长度为 q 的前缀 s2[0...q-1]，
+            // 我们还**没有**记录过它的首次出现位置。
+            if (q > 0 && ans[q-1] == -1) {
+                // 如果是第一次达到 q 的匹配长度，就记录下这个前缀子串的起始位置。
+                // 当前匹配的子串在 s1 中的结束位置是 i，长度是 q。
+                // 所以起始位置 = 结束位置 - 长度 + 1。
+                // 将这个起始位置存入 ans 向量的第 q-1 个位置。
+                ans[q-1] = i - q + 1;
+            }
+
+            // --- 处理完全匹配的情况 ---
+            // 如果 q 等于 m，说明整个模式串 s2 都已经在 s1 中找到了一个匹配。
+            if (q == m) {
+                // 此时，为了继续在 s1 的后续部分寻找 s2 的下一次出现（或更长的匹配），
+                // 我们需要像 KMP 算法一样，利用前缀函数进行回退。
+                // 将 q 设置为 pi[q-1]，这相当于把模式串 s2 向右滑动，
+                // 使得其最长相等前缀与当前已匹配部分的后缀对齐，从而可以继续比较下一个字符。
+                q = pi[q-1];
+            }
+        }
+
+        // 遍历完整个 s1 后，所有前缀子串的首次出现位置都已记录在 ans 中（或保持为 -1）。
+        // 返回最终的答案向量。
+        return ans;
 }
 ```
 
