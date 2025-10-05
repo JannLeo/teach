@@ -1,0 +1,203 @@
+booting hd0a:/bsd: 22251477+4678672+450624+0+1351680 [1937292+128+1503768+1195751]=0x1fd5510
+entry point at 0x1001000
+[ using 4637968 bytes of bsd ELF symbol table ]
+Copyright (c) 1982, 1986, 1989, 1991, 1993
+        The Regents of the University of California.  All rights reserved.
+Copyright (c) 1995-2025 OpenBSD. All rights reserved.  https://www.OpenBSD.org
+
+OpenBSD 7.7-stable (GENERIC.MP) #54: Sat Sep 27 00:21:47 AEST 2025
+    s4827618@comp3301.eait.uq.edu.au:/usr/src/sys/arch/amd64/compile/GENERIC.MP
+real mem = 3182387200 (3034MB)
+avail mem = 3059589120 (2917MB)
+random: good seed from bootblocks
+mpath0 at root
+scsibus0 at mpath0: 256 targets
+mainbus0 at root
+bios0 at mainbus0: SMBIOS rev. 2.8 @ 0xbeafa000 (10 entries)
+bios0: vendor BHYVE version "14.0" date 10/10/2021
+bios0: illumos BHYVE
+efi0 at bios0: UEFI 2.7
+efi0: BHYVE rev 0x10000
+acpi0 at bios0: ACPI 4.0
+acpi0: sleep states S5
+acpi0: tables DSDT FACP HPET APIC MCFG SPCR
+acpi0: wakeup devices
+acpitimer0 at acpi0: 3579545 Hz, 32 bits
+acpihpet0 at acpi0: 16777216 Hz
+acpimadt0 at acpi0 addr 0xfee00000: PC-AT compat
+cpu0 at mainbus0: apid 0 (boot processor)
+cpu0: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz, 2200.22 MHz, 06-4f-01
+cpu0: cpuid 1 edx=9f8bfbff<FPU,VME,DE,PSE,TSC,MSR,PAE,MCE,CX8,APIC,SEP,MTRR,PGE,MCA,CMOV,PAT,PSE36,CFLUSH,MMX,FXSR,SSE,S
+SE2,SS,HTT,PBE> ecx=f6de7a17<SSE3,PCLMUL,DTES64,DS-CPL,SSSE3,SDBG,FMA3,CX16,xTPR,PCID,DCA,SSE4.1,SSE4.2,MOVBE,POPCNT,AES
+,XSAVE,AVX,F16C,RDRAND,HV>
+cpu0: cpuid 6 eax=4<ARAT>
+cpu0: cpuid 7.0 ebx=140bb9<FSGSBASE,BMI1,HLE,AVX2,SMEP,BMI2,ERMS,RTM,RDSEED,SMAP> edx=400<MD_CLEAR>
+cpu0: cpuid d.1 eax=1<XSAVEOPT>
+cpu0: cpuid 80000001 edx=24100800<NXE,PAGE1GB,LONG> ecx=121<LAHF,ABM,3DNOWP>
+cpu0: cpuid 80000007 edx=100<ITSC>
+cpu0: MELTDOWN
+cpu0: 32KB 64b/line 8-way D-cache, 32KB 64b/line 8-way I-cache, 256KB 64b/line 8-way L2 cache, 25MB 64b/line 20-way L3 c
+ache
+cpu0: smt 0, core 0, package 0
+mtrr: Pentium Pro MTRR support, 10 var ranges, 88 fixed ranges
+cpu0: apic clock running at 134MHz
+cpu1 at mainbus0: apid 1 (application processor)
+cpu1: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz, 2200.33 MHz, 06-4f-01
+cpu1: smt 0, core 1, package 0
+cpu2 at mainbus0: apid 2 (application processor)
+cpu2: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz, 2200.28 MHz, 06-4f-01
+cpu2: smt 0, core 2, package 0
+cpu3 at mainbus0: apid 3 (application processor)
+cpu3: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz, 2200.22 MHz, 06-4f-01
+cpu3: smt 0, core 3, package 0
+ioapic0 at mainbus0: apid 4 pa 0xfec00000, version 11, 32 pins, remapped
+acpimcfg0 at acpi0
+acpimcfg0: addr 0xe0000000, bus 0-255
+acpiprt0 at acpi0: bus 0 (PC00)
+acpipci0 at acpi0 PC00
+"PNP0303" at acpi0 not configured
+"PNP0F03" at acpi0 not configured
+com0 at acpi0 COM1 addr 0x3f8/0x8 irq 4: ns16550a, 16 byte fifo
+com0: console
+com1 at acpi0 COM2 addr 0x2f8/0x8 irq 3: ns16550a, 16 byte fifo
+acpicmos0 at acpi0
+cpu0: using VERW MDS workaround
+pvbus0 at mainbus0: bhyve
+pci0 at mainbus0 bus 0
+0:1:0: mem address conflict 0x800000000/0x4000
+pchb0 at pci0 dev 0 function 0 "Intel 82441FX" rev 0x00
+nvme0 at pci0 dev 1 function 0 unknown vendor 0xfb5d product 0x0a0a rev 0x00: msix, NVMe 1.4
+nvme0: bhyve-NVMe, firmware 1.0, serial NVME-1-0
+scsibus1 at nvme0: 2 targets, initiator 0
+sd0 at scsibus1 targ 1 lun 0: <NVMe, bhyve-NVMe, 1.0>
+sd0: 30720MB, 4096 bytes/sector, 7864320 sectors
+ahci0 at pci0 dev 2 function 0 "Intel 82801H AHCI" rev 0x00: msi, AHCI 1.3
+ahci0: port 0: 6.0Gb/s
+scsibus2 at ahci0: 32 targets
+sd1 at scsibus2 targ 0 lun 0: <ATA, BHYVE SATA DISK, 001> t10.ATA_BHYVE_SATA_DISK_BHYVE-66B8-8241-67DA
+sd1: 800MB, 512 bytes/sector, 1639360 sectors
+virtio0 at pci0 dev 3 function 0 "Qumranet Virtio Network" rev 0x00
+vio0 at virtio0: 1 queue, address 02:08:20:63:c6:71
+virtio0: msix shared
+unknown vendor 0x3301 product 0x0001 (class communications subclass miscellaneous, rev 0x00) at pci0 dev 4 function 0 no
+t configured
+unknown vendor 0x3301 product 0x0002 (class communications subclass miscellaneous, rev 0x00) at pci0 dev 5 function 0 no
+t configured
+duct0 at pci0 dev 6 function 0 unknown vendor 0x3301 product 0x2000 rev 0x00: duct driver starting initialization
+: BAR0 mapped successfully, size=128
+: PCI CMD=0x00100007 (bus mastering on)
+: A2 v2.1 hwaddr=0x635bb737
+: configured device to use MSI-X vector 0 for events
+: current FLAGS=0x00000000
+: command ring allocated, size=32 descriptors, pa=0xbdf9c000, shift=5
+: RX ring allocated: 64 descriptors, 64 buffers, pa=0xbdf9b000, shift=6
+: TX ring allocated: 64 descriptors, 64 buffers, pa=0xbdf59000, shift=6
+: duct driver initialized successfully
+duct1 at pci0 dev 7 function 0 unknown vendor 0x3301 product 0x2000 rev 0x00: duct driver starting initialization
+: BAR0 mapped successfully, size=128
+: PCI CMD=0x00100007 (bus mastering on)
+: A2 v2.1 hwaddr=0x0776cf72
+: configured device to use MSI-X vector 0 for events
+: current FLAGS=0x00000000
+: command ring allocated, size=32 descriptors, pa=0xbdf15000, shift=5
+: RX ring allocated: 64 descriptors, 64 buffers, pa=0xbdf14000, shift=6
+: TX ring allocated: 64 descriptors, 64 buffers, pa=0xbded2000, shift=6
+: duct driver initialized successfully
+pcib0 at pci0 dev 31 function 0 "Intel 82371SB ISA" rev 0x00
+isa0 at pcib0
+isadma0 at isa0
+com2 at isa0 port 0x3e8/8 irq 5: ns16550a, 16 byte fifo
+pckbc0 at isa0 port 0x60/5 irq 1 irq 12
+pckbd0 at pckbc0 (kbd slot)
+wskbd0 at pckbd0 mux 1
+pms0 at pckbc0 (aux slot)
+wsmouse0 at pms0 mux 0
+efifb at mainbus0 not configured
+vscsi0 at root
+scsibus3 at vscsi0: 256 targets
+softraid0 at root
+scsibus4 at softraid0: 256 targets
+root on sd0a (9430db97e39cdd07.a) swap on sd0b dump on sd0b
+Automatic boot in progress: starting file system checks.
+/dev/sd0a (9430db97e39cdd07.a): file system is clean; not checking
+pf enabled
+starting network
+reordering: ld.so libc libcrypto sshd sshd-session sshd-auth ssh-agent.
+starting early daemons: syslogd pflogd ntpd.
+starting RPC daemons:.
+savecore: no core dump
+checking quotas: done.
+clearing /tmp
+kern.securelevel: 0 -> 1
+creating runtime link editor directory cache.
+preserving editor files.
+starting network daemons: sshd smtpd sndiod.
+starting local daemons: cron.
+Sat Sep 27 00:30:37 AEST 2025
+
+OpenBSD/amd64 (comp3301.eait.uq.edu.au) (tty00)
+
+login: duct0: sending START command
+duct0: cmd_submit idx=0 cmd=0x00000001 mask=0x00000000 addr=0x00000000 (pending=1)
+duct0: adding unicast filter
+duct0: EVFLAGS=0x00000008 state=0 cmd[c=0 p=1 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct0: cmd_process idx=0 owner=0xaa type=0x01 err=0x00
+duct0: START completed
+duct0: cmd_submit idx=1 cmd=0x00000003 mask=0xffffffff addr=0x635bb737 (pending=1)
+duct0: EVFLAGS=0x00000008 state=2 cmd[c=1 p=2 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct0: cmd_process idx=1 owner=0xaa type=0x03 err=0x00
+duct0: ADDFILT completed
+duct0: device running, open complete
+duct0: flushing multicast filters
+duct0: cmd_submit idx=2 cmd=0x00000005 mask=0x00000000 addr=0x00000000 (pending=1)
+duct0: EVFLAGS=0x00000008 state=2 cmd[c=2 p=3 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct0: cmd_process idx=2 owner=0xaa type=0x05 err=0x00
+duct0: FLUSHFILT completed
+duct0: sending STOP command
+duct0: cmd_submit idx=3 cmd=0x00000002 mask=0x00000000 addr=0x00000000 (pending=1)
+duct0: EVFLAGS=0x00000008 state=2 cmd[c=3 p=4 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct0: cmd_process idx=3 owner=0xaa type=0x02 err=0x00
+duct0: STOP completed
+: reinitializing RX ring
+: reinitializing TX ring
+duct0: close complete
+duct1: sending START command
+duct1: cmd_submit idx=0 cmd=0x00000001 mask=0x00000000 addr=0x00000000 (pending=1)
+duct1: adding unicast filter
+duct1: EVFLAGS=0x00000008 state=0 cmd[c=0 p=1 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct1: cmd_process idx=0 owner=0xaa type=0x01 err=0x00
+duct1: START completed
+duct1: cmd_submit idx=1 cmd=0x00000003 mask=0xffffffff addr=0x0776cf72 (pending=1)
+duct1: EVFLAGS=0x00000008 state=2 cmd[c=1 p=2 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct1: cmd_process idx=1 owner=0xaa type=0x03 err=0x00
+duct1: ADDFILT completed
+duct1: device running, open complete
+duct1: flushing multicast filters
+duct1: cmd_submit idx=2 cmd=0x00000005 mask=0x00000000 addr=0x00000000 (pending=1)
+duct1: EVFLAGS=0x00000008 state=2 cmd[c=2 p=3 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct1: cmd_process idx=2 owner=0xaa type=0x05 err=0x00
+duct1: FLUSHFILT completed
+duct1: sending STOP command
+duct1: cmd_submit idx=3 cmd=0x00000002 mask=0x00000000 addr=0x00000000 (pending=1)
+duct1: EVFLAGS=0x00000008 state=2 cmd[c=3 p=4 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct1: cmd_process idx=3 owner=0xaa type=0x02 err=0x00
+duct1: STOP completed
+: reinitializing RX ring
+: reinitializing TX ring
+duct1: close complete
+duct0: sending START command
+duct0: cmd_submit idx=4 cmd=0x00000001 mask=0x00000000 addr=0x00000000 (pending=1)
+duct0: adding unicast filter
+duct0: EVFLAGS=0x00000008 state=0 cmd[c=4 p=5 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct0: cmd_process idx=4 owner=0xaa type=0x01 err=0x00
+duct0: START completed
+duct0: cmd_submit idx=5 cmd=0x00000003 mask=0xffffffff addr=0x635bb737 (pending=1)
+duct0: EVFLAGS=0x00000008 state=2 cmd[c=5 p=6 pend=1] rx[c=0 p=64] tx[c=0 p=0]
+duct0: cmd_process idx=5 owner=0xaa type=0x03 err=0x00
+duct0: ADDFILT completed
+duct0: device running, open complete
+: TX doorbell rung: idx=0, value=0x80000000
+duct0: EVFLAGS=0x00000001 state=2 cmd[c=6 p=6 pend=0] rx[c=0 p=64] tx[c=0 p=1]
+: TX completed: len=22
+: processed 1 TX completions
+: TX packet submitted: len=22, prod=1

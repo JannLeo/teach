@@ -1,0 +1,38 @@
+[
+{
+  "directory": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/build",
+  "command": "D:\\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\main.dir\\QuickSort.cpp.obj -c \"D:\\创业\\teacher\\teach\\COMPSCI2000 computer system\\20250915\\code\\QuickSort.cpp\"",
+  "file": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/QuickSort.cpp",
+  "output": "CMakeFiles/main.dir/QuickSort.cpp.obj"
+},
+{
+  "directory": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/build",
+  "command": "D:\\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\main.dir\\RecursiveBinarySearch.cpp.obj -c \"D:\\创业\\teacher\\teach\\COMPSCI2000 computer system\\20250915\\code\\RecursiveBinarySearch.cpp\"",
+  "file": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/RecursiveBinarySearch.cpp",
+  "output": "CMakeFiles/main.dir/RecursiveBinarySearch.cpp.obj"
+},
+{
+  "directory": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/build",
+  "command": "D:\\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\main.dir\\CMakeFiles\\3.28.0-rc5\\CompilerIdCXX\\CMakeCXXCompilerId.cpp.obj -c \"D:\\创业\\teacher\\teach\\COMPSCI2000 computer system\\20250915\\code\\build\\CMakeFiles\\3.28.0-rc5\\CompilerIdCXX\\CMakeCXXCompilerId.cpp\"",
+  "file": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/build/CMakeFiles/3.28.0-rc5/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+  "output": "CMakeFiles/main.dir/CMakeFiles/3.28.0-rc5/CompilerIdCXX/CMakeCXXCompilerId.cpp.obj"
+},
+{
+  "directory": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/build",
+  "command": "D:\\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\main.dir\\finder.cpp.obj -c \"D:\\创业\\teacher\\teach\\COMPSCI2000 computer system\\20250915\\code\\finder.cpp\"",
+  "file": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/finder.cpp",
+  "output": "CMakeFiles/main.dir/finder.cpp.obj"
+},
+{
+  "directory": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/build",
+  "command": "D:\\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\main.dir\\main.cpp.obj -c \"D:\\创业\\teacher\\teach\\COMPSCI2000 computer system\\20250915\\code\\main.cpp\"",
+  "file": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/main.cpp",
+  "output": "CMakeFiles/main.dir/main.cpp.obj"
+},
+{
+  "directory": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/build",
+  "command": "D:\\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\main.dir\\sort_demo.cpp.obj -c \"D:\\创业\\teacher\\teach\\COMPSCI2000 computer system\\20250915\\code\\sort_demo.cpp\"",
+  "file": "D:/创业/teacher/teach/COMPSCI2000 computer system/20250915/code/sort_demo.cpp",
+  "output": "CMakeFiles/main.dir/sort_demo.cpp.obj"
+}
+]
