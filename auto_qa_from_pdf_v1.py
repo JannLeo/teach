@@ -32,7 +32,8 @@ class Config:
     site_url: str = "https://dn7vxt.aitianhu2.top/?model=gpt-5"
     login_url: str = "https://dn7vxt.aitianhu2.top/list"
     access_key: str = "sk-fi9uVjhlfirEQMJRE8Da97D764624a948fC2B2657b58636e"
-    prompt_text: str = "对截图中的内容逐句详细使用中文解释，不仅仅只是翻译，还需要对它们进行适当的解释"
+    # prompt_text: str = "对截图中的内容逐句详细使用中文解释，不仅仅只是翻译，还需要对它们进行适当的解释"
+    prompt_text: str = "对截图中的内容逐句详细使用中文解释，不仅仅只是翻译，还需要对它们进行适当的解释,告诉我该怎么教学生并且指导怎么做"
     reuse_session: bool = True
     headless: bool = False
     page_load_timeout: int = 30

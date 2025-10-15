@@ -1,0 +1,727 @@
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  2 
+5,6c5,6
+< number of packet resends by A:  26 
+< number of correct packets received at B:  29 
+---
+> number of packet resends by A:  4 
+> number of correct packets received at B:  3 
+running test script....
+compiling programs....
+running tests....
+# ############ TEST 1 ##################
+comparing output....
+# ############ TEST 2 ##################
+comparing output....
+# ############ TEST 3 ##################
+comparing output....
+expected behaviour for test
+
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+
+EVENT time: 5.182523,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 9.517292,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 14.438572,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 17.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 17.870575
+
+EVENT time: 22.733980,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 33.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 33.870575
+
+EVENT time: 41.333488,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 49.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 49.870575
+
+EVENT time: 52.600815,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 65.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 65.870575
+
+EVENT time: 69.283478,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 81.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 81.870575
+
+EVENT time: 91.707260,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 97.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 97.870575
+
+EVENT time: 99.351204,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 113.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 113.870575
+
+EVENT time: 120.231277,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 129.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 129.870575
+
+EVENT time: 130.929047,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 145.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 145.870575
+
+EVENT time: 151.144669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 161.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 161.870575
+
+EVENT time: 170.651840,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 177.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 177.870575
+
+EVENT time: 181.775055,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 193.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 193.870575
+
+EVENT time: 203.266663,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 209.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 209.870575
+
+EVENT time: 218.781357,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 225.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 225.870575
+
+EVENT time: 231.488251,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 241.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 241.870575
+
+EVENT time: 243.902390,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 257.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 257.870575
+
+EVENT time: 265.613525,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 273.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 273.870575
+
+EVENT time: 280.561920,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 289.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 289.870575
+
+EVENT time: 292.352936,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 305.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 305.870575
+
+EVENT time: 315.199585,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 321.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 321.870575
+
+EVENT time: 323.394287,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 332.828766,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 332.828766
+          START TIMER: starting timer at 332.828766
+
+EVENT time: 348.828766,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 348.828766
+
+EVENT time: 357.654663,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 364.828766,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 364.828766
+
+EVENT time: 369.525391,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 380.828766,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 380.828766
+
+EVENT time: 388.615906,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 396.828766,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 396.828766
+
+EVENT time: 399.333984,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 405.593262,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 405.593262
+          START TIMER: starting timer at 405.593262
+
+EVENT time: 421.593262,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 421.593262
+
+EVENT time: 423.362274,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 437.593262,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 437.593262
+
+EVENT time: 439.218933,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 441.368317,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 441.368317
+ Simulator terminated at time 441.368317
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  26 
+number of correct packets received at B:  29 
+number of messages delivered to application:  3 
+----------------------------
+
+your output for test
+
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+
+EVENT time: 5.182523,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 9.517292,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 14.438572,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 17.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 17.870575
+---A: resending packet 1
+---A: resending packet 2
+
+EVENT time: 22.733980,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 29.032394,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 33.095997,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 33.095997
+          START TIMER: starting timer at 33.095997
+
+EVENT time: 35.062046,  type: 2, fromlayer3  entity: 1
+----B: packet corrupted or not expected sequence number, resend ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 49.095997,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 49.095997
+
+EVENT time: 50.879921,  type: 2, fromlayer3  entity: 1
+----B: packet corrupted or not expected sequence number, resend ACK!
+
+EVENT time: 57.128941,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 57.128941
+ Simulator terminated at time 57.128941
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  2 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  4 
+number of correct packets received at B:  3 
+number of messages delivered to application:  3 
+----------------------------
+
+differences:
+
+34a35,36
+> ---A: resending packet 1
+> ---A: resending packet 2
+40,230c42
+< EVENT time: 33.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 33.870575
+< 
+< EVENT time: 41.333488,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 49.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 49.870575
+< 
+< EVENT time: 52.600815,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 65.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 65.870575
+< 
+< EVENT time: 69.283478,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 81.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 81.870575
+< 
+< EVENT time: 91.707260,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 97.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 97.870575
+< 
+< EVENT time: 99.351204,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 113.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 113.870575
+< 
+< EVENT time: 120.231277,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 129.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 129.870575
+< 
+< EVENT time: 130.929047,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 145.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 145.870575
+< 
+< EVENT time: 151.144669,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 161.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 161.870575
+< 
+< EVENT time: 170.651840,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 177.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 177.870575
+< 
+< EVENT time: 181.775055,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 193.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 193.870575
+< 
+< EVENT time: 203.266663,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 209.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 209.870575
+< 
+< EVENT time: 218.781357,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 225.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 225.870575
+< 
+< EVENT time: 231.488251,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 241.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 241.870575
+< 
+< EVENT time: 243.902390,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 257.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 257.870575
+< 
+< EVENT time: 265.613525,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 273.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 273.870575
+< 
+< EVENT time: 280.561920,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 289.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 289.870575
+< 
+< EVENT time: 292.352936,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 305.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 305.870575
+< 
+< EVENT time: 315.199585,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 321.870575,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 0
+<           START TIMER: starting timer at 321.870575
+< 
+< EVENT time: 323.394287,  type: 2, fromlayer3  entity: 1
+< ----B: packet 0 is correctly received, send ACK!
+< 
+< EVENT time: 332.828766,  type: 2, fromlayer3  entity: 0
+< ----A: uncorrupted ACK 0 is received
+< ----A: ACK 0 is not a duplicate
+<           STOP TIMER: stopping timer at 332.828766
+<           START TIMER: starting timer at 332.828766
+< 
+< EVENT time: 348.828766,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 1
+<           START TIMER: starting timer at 348.828766
+< 
+< EVENT time: 357.654663,  type: 2, fromlayer3  entity: 1
+< ----B: packet 1 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 364.828766,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 1
+<           START TIMER: starting timer at 364.828766
+< 
+< EVENT time: 369.525391,  type: 2, fromlayer3  entity: 1
+---
+> EVENT time: 29.032394,  type: 2, fromlayer3  entity: 1
+232,237d43
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 380.828766,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 1
+<           START TIMER: starting timer at 380.828766
+239,251c45
+< EVENT time: 388.615906,  type: 2, fromlayer3  entity: 1
+< ----B: packet 1 is correctly received, send ACK!
+<           TOLAYER3: packet being lost
+< 
+< EVENT time: 396.828766,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 1
+<           START TIMER: starting timer at 396.828766
+< 
+< EVENT time: 399.333984,  type: 2, fromlayer3  entity: 1
+< ----B: packet 1 is correctly received, send ACK!
+< 
+< EVENT time: 405.593262,  type: 2, fromlayer3  entity: 0
+---
+> EVENT time: 33.095997,  type: 2, fromlayer3  entity: 0
+254,260c48,49
+<           STOP TIMER: stopping timer at 405.593262
+<           START TIMER: starting timer at 405.593262
+< 
+< EVENT time: 421.593262,  type: 0, timerinterrupt   entity: 0
+< ----A: time out,resend packets!
+< ---A: resending packet 2
+<           START TIMER: starting timer at 421.593262
+---
+>           STOP TIMER: stopping timer at 33.095997
+>           START TIMER: starting timer at 33.095997
+262,263c51,52
+< EVENT time: 423.362274,  type: 2, fromlayer3  entity: 1
+< ----B: packet 2 is correctly received, send ACK!
+---
+> EVENT time: 35.062046,  type: 2, fromlayer3  entity: 1
+> ----B: packet corrupted or not expected sequence number, resend ACK!
+266c55
+< EVENT time: 437.593262,  type: 0, timerinterrupt   entity: 0
+---
+> EVENT time: 49.095997,  type: 0, timerinterrupt   entity: 0
+269c58
+<           START TIMER: starting timer at 437.593262
+---
+>           START TIMER: starting timer at 49.095997
+271,272c60,61
+< EVENT time: 439.218933,  type: 2, fromlayer3  entity: 1
+< ----B: packet 2 is correctly received, send ACK!
+---
+> EVENT time: 50.879921,  type: 2, fromlayer3  entity: 1
+> ----B: packet corrupted or not expected sequence number, resend ACK!
+274c63
+< EVENT time: 441.368317,  type: 2, fromlayer3  entity: 0
+---
+> EVENT time: 57.128941,  type: 2, fromlayer3  entity: 0
+277,278c66,67
+<           STOP TIMER: stopping timer at 441.368317
+<  Simulator terminated at time 441.368317
+---
+>           STOP TIMER: stopping timer at 57.128941
+>  Simulator terminated at time 57.128941
+281c70
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  2 
+283,284c72,73
+< number of packet resends by A:  26 
+< number of correct packets received at B:  29 
+---
+> number of packet resends by A:  4 
+> number of correct packets received at B:  3 
+----------------------------
+
+5,7c5,7
+< number of packet resends by A:  7 
+< number of correct packets received at B:  3 
+< number of messages delivered to application:  3 
+---
+> number of packet resends by A:  0 
+> number of correct packets received at B:  0 
+> number of messages delivered to application:  0 
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  1 
+5,6c5,6
+< number of packet resends by A:  8 
+< number of correct packets received at B:  11 
+---
+> number of packet resends by A:  6 
+> number of correct packets received at B:  3 
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  4 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+5,7c5,7
+< number of packet resends by A:  1 
+< number of correct packets received at B:  4 
+< number of messages delivered to application:  4 
+---
+> number of packet resends by A:  0 
+> number of correct packets received at B:  2 
+> number of messages delivered to application:  2 
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  2 
+5,7c5,7
+< number of packet resends by A:  8 
+< number of correct packets received at B:  3 
+< number of messages delivered to application:  3 
+---
+> number of packet resends by A:  7 
+> number of correct packets received at B:  0 
+> number of messages delivered to application:  0 
+2,3c2,3
+< number of messages dropped due to full window:  7 
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  8 
+---
+> number of messages dropped due to full window:  3 
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  9 
+5,7c5,7
+< number of packet resends by A:  6 
+< number of correct packets received at B:  9 
+< number of messages delivered to application:  8 
+---
+> number of packet resends by A:  1 
+> number of correct packets received at B:  7 
+> number of messages delivered to application:  7 
+# ############ TEST 4 ##################
+comparing output....
+# ############ TEST 5 ##################
+comparing output....
+# ############ TEST 6 ##################
+comparing output....
+# ############ TEST 7 ##################
+comparing output....
+# ############ TEST 8 ##################
+comparing output....
