@@ -6927,243 +6927,11 @@ int main() {
 
 
 
-## 用互斥锁替代信号量后的行为对比
-
-
-
-> **If we replace it with mutex lock, it won’t work now.**
-
-> “如果把上页的信号量改成互斥锁，现在那段代码就跑不通了。”
-
-
-
-* 含义：之前那个“Thread 2 乱入多发 `sem_post` 破坏互斥”的例子，如果换成真正的 **mutex**，就**不会出现**那种“别人替你解锁”的问题，因为互斥锁有**所有权**和**错误检测**语义。
-
-
-
-### 代码（把信号量思路换成互斥锁）
-
-
-
-```c
-
-// Thread 1
-
-mutex_lock(&s);
-
-// Critical Section
-
-mutex_unlock(&s);
-
-
-
-// Thread 2
-
-// Foiled!
-
-mutex_unlock(&s);
-
-
-
-// Thread 3
-
-mutex_lock(&s);
-
-// Now it’s thread-safe
-
-mutex_unlock(&s);
-
-```
-
-
-
-逐行解释：
-
-
-
-* 线程 1：正常“加锁→临界区→解锁”。
-
-* 线程 2：**试图解锁**一把它**没有持有**的互斥锁（“Foiled!” 被挫败）。
-
-
-
-  * 在严格实现里，这要么**立刻报错**（返回错误/断言触发/errno 设置），要么是**未定义行为**；总之不会像信号量那样“静悄悄+1 放行别人”。
-
-* 线程 3：随后再 `mutex_lock` 时，互斥语义依然完好，“现在是线程安全的”。
-
-
-
-> **Also, binary semaphores are different than mutexes because one thread can unlock a mutex from a different thread.**
-
-> （原文这句应为：**binary semaphores are different than mutexes because one thread can `post` a semaphore for a different thread**, 而互斥锁**不能**由非持有者解锁。教材口误我帮你纠正意思。）
-
-
-
-* 重点：**二值信号量**允许“线程 A 等、线程 B 发”，这是它的设计；
-
-* **互斥锁**则要求“**谁锁谁解**”，不可跨线程解锁。
-
-* 这就是“信号量≠互斥锁”的本质差别之一。
-
-
-
----
-
-
-
-## Signal Safety（在信号处理函数里哪些调用是安全的）
-
-
-
-> **Also, `sem_post` is one of a handful of functions that can be correctly used inside a signal handler; `pthread_mutex_unlock` is not.**
-
-> “`sem_post` 属于少数**可在信号处理函数里调用的**接口；而 `pthread_mutex_unlock` **不行**。”
-
-
-
-* 背景：**异步信号安全（async-signal-safe）**。在 `SIGINT`/`SIGALRM` 等信号的处理函数里，只能调用少数特定函数（POSIX 列表规定），否则可能打断库内部的不可重入操作，导致崩溃或死锁。
-
-* `sem_post` 被规定为 **async-signal-safe**；`pthread_mutex_*` 系列一般**不是**，因为它们可能触发锁内部的不可重入路径或与线程调度交互。
-
-
-
-> **We can release a waiting thread that can now make all of the calls that we disallowed to call inside the signal handler itself e.g. `printf`.**
-
-> “我们可以在信号处理函数里 `sem_post` 唤醒一个等待线程，由那个普通线程去执行那些**不应在信号处理函数里**调用的操作（比如 `printf`）。”
-
-
-
-* 设计模式：**信号处理函数只做最小动作**（发信号/置标志/`sem_post`），把真正的工作交给**安全的上下文**（普通线程）来完成。
-
-
-
-### 安全用法示例
-
-
-
-```c
-
-#include <stdio.h>
-
-#include <pthread.h>
-
-#include <signal.h>
-
-#include <semaphore.h>
-
-#include <unistd.h>
-
-
-
-sem_t s;
-
-
-
-void handler(int signal) {
-
-    sem_post(&s); /* Release the Kraken! */
-
-}
-
-
-
-void *singsong(void *param) {
-
-    sem_wait(&s);
-
-    printf("Waiting until a signal releases...\n");
-
-}
-
-
-
-int main() {
-
-    int ok = sem_init(&s, 0, 0 /* Initial value of zero*/);
-
-```
-
-
-
-逐句解释：
-
-
-
-* 头文件：`signal.h` 用于安装信号处理器；`semaphore.h` 提供 `sem_*`；`pthread.h` 创建线程；`unistd.h` 供 `sleep` 等。
-
-* `sem_t s;`：全局信号量，便于处理函数与工作线程共享。
-
-* `handler`：信号处理函数，只做一件事：`sem_post(&s)`，**合法且安全**。
-
-* `singsong`：工作线程在 `sem_wait(&s)` 处阻塞，直到被信号处理函数 `sem_post` 唤醒，随后再做 `printf` 等**不适合在信号处理函数里**做的事。
-
-* `main`：`sem_init(&s, 0, 0)` 初始化为 **0**（表示当前没有“许可”），这样 `singsong` 一启动就会阻塞等待。接下来（截图未显示的部分）典型步骤是：
-
-
-
-  1. `signal(SIGINT, handler);` 或用 `sigaction` 安装处理器；
-
-  2. 创建工作线程 `pthread_create(..., singsong, ...)`；
-
-  3. 主线程 `pause()` 或 `sleep` 等待你按 `Ctrl+C` 触发 `SIGINT`；
-
-  4. 信号进来 → 处理器 `sem_post` → 工作线程被唤醒 → 打印消息。
-
-
-
-**要点回顾：**
-
-
-
-* 在信号处理函数里**少做事**：不分配内存、不加解互斥锁、不 printf；
-
-* 用 `sem_post`/写无锁管道/写自管道等**async-signal-safe** 技巧，把工作交给安全环境处理；
-
-* 互斥锁**不能**在信号处理函数里随意解锁（可能造成严重的竞态/死锁）。
-
-
-
----
-
-
-
-### 小结与实践建议
-
-
-
-1. **互斥锁 vs. 二值信号量**：互斥锁有所有权，禁止跨线程解锁；二值信号量允许跨线程 `wait/post`，适合通知与配额控制。
-
-2. **不要用信号量“硬充互斥锁”**：一个多余的 `post` 就会让“临界区”失去互斥。
-
-3. **信号处理场景**：用 `sem_post` 或“设标志 + 自管道”唤醒工作线程，由后者完成 I/O、日志、锁等复杂操作。
-
-
-
-如果你愿意，我可以把这段示例补完（安装 `sigaction`、创建线程、运行流程）成**可编译的完整程序**，并注释每一行为什么是“信号安全”的。
-
-
----
-
-## 第 157 页
-
-![第 157 页](main_assets/page-157.png)
-
-**提问：** 对截图中的内容逐句详细使用中文解释，不仅仅只是翻译，还需要对它们进行适当的解释
-
-下面我把你这两页（第 156–157 页）的内容**逐句解释 + 补充背景**，不仅翻译，还讲清楚它们要表达的编程要点与常见陷阱。
-
-
-
----
-
-
-
 # 续上页：信号量示例收尾（第 156 页上半）
 
 
 
 ```c
-
 if (ok == -1) {
 
     perror("Could not create unnamed semaphore");
@@ -7274,6 +7042,71 @@ pthread_exit(NULL); /* 进程会在没有可运行线程后退出 */
 
 
 
+> 这段在讲“条件变量（condition variables）”——多线程里用来**把等待某个条件的线程挂起、等别人叫醒**的一种同步原语。逐句拆给你：
+>
+> # 这东西解决什么问题？
+>
+> - 多线程程序里常见场景：某个线程需要“等到条件成立（例如：队列里有数据）”再继续。如果用 while 一直检查就会“忙等”浪费 CPU。
+> - 条件变量允许线程**睡眠**，直到别的线程发出“条件可能变了，起来看看”的通知再醒来检查。
+>
+> # 怎么用（必须配合互斥锁）
+>
+> 典型写法（C/pthreads）：
+>
+> ```c
+> pthread_mutex_lock(&mtx);
+> while (!condition_is_true()) {                 // 🔴 必须用 while，不是 if（原因见“伪唤醒”）
+>     pthread_cond_wait(&cv, &mtx);              // 原子地：释放 mtx 并睡眠；被唤醒后再把 mtx 上锁再返回
+> }
+> // 条件已满足，安全地访问共享数据
+> pthread_mutex_unlock(&mtx);
+> ```
+>
+> 通知方：
+>
+> ```c
+> pthread_mutex_lock(&mtx);
+> update_shared_state();                          // 让条件变为真
+> pthread_cond_signal(&cv);                       // 叫醒“一个”等待者
+> // 或 pthread_cond_broadcast(&cv);              // 叫醒“所有”等待者
+> pthread_mutex_unlock(&mtx);
+> ```
+>
+> 关键点：
+>
+> - `pthread_cond_wait(&cv, &mtx)` 会**原子地**释放互斥锁并把线程睡下；被唤醒时会**先重新拿回互斥锁**再返回。这保证了“检查条件”与“等待”的竞态不会丢信号。
+> - 用 `signal` 叫醒**一个**等待线程；用 `broadcast` 叫醒**所有**等待的线程。具体唤醒哪一个由操作系统调度器决定。
+>
+> # 为什么醒来后要“再检查条件”（循环而不是 if）？
+>
+> 文中提到 **spurious wakeups（伪/虚假唤醒）**：线程有时会“无缘无故”醒来。原因包括实现层面的优化、竞态等（尤其在多核上）。因此规范要求你把 `wait` 放在 **while 循环**里，醒来后**重新检查条件**；不满足就继续睡。这样即使出现伪唤醒，也不会出错。
+>
+> # 和 POSIX signals（进程信号）无关
+>
+> `pthread_cond_signal()` 这个名字里虽然有 “signal”，但它跟 `kill()`/`SIGINT` 这些**进程信号完全不是一回事**。这里的“signal”只是“发通知”的意思，作用域仅在**同一进程内的线程**之间。
+>
+> # 细节补充（结合原文要点）
+>
+> - “API 允许叫醒一个或全部等待线程；叫醒哪个由系统决定。”——所以不能依赖叫醒顺序。
+> - “醒来后要在临界区检查条件”——也就是醒来后、在**持锁**状态下判断共享状态是否真满足。
+> - “如果需要在临界区外叫醒线程，POSIX 也有办法”——实践里几乎总是在持锁的临界区里更新状态并发通知，最安全。
+> - “可能丢失唤醒？”——正确使用 `mutex+cond` 的原子语义可以避免**状态更新与通知**之间的竞态导致的“丢通知”；所以一定要按上面的锁定顺序来写。
+>
+> # 一个生活类比
+>
+> - 多个同学（线程）等老师（条件）说“开始发饭了（条件为真）”。与其大家不停探头（忙等），不如躺下睡觉（wait）。
+> - 食堂阿姨（通知方）把饭做好（更新共享状态）后，按铃（signal/broadcast）。被叫醒的同学要先拿到餐盘（重新加锁）再确认“确实开饭了”（while 再检查），再开动。
+>
+> # 常见坑
+>
+> - ❌ 在没持有对应互斥锁的情况下调用 `pthread_cond_wait()` 或 `pthread_cond_signal()`。
+> - ❌ 用 `if` 包住 `wait`，醒来后不再检查条件。
+> - ❌ 更新共享状态后**先解锁再 signal**。正确顺序通常是“更新→signal/broadcast→再解锁”，避免竞态（有实现允许先解锁，但容易出错，遵循这一顺序最稳妥）。
+>
+> 一句话总结：**条件变量 = 让等待条件的线程高效睡眠/被唤醒的机制，必须与互斥锁配合，并且永远在 while 循环里等待以防伪唤醒**。
+
+
+
 ---
 
 
@@ -7287,6 +7120,17 @@ pthread_exit(NULL); /* 进程会在没有可运行线程后退出 */
 > 原子性：一个操作要么**一次性成功**，要么**不发生**。x86 上常见 `lock` 前缀的指令（如 `lock xadd`、`lock cmpxchg`）提供硬件级原子性。
 
 > 但：**数据结构的原子性**更复杂，是由**一系列操作**组成的“复合原子操作”。
+
+
+---
+
+## 第 157 页
+
+![第 157 页](main_assets/page-157.png)
+
+**提问：** 对截图中的内容逐句详细使用中文解释，不仅仅只是翻译，还需要对它们进行适当的解释
+
+下面我把你这两页（第 156–157 页）的内容**逐句解释 + 补充背景**，不仅翻译，还讲清楚它们要表达的编程要点与常见陷阱。
 
 
 
