@@ -23,6 +23,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import pyperclip
+import re
 
 # ===================== CONFIG =====================
 @dataclass
@@ -184,16 +185,28 @@ def is_overloaded_text(txt: str) -> bool:
     low = txt.lower()
     return any(n in low for n in [s.lower() for s in needles])
 
-def pdf_to_images(pdf_path: Path, out_dir: Path, dpi: int = 180):
+
+def render_page_if_needed(pdf_path: Path, assets_dir: Path, page_idx: int, dpi: int = 180) -> Path:
+    """
+    page_idx : 0-based
+    返回 assets_dir / page-xxx.png 的绝对路径
+    已存在且比 pdf 新 → 直接复用；否则只渲染这一页
+    """
+    png_path = assets_dir / f"page-{page_idx+1:03d}.png"
+    pdf_mtime = pdf_path.stat().st_mtime
+    if png_path.exists() and png_path.stat().st_mtime > pdf_mtime:
+        print(f"[reuse] 复用已有图片：{png_path.name}")
+        return png_path
+
+    # 只抽这一页
     doc = fitz.open(pdf_path)
-    paths = []
-    for i, page in enumerate(doc, start=1):
-        pix = page.get_pixmap(matrix=fitz.Matrix(dpi/72, dpi/72))
-        out_path = out_dir / f"page-{i:03d}.png"
-        pix.save(out_path)
-        paths.append(out_path)
+    page = doc.load_page(page_idx)          # 0-based
+    mat = fitz.Matrix(dpi/72, dpi/72)
+    pix = page.get_pixmap(matrix=mat)
+    pix.save(png_path)
     doc.close()
-    return paths
+    print(f"[render] 已渲染单页：{png_path.name}")
+    return png_path
 
 def start_browser(headless=False):
     opt = ChromeOptions()
@@ -296,8 +309,12 @@ def clear_all_uploads(drv):
     """)
     time.sleep(0.3)
 
-def count_tiles(drv):
-    return drv.execute_script("return document.querySelectorAll(arguments[0]).length;", SELECTORS.TILE_SEL)
+def count_tiles(drv) -> int:
+    try:
+        return drv.execute_script("return document.querySelectorAll(arguments[0]).length;", SELECTORS.TILE_SEL)
+    except Exception:
+        return 0
+
 
 def wait_stable_tile_count(drv, expect, timeout=60):
     end = time.time() + timeout
@@ -393,27 +410,70 @@ def wait_for_latest_answer(drv, timeout):
     wait_until_idle(drv)
     time.sleep(0.4)
     install_clipboard_hook(drv)
-    clicked = click_copy_button_in_last_turn(drv)
-    if clicked:
-        md = read_captured_markdown(drv, timeout=6.0)
-        if md: return md
-        md = read_clipboard_via_browser(drv, timeout=6.0)
-        if md: return md
-    try:
-        md2 = (pyperclip.paste() or "").strip()
-        if md2: return md2
-    except Exception:
-        pass
+
+    # ===== 新增：多次尝试复制 =====
+    last_text = ""
+    for retry in range(2):  # 尝试两次
+        clicked = click_copy_button_in_last_turn(drv)
+        if clicked:
+            md = read_captured_markdown(drv, timeout=6.0)
+            if md and md.strip() and md.strip() != last_text:
+                return md.strip()
+            md = read_clipboard_via_browser(drv, timeout=6.0)
+            if md and md.strip() and md.strip() != last_text:
+                return md.strip()
+            try:
+                md2 = (pyperclip.paste() or "").strip()
+                if md2 and md2 != last_text:
+                    return md2
+            except Exception:
+                pass
+
+            # 如果没读到内容或内容没变化，就再按一次复制按钮
+            print(f"[copy] 第 {retry+1} 次复制无变化，准备重试点击复制按钮…")
+            last_text = md or md2 or ""
+            time.sleep(1.0)
+        else:
+            print("[copy] 未能点击复制按钮，重试中…")
+            time.sleep(1.0)
+
+    # ===== 原 fallback 部分 =====
     nodes = drv.find_elements(*SELECTORS.ASSISTANT_MESSAGE)
     fallback = nodes[-1].text.strip() if nodes else ""
     return f"> ⚠️ 未能复制为 Markdown，以下为纯文本回退：\n\n{fallback}"
+
+def compact_blank_lines(text: str) -> str:
+    """
+    清理 Markdown 里的多余空行：
+    - 去掉文首文尾空行
+    - 把连续 2 个以上空行压缩成 1 个
+    - 删除行首/行尾的空格
+    """
+    # 去掉前后空白行
+    text = text.strip()
+
+    # 删除行首尾空格
+    lines = [line.strip() for line in text.splitlines()]
+
+    # 压缩连续空行（最多保留 1 个）
+    cleaned = []
+    last_blank = False
+    for line in lines:
+        if line == "":
+            if not last_blank:
+                cleaned.append("")
+            last_blank = True
+        else:
+            cleaned.append(line)
+            last_blank = False
+
+    return "\n".join(cleaned)
 
 def append_to_md(md_file: Path, rel_img: Path, answer_md: str, page_no: int):
     with md_file.open("a", encoding="utf-8") as f:
         f.write(f"\n\n---\n\n## 第 {page_no} 页\n\n")
         f.write(f"![第 {page_no} 页]({rel_img.as_posix()})\n\n")
-        f.write(f"**提问：** {CFG.prompt_text}\n\n")
-        f.write(answer_md)
+        f.write(compact_blank_lines(answer_md))   # ← 只改这一行
         f.write("\n")
 
 def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_attempts: int = 5) -> str:
@@ -428,6 +488,21 @@ def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_at
     # 每次尝试前都重新上传并提问，确保刷新后上下文干净
     def _upload_and_ask():
         upload_image(drv, img_path)
+        # ===== 新增：检查图片是否被吞掉 =====
+        try:
+            tiles = count_tiles(drv)
+            if tiles == 0:
+                print("[ask] 检测到图片预览丢失，重新上传一次…")
+                upload_image(drv, img_path)
+                tiles2 = count_tiles(drv)
+                if tiles2 == 0:
+                    raise RuntimeError("图片多次上传后仍未显示，可能被网页吞掉。")
+        except Exception as e:
+            print(f"[ask] 上传检查出错：{e!r}（将重试上传）")
+            time.sleep(2)
+            upload_image(drv, img_path)
+
+        # ===================================
         type_prompt_and_send(drv, prompt)
 
     attempt = 1
@@ -474,7 +549,7 @@ def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_at
 
         except Exception as e:
             print(f"[ask] 尝试 #{attempt} 出现非超时异常：{e!r}（将继续下一轮或最终抛出）")
-            attempt += 1
+            raise
 
     raise TimeoutException(f"多次重试后仍超时（共 {max_attempts} 次），请稍后再试。")
 
@@ -502,6 +577,7 @@ def compute_paths_by_target(target_arg: str):
 
 
 # ===================== MAIN =====================
+# =====================  MAIN  =====================
 def main():
     parser = argparse.ArgumentParser(description="PDF逐页问答并生成备课Markdown")
     parser.add_argument("-t", "--target", required=True,
@@ -516,61 +592,57 @@ def main():
                         help="无界面模式运行 Chrome")
     args = parser.parse_args()
 
-
     # 覆盖配置
     CFG.input_pdf = Path(args.pdf).expanduser().resolve()
     CFG.headless = bool(args.headless)
-    # CFG.out_dir, notes_md = compute_paths_by_target(args.target)
-    # 计算路径
     base_dir, notes_md, assets_dir = compute_paths_by_target(args.target)
-
-    # 创建资产目录（每个目标独立）
-    assets_dir = ensure_assets_dir(assets_dir)   # ← 只接收一个返回值
+    assets_dir = ensure_assets_dir(assets_dir)
 
     if not CFG.input_pdf.exists():
         print(f"[ERROR] PDF 不存在：{CFG.input_pdf}")
         sys.exit(2)
 
-    print("[1/5] PDF → 图片")
-    pages_all = pdf_to_images(CFG.input_pdf, assets_dir, CFG.render_dpi)  # ← 渲染到 assets 目录
-
-    # ===== 选择页码范围（包含 end）=====
-    total = len(pages_all)
+    # 计算合法页码范围
+    pdf_doc = fitz.open(CFG.input_pdf)
+    total_pages = pdf_doc.page_count
+    pdf_doc.close()
     start_idx = max(1, args.start)
-    end_idx = min(args.end if args.end else total, total)
+    end_idx = min(args.end if args.end else total_pages, total_pages)
     if start_idx > end_idx:
         print(f"[ERROR] 页码范围非法：start={start_idx}, end={end_idx}")
         sys.exit(2)
-
-    pages = pages_all[start_idx-1:end_idx]
-    print(f"[INFO] 将处理第 {start_idx} 至 {end_idx} 页，共 {len(pages)} 页。")
-    # ==================================
+    print(f"[INFO] 将处理第 {start_idx} 至 {end_idx} 页，共 {end_idx - start_idx + 1} 页。")
 
     drv = start_browser(CFG.headless)
     go_to_chat(drv)
     print(f"[2/5] 登录成功，资产目录：{assets_dir}")
     print(f"[2/5] 目标笔记：{notes_md}")
 
-
+    # 逐页按需渲染 / 复用
     for page_no in range(start_idx, end_idx + 1):
-        img_path = pages_all[page_no - 1]  # 真实页码 → 索引
+        img_path = render_page_if_needed(CFG.input_pdf, assets_dir,
+                                         page_idx=page_no - 1,
+                                         dpi=CFG.render_dpi)
+        rel_img = Path(assets_dir.name) / img_path.name
         print(f"  - 处理第 {page_no} 页：{img_path.name}")
-        rel_img = Path(assets_dir.name) / img_path.name  # 相对 md 的路径
+
         try:
-            answer = ask_with_retries(
-                drv=drv,
-                img_path=img_path,
-                prompt=CFG.prompt_text,
-                base_timeout=CFG.answer_timeout,
-                max_attempts=5
-            )
+            answer = ask_with_retries(drv=drv,
+                                      img_path=img_path,
+                                      prompt=CFG.prompt_text,
+                                      base_timeout=CFG.answer_timeout,
+                                      max_attempts=5)
         except TimeoutException as e:
             print(f"[ask] 第 {page_no} 页最终失败：{e}")
             answer = f"> ⚠️ 本页多次重试仍超时，稍后请手动重试。\n\n原因：{e}"
+        except Exception as e:
+            print(f"[FATAL] 第 {page_no} 页出现致命错误：{e!r}")
+            with open(notes_md, "a", encoding="utf-8") as f:
+                f.write(f"\n\n> ❌ 程序在第 {page_no} 页因异常停止：{e!r}\n")
+            drv.quit()
+            sys.exit(1)
+
         append_to_md(notes_md, rel_img, answer, page_no)
-
-
-
 
     print(f"[✔] 完成！结果保存在：{notes_md.resolve()}")
     drv.quit()
