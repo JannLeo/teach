@@ -7,9 +7,12 @@ Auto Q&A from PDF → chat → Markdown notes.
 - output/ 放在该目标文件名的同目录
 - 生成的 md 命名为 <目标文件名>_prepare.md
 """
-
+import subprocess
+import sys
+from pathlib import Path
 from __future__ import annotations
-import sys, time, shutil, argparse
+import random
+import sys, time, argparse
 from dataclasses import dataclass
 from pathlib import Path
 import fitz  # PyMuPDF
@@ -22,8 +25,21 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-import pyperclip
 import re
+import smtplib, ssl          # 新增
+from selenium.common.exceptions import (
+    StaleElementReferenceException,
+    ElementClickInterceptedException,
+    ElementNotInteractableException,
+    JavascriptException,
+    WebDriverException,
+)
+from urllib3.exceptions import ReadTimeoutError as URLLib3ReadTimeoutError, ProtocolError as URLLib3ProtocolError
+try:
+    from requests.exceptions import ConnectionError as RequestsConnectionError
+except Exception:
+    class RequestsConnectionError(Exception):  # 兜底
+        pass
 
 # ===================== CONFIG =====================
 @dataclass
@@ -48,7 +64,7 @@ class Config:
     # - 详细解释：\
     # - 教学重点：\
     # - 学生可能的问题："
-    prompt_text: str = "我现在是一名远程教学老师，需要备课，告诉我这个截图是什么意思并且详细解释，到时候上课我会根据这个回答讲课"
+    prompt_text: str = "什么意思？详细解释"
     # prompt_text: str = "我现在是一名远程教学老师，需要备课，请对截图中的内容逐句详细使用中文解释，不仅仅只是翻译，还需要对它们进行适当的解释,告诉我该怎么教学生并且指导怎么做，到时候上课我会根据这个回答讲课"
     reuse_session: bool = True
     headless: bool = False
@@ -59,6 +75,11 @@ class Config:
     render_dpi: int = 180
     stable_pause: float = 0.8
     idle_timeout: int = 180
+    # 限流专用
+    max_backoff: int = 5          # 最大连续翻倍次数
+    backoff_mult: int = 2        # 每次翻倍倍数
+    driver_http_timeout: int = 300   # WebDriver 命令读超时（秒）
+
 
 CFG = Config()
 
@@ -71,7 +92,7 @@ class SELECTORS:
     PROMPT_AREA_FALLBACK = (By.CSS_SELECTOR, "div.ProseMirror[contenteditable='true']")
     SEND_BUTTON = (By.CSS_SELECTOR, "button[data-testid='send-button'], button#composer-submit-button[aria-label*='发送']")
     STOP_BUTTON = (By.CSS_SELECTOR, "button[data-testid='stop-button'], button#composer-submit-button[aria-label*='停止'], button[aria-label*='Stop']")
-    ASSISTANT_MESSAGE = (By.CSS_SELECTOR, "[data-message-author-role='assistant'], div.assistant, div.markdown")
+    # ASSISTANT_MESSAGE = (By.CSS_SELECTOR, "[data-message-author-role='assistant'], div.assistant, div.markdown")
     TILE_SEL = "span[style*='background-image'],img[src^='blob:'],img[src^='data:']"
     CHANGE_ACCOUNT_BUTTON = (By.CSS_SELECTOR,
         "div#changeButton, div[title*='切换系统后台账号'], div[title*='change account']"
@@ -88,6 +109,50 @@ class SELECTORS:
         'button[aria-label*="复制"], button[aria-label*="拷贝"], '
         'button[aria-label*="Copy"]'
     )
+    ERROR_BUBBLE = (By.CSS_SELECTOR, "div.text-token-text-error")  # 红色错误提示容器
+    REGENERATE_ERROR_BTN = (By.CSS_SELECTOR, "button[data-testid='regenerate-thread-error-button']")
+
+def extract_wait_seconds(text: str) -> int | None:
+    """从错误提示中提取等待秒数；只在 wait/等待 的语境里取数，避免命中 3h0m0s。"""
+    if not text:
+        return None
+
+    # 归一化
+    t = text.strip()
+    t = re.sub(r"^>\s*⚠️.*?\n+", "", t, flags=re.S)  # 去回退提示
+    t = re.sub(r"(?m)^\s*>\s*", "", t)              # 去 blockquote
+    t = re.sub(r"\s+", " ", t).strip().lower()
+
+    # 1) 英文优先：please wait / retry in / wait ... before trying
+    m = re.search(r"(?:please\s*wait|wait)\D{0,12}?(\d+)\s*(?:s|sec|secs|second|seconds)\b", t, flags=re.I)
+    if m:
+        return int(m.group(1))
+
+    m = re.search(r"retry\s*in\D{0,12}?(\d+)\s*(?:s|sec|secs|second|seconds)\b", t, flags=re.I)
+    if m:
+        return int(m.group(1))
+
+    m = re.search(r"(\d+)\s*(?:s|sec|secs|second|seconds)\s*before\s*(?:retry|trying)\b", t, flags=re.I)
+    if m:
+        return int(m.group(1))
+
+    # 2) 中文：请等待 N 秒 / N 秒后重试
+    m = re.search(r"请等待\s*(\d+)\s*秒", t)
+    if m:
+        return int(m.group(1))
+    m = re.search(r"(\d+)\s*秒\s*后(?:重试|再试|重发|重提问)", t)
+    if m:
+        return int(m.group(1))
+
+    # 3) “等待 1分30秒”这类（必须出现在 等待/please wait 语境里，避免命中 3h0m0s）
+    m = re.search(r"(?:请?等待|please\s*wait)\D{0,12}?(\d+)\s*(?:分钟?|min|m)\s*(\d+)\s*(?:秒|sec|s)\b", t, flags=re.I)
+    if m:
+        return int(m.group(1)) * 60 + int(m.group(2))
+
+    # 调试帮助（可保留）
+    print(f"[extract_wait_seconds] 未识别到秒数，片段: {t[:140]}")
+    return None
+
 
 # ===================== 剪贴板 hook（与你现有一致，略） =====================
 def grant_clipboard_permissions(drv, origin="https://dn7vxt.aitianhu2.top"):
@@ -215,6 +280,16 @@ def start_browser(headless=False):
     opt.add_argument("--disable-gpu"); opt.add_argument("--no-sandbox")
     opt.add_argument("--window-size=1400,900")
     drv = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=opt)
+    # ← 新增：提高 WebDriver 命令读超时 / 脚本执行超时
+    try:
+        drv.command_executor.set_timeout(CFG.driver_http_timeout)
+    except Exception:
+        pass
+    try:
+        drv.set_script_timeout(CFG.driver_http_timeout)
+    except Exception:
+        pass
+
     drv.set_page_load_timeout(CFG.page_load_timeout)
     return drv
 
@@ -234,8 +309,23 @@ def maybe_login(drv):
         pass
 
 def go_to_chat(drv):
-    drv.get(CFG.login_url); maybe_login(drv)
-    drv.get(CFG.site_url);  maybe_login(drv)
+    """打开聊天页；一旦超时立即刷新，无限重试直到成功。"""
+    for url in (CFG.login_url, CFG.site_url):
+        while True:                       # 死循环，直到加载成功
+            try:
+                drv.get(url)              # 尝试加载
+                break                     # 成功就跳出
+            except TimeoutException as e:
+                print(f"[net] 加载 {url} 超时，立即刷新重试… ({e})")
+                try:
+                    drv.refresh()         # 刷新一次
+                except Exception as e2:   # 刷新也超时？继续刷新
+                    print(f"[net] 刷新同样超时，继续刷新… ({e2})")
+                continue                  # 继续 while True
+
+        maybe_login(drv)
+
+    # 以下是你原来的授权 & hook
     grant_clipboard_permissions(drv, origin="https://dn7vxt.aitianhu2.top")
     install_clipboard_hook(drv)
     time.sleep(0.5)
@@ -385,6 +475,15 @@ def type_prompt_and_send(drv, text):
         pass
 
 def click_copy_button_in_last_turn(drv) -> bool:
+    # 清空浏览器侧 & 系统侧剪贴板，避免读到“上一次”的内容
+    try:
+        drv.execute_script("window.__lastCopiedText = '';")
+    except Exception:
+        pass
+    try:
+        import pyperclip; pyperclip.copy("")  # 置空系统剪贴板
+    except Exception:
+        pass
     turns = drv.find_elements(*SELECTORS.ASSISTANT_TURN)
     if not turns: return False
     turn = turns[-1]
@@ -405,42 +504,81 @@ def click_copy_button_in_last_turn(drv) -> bool:
         except Exception:
             return False
 
-def wait_for_latest_answer(drv, timeout):
+import hashlib
+
+def _fingerprint(text: str) -> str:
+    return hashlib.sha1((text or "").strip().encode("utf-8", "ignore")).hexdigest()
+
+def wait_for_latest_answer(drv, timeout, last_fp: str = "") -> dict:
+    """
+    返回：
+      {"kind":"rate_limit", "wait":秒, "raw":文本}
+      {"kind":"answer", "md":markdown_or_text, "fp":sha1}
+      {"kind":"empty"}  # 没拿到新内容
+    """
+    # 放在 wait_for(drv, SELECTORS.ASSISTANT_TURN, timeout) 之前，先快速探测全局错误块
+    global_err = drv.find_elements(By.CSS_SELECTOR, "div.text-token-text-error .markdown, div.text-token-text-error")
+    if global_err:
+        err_text = (global_err[-1].text or "").strip()
+        sec = extract_wait_seconds(err_text)
+        if sec is not None:
+            return {"kind": "rate_limit", "wait": sec, "raw": err_text}
+
     wait_for(drv, SELECTORS.ASSISTANT_TURN, timeout)
     wait_until_idle(drv)
     time.sleep(0.4)
     install_clipboard_hook(drv)
 
-    # ===== 新增：多次尝试复制 =====
-    last_text = ""
-    for retry in range(2):  # 尝试两次
-        clicked = click_copy_button_in_last_turn(drv)
-        if clicked:
-            md = read_captured_markdown(drv, timeout=6.0)
-            if md and md.strip() and md.strip() != last_text:
-                return md.strip()
-            md = read_clipboard_via_browser(drv, timeout=6.0)
-            if md and md.strip() and md.strip() != last_text:
-                return md.strip()
+    # 获取最后一条 assistant turn
+    turns = drv.find_elements(*SELECTORS.ASSISTANT_TURN)
+    if not turns:
+        return {"kind":"empty"}
+    turn = turns[-1]
+    drv.execute_script("arguments[0].scrollIntoView({block:'center'});", turn)
+
+    # 1) 先看是否是“错误气泡”
+    try:
+        # 在 wait_for_latest_answer 的错误块读取处，替换为：
+        err_nodes = turn.find_elements(By.CSS_SELECTOR, "div.text-token-text-error .markdown, div.text-token-text-error")
+        if not err_nodes:
+            err_nodes = drv.find_elements(By.CSS_SELECTOR, "div.text-token-text-error .markdown, div.text-token-text-error")  # 全局兜底
+        if err_nodes:
+            err_text = (err_nodes[-1].text or "").strip()
+            sec = extract_wait_seconds(err_text)
+            if sec is not None:
+                return {"kind":"rate_limit", "wait": sec, "raw": err_text}
+
+    except Exception:
+        pass
+
+    # 2) 点复制 → 读剪贴板；失败则直接读 DOM 文本
+    copied = click_copy_button_in_last_turn(drv)
+    md = ""
+    if copied:
+        md = read_captured_markdown(drv, timeout=6.0) or read_clipboard_via_browser(drv, timeout=6.0)
+        if not md:
             try:
-                md2 = (pyperclip.paste() or "").strip()
-                if md2 and md2 != last_text:
-                    return md2
+                import pyperclip
+                md = (pyperclip.paste() or "").strip()
             except Exception:
-                pass
+                md = ""
+    if not md:
+        # 兜底：直接拿最后一条的纯文本（markdown 容器或整个 turn）
+        try:
+            md_nodes = turn.find_elements(By.CSS_SELECTOR, ".markdown, .prose, [data-message-author-role='assistant']")
+            md = (md_nodes[-1].text if md_nodes else turn.text).strip()
+        except Exception:
+            md = ""
 
-            # 如果没读到内容或内容没变化，就再按一次复制按钮
-            print(f"[copy] 第 {retry+1} 次复制无变化，准备重试点击复制按钮…")
-            last_text = md or md2 or ""
-            time.sleep(1.0)
-        else:
-            print("[copy] 未能点击复制按钮，重试中…")
-            time.sleep(1.0)
+    if not md:
+        return {"kind":"empty"}
 
-    # ===== 原 fallback 部分 =====
-    nodes = drv.find_elements(*SELECTORS.ASSISTANT_MESSAGE)
-    fallback = nodes[-1].text.strip() if nodes else ""
-    return f"> ⚠️ 未能复制为 Markdown，以下为纯文本回退：\n\n{fallback}"
+    fp = _fingerprint(md)
+    if last_fp and fp == last_fp:
+        # 没有新内容（大概率复制到了旧剪贴板），当作 empty 让上层重试
+        return {"kind":"empty"}
+
+    return {"kind":"answer", "md": md, "fp": fp}
 
 def compact_blank_lines(text: str) -> str:
     """
@@ -477,64 +615,51 @@ def append_to_md(md_file: Path, rel_img: Path, answer_md: str, page_no: int):
         f.write("\n")
 
 def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_attempts: int = 5) -> str:
-    """
-    针对当前图片执行：上传 → 提问 → 等待答案，并在超时时进行：
-      1) 刷新并重问
-      2) 仍不行：sleep(10) 再刷新并重问
-      3) 仍不行：翻倍等待时间并继续尝试（直到 max_attempts）
-
-    返回：Markdown 文本（或纯文本回退）。
-    """
-    # 每次尝试前都重新上传并提问，确保刷新后上下文干净
     def _upload_and_ask():
         upload_image(drv, img_path)
-        # ===== 新增：检查图片是否被吞掉 =====
-        try:
-            tiles = count_tiles(drv)
-            if tiles == 0:
-                print("[ask] 检测到图片预览丢失，重新上传一次…")
-                upload_image(drv, img_path)
-                tiles2 = count_tiles(drv)
-                if tiles2 == 0:
-                    raise RuntimeError("图片多次上传后仍未显示，可能被网页吞掉。")
-        except Exception as e:
-            print(f"[ask] 上传检查出错：{e!r}（将重试上传）")
-            time.sleep(2)
+        tiles = count_tiles(drv)
+        if tiles == 0:
             upload_image(drv, img_path)
-
-        # ===================================
         type_prompt_and_send(drv, prompt)
 
     attempt = 1
     timeout = int(base_timeout)
+    last_fp = ""  # 记录上一条内容的指纹，防止读到旧内容
+    transient_errs = 0
+    transient_err_cap = 8  # 每页最多软错误次数
 
     while attempt <= max_attempts:
         print(f"[ask] 尝试 #{attempt}，当前等待时长={timeout}s")
         try:
             _upload_and_ask()
-            answer = wait_for_latest_answer(drv, timeout)
+            res = wait_for_latest_answer(drv, timeout, last_fp=last_fp)
 
-            # ====== 新增：检测“账号超负荷” ======
-            if is_overloaded_text(answer):
-                print("[ask] 检测到“账号超负荷”提示，准备切换后台账号并新建会话…")
-                if click_change_account_and_new_session(drv, reason="因超负荷触发"):
-                    # 切换成功：不计入一次失败，直接继续重试当前页（重新上传&提问）
-                    print("[ask] 已完成后台账号切换，新会话已就绪，将在当前页重新发起提问。")
-                    # 不 return，不 raise，不递增 attempt，直接继续下一轮 while
-                    continue
-                else:
-                    # 按钮没点成，退回到你的刷新/翻倍策略（等同一次失败）
-                    print("[ask] 未能点击“切换”按钮，将按超时重试策略继续。")
-                    raise TimeoutException("账号超负荷，但切换按钮点击失败。")
-            # ===================================
+            if res.get("kind") == "rate_limit":
+                wait_sec = max(5, min(600, int(res.get("wait", 30))))
+                wait_sec += random.randint(2, 7)  # 抖动
+                print(f"[rate-limit] 命中限流：{res.get('wait')}s → 实际等待 {wait_sec}s 后在【同一页】重试…")
+                time.sleep(wait_sec)
+                # 直接继续同一页，不增 attempt
+                continue
 
-            print(f"[ask] 成功于尝试 #{attempt}")
-            return answer
+            if res.get("kind") == "empty":
+                print("[copy] 未拿到新内容（可能复制失败或仍在生成），刷新后原页重试…")
+                refresh_and_prepare(drv, reason="empty content")
+                time.sleep(1.0)
+                # 不增 attempt，继续同一页
+                continue
+
+            if res.get("kind") == "answer":
+                last_fp = res.get("fp", "")
+                print(f"[ask] 成功于尝试 #{attempt}")
+                return res["md"]
+
+            # 兜底
+            print("[ask] 未知返回，按 empty 处理，原页重试…")
+            continue
 
         except TimeoutException as e:
-            msg = str(e) or "TimeoutException"
-            print(f"[ask] 尝试 #{attempt} 超时：{msg}")
-
+            print(f"[ask] 尝试 #{attempt} 超时：{e}")
             if attempt == 1:
                 refresh_and_prepare(drv, reason="首次超时 → 刷新重试")
             elif attempt == 2:
@@ -544,14 +669,64 @@ def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_at
             else:
                 timeout = max(timeout * 2, timeout + 30)
                 print(f"[ask] 多次超时：将等待时长翻倍为 {timeout}s 后继续尝试")
-
             attempt += 1
 
         except Exception as e:
-            print(f"[ask] 尝试 #{attempt} 出现非超时异常：{e!r}（将继续下一轮或最终抛出）")
+            # 归类：哪些属于“可恢复”（刷新即可），哪些属于“需要重启”（此处先不做重启，只刷新），其余才真正抛出
+            transient_types = (
+                URLLib3ReadTimeoutError, URLLib3ProtocolError, RequestsConnectionError,
+                StaleElementReferenceException,
+                ElementClickInterceptedException,
+                ElementNotInteractableException,
+                JavascriptException,
+            )
+
+            msg = (str(e) or "").lower()
+            looks_transient = isinstance(e, transient_types) or any(
+                s in msg for s in [
+                    "stale element reference",
+                    "element is not clickable",
+                    "javascript error",
+                    "httpconnectionpool",
+                    "read timed out",
+                    "net::err_",  # 网络波动
+                ]
+            )
+
+            if looks_transient:
+                transient_errs += 1
+                if transient_errs > transient_err_cap:
+                    print(f"[ask] 可恢复异常已超过 {transient_err_cap} 次，按一次失败处理并增加 attempt…")
+                    attempt += 1
+                    continue
+
+                print(f"[ask] 可恢复异常：{e!r} → 刷新页面后【同一页】重试…")
+                try:
+                    refresh_and_prepare(drv, reason="transient exception")
+                except Exception as e2:
+                    print(f"[ask] 刷新时也出错（忽略继续）：{e2!r}")
+                time.sleep(1.5)
+                # 关键：不计入 attempt，不前进页
+                continue
+
+            # WebDriverException 里也有一部分可以当软错误（例如短暂的 devtools 断连）
+            if isinstance(e, WebDriverException):
+                if any(s in msg for s in ["not connected to devtools", "target closed"]):
+                    print(f"[ask] WebDriver 短暂断连：{e!r} → 刷新后同页重试…")
+                    try:
+                        refresh_and_prepare(drv, reason="devtools reconnect")
+                    except Exception as e2:
+                        print(f"[ask] 刷新失败（忽略继续）：{e2!r}")
+                    time.sleep(1.5)
+                    continue
+
+            # 其余才按真正异常处理
+            print(f"[ask] 尝试 #{attempt} 出现不可恢复异常：{e!r}")
             raise
 
+
     raise TimeoutException(f"多次重试后仍超时（共 {max_attempts} 次），请稍后再试。")
+
 
 
 # ===================== 路径解析：根据 --target 计算输出位置 =====================
@@ -575,15 +750,32 @@ def compute_paths_by_target(target_arg: str):
     assets_dir = base_dir / f"{stem}_assets"   # ← 每个目标独立资产目录
     return base_dir, notes_md, assets_dir
 
+def send_qq_mail(to_addr: str, subject: str, body: str):
+    """用 QQ 邮箱 SMTP 发信，端口 465（SSL）。"""
+    smtp_server = "smtp.qq.com"
+    port = 465
+    # 这里写你自己的 QQ 邮箱和「授权码」（不是登录密码！）
+    sender_email = "1144097453@qq.com"
+    password = "drljclcjrxfmgjdg"          # 去 QQ 邮箱设置里生成
 
-# ===================== MAIN =====================
+    msg = f"From: {sender_email}\r\nTo: {to_addr}\r\nSubject: {subject}\r\n\r\n{body}"
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, to_addr, msg.encode("utf-8"))
+    print(f"[mail] 提醒邮件已发送至 {to_addr}")
+
+
 # =====================  MAIN  =====================
 def main():
     parser = argparse.ArgumentParser(description="PDF逐页问答并生成备课Markdown")
-    parser.add_argument("-t", "--target", required=True,
-                        help="备课目标文件名（可含路径，可带/不带扩展名）")
-    parser.add_argument("-p", "--pdf", required=True,
-                        help="输入 PDF 文件路径")
+    parser.add_argument("-t", "--target",
+                        default=None,  # ← 关键：允许缺省
+                        help="备课目标文件名（可含路径，可带/不带扩展名）。"
+                            "缺省时用第一个 PDF 的路径（去扩展名）作为前缀。")
+    parser.add_argument("-p", "--pdf", required=True, action="append", type=Path,
+                        help="输入 PDF 文件路径，可多次指定，例如：-p a.pdf -p b.pdf")
     parser.add_argument("--start", type=int, default=1,
                         help="起始页码（从 1 开始）")
     parser.add_argument("--end", type=int, default=None,
@@ -592,60 +784,92 @@ def main():
                         help="无界面模式运行 Chrome")
     args = parser.parse_args()
 
-    # 覆盖配置
-    CFG.input_pdf = Path(args.pdf).expanduser().resolve()
-    CFG.headless = bool(args.headless)
-    base_dir, notes_md, assets_dir = compute_paths_by_target(args.target)
-    assets_dir = ensure_assets_dir(assets_dir)
+    done_list = []          # 记录成功完成的 (pdf, md)
+    drv = None              # 浏览器实例
 
-    if not CFG.input_pdf.exists():
-        print(f"[ERROR] PDF 不存在：{CFG.input_pdf}")
-        sys.exit(2)
+    # ── 缺省 target 逻辑 ──
+    if args.target is None:
+        if not args.pdf:
+            print("[ERROR] 必须至少提供一个 PDF 文件（-p）")
+            sys.exit(2)
+        args.target = str(args.pdf[0].with_suffix(''))  # 去掉 .pdf
+    # ----------------------
 
-    # 计算合法页码范围
-    pdf_doc = fitz.open(CFG.input_pdf)
-    total_pages = pdf_doc.page_count
-    pdf_doc.close()
-    start_idx = max(1, args.start)
-    end_idx = min(args.end if args.end else total_pages, total_pages)
-    if start_idx > end_idx:
-        print(f"[ERROR] 页码范围非法：start={start_idx}, end={end_idx}")
-        sys.exit(2)
-    print(f"[INFO] 将处理第 {start_idx} 至 {end_idx} 页，共 {end_idx - start_idx + 1} 页。")
+    for pdf_path in args.pdf:
+        pdf_path = pdf_path.expanduser().resolve()
+        if not pdf_path.exists():
+            print(f"[ERROR] PDF 不存在：{pdf_path}")
+            continue
 
-    drv = start_browser(CFG.headless)
-    go_to_chat(drv)
-    print(f"[2/5] 登录成功，资产目录：{assets_dir}")
-    print(f"[2/5] 目标笔记：{notes_md}")
+        stem = pdf_path.stem
+        base_dir, notes_md, assets_dir = compute_paths_by_target(
+            Path(args.target).parent / stem
+        )
+        assets_dir = ensure_assets_dir(assets_dir)
 
-    # 逐页按需渲染 / 复用
-    for page_no in range(start_idx, end_idx + 1):
-        img_path = render_page_if_needed(CFG.input_pdf, assets_dir,
-                                         page_idx=page_no - 1,
-                                         dpi=CFG.render_dpi)
-        rel_img = Path(assets_dir.name) / img_path.name
-        print(f"  - 处理第 {page_no} 页：{img_path.name}")
+        pdf_doc = fitz.open(pdf_path)
+        total_pages = pdf_doc.page_count
+        pdf_doc.close()
+        start_idx = max(1, args.start)
+        end_idx = min(args.end if args.end else total_pages, total_pages)
+        print(f"[INFO] 将处理 {pdf_path.name} 第 {start_idx} 至 {end_idx} 页。")
 
+        # 浏览器只启动一次
+        if drv is None:
+            drv = start_browser(args.headless)
+            go_to_chat(drv)
+
+        # 逐页处理
+        for page_no in range(start_idx, end_idx + 1):
+            img_path = render_page_if_needed(pdf_path, assets_dir, page_idx=page_no - 1, dpi=CFG.render_dpi)
+            rel_img = Path(assets_dir.name) / img_path.name
+            print(f"  - 处理第 {page_no} 页：{img_path.name}")
+
+            try:
+                answer = ask_with_retries(drv, img_path, CFG.prompt_text, CFG.answer_timeout)
+            except TimeoutException as e:
+                print(f"[ask] 第 {page_no} 页最终失败：{e}")
+                answer = f"> ⚠️ 本页多次重试仍超时，稍后请手动重试。\n\n原因：{e}"
+            except Exception as e:
+                print(f"[FATAL] 第 {page_no} 页出现致命错误：{e!r}")
+                with open(notes_md, "a", encoding="utf-8") as f:
+                    f.write(f"\n\n> ❌ 程序在第 {page_no} 页因异常停止：{e!r}\n")
+                drv.quit()
+                sys.exit(1)
+
+            append_to_md(notes_md, rel_img, answer, page_no)
+
+        # ===== 单本 PDF 已跑完：生成讲解视频 =====
+        print(f"[VIDEO] 开始生成 {notes_md.stem} 的讲解视频…")
         try:
-            answer = ask_with_retries(drv=drv,
-                                      img_path=img_path,
-                                      prompt=CFG.prompt_text,
-                                      base_timeout=CFG.answer_timeout,
-                                      max_attempts=5)
-        except TimeoutException as e:
-            print(f"[ask] 第 {page_no} 页最终失败：{e}")
-            answer = f"> ⚠️ 本页多次重试仍超时，稍后请手动重试。\n\n原因：{e}"
-        except Exception as e:
-            print(f"[FATAL] 第 {page_no} 页出现致命错误：{e!r}")
-            with open(notes_md, "a", encoding="utf-8") as f:
-                f.write(f"\n\n> ❌ 程序在第 {page_no} 页因异常停止：{e!r}\n")
-            drv.quit()
-            sys.exit(1)
+            result = subprocess.run(
+                [sys.executable, "auto_gen_audio.py", "--md", str(notes_md)],
+                capture_output=True, text=True, check=True
+            )
+            last_line = result.stdout.strip().splitlines()[-1]
+            if "🎉 完整视频已生成" in last_line:
+                mp4_path = last_line.split("：")[-1].strip()
+                done_list.append((pdf_path, notes_md, Path(mp4_path)))
+                print(f"[VIDEO] 已生成并记录：{mp4_path}")
+            else:
+                print(f"[VIDEO] 未解析到 MP4 路径：{last_line}")
+                done_list.append((pdf_path, notes_md, None))
+        except subprocess.CalledProcessError as e:
+            print(f"[VIDEO] 视频生成失败：{e.stderr}")
+            done_list.append((pdf_path, notes_md, None))
 
-        append_to_md(notes_md, rel_img, answer, page_no)
+    # ===== 全部 PDF 跑完：发邮件 =====
+    if done_list:
+        mp4_lines = [f"{pdf.name} → {mp4}" for pdf, _, mp4 in done_list if mp4]
+        if mp4_lines:
+            body = "以下完整讲解视频已生成：\n" + "\n".join(mp4_lines) + "\n\n请手动下载观看。"
+            send_qq_mail("1144097453@qq.com", "PDF 讲解视频全部完成", body)
+        else:
+            print("[mail] 无成功生成的 MP4，跳过邮件。")
 
-    print(f"[✔] 完成！结果保存在：{notes_md.resolve()}")
-    drv.quit()
+    # 退出浏览器
+    if drv:
+        drv.quit()
 
 if __name__ == "__main__":
     main()
