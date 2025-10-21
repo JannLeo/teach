@@ -44,6 +44,20 @@ output_video_dir.mkdir(parents=True, exist_ok=True)
 print(f"[DEBUG] 视频将输出到：{output_video_dir}")
 os.makedirs(output_video_dir, exist_ok=True)
 
+def prepare_text(raw: str) -> str:
+    # 先用你已有的清理
+    t = clean_markdown(raw)
+    # 处理星号（*）为逗号，避免 TTS 读出
+    t = re.sub(r'[＊*•●▪▫·]+', '，', t)
+    # 删除不需要的数字，如 "465 1880"
+    # 删除所有“纯数字”或“逗号/空格分隔的数字”
+    t = re.sub(r'\b\d+(?:[,\s]\d+)*\b', '', t)
+    # 删除网址链接
+    t = re.sub(r'https?://\S+', '', t)  # 删除网址
+    # 压缩空白
+    t = re.sub(r'\s+', ' ', t).strip()
+    return t
+
 
 def clean_markdown(text: str) -> str:
     # 1. 去掉图片链接 ![...](...)
@@ -275,7 +289,6 @@ def generate_audio_tmp(text) -> Path:
 
 
 def generate_ass_by_segments(segments, output_file, frame_w, frame_h):
-    # segments: [{'text':..., 'start':t0, 'end':t1}, ...]
     import textwrap
     header = textwrap.dedent(f"""\
     [Script Info]
@@ -286,18 +299,20 @@ def generate_ass_by_segments(segments, output_file, frame_w, frame_h):
 
     [V4+ Styles]
     Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
-    Style: Cur,Microsoft YaHei,36,&H00FFFF00,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,2,60,60,50,1
-    Style: Prev,Microsoft YaHei,30,&H55FFFF00,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,2,60,60,120,1
+    Style: Cur,Microsoft YaHei,36,&H00FFFF00,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,3,2,0,2,60,60,64,1
+    Style: Prev,Microsoft YaHei,30,&H55FFFF00,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,3,1,0,5,60,60,40,1
 
     [Events]
     Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     """)
 
     def ts(x):
-        h=int(x//3600); m=int((x%3600)//60); s=x%60
+        h = int(x // 3600)
+        m = int((x % 3600) // 60)
+        s = x % 60
         return f"{h:01}:{m:02}:{s:05.2f}"
 
-    lines=[]
+    lines = []
     for i, seg in enumerate(segments):
         def esc(text: str) -> str:
             # 基本转义：反斜杠、花括号，顺带把多空白压成空格
@@ -305,19 +320,22 @@ def generate_ass_by_segments(segments, output_file, frame_w, frame_h):
             t = t.replace('\\', r'\\').replace('{', '（').replace('}', '）')
             # 可选：把很长的句子手动断行，避免过宽（示例每 ~28 字加一次换行）
             if len(t) > 28:
-                chunks = [t[i:i+28] for i in range(0, len(t), 28)]
+                chunks = [t[i:i + 28] for i in range(0, len(t), 28)]
                 t = r'\N'.join(chunks)
             return t
 
-        cur_txt  = esc(seg['text'])
-        lines.append(f"Dialogue: 0,{ts(seg['start'])},{ts(seg['end'])},Cur,,0,0,0,,{cur_txt}")
-        if i > 0:
-            prev_txt = esc(segments[i-1]['text'])
-            lines.append(f"Dialogue: 1,{ts(seg['start'])},{ts(seg['end'])},Prev,,0,0,0,,{prev_txt}")
+        cur_txt = esc(seg['text'])
 
+        # 计算上一句和当前句之间的距离
+        prev_margin_v = frame_h - 200 if i == 0 else frame_h - 100  # 如果是第一页的第一句，放上面
+        cur_margin_v = frame_h - 100  # 当前字幕始终放在屏幕下方
 
+        # 当前句字幕显示在画面下方
+        lines.append(f"Dialogue: 0,{ts(seg['start'])},{ts(seg['end'])},Cur,,0,0,0,,{{\\fad(120,80)}}{cur_txt}, {frame_w//2-300}, {cur_margin_v}")
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(header + "\n".join(lines) + "\n")
+
+
 
 
 
@@ -411,7 +429,8 @@ def generate_videos(pages):
         image_file = Path(image_dir) / p['image']
 
         # 1) 逐句切分文本
-        sentences = split_sentences(p['text'], max_len=28)
+        cleaned = prepare_text(p['text'])
+        sentences = split_sentences(cleaned, max_len=28)
         # 强过滤：去掉空/全标点的句子
         sentences = [re.sub(r'\s+', ' ', s).strip() for s in sentences]
         sentences = [s for s in sentences if s and re.sub(r'[^\w\u4e00-\u9fa5]+', '', s)]
@@ -430,11 +449,16 @@ def generate_videos(pages):
                 w = make_silence_wav(0.4)
 
             d = wav_duration(w)
-            # 多留 0.25 秒让字幕更好读；纯静音时可稍短
-            pad = 0.25 if d > 0.25 else 0.15
-            segments.append({'text': s, 'start': t, 'end': t + d + pad})
+            # 关键：Cur 只显示真实时长，不加 pad
+            start = t
+            end   = t + d
+            segments.append({'text': s, 'start': start, 'end': end})
             wav_parts.append(w)
-            t += d
+
+            # 把 pad 放到“下一句的开始之前”，避免重影
+            pad = 0.25 if d > 0.25 else 0.15
+            t = end + pad
+
 
         if not wav_parts:
             # 回退：整段一次性 TTS，至少保证页面能出片

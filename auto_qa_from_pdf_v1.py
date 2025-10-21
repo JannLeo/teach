@@ -7,10 +7,11 @@ Auto Q&A from PDF → chat → Markdown notes.
 - output/ 放在该目标文件名的同目录
 - 生成的 md 命名为 <目标文件名>_prepare.md
 """
+from __future__ import annotations
 import subprocess
 import sys
 from pathlib import Path
-from __future__ import annotations
+
 import random
 import sys, time, argparse
 from dataclasses import dataclass
@@ -64,7 +65,7 @@ class Config:
     # - 详细解释：\
     # - 教学重点：\
     # - 学生可能的问题："
-    prompt_text: str = "什么意思？详细解释"
+    prompt_text: str = "什么意思？详细解释，中文回答"
     # prompt_text: str = "我现在是一名远程教学老师，需要备课，请对截图中的内容逐句详细使用中文解释，不仅仅只是翻译，还需要对它们进行适当的解释,告诉我该怎么教学生并且指导怎么做，到时候上课我会根据这个回答讲课"
     reuse_session: bool = True
     headless: bool = False
@@ -475,34 +476,57 @@ def type_prompt_and_send(drv, text):
         pass
 
 def click_copy_button_in_last_turn(drv) -> bool:
-    # 清空浏览器侧 & 系统侧剪贴板，避免读到“上一次”的内容
+    # 1. 清空剪贴板缓存
     try:
         drv.execute_script("window.__lastCopiedText = '';")
     except Exception:
         pass
     try:
-        import pyperclip; pyperclip.copy("")  # 置空系统剪贴板
+        import pyperclip
+        pyperclip.copy("")
     except Exception:
         pass
+
     turns = drv.find_elements(*SELECTORS.ASSISTANT_TURN)
-    if not turns: return False
+    if not turns:
+        return False
     turn = turns[-1]
     drv.execute_script("arguments[0].scrollIntoView({block:'center'});", turn)
     time.sleep(0.1)
+
     btns = turn.find_elements(*SELECTORS.COPY_BUTTON_IN_TURN) or drv.find_elements(*SELECTORS.COPY_BUTTON_IN_TURN)
-    if not btns: return False
+    if not btns:
+        return False
     btn = btns[-1]
+
     try:
         WebDriverWait(drv, 5).until(EC.element_to_be_clickable(btn))
     except Exception:
         pass
+
+    # 2. 点击复制按钮
     try:
-        btn.click(); return True
+        btn.click()
     except Exception:
         try:
-            drv.execute_script("arguments[0].click();", btn); return True
+            drv.execute_script("arguments[0].click();", btn)
         except Exception:
             return False
+
+    # 3. ✅ 检测是否出现“Failed to copy”提示（显式等待 1.5 s）
+    try:
+        WebDriverWait(drv, 1.5).until(
+            EC.presence_of_element_located(
+                (By.XPATH, "//div[contains(text(), 'Failed to copy')]")
+            )
+        )
+        print("[copy] 检测到“Failed to copy”提示，视为复制失败")
+        return False
+    except TimeoutException:
+        # 未出现提示，认为点击成功
+        pass
+
+    return True
 
 import hashlib
 
@@ -516,42 +540,21 @@ def wait_for_latest_answer(drv, timeout, last_fp: str = "") -> dict:
       {"kind":"answer", "md":markdown_or_text, "fp":sha1}
       {"kind":"empty"}  # 没拿到新内容
     """
-    # 放在 wait_for(drv, SELECTORS.ASSISTANT_TURN, timeout) 之前，先快速探测全局错误块
-    global_err = drv.find_elements(By.CSS_SELECTOR, "div.text-token-text-error .markdown, div.text-token-text-error")
-    if global_err:
-        err_text = (global_err[-1].text or "").strip()
-        sec = extract_wait_seconds(err_text)
-        if sec is not None:
-            return {"kind": "rate_limit", "wait": sec, "raw": err_text}
 
+    # 1. 等待最后一条 assistant turn 出现（确保页面已加载）
     wait_for(drv, SELECTORS.ASSISTANT_TURN, timeout)
     wait_until_idle(drv)
     time.sleep(0.4)
     install_clipboard_hook(drv)
 
-    # 获取最后一条 assistant turn
+    # 2. 获取最后一条 assistant turn
     turns = drv.find_elements(*SELECTORS.ASSISTANT_TURN)
     if not turns:
-        return {"kind":"empty"}
+        return {"kind": "empty"}
     turn = turns[-1]
     drv.execute_script("arguments[0].scrollIntoView({block:'center'});", turn)
 
-    # 1) 先看是否是“错误气泡”
-    try:
-        # 在 wait_for_latest_answer 的错误块读取处，替换为：
-        err_nodes = turn.find_elements(By.CSS_SELECTOR, "div.text-token-text-error .markdown, div.text-token-text-error")
-        if not err_nodes:
-            err_nodes = drv.find_elements(By.CSS_SELECTOR, "div.text-token-text-error .markdown, div.text-token-text-error")  # 全局兜底
-        if err_nodes:
-            err_text = (err_nodes[-1].text or "").strip()
-            sec = extract_wait_seconds(err_text)
-            if sec is not None:
-                return {"kind":"rate_limit", "wait": sec, "raw": err_text}
-
-    except Exception:
-        pass
-
-    # 2) 点复制 → 读剪贴板；失败则直接读 DOM 文本
+    # 3. ✅ 优先获取内容（复制或 DOM）
     copied = click_copy_button_in_last_turn(drv)
     md = ""
     if copied:
@@ -563,22 +566,31 @@ def wait_for_latest_answer(drv, timeout, last_fp: str = "") -> dict:
             except Exception:
                 md = ""
     if not md:
-        # 兜底：直接拿最后一条的纯文本（markdown 容器或整个 turn）
+        # 兜底：直接读 DOM
         try:
             md_nodes = turn.find_elements(By.CSS_SELECTOR, ".markdown, .prose, [data-message-author-role='assistant']")
             md = (md_nodes[-1].text if md_nodes else turn.text).strip()
         except Exception:
             md = ""
 
+    # 4. ✅ 如果内容为空，**直接返回 empty**，**不再检查限流**
     if not md:
-        return {"kind":"empty"}
+        return {"kind": "empty"}
 
+    # 5. ✅ 内容非空，再检查是否有限流提示（避免残留误报）
+    err_nodes = turn.find_elements(By.CSS_SELECTOR, "div.text-token-text-error")
+    if err_nodes:
+        err_text = (err_nodes[-1].text or "").strip()
+        sec = extract_wait_seconds(err_text)
+        if sec is not None:
+            return {"kind": "rate_limit", "wait": sec, "raw": err_text}
+
+    # 6. ✅ 内容指纹去重
     fp = _fingerprint(md)
     if last_fp and fp == last_fp:
-        # 没有新内容（大概率复制到了旧剪贴板），当作 empty 让上层重试
-        return {"kind":"empty"}
+        return {"kind": "empty"}
 
-    return {"kind":"answer", "md": md, "fp": fp}
+    return {"kind": "answer", "md": md, "fp": fp}
 
 def compact_blank_lines(text: str) -> str:
     """
@@ -639,6 +651,7 @@ def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_at
                 wait_sec += random.randint(2, 7)  # 抖动
                 print(f"[rate-limit] 命中限流：{res.get('wait')}s → 实际等待 {wait_sec}s 后在【同一页】重试…")
                 time.sleep(wait_sec)
+                last_fp = ""
                 # 直接继续同一页，不增 attempt
                 continue
 
@@ -660,6 +673,15 @@ def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_at
 
         except TimeoutException as e:
             print(f"[ask] 尝试 #{attempt} 超时：{e}")
+            # ✅ 超过 300 s 就视为卡死，刷新重试当前页
+            if timeout >= 300:
+                print(f"[ask] 等待时长已达 {timeout}s，视为卡死，刷新页面后重试当前页…")
+                refresh_and_prepare(drv, reason=f"等待超时已达 {timeout}s")
+                time.sleep(1)
+                # 不增加 attempt，继续当前页
+                continue
+
+            # ✅ 300 s 以内才允许翻倍
             if attempt == 1:
                 refresh_and_prepare(drv, reason="首次超时 → 刷新重试")
             elif attempt == 2:
@@ -667,8 +689,8 @@ def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_at
                 time.sleep(10.0)
                 refresh_and_prepare(drv, reason="二次超时 → 再次刷新重试")
             else:
-                timeout = max(timeout * 2, timeout + 30)
-                print(f"[ask] 多次超时：将等待时长翻倍为 {timeout}s 后继续尝试")
+                timeout = min(300, max(timeout * 2, timeout + 30))  # ✅ 封顶 300 s
+                print(f"[ask] 将等待时长翻倍为 {timeout}s 后继续尝试")
             attempt += 1
 
         except Exception as e:
@@ -776,14 +798,22 @@ def main():
                             "缺省时用第一个 PDF 的路径（去扩展名）作为前缀。")
     parser.add_argument("-p", "--pdf", required=True, action="append", type=Path,
                         help="输入 PDF 文件路径，可多次指定，例如：-p a.pdf -p b.pdf")
-    parser.add_argument("--start", type=int, default=1,
-                        help="起始页码（从 1 开始）")
-    parser.add_argument("--end", type=int, default=None,
-                        help="终止页码（包含）")
+    parser.add_argument("--start", dest="ranges", action="append", type=int,
+                    help="对该 PDF 的起始页码（从 1 开始）")
+    parser.add_argument("--end", dest="ranges", action="append", type=int,
+                    help="对该 PDF 的终止页码（包含）")
     parser.add_argument("--headless", action="store_true",
                         help="无界面模式运行 Chrome")
     args = parser.parse_args()
 
+    # 把 --start/--end 按顺序配给前面的 -p
+    pdf_and_ranges = []
+    starts = args.ranges[::2] if args.ranges else []   # 0,2,4...
+    ends   = args.ranges[1::2] if args.ranges else []   # 1,3,5...
+    for i, pdf in enumerate(args.pdf):
+        start = starts[i] if i < len(starts) else 1
+        end   = ends[i]   if i < len(ends)   else None
+        pdf_and_ranges.append((Path(pdf), start, end))
     done_list = []          # 记录成功完成的 (pdf, md)
     drv = None              # 浏览器实例
 
@@ -795,7 +825,7 @@ def main():
         args.target = str(args.pdf[0].with_suffix(''))  # 去掉 .pdf
     # ----------------------
 
-    for pdf_path in args.pdf:
+    for pdf_path, start, end in pdf_and_ranges:
         pdf_path = pdf_path.expanduser().resolve()
         if not pdf_path.exists():
             print(f"[ERROR] PDF 不存在：{pdf_path}")
@@ -810,8 +840,8 @@ def main():
         pdf_doc = fitz.open(pdf_path)
         total_pages = pdf_doc.page_count
         pdf_doc.close()
-        start_idx = max(1, args.start)
-        end_idx = min(args.end if args.end else total_pages, total_pages)
+        start_idx = max(1, start)
+        end_idx = min(end if end else total_pages, total_pages)
         print(f"[INFO] 将处理 {pdf_path.name} 第 {start_idx} 至 {end_idx} 页。")
 
         # 浏览器只启动一次
@@ -858,14 +888,28 @@ def main():
             print(f"[VIDEO] 视频生成失败：{e.stderr}")
             done_list.append((pdf_path, notes_md, None))
 
-    # ===== 全部 PDF 跑完：发邮件 =====
+   # ===== 全部 PDF 跑完：发邮件（只发通知，不附带视频） =====
     if done_list:
         mp4_lines = [f"{pdf.name} → {mp4}" for pdf, _, mp4 in done_list if mp4]
         if mp4_lines:
-            body = "以下完整讲解视频已生成：\n" + "\n".join(mp4_lines) + "\n\n请手动下载观看。"
-            send_qq_mail("1144097453@qq.com", "PDF 讲解视频全部完成", body)
+            # 邮件正文：只包含视频生成的路径说明，不附带文件
+            body = (
+                "以下完整讲解视频已生成：\n\n"
+                + "\n".join(mp4_lines)
+                + "\n\n视频文件已保存在本地，请手动查看或上传云盘。"
+            )
+            try:
+                send_qq_mail(
+                    "1144097453@qq.com",
+                    "PDF 讲解视频全部完成（无附件）",
+                    body
+                )
+                print("[mail] 已发送完成通知（不包含视频附件）")
+            except Exception as e:
+                print(f"[mail] 邮件发送失败：{e}")
         else:
             print("[mail] 无成功生成的 MP4，跳过邮件。")
+
 
     # 退出浏览器
     if drv:
