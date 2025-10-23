@@ -28,6 +28,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import re
 import smtplib, ssl          # 新增
+import tempfile, atexit, shutil
 from selenium.common.exceptions import (
     StaleElementReferenceException,
     ElementClickInterceptedException,
@@ -620,6 +621,7 @@ def compact_blank_lines(text: str) -> str:
     return "\n".join(cleaned)
 
 def append_to_md(md_file: Path, rel_img: Path, answer_md: str, page_no: int):
+    print(f"[write] 第 {page_no} 页写入内容长度：{len(answer_md)} 字符")
     with md_file.open("a", encoding="utf-8") as f:
         f.write(f"\n\n---\n\n## 第 {page_no} 页\n\n")
         f.write(f"![第 {page_no} 页]({rel_img.as_posix()})\n\n")
@@ -628,6 +630,17 @@ def append_to_md(md_file: Path, rel_img: Path, answer_md: str, page_no: int):
 
 def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_attempts: int = 5) -> str:
     def _upload_and_ask():
+        # ✅ 清空剪贴板缓存
+        try:
+            drv.execute_script("window.__lastCopiedText = '';")
+        except Exception:
+            pass
+        try:
+            import pyperclip
+            pyperclip.copy("")
+        except Exception:
+            pass
+
         upload_image(drv, img_path)
         tiles = count_tiles(drv)
         if tiles == 0:
@@ -663,6 +676,9 @@ def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_at
                 continue
 
             if res.get("kind") == "answer":
+                if not res["md"].strip():
+                    print("[copy] 复制成功但内容为空，视为 empty，继续重试…")
+                    continue  # ✅ 加这一行
                 last_fp = res.get("fp", "")
                 print(f"[ask] 成功于尝试 #{attempt}")
                 return res["md"]
@@ -817,24 +833,14 @@ def main():
     done_list = []          # 记录成功完成的 (pdf, md)
     drv = None              # 浏览器实例
 
-    # ── 缺省 target 逻辑 ──
-    if args.target is None:
-        if not args.pdf:
-            print("[ERROR] 必须至少提供一个 PDF 文件（-p）")
-            sys.exit(2)
-        args.target = str(args.pdf[0].with_suffix(''))  # 去掉 .pdf
-    # ----------------------
-
     for pdf_path, start, end in pdf_and_ranges:
         pdf_path = pdf_path.expanduser().resolve()
         if not pdf_path.exists():
             print(f"[ERROR] PDF 不存在：{pdf_path}")
             continue
 
-        stem = pdf_path.stem
-        base_dir, notes_md, assets_dir = compute_paths_by_target(
-            Path(args.target).parent / stem
-        )
+        target_stem = pdf_path.with_suffix('')        # 当前 PDF 的绝对路径去掉后缀
+        base_dir, notes_md, assets_dir = compute_paths_by_target(target_stem)
         assets_dir = ensure_assets_dir(assets_dir)
 
         pdf_doc = fitz.open(pdf_path)
@@ -869,24 +875,24 @@ def main():
 
             append_to_md(notes_md, rel_img, answer, page_no)
 
-        # ===== 单本 PDF 已跑完：生成讲解视频 =====
-        print(f"[VIDEO] 开始生成 {notes_md.stem} 的讲解视频…")
-        try:
-            result = subprocess.run(
-                [sys.executable, "auto_gen_audio.py", "--md", str(notes_md)],
-                capture_output=True, text=True, check=True
-            )
-            last_line = result.stdout.strip().splitlines()[-1]
-            if "🎉 完整视频已生成" in last_line:
-                mp4_path = last_line.split("：")[-1].strip()
-                done_list.append((pdf_path, notes_md, Path(mp4_path)))
-                print(f"[VIDEO] 已生成并记录：{mp4_path}")
-            else:
-                print(f"[VIDEO] 未解析到 MP4 路径：{last_line}")
-                done_list.append((pdf_path, notes_md, None))
-        except subprocess.CalledProcessError as e:
-            print(f"[VIDEO] 视频生成失败：{e.stderr}")
-            done_list.append((pdf_path, notes_md, None))
+        # # ===== 单本 PDF 已跑完：生成讲解视频 =====
+        # print(f"[VIDEO] 开始生成 {notes_md.stem} 的讲解视频…")
+        # try:
+        #     result = subprocess.run(
+        #         [sys.executable, "auto_gen_audio.py", "--md", str(notes_md)],
+        #         capture_output=True, text=True, check=True
+        #     )
+        #     last_line = result.stdout.strip().splitlines()[-1]
+        #     if "🎉 完整视频已生成" in last_line:
+        #         mp4_path = last_line.split("：")[-1].strip()
+        #         done_list.append((pdf_path, notes_md, Path(mp4_path)))
+        #         print(f"[VIDEO] 已生成并记录：{mp4_path}")
+        #     else:
+        #         print(f"[VIDEO] 未解析到 MP4 路径：{last_line}")
+        #         done_list.append((pdf_path, notes_md, None))
+        # except subprocess.CalledProcessError as e:
+        #     print(f"[VIDEO] 视频生成失败：{e.stderr}")
+        #     done_list.append((pdf_path, notes_md, None))
 
    # ===== 全部 PDF 跑完：发邮件（只发通知，不附带视频） =====
     if done_list:

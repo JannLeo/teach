@@ -9,7 +9,7 @@ import math
 import wave
 import textwrap
 from gtts import gTTS
-
+import fitz  # PyMuPDF
 # —— Windows 事件循环修正（edge_tts + websockets 更稳定）——
 import os, asyncio
 if os.name == "nt":
@@ -37,6 +37,9 @@ print(f"[DEBUG] 图片目录：{image_dir}")
 # === 动态输出目录 ===
 OUTPUT_ROOT = r'D:\other\teacher\teach_video'
 md_path      = Path(md_file).resolve()
+stem = md_path.stem.replace('_prepare', '')      # 去掉 _prepare
+pdf_path = md_path.with_name(stem + '.pdf')      # 同级 XXX.pdf
+assets_dir = md_path.with_suffix('').parent / f"{md_path.stem.replace('_prepare', '')}_assets"
 course_name  = md_path.parent.name
 stem_clean   = md_path.stem.replace('_prepare', '')
 output_video_dir = Path(OUTPUT_ROOT) / course_name / stem_clean
@@ -79,20 +82,47 @@ def clean_markdown(text: str) -> str:
     text = re.sub(r'\n{3,}', '\n\n', text)
     return text.strip()
 
-def adjust_image_size(image_path):
-    """调整图片尺寸为偶数"""
-    with Image.open(image_path) as img:
-        width, height = img.size
-        # 如果宽度或高度是奇数，则将其加1，确保是偶数
-        new_width = width + 1 if width % 2 != 0 else width
-        new_height = height + 1 if height % 2 != 0 else height
-
-        # 调整尺寸，使用 LANCZOS 高质量滤镜
-        img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
-        img.save(image_path)  # 保存调整后的图片
+def adjust_image_size(image_path: Path):
+    """调整图片尺寸为偶数，失败就跳过"""
+    try:
+        with Image.open(image_path) as img:
+            width, height = img.size
+            new_width = width + 1 if width % 2 else width
+            new_height = height + 1 if height % 2 else height
+            if (new_width, new_height) == (width, height):
+                return  # 已经是偶数，不用改
+            img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+            img.save(image_path)
+            print(f"Image {image_path.name} resized to {new_width}x{new_height}.")
+    except Exception as e:
+        print(f"[WARN] 无法处理 {image_path}：{e} —— 跳过此页")
+        image_path.unlink(missing_ok=True)  # 可选：删掉坏图
+        # 关键：直接结束函数，不再往下执行
+        return
 
     print(f"Image {image_path} resized to {new_width}x{new_height}.")
 
+def render_page_if_needed(pdf_path: Path, assets_dir: Path, page_idx: int, dpi: int = 180) -> Path:
+    """
+    page_idx : 0-based
+    返回 assets_dir / page-xxx.png 的绝对路径
+    已存在且比 pdf 新 → 直接复用；否则只渲染这一页
+    """
+    png_path = assets_dir / f"page-{page_idx+1:03d}.png"
+    pdf_mtime = pdf_path.stat().st_mtime
+    if png_path.exists() and png_path.stat().st_mtime > pdf_mtime:
+        print(f"[reuse] 复用已有图片：{png_path.name}")
+        return png_path
+
+    # 只抽这一页
+    doc = fitz.open(pdf_path)
+    page = doc.load_page(page_idx)          # 0-based
+    mat = fitz.Matrix(dpi/72, dpi/72)
+    pix = page.get_pixmap(matrix=mat)
+    pix.save(png_path)
+    doc.close()
+    print(f"[render] 已渲染单页：{png_path.name}")
+    return png_path
 def parse_markdown(md_file):
     with open(md_file, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -108,28 +138,35 @@ def parse_markdown(md_file):
 
         # 1. 图片：根据页码生成图片文件名
         img_filename = f"page-{int(page_no):03d}.png"  # 根据页码生成类似 "page-001.png"
-        img_path = os.path.join(image_dir, img_filename).replace("\\", "/")  # 获取图片完整路径
+        img_path = Path(image_dir) / img_filename 
 
         print(f"[DEBUG] 第 {page_no} 页 ✅ 图片：{img_filename}")
-
+        if not img_path.exists():
+            print(f"[DEBUG] 第 {page_no} 页图片不存在，将重新渲染")
+            # 重新渲染单页（0-based）
+            img_path = render_page_if_needed(pdf_path, assets_dir, page_idx=int(page_no)-1)
+            if not img_path.exists():  # 仍然失败就跳过
+                print(f"[DEBUG] 第 {page_no} 页重新渲染失败，跳过")
+                continue
         if os.path.exists(img_path):
             adjust_image_size(img_path)  # 调整图像尺寸
         else:
             print(f"[DEBUG] 第 {page_no} 页 ❌ 图片不存在：{img_path}")
             continue
 
-        # 2. 正文：图片后直到下一页标题之前的所有内容
+        # 2. 识别到 `[口语化表达]` 标记后，提取该部分正文直到下一个图片
         text_match = re.search(
-            r'!\[.*?\]\(.*?\)\s*\n+(.*?)(?=\n##\s*第\s*\d+\s*页|\Z)',  # 提取正文内容
+            r'\[口语化表达\](.*?)(?=---|\Z)',  # 匹配 [口语化表达] 后到图片之间的文本
             page_content,
             re.DOTALL
         )
         if not text_match:
-            print(f"[DEBUG] 第 {page_no} 页 ❌ 取不到正文")
+            print(f"[DEBUG] 第 {page_no} 页 ❌ 取不到[口语化表达]内容")
             continue
+        
         text = text_match.group(1).strip()
 
-        if len(text) < 10:
+        if len(text) < 5:
             print(f"[DEBUG] 第 {page_no} 页 ❌ 正文过短（<10）")
             continue
         print(f"[DEBUG] 第 {page_no} 页 ✅ 正文长度：{len(text)}")
@@ -342,15 +379,13 @@ def generate_ass_by_segments(segments, output_file, frame_w, frame_h):
 
 
 def merge_videos(pages: list, output_dir: Path, stem_clean: str) -> Path:
-    """把所有 page_XX.mp4 合并成单个文件"""
-    # 按页号排序
     pages.sort(key=lambda p: int(p['page_no']))
-    # 创建临时列表文件
     list_file = output_dir / 'concat_list.txt'
     with list_file.open('w', encoding='utf-8') as f:
         for p in pages:
             mp4 = output_dir / f"page_{p['page_no']}.mp4"
-            f.write(f"file '{mp4.resolve()}'\n")
+            # ✅ 关键修复：去掉引号，用 as_posix()
+            f.write(f"file {mp4.resolve().as_posix()}\n")
 
     full_video = output_dir / f"{stem_clean}_full.mp4"
     cmd = [
@@ -359,8 +394,9 @@ def merge_videos(pages: list, output_dir: Path, stem_clean: str) -> Path:
         '-c', 'copy', '-y', str(full_video)
     ]
     subprocess.run(cmd, check=True)
-    list_file.unlink(missing_ok=True)   # 删除列表文件
-    # ✅ 新增：删除单页中间文件
+    list_file.unlink(missing_ok=True)
+
+    # 清理单页文件
     for p in pages:
         p['mp4'].unlink(missing_ok=True)
     print(f"🧹 已清理 {len(pages)} 个单页 MP4")
