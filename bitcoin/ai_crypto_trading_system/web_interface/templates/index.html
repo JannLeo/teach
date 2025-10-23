@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI驱动加密货币交易系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .metric-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+            transition: transform 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .status-running { background-color: #28a745; }
+        .status-stopped { background-color: #dc3545; }
+        .status-warning { background-color: #ffc107; }
+        .data-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .alert-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+        .alert-critical {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        .alert-warning {
+            background-color: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+        .alert-info {
+            background-color: #d1ecf1;
+            border-color: #17a2b8;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 侧边栏 -->
+            <div class="col-md-2 bg-dark text-white min-vh-100">
+                <div class="p-3">
+                    <h4 class="text-center mb-4">
+                        <i class="fas fa-robot"></i> AI交易系统
+                    </h4>
+                    <nav class="nav flex-column">
+                        <a class="nav-link text-white active" href="#dashboard">
+                            <i class="fas fa-tachometer-alt"></i> 仪表板
+                        </a>
+                        <a class="nav-link text-white" href="#trading">
+                            <i class="fas fa-chart-line"></i> 交易监控
+                        </a>
+                        <a class="nav-link text-white" href="#performance">
+                            <i class="fas fa-chart-bar"></i> 性能分析
+                        </a>
+                        <a class="nav-link text-white" href="#alerts">
+                            <i class="fas fa-exclamation-triangle"></i> 系统警报
+                        </a>
+                        <a class="nav-link text-white" href="#settings">
+                            <i class="fas fa-cog"></i> 系统设置
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- 主内容区 -->
+            <div class="col-md-10">
+                <div class="main-container">
+                    <!-- 系统标题 -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h1 class="text-center">
+                                <i class="fas fa-brain"></i> 
+                                AI驱动加密货币交易系统
+                            </h1>
+                            <p class="text-center text-muted">
+                                基于深度学习和智能决策的自动化交易平台
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- 系统状态概览 -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <h6><i class="fas fa-power-off"></i> 系统状态</h6>
+                                <h3 id="system-status">
+                                    <span class="status-indicator status-running"></span>
+                                    运行中
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <h6><i class="fas fa-coins"></i> 活跃交易对</h6>
+                                <h3 id="active-pairs">3</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <h6><i class="fas fa-chart-line"></i> 今日盈亏</h6>
+                                <h3 id="daily-pnl" class="text-success">+$0.00</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <h6><i class="fas fa-shield-alt"></i> 风险评分</h6>
+                                <h3 id="risk-score" class="text-warning">低</h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 实时数据图表 -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="chart-container">
+                                <h5><i class="fas fa-chart-area"></i> 价格走势</h5>
+                                <canvas id="price-chart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="chart-container">
+                                <h5><i class="fas fa-pie-chart"></i> 交易分布</h5>
+                                <canvas id="trading-chart" width="200" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块状态表格 -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="data-table">
+                                <div class="p-3 bg-light border-bottom">
+                                    <h5><i class="fas fa-cogs"></i> 模块状态</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>模块名称</th>
+                                                <th>状态</th>
+                                                <th>最后检查</th>
+                                                <th>性能指标</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="modules-table">
+                                            <tr>
+                                                <td><i class="fas fa-database"></i> 数据采集</td>
+                                                <td>
+                                                    <span class="status-indicator status-running"></span>
+                                                    正常
+                                                </td>
+                                                <td>2025-10-23 12:00:00</td>
+                                                <td>数据延迟: 0.5s</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-sync"></i> 重启
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-brain"></i> AI决策</td>
+                                                <td>
+                                                    <span class="status-indicator status-running"></span>
+                                                    正常
+                                                </td>
+                                                <td>2025-10-23 12:00:00</td>
+                                                <td>置信度: 85%</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-sync"></i> 重启
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-shield-alt"></i> 风险管理</td>
+                                                <td>
+                                                    <span class="status-indicator status-warning"></span>
+                                                    警告
+                                                </td>
+                                                <td>2025-10-23 12:00:00</td>
+                                                <td>熔断器: 激活</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-warning">
+                                                        <i class="fas fa-exclamation-triangle"></i> 重置
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-exchange-alt"></i> 订单执行</td>
+                                                <td>
+                                                    <span class="status-indicator status-running"></span>
+                                                    正常
+                                                </td>
+                                                <td>2025-10-23 12:00:00</td>
+                                                <td>成功率: 98%</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-sync"></i> 重启
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 警报面板 -->
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="data-table">
+                                <div class="p-3 bg-light border-bottom">
+                                    <h5><i class="fas fa-exclamation-triangle"></i> 最近警报</h5>
+                                </div>
+                                <div id="alerts-panel" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="alert-item alert-info">
+                                        <strong>系统启动</strong><br>
+                                        <small>2025-10-23 11:30:15</small><br>
+                                        AI交易系统已成功启动
+                                    </div>
+                                    <div class="alert-item alert-warning">
+                                        <strong>API延迟</strong><br>
+                                        <small>2025-10-23 11:45:22</small><br>
+                                        交易所API响应时间超过5秒
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="data-table">
+                                <div class="p-3 bg-light border-bottom">
+                                    <h5><i class="fas fa-list"></i> 最近交易</h5>
+                                </div>
+                                <div id="recent-trades" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="p-3 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>BTC/USDT</strong></span>
+                                            <span class="text-success">买入</span>
+                                        </div>
+                                        <div class="text-muted">
+                                            <small>价格: $30,250.50 | 数量: 0.001</small>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>ETH/USDT</strong></span>
+                                            <span class="text-danger">卖出</span>
+                                        </div>
+                                        <div class="text-muted">
+                                            <small>价格: $1,850.25 | 数量: 0.01</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 控制面板 -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="p-3 bg-light border rounded">
+                                <h5><i class="fas fa-sliders-h"></i> 系统控制</h5>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button class="btn btn-danger" onclick="shutdownSystem()">
+                                            <i class="fas fa-power-off"></i> 关闭系统
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-warning" onclick="resetRiskManagement()">
+                                            <i class="fas fa-redo"></i> 重置风险管理
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-info" onclick="exportData()">
+                                            <i class="fas fa-download"></i> 导出数据
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-secondary" onclick="refreshData()">
+                                            <i class="fas fa-sync"></i> 刷新数据
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Socket.IO连接
+        const socket = io();
+        
+        // 连接事件
+        socket.on('connect', function() {
+            console.log('已连接到服务器');
+            socket.emit('subscribe_metrics', {type: 'all'});
+        });
+        
+        // 断开事件
+        socket.on('disconnect', function() {
+            console.log('与服务器断开连接');
+        });
+        
+        // 系统更新事件
+        socket.on('system_update', function(data) {
+            updateDashboard(data);
+        });
+        
+        // 初始化图表
+        let priceChart, tradingChart;
+        
+        function initCharts() {
+            // 价格走势图
+            const priceCtx = document.getElementById('price-chart').getContext('2d');
+            priceChart = new Chart(priceCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'BTC/USDT',
+                        data: [],
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '实时价格走势'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+            
+            // 交易分布饼图
+            const tradingCtx = document.getElementById('trading-chart').getContext('2d');
+            tradingChart = new Chart(tradingCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['买入', '卖出', '持有'],
+                    datasets: [{
+                        data: [30, 20, 50],
+                        backgroundColor: [
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 205, 86)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: '交易决策分布'
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateDashboard(data) {
+            // 更新系统状态
+            if (data.status) {
+                updateSystemStatus(data.status);
+            }
+            
+            // 更新性能数据
+            if (data.performance) {
+                updatePerformanceData(data.performance);
+            }
+            
+            // 更新统计数据
+            if (data.statistics) {
+                updateTradingStats(data.statistics);
+            }
+        }
+        
+        function updateSystemStatus(status) {
+            const statusElement = document.getElementById('system-status');
+            if (status.running) {
+                statusElement.innerHTML = '<span class="status-indicator status-running"></span>运行中';
+            } else {
+                statusElement.innerHTML = '<span class="status-indicator status-stopped"></span>已停止';
+            }
+        }
+        
+        function updatePerformanceData(performance) {
+            // 更新交易对数量
+            if (performance.trading_metrics && performance.trading_metrics.data_sources) {
+                document.getElementById('active-pairs').textContent = performance.trading_metrics.data_sources;
+            }
+            
+            // 更新风险评分
+            if (performance.trading_metrics && performance.trading_metrics.performance_summary) {
+                const riskScore = performance.trading_metrics.performance_summary.overall_health;
+                const riskElement = document.getElementById('risk-score');
+                
+                switch (riskScore) {
+                    case 'excellent':
+                    case 'good':
+                        riskElement.className = 'text-success';
+                        riskElement.textContent = '低';
+                        break;
+                    case 'fair':
+                        riskElement.className = 'text-warning';
+                        riskElement.textContent = '中';
+                        break;
+                    case 'poor':
+                        riskElement.className = 'text-danger';
+                        riskElement.textContent = '高';
+                        break;
+                }
+            }
+        }
+        
+        function updateTradingStats(stats) {
+            // 更新交易分布图表
+            if (stats.ai_decisions) {
+                const decisions = stats.ai_decisions;
+                tradingChart.data.datasets[0].data = [
+                    decisions.buy_decisions || 0,
+                    decisions.sell_decisions || 0,
+                    decisions.hold_decisions || 0
+                ];
+                tradingChart.update();
+            }
+            
+            // 更新今日盈亏
+            if (stats.risk_metrics) {
+                const dailyPnl = stats.risk_metrics.daily_pnl || 0;
+                const pnlElement = document.getElementById('daily-pnl');
+                if (dailyPnl >= 0) {
+                    pnlElement.className = 'text-success';
+                    pnlElement.textContent = `+$${dailyPnl.toFixed(2)}`;
+                } else {
+                    pnlElement.className = 'text-danger';
+                    pnlElement.textContent = `-$${Math.abs(dailyPnl).toFixed(2)}`;
+                }
+            }
+        }
+        
+        // 控制函数
+        function shutdownSystem() {
+            if (confirm('确定要关闭系统吗？')) {
+                fetch('/api/control/shutdown', {method: 'POST'})
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('关闭系统时出错');
+                    });
+            }
+        }
+        
+        function resetRiskManagement() {
+            alert('风险管理模块重置功能待实现');
+        }
+        
+        function exportData() {
+            alert('数据导出功能待实现');
+        }
+        
+        function refreshData() {
+            location.reload();
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            
+            // 初始加载数据
+            fetch('/api/system/status')
+                .then(response => response.json())
+                .then(data => updateSystemStatus(data))
+                .catch(error => console.error('Error:', error));
+                
+            fetch('/api/performance')
+                .then(response => response.json())
+                .then(data => updatePerformanceData(data))
+                .catch(error => console.error('Error:', error));
+                
+            fetch('/api/trading/stats')
+                .then(response => response.json())
+                .then(data => updateTradingStats(data))
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

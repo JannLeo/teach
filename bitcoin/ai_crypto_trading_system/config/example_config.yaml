@@ -1,0 +1,128 @@
+# AI驱动加密货币交易系统 - 示例配置文件
+# 复制此文件为 config.yaml 并根据需要修改
+
+# 系统基本配置
+system:
+  name: "AI Crypto Trading System"
+  version: "1.0.0"
+  mode: "development"  # development, production, paper_trading
+  log_level: "INFO"    # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  
+# 数据源配置
+data_sources:
+  # GMGN平台配置
+  gmgn:
+    base_url: "https://gmgn.ai"
+    api_key: ""  # 从GMGN官网获取API密钥
+    enabled: true
+    
+  # 交易所配置 (支持多个交易所)
+  exchange:
+    name: "binance"  # binance, coinbase, kraken等
+    api_key: ""      # 交易所API密钥
+    secret_key: ""   # 交易所密钥
+    testnet: true    # 使用测试网 (推荐用于测试)
+    
+  # 其他数据源可以在这里添加
+  
+# AI模型配置
+ai_model:
+  provider: "deepseek"  # deepseek, openai, anthropic等
+  api_key: ""           # AI服务API密钥
+  model_name: "deepseek-chat"
+  max_tokens: 2000      # 最大输出token数
+  temperature: 0.1      # 温度参数 (0.0-1.0)，降低随机性
+  timeout: 30           # API调用超时时间(秒)
+  
+# 风险管理配置
+risk_management:
+  max_position_size: 0.1        # 最大仓位比例 (10%)
+  stop_loss_percentage: 0.05    # 止损百分比 (5%)
+  take_profit_percentage: 0.1   # 止盈百分比 (10%)
+  max_daily_loss: 0.02         # 最大日亏损比例 (2%)
+  max_drawdown: 0.05           # 最大回撤比例 (5%)
+  max_daily_trades: 10         # 最大日交易次数
+  circuit_breaker_enabled: true # 熔断机制开关
+  
+# 交易配置
+trading:
+  base_currency: "USDT"  # 基础货币
+  trading_pairs:         # 交易对列表
+    - "BTC/USDT"
+    - "ETH/USDT"
+    - "SOL/USDT"
+  order_type: "limit"    # 订单类型: limit, market
+  order_timeout: 60      # 订单超时时间(秒)
+  slippage_tolerance: 0.001  # 滑点容忍度 (0.1%)
+  
+# 监控配置
+monitoring:
+  enabled: true
+  metrics_port: 8080           # 指标端口
+  web_interface_port: 8081     # Web界面端口
+  performance_update_interval: 300  # 性能更新间隔(秒)
+  alert_thresholds:
+    cpu_usage: 80.0
+    memory_usage: 80.0
+    disk_usage: 90.0
+    api_response_time: 5.0
+    error_rate: 0.1
+    daily_loss: 0.05
+    
+# 数据库配置
+database:
+  type: "sqlite"  # sqlite, mysql, postgresql
+  connection_string: "sqlite:///data/trading_system.db"
+  # MySQL示例: "mysql://user:password@localhost/trading_db"
+  # PostgreSQL示例: "postgresql://user:password@localhost/trading_db"
+  
+# 通知配置
+notifications:
+  enabled: false
+  telegram:
+    bot_token: ""  # Telegram Bot Token
+    chat_id: ""    # Telegram Chat ID
+  email:
+    enabled: false
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    username: ""
+    password: ""
+    to_email: ""
+    
+# 数据保留配置
+data_retention:
+  order_history_days: 90      # 订单历史保留天数
+  performance_data_days: 365  # 性能数据保留天数
+  log_files_days: 30          # 日志文件保留天数
+  market_data_days: 7         # 市场数据保留天数
+  
+# 性能调优配置
+performance:
+  max_concurrent_tasks: 10     # 最大并发任务数
+  data_buffer_size: 1000       # 数据缓冲区大小
+  api_request_delay: 0.1       # API请求延迟(秒)
+  retry_attempts: 3            # 重试次数
+  retry_delay: 1               # 重试延迟(秒)
+  
+# 安全配置
+security:
+  enable_encryption: false      # 启用数据加密
+  allowed_ips: []              # 允许访问的IP列表
+  rate_limit_enabled: true     # 启用速率限制
+  max_requests_per_minute: 60  # 每分钟最大请求数
+
+# 开发配置 (仅在development模式下生效)
+development:
+  mock_data_enabled: true      # 启用模拟数据
+  api_call_delay: 0.5          # API调用延迟
+  enable_detailed_logging: true # 启用详细日志
+  
+# 回测配置
+backtesting:
+  enabled: false
+  data_file: "data/historical_data.csv"
+  start_date: "2024-01-01"
+  end_date: "2024-12-31"
+  initial_capital: 10000
+  commission: 0.001

@@ -1,0 +1,3920 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>报告</title>
+	
+	
+	
+	
+	
+	<style>
+		img {
+		cursor: pointer;
+		}
+	</style>
+<style>
+        :root {
+            --nav-width: 20%;
+        }
+
+        body {
+            font-family: sans-serif, Noto Serif SC, SimSun;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            color: #333;
+        }
+
+        body.open-catalog .toc {
+            transform: translateX(0%);
+        }
+
+        body.open-catalog .main-content {
+            margin-left: calc(var(--nav-width) + 20px);
+        }
+
+		body.open-catalog .board {
+            margin-left: var(--nav-width);
+			width: calc(100% - var(--nav-width));
+        }
+
+		body.open-catalog .title {
+			max-width: 960px;
+			width: 100%;
+			word-wrap: break-word;
+			word-break: break-all;
+        }
+
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: left 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background: #2563eb;
+        }
+
+        .toc {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: var(--nav-width);
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            transform: translateX(-100%);
+            z-index: 1000;
+            padding: 1rem;
+            padding-right: 0;
+        }
+
+        .toc h3 {
+            font-size: 18px;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+            margin-right: 15px;
+        }
+
+        .toc a {
+            display: block;
+            padding: 0.5rem 15px 0.5rem 0.5rem;
+            color: #1e293b;
+            text-decoration: none;
+            transition: background 0.3s;
+            font-size: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .toc a:hover {
+            background: #e5e7eb;
+        }
+
+        .toc .sub {
+            padding-left: 2rem;
+            padding-right: 15px;
+            font-size: 0.95rem;
+            color: #475569;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .toc .sub3 {
+            padding-left: 3rem;
+            padding-right: 15px;
+            font-size: 0.9rem;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .resize-handle {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 12px;
+            height: 100%;
+            background: transparent;
+            cursor: col-resize;
+            z-index: 1002;
+            opacity: 0.7;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .resize-handle::before {
+            content: '';
+            width: 2px;
+            height: 20px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #000000 0px,
+                #000000 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            border-radius: 1px;
+            margin-right: 2px;
+        }
+
+        .resize-handle::after {
+            content: '';
+            width: 2px;
+            height: 20px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #000000 0px,
+                #000000 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            border-radius: 1px;
+            margin-left: 2px;
+        }
+
+        .resize-handle:hover {
+            background: transparent;
+        }
+
+        .resize-handle.dragging {
+            background: transparent;
+        }
+
+        .resize-handle.dragging::before,
+        .resize-handle.dragging::after {
+            background: repeating-linear-gradient(
+                to bottom,
+                #333333 0px,
+                #333333 2px,
+                transparent 2px,
+                transparent 4px
+            );
+        }
+
+        .main-content {
+            margin: 0 20px;
+            z-index: 1;
+        }
+
+        .line-bar {
+            position: static;
+            max-width: 960px;
+            width: 100%;
+            height: 0;
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+            margin: 48px auto;
+            border: 1px dashed rgba(0, 0, 0, 0.4);
+        }
+
+        html::-webkit-scrollbar, body ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        html::-webkit-scrollbar-corner, body ::-webkit-scrollbar-corner {
+            display: none;
+        }
+
+        html:hover::-webkit-scrollbar-thumb, body :hover::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        html:hover::-webkit-scrollbar-thumb:hover, body :hover::-webkit-scrollbar-thumb:hover {
+            border-color: #ccc;
+        }
+
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .resize-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            cursor: col-resize;
+            z-index: 9999;
+            display: none;
+        }
+
+        .resize-overlay.active {
+            display: block;
+        }
+    </style>
+<style>
+        .board {
+            width: 100%;
+            min-height: 432px;
+            background-image: 
+linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)
+;
+            margin: 0 auto;
+            padding-top: 210px;
+        }
+        .title-board {
+			max-width: 960px;
+			width: calc(100% - 40px);
+			min-height: 162px;
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: flex-start;
+        }
+        .title {
+            position: static;
+            max-width: 960px;
+            width: 100%;
+            min-height: 134px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 12;
+            padding: 0px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            margin: 12px 0px;
+            color: rgb(255, 255, 255);
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 0px;
+            text-align: left;
+			word-wrap: break-word;
+			word-break: break-all;
+            font-family: SimSun;
+        }
+        .subtitle-board {
+            position: static;
+            max-width: 960px;
+            width: 100%;
+            height: 16px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 8;
+            padding: 0px;
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+            margin: 0px 0px;
+        }
+        .report-content {
+            position: static;
+            width: auto;
+            height: 16px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 8;
+            padding: 0px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            margin: 0px 8px;
+            color: rgb(255, 255, 255);
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 16px;
+            letter-spacing: 0px;
+            text-align: center;
+        }
+        .decoration {
+            position: static;
+            max-width: 8px;
+            width: 100%;
+            height: 0;
+            flex: none;
+            flex-grow: 0;
+            transform: rotate(90.00deg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+<style>.abstract-board {
+            position: static;
+            max-width: 960px;
+            width: 100%;
+            min-height: 406px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 16;
+            padding: 0px;
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+            margin: 56px auto 0;
+        }
+.abstract-board[data-page-id="abstract"] .abstract-title {
+            position: static;
+            max-width: 960px;
+            width: 90%;
+            height: 44px;
+            color: rgba(0, 0, 0, 0.9);
+            font-family: Noto Serif SC;
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 160%;
+            letter-spacing: 0px;
+            text-align: left;
+            text-decoration-line: underline;
+        }
+
+.abstract-board[data-page-id="abstract"] .body-text {
+            position: static;
+            max-width: 960px;
+            width: 100%;
+            color: rgba(0, 0, 0, 0.9);
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 160%;
+            letter-spacing: 0px;
+            text-align: left;
+            margin: 16px 0px;
+        }
+
+.abstract-board[data-page-id="abstract"] .content-card {
+            background: transparent;
+            padding: 24px 32px 24px 32px;
+            border-radius: 4px;
+            background: rgba(0, 103, 209, 0.03);
+        }
+
+.abstract-board[data-page-id="abstract"] .card-title {
+            color: rgba(0, 0, 0, 0.9);
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 180%;
+            letter-spacing: 0px;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+</style>
+<style>.main-content-board {
+      max-width: 960px; 
+      width: 100%;
+      margin: 0 auto;
+      background-color: white;
+      padding: 0px;
+    }
+.main-content-board[data-page-id="1"] .chart-container {
+      position: relative;
+      margin: 0 auto;
+      padding-top: 24px;
+      width: 100%;
+    }
+
+.main-content-board[data-page-id="1"] .svg-chart-container {
+      position: relative;
+    }
+
+.main-content-board[data-page-id="1"] .svg-chart-title {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+.main-content-board[data-page-id="1"] .chart-svg {
+      padding: 0;
+      margin: 0 auto;
+      display: block;
+    }
+
+.main-content-board[data-page-id="1"] .content-card {
+      border: 1px solid rgb(226, 232, 240);
+      border-radius: 4px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="1"] .highlight-container {
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="1"] .table-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+.main-content-board[data-page-id="1"] .chapter-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      flex-grow: 1;
+      color: rgba(0, 0, 0, 0.9);
+      font-family: Noto Serif SC;
+      margin: 0 0 36px 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+      text-decoration-line: underline;
+    }
+
+.main-content-board[data-page-id="1"] .section-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      gap: 32px;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+      margin: 32px 0;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="1"] .section-content-container {
+      background: transparent;
+    }
+
+.main-content-board[data-page-id="1"] .media-container {
+      width: 100%;
+      display: grid;
+      justify-content: center;
+      align-items: center; 
+      margin-bottom: 24px;
+    }
+
+.main-content-board[data-page-id="1"] .media-container img {
+      display: block;
+      grid-area: 1 / 1;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto
+    }
+
+.main-content-board[data-page-id="1"] .source-link {
+      grid-area: 1 / 1;
+      align-self: end;
+      justify-self: start;
+      margin-left: 12px;
+      margin-bottom: 12px;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 12px;
+      padding: 0 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      height: 28px;
+      width: fit-content;
+      pointer-events: auto;
+    }
+
+.main-content-board[data-page-id="1"] sup {
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0px 4px 0px 4px;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 10px;
+    }
+
+.main-content-board[data-page-id="1"] .custom-icon-blue {
+      color: rgb(0,103,209);
+    }
+
+.main-content-board[data-page-id="1"] .custom-icon-green {
+      color: rgb(9,170,113);
+    }
+
+.main-content-board[data-page-id="1"] .custom-icon-orange {
+      color: rgb(244,132,12);
+    }
+
+.main-content-board[data-page-id="1"] .custom-icon-purple {
+      color: rgb(113,90,251);
+    }
+
+.main-content-board[data-page-id="1"] .custom-icon-cyan {
+      color: rgb(44,184,201);
+    }
+
+.main-content-board[data-page-id="1"] .custom-bg-blue {
+      background-color: rgb(242,247,253);
+    }
+
+.main-content-board[data-page-id="1"] .custom-bg-green {
+      background-color: rgb(242,251,248);
+    }
+
+.main-content-board[data-page-id="1"] .custom-bg-orange {
+      background-color: rgb(254,249,243);
+    }
+
+.main-content-board[data-page-id="1"] .custom-bg-purple {
+      background-color: rgb(248,247,255);
+    }
+
+.main-content-board[data-page-id="1"] .custom-bg-cyan {
+      background-color: rgb(244,251,252);
+    }
+
+.main-content-board[data-page-id="1"] .custom-text-blue {
+      color: rgb(0,82,167);
+    }
+
+.main-content-board[data-page-id="1"] .custom-text-green {
+      color: rgb(7,136,90);
+    }
+
+.main-content-board[data-page-id="1"] .custom-text-orange {
+      color: rgb(195,106,10);
+    }
+
+.main-content-board[data-page-id="1"] .custom-text-purple {
+      color: rgb(90,72,201);
+    }
+
+.main-content-board[data-page-id="1"] .custom-text-cyan {
+      color: rgb(35,147,161);
+    }
+
+.main-content-board[data-page-id="1"] th {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="1"] td {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="1"] td:first-child, th:first-child {
+            word-break: keep-all;
+        }
+</style>
+<style>.main-content-board {
+      max-width: 960px; 
+      width: 100%;
+      margin: 0 auto;
+      background-color: white;
+      padding: 0px;
+    }
+.main-content-board[data-page-id="2"] .chart-container {
+      position: relative;
+      margin: 0 auto;
+      padding-top: 24px;
+      width: 100%;
+    }
+
+.main-content-board[data-page-id="2"] .svg-chart-container {
+      position: relative;
+    }
+
+.main-content-board[data-page-id="2"] .svg-chart-title {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+.main-content-board[data-page-id="2"] .chart-svg {
+      padding: 0;
+      margin: 0 auto;
+      display: block;
+    }
+
+.main-content-board[data-page-id="2"] .content-card {
+      border: 1px solid rgb(226, 232, 240);
+      border-radius: 4px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="2"] .highlight-container {
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="2"] .table-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+.main-content-board[data-page-id="2"] .chapter-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      flex-grow: 1;
+      color: rgba(0, 0, 0, 0.9);
+      font-family: Noto Serif SC;
+      margin: 0 0 36px 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+      text-decoration-line: underline;
+    }
+
+.main-content-board[data-page-id="2"] .section-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      gap: 32px;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+      margin: 32px 0;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="2"] .section-content-container {
+      background: transparent;
+    }
+
+.main-content-board[data-page-id="2"] .media-container {
+      width: 100%;
+      display: grid;
+      justify-content: center;
+      align-items: center; 
+      margin-bottom: 24px;
+    }
+
+.main-content-board[data-page-id="2"] .media-container img {
+      display: block;
+      grid-area: 1 / 1;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto
+    }
+
+.main-content-board[data-page-id="2"] .source-link {
+      grid-area: 1 / 1;
+      align-self: end;
+      justify-self: start;
+      margin-left: 12px;
+      margin-bottom: 12px;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 12px;
+      padding: 0 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      height: 28px;
+      width: fit-content;
+      pointer-events: auto;
+    }
+
+.main-content-board[data-page-id="2"] sup {
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0px 4px 0px 4px;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 10px;
+    }
+
+.main-content-board[data-page-id="2"] .custom-icon-blue {
+      color: rgb(0,103,209);
+    }
+
+.main-content-board[data-page-id="2"] .custom-icon-green {
+      color: rgb(9,170,113);
+    }
+
+.main-content-board[data-page-id="2"] .custom-icon-orange {
+      color: rgb(244,132,12);
+    }
+
+.main-content-board[data-page-id="2"] .custom-icon-purple {
+      color: rgb(113,90,251);
+    }
+
+.main-content-board[data-page-id="2"] .custom-icon-cyan {
+      color: rgb(44,184,201);
+    }
+
+.main-content-board[data-page-id="2"] .custom-bg-blue {
+      background-color: rgb(242,247,253);
+    }
+
+.main-content-board[data-page-id="2"] .custom-bg-green {
+      background-color: rgb(242,251,248);
+    }
+
+.main-content-board[data-page-id="2"] .custom-bg-orange {
+      background-color: rgb(254,249,243);
+    }
+
+.main-content-board[data-page-id="2"] .custom-bg-purple {
+      background-color: rgb(248,247,255);
+    }
+
+.main-content-board[data-page-id="2"] .custom-bg-cyan {
+      background-color: rgb(244,251,252);
+    }
+
+.main-content-board[data-page-id="2"] .custom-text-blue {
+      color: rgb(0,82,167);
+    }
+
+.main-content-board[data-page-id="2"] .custom-text-green {
+      color: rgb(7,136,90);
+    }
+
+.main-content-board[data-page-id="2"] .custom-text-orange {
+      color: rgb(195,106,10);
+    }
+
+.main-content-board[data-page-id="2"] .custom-text-purple {
+      color: rgb(90,72,201);
+    }
+
+.main-content-board[data-page-id="2"] .custom-text-cyan {
+      color: rgb(35,147,161);
+    }
+
+.main-content-board[data-page-id="2"] table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+    }
+
+.main-content-board[data-page-id="2"] th, td {
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="2"] th {
+      background-color: #f8fafc;
+      font-weight: 600;
+    }
+
+.main-content-board[data-page-id="2"] th {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="2"] td {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="2"] td:first-child, th:first-child {
+            word-break: keep-all;
+        }
+</style>
+<style>.main-content-board {
+      max-width: 960px; 
+      width: 100%;
+      margin: 0 auto;
+      background-color: white;
+      padding: 0px;
+    }
+.main-content-board[data-page-id="3"] .chart-container {
+      position: relative;
+      margin: 0 auto;
+      padding-top: 24px;
+      width: 100%;
+    }
+
+.main-content-board[data-page-id="3"] .content-card {
+      border: 1px solid rgb(226, 232, 240);
+      border-radius: 4px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="3"] .highlight-container {
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="3"] .table-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+.main-content-board[data-page-id="3"] .chapter-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      flex-grow: 1;
+      color: rgba(0, 0, 0, 0.9);
+      font-family: Noto Serif SC;
+      margin: 0 0 36px 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+      text-decoration-line: underline;
+    }
+
+.main-content-board[data-page-id="3"] .section-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      gap: 32px;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+      margin: 32px 0;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="3"] .section-content-container {
+      background: transparent;
+    }
+
+.main-content-board[data-page-id="3"] .media-container {
+      width: 100%;
+      display: grid;
+      justify-content: center;
+      align-items: center; 
+      margin-bottom: 24px;
+    }
+
+.main-content-board[data-page-id="3"] .source-link {
+      grid-area: 1 / 1;
+      align-self: end;
+      justify-self: start;
+      margin-left: 12px;
+      margin-bottom: 12px;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 12px;
+      padding: 0 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      height: 28px;
+      width: fit-content;
+      pointer-events: auto;
+    }
+
+.main-content-board[data-page-id="3"] sup {
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0px 4px 0px 4px;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 10px;
+    }
+
+.main-content-board[data-page-id="3"] .custom-icon-blue { color: rgb(0,103,209); }
+
+.main-content-board[data-page-id="3"] .custom-icon-green { color: rgb(9,170,113); }
+
+.main-content-board[data-page-id="3"] .custom-icon-orange { color: rgb(244,132,12); }
+
+.main-content-board[data-page-id="3"] .custom-icon-purple { color: rgb(113,90,251); }
+
+.main-content-board[data-page-id="3"] .custom-icon-cyan { color: rgb(44,184,201); }
+
+.main-content-board[data-page-id="3"] .custom-bg-blue { background-color: rgb(242,247,253); }
+
+.main-content-board[data-page-id="3"] .custom-bg-green { background-color: rgb(242,251,248); }
+
+.main-content-board[data-page-id="3"] .custom-bg-orange { background-color: rgb(254,249,243); }
+
+.main-content-board[data-page-id="3"] .custom-bg-purple { background-color: rgb(248,247,255); }
+
+.main-content-board[data-page-id="3"] .custom-bg-cyan { background-color: rgb(244,251,252); }
+
+.main-content-board[data-page-id="3"] .custom-text-blue { color: rgb(0,82,167); }
+
+.main-content-board[data-page-id="3"] .custom-text-green { color: rgb(7,136,90); }
+
+.main-content-board[data-page-id="3"] .custom-text-orange { color: rgb(195,106,10); }
+
+.main-content-board[data-page-id="3"] .custom-text-purple { color: rgb(90,72,201); }
+
+.main-content-board[data-page-id="3"] .custom-text-cyan { color: rgb(35,147,161); }
+
+.main-content-board[data-page-id="3"] .code-block {
+      background-color: #f8f8f8;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 16px;
+      font-family: monospace;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+.main-content-board[data-page-id="3"] th {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="3"] td {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="3"] td:first-child, th:first-child {
+            word-break: keep-all;
+        }
+</style>
+<style>.main-content-board {
+      max-width: 960px; 
+      width: 100%;
+      margin: 0 auto;
+      background-color: white;
+      padding: 0px;
+    }
+.main-content-board[data-page-id="4"] .chart-container {
+      position: relative;
+      margin: 0 auto;
+      padding-top: 24px;
+      width: 100%;
+    }
+
+.main-content-board[data-page-id="4"] .svg-chart-container {
+      position: relative;
+    }
+
+.main-content-board[data-page-id="4"] .svg-chart-title {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+.main-content-board[data-page-id="4"] .chart-svg {
+      padding: 0;
+      margin: 0 auto;
+      display: block;
+    }
+
+.main-content-board[data-page-id="4"] .content-card {
+      border: 1px solid rgb(226, 232, 240);
+      border-radius: 4px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="4"] .highlight-container {
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="4"] .table-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+.main-content-board[data-page-id="4"] .chapter-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      flex-grow: 1;
+      color: rgba(0, 0, 0, 0.9);
+      font-family: Noto Serif SC;
+      margin: 0 0 36px 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+      text-decoration-line: underline;
+    }
+
+.main-content-board[data-page-id="4"] .section-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      gap: 32px;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+      margin: 32px 0;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="4"] .section-content-container {
+      background: transparent;
+    }
+
+.main-content-board[data-page-id="4"] .media-container {
+      width: 100%;
+      display: grid;
+      justify-content: center;
+      align-items: center; 
+      margin-bottom: 24px;
+    }
+
+.main-content-board[data-page-id="4"] .media-container img {
+      display: block;
+      grid-area: 1 / 1;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto
+    }
+
+.main-content-board[data-page-id="4"] .source-link {
+      grid-area: 1 / 1;
+      align-self: end;
+      justify-self: start;
+      margin-left: 12px;
+      margin-bottom: 12px;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 12px;
+      padding: 0 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      height: 28px;
+      width: fit-content;
+      pointer-events: auto;
+    }
+
+.main-content-board[data-page-id="4"] sup {
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0px 4px 0px 4px;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 10px;
+    }
+
+.main-content-board[data-page-id="4"] .custom-icon-blue { color: rgb(0,103,209); }
+
+.main-content-board[data-page-id="4"] .custom-icon-green { color: rgb(9,170,113); }
+
+.main-content-board[data-page-id="4"] .custom-icon-orange { color: rgb(244,132,12); }
+
+.main-content-board[data-page-id="4"] .custom-icon-purple { color: rgb(113,90,251); }
+
+.main-content-board[data-page-id="4"] .custom-icon-cyan { color: rgb(44,184,201); }
+
+.main-content-board[data-page-id="4"] .custom-bg-blue { background-color: rgb(242,247,253); }
+
+.main-content-board[data-page-id="4"] .custom-bg-green { background-color: rgb(242,251,248); }
+
+.main-content-board[data-page-id="4"] .custom-bg-orange { background-color: rgb(254,249,243); }
+
+.main-content-board[data-page-id="4"] .custom-bg-purple { background-color: rgb(248,247,255); }
+
+.main-content-board[data-page-id="4"] .custom-bg-cyan { background-color: rgb(244,251,252); }
+
+.main-content-board[data-page-id="4"] .custom-text-blue { color: rgb(0,82,167); }
+
+.main-content-board[data-page-id="4"] .custom-text-green { color: rgb(7,136,90); }
+
+.main-content-board[data-page-id="4"] .custom-text-orange { color: rgb(195,106,10); }
+
+.main-content-board[data-page-id="4"] .custom-text-purple { color: rgb(90,72,201); }
+
+.main-content-board[data-page-id="4"] .custom-text-cyan { color: rgb(35,147,161); }
+
+.main-content-board[data-page-id="4"] table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+.main-content-board[data-page-id="4"] th, td {
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="4"] th {
+      background-color: #f8fafc;
+      font-weight: 600;
+    }
+
+.main-content-board[data-page-id="4"] th {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="4"] td {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="4"] td:first-child, th:first-child {
+            word-break: keep-all;
+        }
+</style>
+<style>.main-content-board {
+      max-width: 960px; 
+      width: 100%;
+      margin: 0 auto;
+      background-color: white;
+      padding: 0px;
+    }
+.main-content-board[data-page-id="5"] .chart-container {
+      position: relative;
+      margin: 0 auto;
+      padding-top: 24px;
+      width: 100%;
+    }
+
+.main-content-board[data-page-id="5"] .svg-chart-container {
+      position: relative;
+    }
+
+.main-content-board[data-page-id="5"] .svg-chart-title {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+.main-content-board[data-page-id="5"] .chart-svg {
+      padding: 0;
+      margin: 0 auto;
+      display: block;
+    }
+
+.main-content-board[data-page-id="5"] .content-card {
+      border: 1px solid rgb(226, 232, 240);
+      border-radius: 4px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="5"] .highlight-container {
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="5"] .table-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+.main-content-board[data-page-id="5"] .chapter-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      flex-grow: 1;
+      color: rgba(0, 0, 0, 0.9);
+      font-family: Noto Serif SC;
+      margin: 0 0 36px 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+      text-decoration-line: underline;
+    }
+
+.main-content-board[data-page-id="5"] .section-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      gap: 32px;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+      margin: 32px 0;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="5"] .section-content-container {
+      background: transparent;
+    }
+
+.main-content-board[data-page-id="5"] .media-container {
+      width: 100%;
+      display: grid;
+      justify-content: center;
+      align-items: center; 
+      margin-bottom: 24px;
+    }
+
+.main-content-board[data-page-id="5"] .media-container img {
+      display: block;
+      grid-area: 1 / 1;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto
+    }
+
+.main-content-board[data-page-id="5"] .source-link {
+      grid-area: 1 / 1;
+      align-self: end;
+      justify-self: start;
+      margin-left: 12px;
+      margin-bottom: 12px;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 12px;
+      padding: 0 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      height: 28px;
+      width: fit-content;
+      pointer-events: auto;
+    }
+
+.main-content-board[data-page-id="5"] sup {
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0px 4px 0px 4px;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 10px;
+    }
+
+.main-content-board[data-page-id="5"] .custom-icon-blue {
+      color: rgb(0,103,209);
+    }
+
+.main-content-board[data-page-id="5"] .custom-icon-green {
+      color: rgb(9,170,113);
+    }
+
+.main-content-board[data-page-id="5"] .custom-icon-orange {
+      color: rgb(244,132,12);
+    }
+
+.main-content-board[data-page-id="5"] .custom-icon-purple {
+      color: rgb(113,90,251);
+    }
+
+.main-content-board[data-page-id="5"] .custom-icon-cyan {
+      color: rgb(44,184,201);
+    }
+
+.main-content-board[data-page-id="5"] .custom-bg-blue {
+      background-color: rgb(242,247,253);
+    }
+
+.main-content-board[data-page-id="5"] .custom-bg-green {
+      background-color: rgb(242,251,248);
+    }
+
+.main-content-board[data-page-id="5"] .custom-bg-orange {
+      background-color: rgb(254,249,243);
+    }
+
+.main-content-board[data-page-id="5"] .custom-bg-purple {
+      background-color: rgb(248,247,255);
+    }
+
+.main-content-board[data-page-id="5"] .custom-bg-cyan {
+      background-color: rgb(244,251,252);
+    }
+
+.main-content-board[data-page-id="5"] .custom-text-blue {
+      color: rgb(0,82,167);
+    }
+
+.main-content-board[data-page-id="5"] .custom-text-green {
+      color: rgb(7,136,90);
+    }
+
+.main-content-board[data-page-id="5"] .custom-text-orange {
+      color: rgb(195,106,10);
+    }
+
+.main-content-board[data-page-id="5"] .custom-text-purple {
+      color: rgb(90,72,201);
+    }
+
+.main-content-board[data-page-id="5"] .custom-text-cyan {
+      color: rgb(35,147,161);
+    }
+
+.main-content-board[data-page-id="5"] th {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="5"] td {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="5"] td:first-child, th:first-child {
+            word-break: keep-all;
+        }
+</style>
+<style>.main-content-board {
+      max-width: 960px; 
+      width: 100%;
+      margin: 0 auto;
+      background-color: white;
+      padding: 0px;
+    }
+.main-content-board[data-page-id="6"] .chart-container {
+      position: relative;
+      margin: 0 auto;
+      padding-top: 24px;
+      width: 100%;
+    }
+
+.main-content-board[data-page-id="6"] .svg-chart-container {
+      position: relative;
+    }
+
+.main-content-board[data-page-id="6"] .svg-chart-title {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+.main-content-board[data-page-id="6"] .chart-svg {
+      padding: 0;
+      margin: 0 auto;
+      display: block;
+    }
+
+.main-content-board[data-page-id="6"] .content-card {
+      border: 1px solid rgb(226, 232, 240);
+      border-radius: 4px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="6"] .highlight-container {
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="6"] .table-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+.main-content-board[data-page-id="6"] .chapter-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      flex-grow: 1;
+      color: rgba(0, 0, 0, 0.9);
+      font-family: Noto Serif SC;
+      margin: 0 0 36px 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+      text-decoration-line: underline;
+    }
+
+.main-content-board[data-page-id="6"] .section-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      gap: 32px;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+      margin: 32px 0;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="6"] .section-content-container {
+      background: transparent;
+    }
+
+.main-content-board[data-page-id="6"] .media-container {
+      width: 100%;
+      display: grid;
+      justify-content: center;
+      align-items: center; 
+      margin-bottom: 24px;
+    }
+
+.main-content-board[data-page-id="6"] .media-container img {
+      display: block;
+      grid-area: 1 / 1;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto
+    }
+
+.main-content-board[data-page-id="6"] .source-link {
+      grid-area: 1 / 1;
+      align-self: end;
+      justify-self: start;
+      margin-left: 12px;
+      margin-bottom: 12px;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 12px;
+      padding: 0 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      height: 28px;
+      width: fit-content;
+      pointer-events: auto;
+    }
+
+.main-content-board[data-page-id="6"] sup {
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0px 4px 0px 4px;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 10px;
+    }
+
+.main-content-board[data-page-id="6"] .custom-icon-blue {
+      color: rgb(0,103,209);
+    }
+
+.main-content-board[data-page-id="6"] .custom-icon-green {
+      color: rgb(9,170,113);
+    }
+
+.main-content-board[data-page-id="6"] .custom-icon-orange {
+      color: rgb(244,132,12);
+    }
+
+.main-content-board[data-page-id="6"] .custom-icon-purple {
+      color: rgb(113,90,251);
+    }
+
+.main-content-board[data-page-id="6"] .custom-icon-cyan {
+      color: rgb(44,184,201);
+    }
+
+.main-content-board[data-page-id="6"] .custom-bg-blue {
+      background-color: rgb(242,247,253);
+    }
+
+.main-content-board[data-page-id="6"] .custom-bg-green {
+      background-color: rgb(242,251,248);
+    }
+
+.main-content-board[data-page-id="6"] .custom-bg-orange {
+      background-color: rgb(254,249,243);
+    }
+
+.main-content-board[data-page-id="6"] .custom-bg-purple {
+      background-color: rgb(248,247,255);
+    }
+
+.main-content-board[data-page-id="6"] .custom-bg-cyan {
+      background-color: rgb(244,251,252);
+    }
+
+.main-content-board[data-page-id="6"] .custom-text-blue {
+      color: rgb(0,82,167);
+    }
+
+.main-content-board[data-page-id="6"] .custom-text-green {
+      color: rgb(7,136,90);
+    }
+
+.main-content-board[data-page-id="6"] .custom-text-orange {
+      color: rgb(195,106,10);
+    }
+
+.main-content-board[data-page-id="6"] .custom-text-purple {
+      color: rgb(90,72,201);
+    }
+
+.main-content-board[data-page-id="6"] .custom-text-cyan {
+      color: rgb(35,147,161);
+    }
+
+.main-content-board[data-page-id="6"] table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+    }
+
+.main-content-board[data-page-id="6"] th, td {
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="6"] th {
+      background-color: #f8fafc;
+      font-weight: 600;
+    }
+
+.main-content-board[data-page-id="6"] th {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="6"] td {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="6"] td:first-child, th:first-child {
+            word-break: keep-all;
+        }
+</style>
+<style>.main-content-board {
+      max-width: 960px; 
+      width: 100%;
+      margin: 0 auto;
+      background-color: white;
+      padding: 0px;
+    }
+.main-content-board[data-page-id="7"] .chart-container {
+      position: relative;
+      margin: 0 auto;
+      padding-top: 24px;
+      width: 100%;
+    }
+
+.main-content-board[data-page-id="7"] .svg-chart-container {
+      position: relative;
+    }
+
+.main-content-board[data-page-id="7"] .svg-chart-title {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+.main-content-board[data-page-id="7"] .chart-svg {
+      padding: 0;
+      margin: 0 auto;
+      display: block;
+    }
+
+.main-content-board[data-page-id="7"] .content-card {
+      border: 1px solid rgb(226, 232, 240);
+      border-radius: 4px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="7"] .highlight-container {
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      flex: 1;
+      min-width: calc(100% / 3);
+    }
+
+.main-content-board[data-page-id="7"] .table-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+.main-content-board[data-page-id="7"] .chapter-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      flex-grow: 1;
+      color: rgba(0, 0, 0, 0.9);
+      font-family: Noto Serif SC;
+      margin: 0 0 36px 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+      text-decoration-line: underline;
+    }
+
+.main-content-board[data-page-id="7"] .section-title {
+      position: static;
+      max-width: 960px;
+      width: 100%;
+      gap: 32px;
+      padding: 0px;
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+      margin: 32px 0;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 160%;
+      letter-spacing: 0px;
+      text-align: left;
+    }
+
+.main-content-board[data-page-id="7"] .section-content-container {
+      background: transparent;
+    }
+
+.main-content-board[data-page-id="7"] .media-container {
+      width: 100%;
+      display: grid;
+      justify-content: center;
+      align-items: center; 
+      margin-bottom: 24px;
+    }
+
+.main-content-board[data-page-id="7"] .media-container img {
+      display: block;
+      grid-area: 1 / 1;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto
+    }
+
+.main-content-board[data-page-id="7"] .source-link {
+      grid-area: 1 / 1;
+      align-self: end;
+      justify-self: start;
+      margin-left: 12px;
+      margin-bottom: 12px;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 12px;
+      padding: 0 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      height: 28px;
+      width: fit-content;
+      pointer-events: auto;
+    }
+
+.main-content-board[data-page-id="7"] sup {
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0px 4px 0px 4px;
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 10px;
+    }
+
+.main-content-board[data-page-id="7"] .custom-icon-blue {
+      color: rgb(0,103,209);
+    }
+
+.main-content-board[data-page-id="7"] .custom-icon-green {
+      color: rgb(9,170,113);
+    }
+
+.main-content-board[data-page-id="7"] .custom-icon-orange {
+      color: rgb(244,132,12);
+    }
+
+.main-content-board[data-page-id="7"] .custom-icon-purple {
+      color: rgb(113,90,251);
+    }
+
+.main-content-board[data-page-id="7"] .custom-icon-cyan {
+      color: rgb(44,184,201);
+    }
+
+.main-content-board[data-page-id="7"] .custom-bg-blue {
+      background-color: rgb(242,247,253);
+    }
+
+.main-content-board[data-page-id="7"] .custom-bg-green {
+      background-color: rgb(242,251,248);
+    }
+
+.main-content-board[data-page-id="7"] .custom-bg-orange {
+      background-color: rgb(254,249,243);
+    }
+
+.main-content-board[data-page-id="7"] .custom-bg-purple {
+      background-color: rgb(248,247,255);
+    }
+
+.main-content-board[data-page-id="7"] .custom-bg-cyan {
+      background-color: rgb(244,251,252);
+    }
+
+.main-content-board[data-page-id="7"] .custom-text-blue {
+      color: rgb(0,82,167);
+    }
+
+.main-content-board[data-page-id="7"] .custom-text-green {
+      color: rgb(7,136,90);
+    }
+
+.main-content-board[data-page-id="7"] .custom-text-orange {
+      color: rgb(195,106,10);
+    }
+
+.main-content-board[data-page-id="7"] .custom-text-purple {
+      color: rgb(90,72,201);
+    }
+
+.main-content-board[data-page-id="7"] .custom-text-cyan {
+      color: rgb(35,147,161);
+    }
+
+.main-content-board[data-page-id="7"] th {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="7"] td {
+            text-align: left;
+        }
+
+.main-content-board[data-page-id="7"] td:first-child, th:first-child {
+            word-break: keep-all;
+        }
+</style>
+<style>
+        .reference-board {
+            position: static;
+            max-width: 960px;
+            width: 100%;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 16;
+            padding: 0px;
+            flex: none;
+            order: 6;
+            align-self: stretch;
+            flex-grow: 0;
+            margin: 0 auto;
+        }
+
+        .reference-board[data-page-id="ref"] .reference-board-title {
+            position: static;
+            width: 36px;
+            height: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 16;
+            padding: 0px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            color: rgba(0, 0, 0, 0.9);
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 160%;
+            letter-spacing: 0px;
+            text-align: left;
+        }
+
+        .reference-board[data-page-id="ref"] .reference-list-board {
+            position: static;
+            max-width: 960px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 12;
+            padding: 0px;
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+        }
+
+        .reference-board[data-page-id="ref"] .single-ref-board {
+            position: static;
+			width: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 16;
+            padding: 12px;
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+            margin-bottom: 12px;
+			border-radius: 8px;
+			background: rgb(249, 250, 251);
+        }
+
+        .reference-board[data-page-id="ref"] .ref-num {
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0px 4px 0px 4px;
+            color: rgba(0, 0, 0, 0.9);
+            font-size: 10px;
+            margin-right: 8px;
+        }
+
+        .reference-board[data-page-id="ref"] .ref-title {
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            font-weight: 400;
+            line-height: 16px;
+        }
+
+        .reference-board[data-page-id="ref"] .info {
+            align-items: center;
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            margin-right: 0;
+        }
+
+        .reference-board[data-page-id="ref"] .site-name {
+            color: #00000066;
+            flex-shrink: 0;
+            font-size: 12px;
+            height: 16px;
+            letter-spacing: 0;
+            margin-left: 16px;
+            max-width: 50%;
+            text-align: right;
+
+            .site.authority-mark {
+                align-items: center;
+                background: #f4ece0;
+                border-radius: 4px;
+                color: #8e7656;
+                display: flex;
+                font-size: 10px;
+                gap: 2px;
+                line-height: 14px;
+
+                .svg-icon {
+                    flex-shrink: 0;
+                    height: 12px;
+                    width: 12px;
+                }
+            }
+
+            .site.authority-mark.major{
+                background: #dae6f6;
+                color: #4c699e;
+            }
+
+            .site {
+                overflow: hidden;
+                padding: 1px 4px;
+                white-space: nowrap;
+                word-wrap: break-word;
+                text-overflow: ellipsis;
+            }
+        }
+    </style>
+<script src="https://registry.npmmirror.com/tailwindcss-cdn/3.4.10/files/tailwindcss.js"></script><script src="https://registry.npmmirror.com/echarts/5.6.0/files/dist/echarts.min.js"></script><script src="https://registry.npmmirror.com/viewerjs/latest/files/dist/viewer.min.js"></script><link href="https://registry.npmmirror.com/@fortawesome/fontawesome-free/6.4.0/files/css/all.min.css" rel="stylesheet"/><link rel="stylesheet" href="https://registry.npmmirror.com/viewerjs/latest/files/dist/viewer.min.css"/></head>
+<body class="open-catalog"><nav class="toc" id="toc"><h3>目录导航</h3>
+<a href="#chapter-0">摘要：</a>
+<a href="#chapter-1">1. 项目概述与核心架构</a>
+<a href="#section-1-1" class="sub">1.1 项目目标与定位</a>
+<a href="#section-1-2" class="sub">1.2 系统总体架构</a>
+<a href="#chapter-2">2. 核心数据源</a>
+<a href="#section-2-1" class="sub">2.1 GMGN的核心价值与数据能力</a>
+<a href="#section-2-2" class="sub">2.2 商业模式的脆弱性与风险评估</a>
+<a href="#section-2-3" class="sub">2.3 数据获取的现实路径</a>
+<a href="#chapter-3">3. AI决策核心</a>
+<a href="#section-3-1" class="sub">3.1 DeepSeek API的性能与成本分析</a>
+<a href="#section-3-2" class="sub">3.2 模型选型</a>
+<a href="#section-3-3" class="sub">3.3 API接入与集成技术方案</a>
+<a href="#section-3-4" class="sub">3.4 核心技术</a>
+<a href="#chapter-4">4. 风险管理</a>
+<a href="#section-4-1" class="sub">4.1 理论基石</a>
+<a href="#section-4-2" class="sub">4.2 实战策略一</a>
+<a href="#section-4-3" class="sub">4.3 实战策略二</a>
+<a href="#section-4-4" class="sub">4.4 实战策略三</a>
+<a href="#chapter-5">5. 系统实现</a>
+<a href="#section-5-1" class="sub">5.1 数据采集模块</a>
+<a href="#section-5-2" class="sub">5.2 特征工程模块</a>
+<a href="#section-5-3" class="sub">5.3 订单执行模块</a>
+<a href="#section-5-4" class="sub">5.4 监控与性能模块</a>
+<a href="#section-5-5" class="sub">5.5 利用开源项目加速开发</a>
+<a href="#chapter-6">6. 重大风险与挑战</a>
+<a href="#section-6-1" class="sub">6.1 技术挑战</a>
+<a href="#section-6-2" class="sub">6.2 财务挑战</a>
+<a href="#section-6-3" class="sub">6.3 法律与合规挑战</a>
+<a href="#chapter-7">7. 结论与展望</a>
+<a href="#section-7-1" class="sub">7.1 核心发现</a>
+<a href="#section-7-2" class="sub">7.2 关键挑战</a>
+<a href="#section-7-3" class="sub">7.3 结论与展望</a>
+<a href="#reference">来源</a>
+<div id="resizeHandle" class="resize-handle"></div>
+<div id="resizeOverlay" class="resize-overlay"></div></nav><div class="board">
+        <div class="title-board">
+            <div class="title">AI驱动加密货币自动化交易系统的可行性研究</div>
+            <div class="subtitle-board">
+                <div class="report-content">内容由AI生成</div>
+                <div class="decoration"></div>
+				<div class="report-content">小艺深度研究报告</div>
+				<div class="decoration"></div>
+				<div class="report-content">2025.10.23</div>
+            </div>
+        </div>
+    </div><div class="main-content" id="mainContent">
+
+    <div class="abstract-board" data-page-id="abstract">
+    <div class="abstract-title" id="chapter-0">摘要：</div>
+
+    <div class="body-text">
+        <p>本报告探讨了基于DeepSeek API与GMGN数据构建完全由AI驱动的加密货币自动化交易工具的可行性。核心采用分层模块化的“管道-过滤器”架构，通过六大模块实现端到端自动化流程。</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 w-full">
+        <div class="content-card">
+            <div class="card-title">技术优势</div>
+            <ul class="list-disc pl-5 space-y-2 text-[18px]">
+                <li>DeepSeek API混合专家架构（MoE）成本优势（3元/百万tokens）</li>
+                <li>Alpha Arena竞赛36%收益验证交易决策潜力</li>
+                <li>GMGN提供独特链上信号（如&#34;聪明钱&#34;动向）</li>
+            </ul>
+        </div>
+        <div class="content-card">
+            <div class="card-title">核心挑战</div>
+            <ul class="list-disc pl-5 space-y-2 text-[18px]">
+                <li>技术风险：LLM输出不确定性需JSON Schema校验</li>
+                <li>财务压力：API/数据订阅成本需异步批处理控制</li>
+                <li>合规复杂性：全球监管差异显著（欧盟MiCA/中国禁止）</li>
+            </ul>
+        </div>
+        <div class="content-card">
+            <div class="card-title">实施建议</div>
+            <ul class="list-disc pl-5 space-y-2 text-[18px]">
+                <li>优先优化AI决策（精细化提示词工程）</li>
+                <li>动态风险管理（CVaR理论驱动策略）</li>
+                <li>依托开源框架（如Freqtrade）加速开发</li>
+                <li>审慎验证盈利模型非追求短期回报</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="body-text">
+        <p>结论：该项目作为业余探索具备技术可行性，但成功依赖系统性应对核心挑战。需通过多源数据规避GMGN单点风险（牛市日均50万美元 vs 暴跌期97%下滑），并建立熔断机制（如5%回撤停机）控制亏损。</p>
+    </div>
+</div><div class="line-bar"></div><div class="main-content-board" data-page-id="1">
+    <!-- 章节标题 -->
+    <div class="chapter-title" id="chapter-1">1. 项目概述与核心架构</div>
+    
+    <!-- 章节描述 -->
+    <p class="text-lg mb-6">
+      在当今金融市场高度复杂且竞争激烈的环境下，量化交易作为一种基于数学模型和计算机算法的交易方式，正逐渐成为众多投资者和金融机构的重要选择。它能够快速处理海量数据，精准执行交易策略，从而在瞬息万变的市场中捕捉机会、规避风险。本报告旨在深入探讨并系统性地构建一个前沿的量化交易系统——一个完全由人工智能（AI）驱动的加密货币自动化交易工具。该项目不仅是对现有技术的整合与应用，更是一次对AI在金融决策领域潜力的深度探索。本章将作为报告的开篇，首先明确项目的核心目标与定位，随后详细阐述其采用的分层、模块化系统架构，为后续章节的技术选型与实现细节奠定坚实的理论基础。
+    </p>
+    
+    <!-- 1.1 项目目标与定位 -->
+    <div class="section-title" id="section-1-1">1.1 项目目标与定位</div>
+    <div class="section-content-container">
+      <!-- 小节引导描述 -->
+      <p class="text-lg mb-6">
+        本项目的最终形态，是一个面向个人用户的、完全由AI驱动的加密货币自动化交易工具，其核心目标是在长期维度内实现稳定且可持续的盈利。与传统的量化交易机器人不同，后者通常依赖预设的数学模型和技术指标来生成交易信号<sup><a href="https://developer.aliyun.com/article/1636515" target="_blank">11</a></sup>，而本系统将其决策逻辑的&#34;大脑&#34;完全托付给大型语言模型（LLM），旨在利用其强大的推理、学习和知识整合能力，突破传统量化框架的限制，实现更智能、更具适应性的交易决策<sup><a href="https://cn.cointelegraph.com/news/how-to-develop-an-ai-agent-for-crypto-trading" target="_blank">13</a></sup>。
+      </p>
+      
+      <!-- 核心目标与定位卡片 -->
+      <div class="grid grid-cols-2 gap-6 mb-6">
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-bullseye custom-icon-blue text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">核心目标</span>
+          </div>
+          <p class="text-lg">
+            在长期维度内实现<strong class="custom-text-blue">稳定且可持续的盈利</strong>，通过AI决策突破传统量化框架限制
+          </p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-map-marker-alt custom-icon-green text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">项目定位</span>
+          </div>
+          <p class="text-lg">
+            明确界定为<strong class="custom-text-green">业余兴趣探索</strong>，聚焦核心功能实现与技术逻辑验证
+          </p>
+        </div>
+      </div>
+      
+      <!-- 定位详细说明 -->
+      <div class="content-card">
+        <p class="text-lg">
+          在定位上，本项目明确将自身界定为一次&#34;业余兴趣探索&#34;，而非一个复杂的商业模型。这意味着我们的开发将聚焦于核心功能的实现与技术逻辑的验证，旨在为个人投资者提供一个可定制、可理解的自动化交易平台。这种定位有助于我们在开发初期集中资源，深入研究AI决策的核心技术，同时也为未来的功能扩展和商业模式创新保留了足够的灵活性。
+        </p>
+      </div>
+    </div>
+    
+    <!-- 1.2 系统总体架构：分层与模块化设计 -->
+    <div class="section-title" id="section-1-2">1.2 系统总体架构：分层与模块化设计</div>
+    <div class="section-content-container">
+      <!-- 小节引导描述 -->
+      <p class="text-lg mb-6">
+        为了实现上述目标，本项目采用了一种严谨的、基于数据流的&#34;管道-过滤器&#34;（Pipe-and-Filter）架构模式<sup><a href="https://rk.51cto.com/article/368051.html" target="_blank">10</a></sup> <sup><a href="https://www.bilibili.com/video/BV1ZSj5zAES7/" target="_blank">12</a></sup>。该模式的核心思想是将复杂的数据处理任务分解为一系列独立的、可重用的&#34;过滤器&#34;（即系统模块），数据通过&#34;管道&#34;在这些模块间线性流动和转换<sup><a href="https://rk.51cto.com/article/368051.html" target="_blank">10</a></sup> <sup><a href="https://www.bilibili.com/video/BV1ZSj5zAES7/" target="_blank">12</a></sup>。这种设计确保了系统的高内聚、低耦合特性，使得每个模块都可以独立开发、测试、维护和复用，极大地提升了系统的灵活性与可扩展性。
+      </p>
+      
+      <!-- 系统架构核心特点 -->
+      <div class="highlight-container custom-bg-orange mb-6">
+        <div class="flex items-center mb-3">
+          <i class="fas fa-sitemap custom-icon-orange text-2xl mr-3"></i>
+          <span class="font-semibold text-xl">架构核心优势</span>
+        </div>
+        <p class="text-lg">
+          采用<strong class="custom-text-orange">管道-过滤器模式</strong>，实现模块<strong class="custom-text-orange">高内聚、低耦合</strong>，通过消息队列机制确保系统健壮性
+        </p>
+      </div>
+      
+      <!-- 六大核心模块展示 -->
+      <div class="grid grid-cols-3 gap-6 mb-6">
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-database text-gray-500 mr-2"></i>
+            <span class="font-semibold">数据采集模块</span>
+          </div>
+          <p class="text-lg">系统的&#34;感官&#34;，从加密货币交易所、链上数据平台等获取原始市场数据</p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-cogs text-gray-500 mr-2"></i>
+            <span class="font-semibold">特征工程模块</span>
+          </div>
+          <p class="text-lg">&#34;数据预处理中心&#34;，负责数据清洗、去噪、归一化及特征提取</p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-brain text-gray-500 mr-2"></i>
+            <span class="font-semibold">AI决策模块</span>
+          </div>
+          <p class="text-lg">系统&#34;大脑&#34;，利用LLM进行复杂推理，输出交易信号</p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-shield-alt text-gray-500 mr-2"></i>
+            <span class="font-semibold">风险管理层</span>
+          </div>
+          <p class="text-lg">&#34;风控中枢&#34;，基于预设策略过滤交易信号，控制风险敞口</p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-bolt text-gray-500 mr-2"></i>
+            <span class="font-semibold">订单执行模块</span>
+          </div>
+          <p class="text-lg">系统&#34;执行器&#34;，通过交易所API转化指令为实际交易</p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-chart-line text-gray-500 mr-2"></i>
+            <span class="font-semibold">监控与性能模块</span>
+          </div>
+          <p class="text-lg">系统&#34;仪表盘&#34;，记录日志、分析交易绩效及数据流</p>
+        </div>
+      </div>
+      
+      <!-- 架构对比表格 -->
+      <div class="content-card">
+        <div class="table-title">两种主流的自动化交易系统架构模式对比</div>
+        <table class="w-full border-collapse">
+          <thead>
+            <tr>
+              <th class="border border-gray-300 p-2">架构模式</th>
+              <th class="border border-gray-300 p-2">核心思想</th>
+              <th class="border border-gray-300 p-2">主要优势</th>
+              <th class="border border-gray-300 p-2">主要挑战</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-300 p-2 font-semibold">事件驱动架构</td>
+              <td class="border border-gray-300 p-2">系统围绕市场事件（如价格变动、订单更新）构建，事件产生后被传递给相应的处理器进行处理。</td>
+              <td class="border border-gray-300 p-2">能够灵活响应市场的异步变化，适合处理实时数据流和复杂的交易逻辑。</td>
+              <td class="border border-gray-300 p-2">系统的并发性和事件处理的顺序性需要仔细设计，以避免竞态条件和逻辑错误。</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 p-2 font-semibold">管道-过滤器架构</td>
+              <td class="border border-gray-300 p-2">将复杂的数据处理任务分解为一系列独立的、可重用的&#34;过滤器&#34;（模块），数据通过&#34;管道&#34;在这些模块间线性流动和转换<sup><a href="https://rk.51cto.com/article/368051.html" target="_blank">10</a></sup> <sup><a href="https://www.bilibili.com/video/BV1ZSj5zAES7/" target="_blank">12</a></sup>。</td>
+              <td class="border border-gray-300 p-2">模块（过滤器）具有高内聚、低耦合的特点，易于独立开发、测试、维护和复用；天然支持并行执行，可提升系统吞吐量<sup><a href="https://rk.51cto.com/article/368051.html" target="_blank">10</a></sup>。</td>
+              <td class="border border-gray-300 p-2">数据格式需要在各模块间保持一致，增加了设计复杂性；系统整体性能受限于最慢的模块。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div><div class="line-bar"></div><div class="main-content-board" data-page-id="2">
+    <div class="chapter-title" id="chapter-2">2. 核心数据源：GMGN平台的深度解析</div>
+    
+    <p class="text-lg mb-6">
+      在第一章所构建的系统架构蓝图中，数据采集模块是整个AI交易决策链的起点。一个高质量、高维度的数据源，是训练智能模型、捕捉市场信号、最终实现盈利目标的基石。本报告将聚焦于GMGN平台，对其作为本项目核心数据源的可行性、实用性与潜在风险进行深度解析。
+    </p>
+
+    <!-- 2.1 小节 -->
+    <div class="section-title" id="section-2-1">2.1 GMGN的核心价值与数据能力</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        GMGN平台的核心价值在于其将复杂链上数据转化为直观交易信号，降低普通交易者分析门槛<sup><a href="https://www.theblockbeats.info/news/54622" target="_blank">14</a></sup>。作为专注于Meme币的&#34;百倍币发现平台&#34;，其设计初衷是帮助用户在信息不对称的加密市场中捕捉早期机会<sup><a href="https://www.theblockbeats.info/news/54622" target="_blank">14</a></sup>。
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-brain custom-icon-blue text-2xl mr-3"></i>
+            <h3 class="text-xl font-semibold">聪明钱追踪能力</h3>
+          </div>
+          <ul class="list-disc space-y-2 text-lg pl-5 pl-6">
+            <li>识别历史表现出色的盈利钱包地址<sup><a href="https://www.theblockbeats.info/news/54622" target="_blank">14</a></sup></li>
+            <li>大额交易时在价格走势图下方醒目展示<sup><a href="https://www.theblockbeats.info/news/54622" target="_blank">14</a></sup> <sup><a href="https://news.qq.com/rain/a/20241120A040GY00" target="_blank">15</a></sup></li>
+            <li>提供<strong class="custom-text-blue">事件驱动维度的链上行为洞察</strong></li>
+          </ul>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-search custom-icon-green text-2xl mr-3"></i>
+            <h3 class="text-xl font-semibold">高级监测功能</h3>
+          </div>
+          <p class="text-lg">
+            &#34;老鼠仓追踪&#34;功能揭示项目方潜在利益输送，提供<strong class="custom-text-green">非公开链上信息</strong>，对构建发现市场异常的AI交易系统具有极高价值。
+          </p>
+        </div>
+      </div>
+      
+      <div class="highlight-container custom-bg-orange">
+        <div class="flex items-center mb-2">
+          <i class="fas fa-lightbulb custom-icon-orange text-2xl mr-3"></i>
+          <span class="font-semibold text-xl">AI系统核心价值</span>
+        </div>
+        <p class="text-lg">
+          补充传统技术指标，提供<strong class="custom-text-orange">多模态非结构化数据输入</strong>，增强AI处理复杂金融问题的能力
+        </p>
+      </div>
+    </div>
+
+    <!-- 2.2 小节 -->
+    <div class="section-title" id="section-2-2">2.2 商业模式的脆弱性与风险评估</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        GMGN的商业模式高度依赖加密市场繁荣周期，尤其是Meme币板块热度<sup><a href="https://www.jb51.net/blockchain/978152.html" target="_blank">16</a></sup>。2024年牛市期间日均收入达<strong class="custom-text-purple">50万美元</strong>，但市场调整期收入暴跌<strong class="custom-text-purple">97%</strong>至1.5万美元<sup><a href="https://www.jb51.net/blockchain/978152.html" target="_blank">16</a></sup>。
+      </p>
+      
+      <div class="table-title">GMGN平台收入与活跃度对比</div>
+      <table>
+        <thead>
+          <tr>
+            <th>指标</th>
+            <th>市场繁荣期 (2024年牛市)</th>
+            <th>市场调整期 (2025年3月)</th>
+            <th>变化幅度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>日均收入</td>
+            <td>约50万美元</td>
+            <td>约1.5万美元</td>
+            <td>-97%</td>
+          </tr>
+          <tr>
+            <td>日均活跃用户</td>
+            <td>约2.8万</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>日均交易笔数</td>
+            <td>约60万</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-exclamation-triangle custom-icon-cyan text-2xl mr-3"></i>
+            <h3 class="text-xl font-semibold">双重风险预警</h3>
+          </div>
+          <ul class="list-disc space-y-2 text-lg pl-5 pl-6">
+            <li>市场下行期平台生存面临挑战</li>
+            <li>数据易受<strong class="custom-text-cyan">极端市场情绪扭曲</strong></li>
+            <li>AI模型可能学习错误历史模式</li>
+          </ul>
+        </div>
+        
+        <div class="highlight-container custom-bg-blue">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-shield-alt custom-icon-blue text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">风险缓解策略</span>
+          </div>
+          <p class="text-lg">
+            建立<strong class="custom-text-blue">多元化数据采集策略</strong>，结合交易所行情与链上区块浏览器数据
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.3 小节 -->
+    <div class="section-title" id="section-2-3">2.3 数据获取的现实路径：官方API与非官方方案</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        GMGN未提供官方API，迫使采用非官方数据获取方案。社区开发者工具（如GMGN Tools脚本）通过网页抓取技术提取&#34;聪明钱&#34;交易信号等关键数据。
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-gavel custom-icon-green text-2xl mr-3"></i>
+            <h3 class="text-xl font-semibold">法律合规风险</h3>
+          </div>
+          <p class="text-lg">
+            可能违反平台服务条款，导致<strong class="custom-text-green">IP封禁或法律纠纷</strong>
+          </p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-cogs custom-icon-orange text-2xl mr-3"></i>
+            <h3 class="text-xl font-semibold">技术稳定性风险</h3>
+          </div>
+          <p class="text-lg">
+            依赖社区维护，<strong class="custom-text-orange">网站改版可能导致工具失效</strong>
+          </p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-filter custom-icon-purple text-2xl mr-3"></i>
+            <h3 class="text-xl font-semibold">数据质量风险</h3>
+          </div>
+          <p class="text-lg">
+            需额外<strong class="custom-text-purple">清洗校验步骤</strong>，增加处理复杂性
+          </p>
+        </div>
+      </div>
+      
+      <div class="mt-8">
+        <div class="flex items-center mb-3">
+          <i class="fas fa-road custom-icon-cyan text-2xl mr-3"></i>
+          <h3 class="text-xl font-semibold">实施路径建议</h3>
+        </div>
+        <p class="text-lg">
+          短期采用非官方工具，中长期需开发<strong class="custom-text-cyan">专用数据管道</strong>并探索合规数据获取渠道
+        </p>
+      </div>
+    </div>
+  </div><div class="line-bar"></div><div class="main-content-board" data-page-id="3">
+    <!-- 章节标题 -->
+    <div class="chapter-title" id="chapter-3">3. AI决策核心：DeepSeek API的选型与集成</div>
+    
+    <!-- 章节描述 -->
+    <p class="text-lg mb-6">
+      在前一章节中剖析了系统数据输入的基石——GMGN平台后，本章聚焦核心决策模块，详细评估DeepSeek API作为AI决策引擎的选择依据。从性能与成本效益、模型选型策略、技术集成方案到提示词工程关键技术进行全方位剖析，展示如何将先进AI能力融入自动化交易系统。
+    </p>
+
+    <!-- 3.1 小节 -->
+    <div class="section-title" id="section-3-1">3.1 DeepSeek API的性能与成本分析</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        开发者选择AI决策引擎时面临性能与成本的核心权衡。DeepSeek API凭借独特技术架构和动态定价策略，在交易决策这类对推理能力和响应速度有双重要求的场景中展现出显著竞争力。
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="flex flex-col gap-4">
+          <!-- 性能分析 -->
+          <div class="content-card">
+            <div class="font-semibold text-xl mb-3">性能优势</div>
+            <p class="text-lg">
+              核心优势源于混合专家（Mixture of Experts, MoE）架构<sup><a href="https://blog.csdn.net/ChailangCompany/article/details/146778194" target="_blank">19</a></sup> <sup><a href="https://feeds-drcn.cloud.huawei.com.cn/landingpage/latest?docid=1051057d_JPSKII2L0511N33R&amp;to_app=hiboard&amp;dy_scenario=recomm&amp;tn=cf47ac568430cdb64a4d03c10611179916f277ce41e1143189368a1d1eb0df1c&amp;ctype=news" target="_blank">20</a></sup> <sup><a href="https://dev.to/sayed_ali_alkamel/deepseek-and-the-power-of-mixture-of-experts-moe-ham" target="_blank">22</a></sup>，通过&#34;门控网络&#34;智能路由请求，在有限硬件投入下实现与传统大规模模型相当甚至更优性能<sup><a href="https://finance.sina.com.cn/wm/2025-09-29/doc-infseiwm1702621.shtml" target="_blank">25</a></sup>。
+            </p>
+          </div>
+          
+          <!-- 市场验证 -->
+          <div class="highlight-container custom-bg-blue">
+            <div class="flex items-center mb-2">
+              <i class="fas fa-trophy custom-icon-blue text-2xl mr-3"></i>
+              <span class="font-semibold text-xl">市场验证</span>
+            </div>
+            <p class="text-lg">
+              Alpha Arena全球AI实盘竞赛中，DeepSeek模型<strong class="custom-text-blue">收益达36%</strong>，远超其他参赛模型<sup><a href="https://baijiahao.baidu.com/s?id=1846480972806737702" target="_blank">26</a></sup> <sup><a href="https://news.sohu.com/a/946272914_114760" target="_blank">27</a></sup>。
+            </p>
+          </div>
+        </div>
+        
+        <!-- 成本图表 -->
+        <div>
+          <div id="priceChart_3" class="chart-container" style="height:400px;"></div>
+        </div>
+      </div>
+      
+      <!-- 成本分析 -->
+      <div class="content-card mb-6">
+        <div class="font-semibold text-xl mb-3">成本优势</div>
+        <p class="text-lg">
+          计费模式基于输入输出tokens数量，与OpenAI等主流模型一致<sup><a href="https://www.toutiao.com/w/1823630468900876/" target="_blank">28</a></sup>，但价格显著低于国际竞争对手。V3.2-Exp版本发布后，开发者调用<strong class="custom-text-green">成本降低50%以上</strong><sup><a href="https://feeds-drcn.cloud.huawei.com.cn/landingpage/latest?docid=105102131707423&amp;to_app=hiboard&amp;dy_scenario=recomm&amp;tn=a40f8f2cfbeacddce619bb94814cf1c7fb6bb8692b5f042cf4ee9078598ccaa7&amp;ctype=news" target="_blank">21</a></sup> <sup><a href="https://news.sohu.com/a/939974416_639898" target="_blank">29</a></sup> <sup><a href="https://www.21jingji.com/article/20250929/herald/d59b29e90267d7aafd3d1553e107eeb5.html" target="_blank">30</a></sup>。
+        </p>
+      </div>
+    </div>
+
+    <!-- 3.2 小节 -->
+    <div class="section-title" id="section-3-2">3.2 模型选型：V3 vs R1的交易场景适配</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        DeepSeek提供通用型V3和推理专精型R1两款核心模型<sup><a href="https://segmentfault.com/a/1190000046137837" target="_blank">5</a></sup> <sup><a href="https://blog.csdn.net/sanshi0007/article/details/145378900" target="_blank">18</a></sup> <sup><a href="https://blog.csdn.net/ChailangCompany/article/details/146778194" target="_blank">19</a></sup>。模型选型基于策略复杂度决策框架，建议采用分层决策架构：
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- V3模型 -->
+        <div class="content-card">
+          <div class="font-semibold text-xl mb-3">DeepSeek-V3</div>
+          <p class="text-lg">
+            通用大语言模型，MoE架构优化，在<strong class="custom-text-orange">自然语言理解</strong>和<strong class="custom-text-orange">代码生成</strong>达到领先水平<sup><a href="https://blog.csdn.net/weixin_61514920/article/details/144950687" target="_blank">6</a></sup> <sup><a href="https://blog.csdn.net/sanshi0007/article/details/145378900" target="_blank">18</a></sup> <sup><a href="https://blog.csdn.net/weixin_56435870/article/details/145823254" target="_blank">23</a></sup>。
+          </p>
+          <ul class="list-disc pl-5 mt-3 space-y-2 text-lg pl-6">
+            <li>优势：<strong class="custom-text-green">高吞吐量</strong>与<strong class="custom-text-green">低延迟响应</strong></li>
+            <li>场景：实时技术分析策略决策</li>
+          </ul>
+        </div>
+        
+        <!-- R1模型 -->
+        <div class="content-card">
+          <div class="font-semibold text-xl mb-3">DeepSeek-R1</div>
+          <p class="text-lg">
+            专为<strong class="custom-text-purple">复杂逻辑推理</strong>和<strong class="custom-text-purple">深度思考</strong>设计<sup><a href="https://blog.csdn.net/weixin_41429382/article/details/145436262" target="_blank">4</a></sup> <sup><a href="https://blog.csdn.net/sanshi0007/article/details/145378900" target="_blank">18</a></sup> <sup><a href="https://blog.csdn.net/ChailangCompany/article/details/146778194" target="_blank">19</a></sup>。
+          </p>
+          <ul class="list-disc pl-5 mt-3 space-y-2 text-lg pl-6">
+            <li>优势：多步推理与链式思考能力</li>
+            <li>场景：基本面分析与复杂金融模型评估</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- 分层决策架构 -->
+      <div class="highlight-container custom-bg-cyan">
+        <div class="flex items-center mb-2">
+          <i class="fas fa-sitemap custom-icon-cyan text-2xl mr-3"></i>
+          <span class="font-semibold text-xl">分层决策架构</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p class="font-semibold text-lg">第一决策层</p>
+            <p class="text-lg">V3处理实时数据流，生成初步交易建议</p>
+          </div>
+          <div>
+            <p class="font-semibold text-lg">第二决策层</p>
+            <p class="text-lg">R1对关键决策复核，深度分析确认</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.3 小节 -->
+    <div class="section-title" id="section-3-3">3.3 API接入与集成技术方案</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        DeepSeek提供与OpenAI高度兼容的API，简化集成过程<sup><a href="https://blog.csdn.net/weixin_61514920/article/details/144950687" target="_blank">6</a></sup>。Python环境下主要有两种技术路径：
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- 官方客户端 -->
+        <div class="content-card">
+          <div class="font-semibold text-xl mb-3">官方客户端库</div>
+          <p class="text-lg">
+            推荐使用<strong class="custom-text-blue">openai兼容库</strong>，通过设置<strong class="custom-text-blue">base_url</strong>实现无缝对接<sup><a href="https://blog.csdn.net/weixin_61514920/article/details/144950687" target="_blank">6</a></sup>。
+          </p>
+          <p class="text-lg mt-2">
+            优势：代码简洁，易于维护
+          </p>
+        </div>
+        
+        <!-- requests直接调用 -->
+        <div class="content-card">
+          <div class="font-semibold text-xl mb-3">requests直接调用</div>
+          <p class="text-lg">
+            使用Python标准库<strong class="custom-text-green">requests模块</strong>构造POST请求。
+          </p>
+          <p class="text-lg mt-2">
+            适用场景：需完全掌控HTTP请求细节
+          </p>
+        </div>
+      </div>
+      
+      <!-- 代码示例 -->
+      <div class="content-card">
+        <div class="font-semibold text-xl mb-3">API调用代码示例</div>
+        <div class="code-block">
+          <pre>import requests
+import json
+
+def call_deepseek_api(prompt, api_key, model=&#34;deepseek-chat&#34;):
+    url = &#34;https://api.deepseek.com/v1/chat/completions&#34;
+    headers = {
+        &#34;Content-Type&#34;: &#34;application/json&#34;,
+        &#34;Authorization&#34;: f&#34;Bearer {api_key}&#34;
+    }
+    data = {
+        &#34;model&#34;: model,
+        &#34;messages&#34;: [{&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: prompt}],
+        &#34;stream&#34;: False,
+        &#34;temperature&#34;: 0.1
+    }
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(data), timeout=10)
+        response.raise_for_status()
+        return response.json()[&#34;choices&#34;][&#34;message&#34;][&#34;content&#34;]
+    except requests.exceptions.RequestException as e:
+        print(f&#34;API调用失败: {e}&#34;)
+        return None</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.4 小节 -->
+    <div class="section-title" id="section-3-4">3.4 核心技术：提示词工程（Prompt Engineering）</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        提示词工程是决定决策质量的&#34;软件&#34;核心，通过结构化语言向模型传达角色、任务、输入数据和输出格式<sup><a href="https://www.woshipm.com/operate/6180016.html" target="_blank">31</a></sup>。有效提示词模板包含四个关键要素：
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- 提示词结构 -->
+        <div class="content-card">
+          <div class="font-semibold text-xl mb-3">提示词结构要素</div>
+          <ul class="list-disc pl-5 space-y-3 text-lg pl-6">
+            <li><strong class="custom-text-orange">角色定义</strong>：明确模型扮演的角色</li>
+            <li><strong class="custom-text-purple">任务分配</strong>：描述需完成的核心任务</li>
+            <li><strong class="custom-text-cyan">输入数据</strong>：结构化呈现关键市场数据</li>
+            <li><strong class="custom-text-blue">输出格式</strong>：指定程序可解析的格式</li>
+          </ul>
+        </div>
+        
+        <!-- 输出要求 -->
+        <div class="highlight-container custom-bg-green">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-code custom-icon-green text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">输出格式要求</span>
+          </div>
+          <p class="text-lg">
+            强制JSON格式输出，包含<strong class="custom-text-green">decision</strong>、<strong class="custom-text-green">confidence</strong>、<strong class="custom-text-green">target_price</strong>等关键字段。
+          </p>
+        </div>
+      </div>
+      
+      <!-- 提示词模板 -->
+      <div class="content-card">
+        <div class="font-semibold text-xl mb-3">技术分析策略提示词模板</div>
+        <div class="code-block">
+          <pre>你是一个专业的加密货币交易策略分析师，专注于识别短期市场趋势。
+
+你的任务：基于以下市场数据和事件信号，生成包含交易决策的JSON响应。
+
+输入数据：
+- 资产：{asset_symbol}
+- 当前价格：{current_price}
+- 技术指标：RSI(14): {rsi_value}, MACD: {macd_value}
+- GMGN事件信号：{gmgm_events}
+
+输出要求：
+{
+  &#34;decision&#34;: &#34;hold&#34; | &#34;buy&#34; | &#34;sell&#34;,
+  &#34;confidence&#34;: 0.0-1.0,
+  &#34;target_price&#34;: null | float,
+  &#34;stop_loss_price&#34;: null | float,
+  &#34;analysis_summary&#34;: string
+}</pre>
+        </div>
+      </div>
+    </div>
+  </div><div class="line-bar"></div><div class="main-content-board" data-page-id="4">
+    <!-- 章节标题 -->
+    <div class="chapter-title" id="chapter-4">4. 风险管理：从CVaR理论到实战策略</div>
+    
+    <!-- 章节描述 -->
+    <p class="text-lg mb-6">
+      在第三章中，我们详细论证了如何利用DeepSeek API构建一个强大的AI决策引擎，使其成为系统的&#34;智慧大脑&#34;。然而，任何智能决策系统若要在金融市场中长期生存并实现盈利，都必须配备一个同样坚固的&#34;安全气囊&#34;——风险管理模块。该模块作为系统的&#34;刹车&#34;与&#34;护栏&#34;，其重要性甚至超越了AI决策本身。它不仅是防止单次交易失误演变为灾难性损失的关键，更是保障系统在极端市场条件下能够存活下来，以待来日东山再起的核心机制。
+    </p>
+
+    <!-- 4.1 理论基石 -->
+    <div class="section-title" id="section-4-1">4.1 理论基石：CVaR（条件风险价值）在交易中的应用</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        传统的风险管理方法，如基于标准差或方差的风险度量，其核心逻辑在于将所有价格波动视为对称的风险。然而，这种方法在金融市场，尤其是加密货币市场中，存在显著的局限性。加密货币市场以其高波动性和频繁的极端行情著称，传统的方差模型往往会低估那些发生概率极低但一旦发生便会造成巨大影响的<strong class="custom-text-blue">&#34;尾部风险&#34;</strong>。
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="content-card">
+          <p class="text-lg mb-3">CVaR核心优势：</p>
+          <ul class="list-disc space-y-2 text-lg pl-5 pl-6">
+            <li>精准捕捉<strong class="custom-text-green">极端风险</strong>，超越传统VaR模型</li>
+            <li>度量超过置信水平的<strong class="custom-text-orange">预期平均损失</strong></li>
+            <li>特别适用于<strong class="custom-text-purple">高波动性市场</strong>如加密货币</li>
+          </ul>
+        </div>
+        
+        <div class="highlight-container custom-bg-cyan">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-exclamation-triangle custom-icon-cyan text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">关键概念对比</span>
+          </div>
+          <p class="text-lg">
+            VaR：<strong class="custom-text-cyan">最大潜在损失阈值</strong><br/>
+            CVaR：<strong class="custom-text-cyan">超过阈值时的平均损失</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.2 实战策略一 -->
+    <div class="section-title" id="section-4-2">4.2 实战策略一：动态止损与止盈</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        基于CVaR理论的风险管理，其首要应用便是实现动态的止损与止盈机制。与传统的固定百分比（如5%）或固定点数的止损方式不同，动态策略能够根据市场实时变化调整风险敞口，体现了风险管理的智能化与适应性。
+      </p>
+      
+      <div class="content-card mb-6">
+        <p class="text-lg mb-4">
+          动态止损的核心逻辑在于，当市场波动性增加时，我们需要<strong class="custom-text-blue">放宽止损阈值</strong>，以避免策略被正常的市场波动&#34;震出&#34;；反之，当市场趋于平静时，则应收紧止损，以保护已有的利润。这种动态调整可以通过<strong class="custom-text-green">平均真实波幅（ATR）</strong>指标来实现。
+        </p>
+        
+        <div class="grid grid-cols-3 gap-4 mt-4">
+          <div class="text-center">
+            <div class="font-semibold text-lg mb-2">步骤一</div>
+            <p>计算实时<strong class="custom-text-orange">波动性指标</strong></p>
+          </div>
+          <div class="text-center">
+            <div class="font-semibold text-lg mb-2">步骤二</div>
+            <p>设定动态<strong class="custom-text-purple">阈值参数</strong></p>
+          </div>
+          <div class="text-center">
+            <div class="font-semibold text-lg mb-2">步骤三</div>
+            <p>调整<strong class="custom-text-cyan">交易指令</strong></p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="highlight-container custom-bg-blue mb-6">
+        <div class="flex items-center mb-3">
+          <i class="fas fa-sliders-h custom-icon-blue text-2xl mr-3"></i>
+          <span class="font-semibold text-xl">ATR阈值设置示例</span>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-lg">高波动市场：</p>
+            <p class="text-xl font-bold custom-text-blue">2×ATR</p>
+          </div>
+          <div>
+            <p class="text-lg">低波动市场：</p>
+            <p class="text-xl font-bold custom-text-blue">1×ATR</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.3 实战策略二 -->
+    <div class="section-title" id="section-4-3">4.3 实战策略二：仓位管理与头寸限制</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        如果说动态止损是控制单次交易的&#34;宽度&#34;，那么仓位管理则是控制单次交易的&#34;深度&#34;——即我们愿意为每一次交易投入多少本金。仓位管理是资金管理的核心，直接决定了系统在经历连续亏损后，是否还有足够的弹药进行反击。
+      </p>
+      
+      <div class="content-card mb-6">
+        <div class="font-semibold text-xl mb-4">凯利公式应用</div>
+        <p class="text-lg mb-4">
+          凯利公式：<code class="bg-gray-100 p-1 rounded">f* = (bp - q) / b</code>
+        </p>
+        <ul class="list-disc space-y-2 text-lg pl-5 pl-6">
+          <li><strong class="custom-text-green">f*</strong>：最优投注比例</li>
+          <li><strong class="custom-text-orange">b</strong>：盈亏比（赢时净收益/输时净损失）</li>
+          <li><strong class="custom-text-purple">p</strong>：获胜概率 ≈ AI置信度</li>
+          <li><strong class="custom-text-cyan">q</strong>：失败概率 = 1-p</li>
+        </ul>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="highlight-container custom-bg-green">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-calculator custom-icon-green text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">盈亏比计算实例</span>
+          </div>
+          <p class="text-lg">
+            止盈目标：<strong class="custom-text-green">1.5×ATR</strong><br/>
+            止损阈值：<strong class="custom-text-green">0.5×ATR</strong><br/>
+            盈亏比 b = 1.5 / 0.5 = <strong class="custom-text-green">3</strong>
+          </p>
+        </div>
+        
+        <div class="highlight-container custom-bg-orange">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-brain custom-icon-orange text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">AI-风险管理协同</span>
+          </div>
+          <p class="text-lg">
+            AI置信度越高 → 仓位比例<strong class="custom-text-orange">越大</strong><br/>
+            AI不确定性高 → 仓位比例<strong class="custom-text-orange">越小</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.4 实战策略三 -->
+    <div class="section-title" id="section-4-4">4.4 实战策略三：全局熔断与强制休眠机制</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        在风险管理体系中，必须存在一个&#34;最后防线&#34;——全局熔断与强制休眠机制。这是一种被动的、极端的防御策略，旨在当系统遭遇系统性风险或连续的决策失误时，能够自动暂停所有交易活动，防止本金被完全侵蚀。
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="content-card">
+          <div class="font-semibold text-xl mb-4">熔断触发条件</div>
+          <ul class="list-disc space-y-2 text-lg pl-5 pl-6">
+            <li><strong class="custom-text-purple">连续亏损次数</strong>超过阈值N</li>
+            <li>账户总资产回撤超过<strong class="custom-text-purple">10%</strong></li>
+            <li>市场波动性<strong class="custom-text-purple">极端异常</strong></li>
+          </ul>
+        </div>
+        
+        <div class="highlight-container custom-bg-purple">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-shield-alt custom-icon-purple text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">熔断响应机制</span>
+          </div>
+          <p class="text-lg">
+            立即<strong class="custom-text-purple">暂停所有交易</strong><br/>
+            进入系统<strong class="custom-text-purple">诊断检查期</strong><br/>
+            人工干预后<strong class="custom-text-purple">重新激活</strong>
+          </p>
+        </div>
+      </div>
+      
+      <!-- 风险管理配置表格 -->
+      <div class="content-card">
+        <div class="table-title">不同交易策略的风险管理配置</div>
+        <table>
+          <thead>
+            <tr>
+              <th>策略类型</th>
+              <th>典型止损阈值</th>
+              <th>典型止盈阈值</th>
+              <th>典型熔断机制</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>高频交易</strong></td>
+              <td>基于市场实时波动动态调整，通常非常小（如0.1%）</td>
+              <td>基于市场实时波动动态调整，通常非常小（如0.1%）</td>
+              <td>基于连续亏损次数或总资产回撤比例，触发后暂停交易</td>
+            </tr>
+            <tr>
+              <td><strong>套利策略</strong></td>
+              <td>基于市场实时波动动态调整，通常非常小（如0.1%）</td>
+              <td>基于市场实时波动动态调整，通常非常小（如0.1%）</td>
+              <td>基于连续亏损次数或总资产回撤比例，触发后暂停交易</td>
+            </tr>
+            <tr>
+              <td><strong>趋势跟踪</strong></td>
+              <td>固定比例（如1-5%）或基于技术指标（如ATR）动态计算</td>
+              <td>固定比例（如10-20%）或基于技术指标（如移动平均线）动态计算</td>
+              <td>基于连续亏损次数或总资产回撤比例，触发后暂停交易</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="text-sm mt-2 text-gray-600">数据来源：根据公开信息整理</p>
+      </div>
+    </div>
+  </div><div class="line-bar"></div><div class="main-content-board" data-page-id="5">
+    <div class="chapter-title" id="chapter-5">5. 系统实现：从架构蓝图到代码模块</div>
+    
+    <p class="text-lg mb-6">
+      在前序章节中，我们已经完成了对本项目核心架构、数据源、AI决策引擎以及风险管理框架的理论构建。然而，任何宏伟的蓝图都需要坚实的代码作为支撑才能从构想变为现实。本章将聚焦于系统的具体实现，详细拆解如何将前文所述的各个核心模块转化为可执行、可维护的Python代码。我们将遵循&#34;管道-过滤器&#34;的架构思想，逐一阐述数据采集、特征工程、AI决策、订单执行及监控等模块的技术细节与实现难点，并探讨如何借助开源社区的力量，加速项目的开发进程。
+    </p>
+    
+    <div class="section-title" id="section-5-1">5.1 数据采集模块：多源适配与缓存设计</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        数据采集模块是整个AI交易系统的&#34;感官&#34;，其可靠性与效率直接决定了决策引擎的质量。该模块的核心任务是从多个异构数据源中，以稳定、高效的方式获取原始市场数据。
+      </p>
+      
+      <div class="grid grid-cols-2 gap-6 mb-8">
+        <div class="content-card">
+          <p class="text-lg mb-3">核心架构设计：</p>
+          <ul class="list-disc space-y-2 text-lg ml-5 pl-6">
+            <li>
+              <strong class="custom-text-blue">适配器模式</strong>：为每个数据源编写独立的适配器类，实现统一的<strong class="custom-text-blue">DataProvider接口</strong>
+            </li>
+            <li>
+              <strong class="custom-text-green">API速率限制</strong>：集成<strong class="custom-text-green">ratelimit库</strong>，实现&#34;令牌桶&#34;算法控制请求频率
+            </li>
+            <li>
+              <strong class="custom-text-orange">断路器模式</strong>：在连续调用失败时暂停请求，防止账户封禁
+            </li>
+          </ul>
+        </div>
+        
+        <div class="content-card">
+          <p class="text-lg mb-3">容错机制与性能优化：</p>
+          <ul class="list-disc space-y-2 text-lg ml-5 pl-6">
+            <li>
+              <strong class="custom-text-purple">指数退避策略</strong>：故障重试间隔呈指数增长，最大程度恢复服务
+            </li>
+            <li>
+              <strong class="custom-text-cyan">Redis数据缓存</strong>：对时效性要求不高的历史数据进行缓存
+            </li>
+            <li>
+              <strong class="custom-text-blue">降级机制</strong>：API不可用时使用缓存数据进行回测分析
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section-title" id="section-5-2">5.2 特征工程模块：从原始数据到AI输入</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        特征工程模块是将原始市场数据加工成AI决策模型可用特征的核心环节，这一过程对提升模型预测准确性至关重要。
+      </p>
+      
+      <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-broom custom-icon-blue text-xl mr-2"></i>
+            <p class="font-semibold text-lg">数据清洗与预处理</p>
+          </div>
+          <p class="text-lg">
+            使用<strong class="custom-text-blue">Pandas库</strong>处理缺失值、异常值及重复数据，采用Z-score或IQR方法剔除噪声干扰
+          </p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-calculator custom-icon-green text-xl mr-2"></i>
+            <p class="font-semibold text-lg">特征计算</p>
+          </div>
+          <ul class="list-disc space-y-2 text-lg ml-5 pl-6">
+            <li><strong class="custom-text-green">技术指标</strong>：MA、RSI、MACD、布林带</li>
+            <li><strong class="custom-text-green">市场微观特征</strong>：买卖盘深度、VWAP</li>
+            <li><strong class="custom-text-green">链上数据特征</strong>：大额转账监控</li>
+          </ul>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-sliders-h custom-icon-orange text-xl mr-2"></i>
+            <p class="font-semibold text-lg">数据标准化</p>
+          </div>
+          <p class="text-lg">
+            将所有特征值缩放到<strong class="custom-text-orange">0-1区间</strong>或转换为<strong class="custom-text-orange">标准正态分布</strong>，确保模型有效学习
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section-title" id="section-5-3">5.3 订单执行模块：统一交易接口与健壮性设计</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        订单执行模块是连接虚拟决策与真实市场的桥梁，其核心职责是可靠地执行风险管理模块的交易指令。
+      </p>
+      
+      <div class="mb-6">
+        <div class="content-card">
+          <p class="text-lg">
+            采用<strong class="custom-text-purple">统一交易接口(UTI)</strong>设计，基于<strong class="custom-text-purple">ccxt库</strong>实现交易所API适配器，支持<strong class="custom-text-purple">create_order()</strong>、<strong class="custom-text-purple">cancel_order()</strong>等核心方法
+          </p>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-search custom-icon-blue text-xl mr-2"></i>
+            <p class="font-semibold text-lg">状态监控与确认</p>
+          </div>
+          <p class="text-lg">
+            通过轮询或Websocket实时监听订单执行状态，确保交易指令被正确处理
+          </p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-redo custom-icon-green text-xl mr-2"></i>
+            <p class="font-semibold text-lg">失败处理与重试</p>
+          </div>
+          <p class="text-lg">
+            采用<strong class="custom-text-green">断路器模式</strong>和<strong class="custom-text-green">指数退避策略</strong>，智能处理网络中断和API错误
+          </p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-wave-square custom-icon-orange text-xl mr-2"></i>
+            <p class="font-semibold text-lg">滑点控制</p>
+          </div>
+          <p class="text-lg">
+            根据实时<strong class="custom-text-orange">市场波动性指标(ATR)</strong>动态调整可接受滑点范围，保护交易利润
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section-title" id="section-5-4">5.4 监控与性能模块：日志、仪表盘与告警</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        监控与性能模块是系统的&#34;仪表盘&#34;和&#34;警报器&#34;，为故障排查、策略优化和风险控制提供关键反馈。
+      </p>
+      
+      <div class="grid grid-cols-2 gap-6 mb-8">
+        <div>
+          <div class="content-card mb-6">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-clipboard-list custom-icon-cyan text-xl mr-2"></i>
+              <p class="font-semibold text-lg">日志记录</p>
+            </div>
+            <p class="text-lg">
+              使用Python<strong class="custom-text-cyan">logging模块</strong>记录关键步骤和状态变更，包含时间戳、模块名称等上下文信息
+            </p>
+          </div>
+          
+          <div class="content-card">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-chart-line custom-icon-blue text-xl mr-2"></i>
+              <p class="font-semibold text-lg">实时绩效跟踪</p>
+            </div>
+            <ul class="list-disc space-y-2 text-lg ml-5 pl-6">
+              <li><strong class="custom-text-blue">累计盈亏(PNL)</strong></li>
+              <li><strong class="custom-text-blue">最大回撤(Max Drawdown)</strong></li>
+              <li><strong class="custom-text-blue">夏普比率(Sharpe Ratio)</strong></li>
+              <li><strong class="custom-text-blue">胜率与盈亏比</strong></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div>
+          <div class="content-card mb-6">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-tachometer-alt custom-icon-green text-xl mr-2"></i>
+              <p class="font-semibold text-lg">可视化仪表盘</p>
+            </div>
+            <p class="text-lg">
+              基于<strong class="custom-text-green">Streamlit框架</strong>构建实时数据看板，展示账户资产、持仓情况和关键绩效图表
+            </p>
+          </div>
+          
+          <div class="content-card">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-bell custom-icon-orange text-xl mr-2"></i>
+              <p class="font-semibold text-lg">告警系统</p>
+            </div>
+            <p class="text-lg">
+              当检测到<strong class="custom-text-orange">总资产回撤超5%</strong>或<strong class="custom-text-orange">连续交易失败</strong>时，通过邮件/Slack触发即时告警
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section-title" id="section-5-5">5.5 利用开源项目加速开发</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        开源社区提供了大量经过实战检验的优秀项目和工具，借鉴这些项目能显著加速开发进程并避免常见陷阱。
+      </p>
+      
+      <div class="table-title">开源AI量化交易项目参考</div>
+      <div class="overflow-x-auto mb-8">
+        <table class="min-w-full border border-gray-200">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border border-gray-300 px-4 py-2 text-left">项目名称</th>
+              <th class="border border-gray-300 px-4 py-2 text-left">核心特点与优势</th>
+              <th class="border border-gray-300 px-4 py-2 text-left">主要技术栈</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2 font-semibold">TensorTrade-NG</td>
+              <td class="border border-gray-300 px-4 py-2">
+                模块化设计，AI策略可通过强化学习(RL)实现自我进化；提供便捷的快速原型验证环境<sup><a href="https://blog.csdn.net/weixin_70955880/article/details/147188775" target="_blank">32</a></sup>
+              </td>
+              <td class="border border-gray-300 px-4 py-2">Python, Ray, Stable-Baselines3</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2 font-semibold">Freqtrade</td>
+              <td class="border border-gray-300 px-4 py-2">
+                专注于加密货币交易的开源机器人；提供回测引擎、策略优化和交易执行等功能<sup><a href="https://github.com/asaltrader/RobinTrader" target="_blank">34</a></sup>
+              </td>
+              <td class="border border-gray-300 px-4 py-2">Python, ccxt, Pandas</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2 font-semibold">Qlib</td>
+              <td class="border border-gray-300 px-4 py-2">
+                微软亚洲研究院开发的AI量化投资工具包，专为AI模型在金融领域的应用设计<sup><a href="https://blog.csdn.net/j8267643/article/details/147318384" target="_blank">33</a></sup>
+              </td>
+              <td class="border border-gray-300 px-4 py-2">Python, PyTorch/TensorFlow, Pandas</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2 font-semibold">Backtrader</td>
+              <td class="border border-gray-300 px-4 py-2">
+                轻量级、灵活的Python回测框架，支持多种数据源和交易接口，易于策略编写和测试<sup><a href="https://blog.csdn.net/j8267643/article/details/147318384" target="_blank">33</a></sup>
+              </td>
+              <td class="border border-gray-300 px-4 py-2">Python, Pandas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-gray-600 mb-8">数据来源：根据公开信息整理</p>
+    </div>
+  </div><div class="line-bar"></div><div class="main-content-board" data-page-id="6">
+    <div class="chapter-title" id="chapter-6">6. 重大风险与挑战：技术、财务与合规</div>
+    
+    <p class="text-lg mb-6">
+      在前序章节中，我们系统性地构建了一个从数据采集到交易执行的完整AI自动化交易框架。然而，任何技术蓝图在迈向现实的过程中，都必须正视并审慎评估其潜在的风险与挑战。本章节将剖析本项目在实施过程中可能遭遇的三大核心挑战：技术层面上大型语言模型（LLM）固有的不确定性，财务层面上持续的运营成本压力，以及法律合规层面上全球监管环境的复杂性。
+    </p>
+
+    <div class="section-title" id="section-6-1">6.1 技术挑战：LLM输出的不确定性与幻觉</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        尽管DeepSeek API展现了强大的性能与成本优势，但其作为大型语言模型的本质，决定了其输出并非绝对可靠。这一特性为本项目带来了最严峻的技术挑战，即如何有效管理和利用LLM固有的随机性与<strong class="custom-text-blue">&#34;幻觉&#34;（Hallucination）现象</strong>，避免其生成格式错误的响应或做出不合理、高风险的决策。
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-shield-alt custom-icon-green text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">强制结构化输出与Schema校验</span>
+          </div>
+          <p class="text-lg">
+            在提示词工程中，强调引导模型生成JSON等结构化格式。在代码实现层面，引入严格的Schema校验机制：
+          </p>
+          <ul class="list-disc pl-5 space-y-2 mt-3 text-lg pl-6">
+            <li>使用Python的<strong class="custom-text-green">pydantic或jsonschema库</strong>验证交易信号</li>
+            <li>任何不符合预设Schema的响应自动判定为无效</li>
+            <li>触发预设的默认行为（如保持持仓）或告警</li>
+          </ul>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-layer-group custom-icon-orange text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">引入独立的验证层</span>
+          </div>
+          <p class="text-lg">
+            对于通过格式校验的交易信号，提交给基于规则或传统量化模型的验证模块进行&#34;sanity check&#34;：
+          </p>
+          <ul class="list-disc pl-5 space-y-2 mt-3 text-lg pl-6">
+            <li>基于预设<strong class="custom-text-orange">风险阈值（如最大单笔亏损比例）</strong>判断决策合理性</li>
+            <li>使用技术指标（如价格是否处于历史高位）验证逻辑</li>
+            <li>高风险决策可被否决、要求重新生成或标记为&#34;待人工审核&#34;</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" id="section-6-2">6.2 财务挑战：运营成本与盈利预期</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        本项目的财务挑战主要源于两个方面：一是持续的、可预见的运营成本，二是基于历史回测的盈利预期与真实市场表现之间的巨大鸿沟。
+      </p>
+      
+      <div class="flex flex-col md:flex-row gap-6 mb-6">
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-calculator custom-icon-purple text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">成本估算框架</span>
+          </div>
+          <p class="text-lg mb-3">量化项目的总拥有成本（TCO）：</p>
+          <ul class="list-disc pl-5 space-y-2 text-lg pl-6">
+            <li><strong class="custom-text-purple">DeepSeek API调用费</strong>：基于tokens数量的可变成本</li>
+            <li><strong class="custom-text-purple">服务器与基础设施成本</strong>：云端或本地部署的持续投入</li>
+            <li><strong class="custom-text-purple">数据订阅与采集成本</strong>：高质量链上或市场数据费用</li>
+            <li><strong class="custom-text-purple">交易所交易手续费</strong>：侵蚀最终利润</li>
+          </ul>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-chart-line custom-icon-cyan text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">盈利预期挑战</span>
+          </div>
+          <p class="text-lg">
+            历史回测存在<strong class="custom-text-cyan">&#34;后视偏差&#34;（Hindsight Bias）</strong>，在真实市场中无法复制。必须对盈利前景保持极度审慎，避免不切实际的承诺。
+          </p>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-sliders-h custom-icon-blue text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">成本控制优化</span>
+          </div>
+          <p class="text-lg">
+            通过<strong class="custom-text-blue">异步批处理、多级缓存设计和动态速率限制</strong>降低API调用频率和成本<sup><a href="https://segmentfault.com/a/1190000047262188" target="_blank">35</a></sup>。选择性价比高的云服务或边缘计算资源控制固定支出。
+          </p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-3">
+            <i class="fas fa-shield-virus custom-icon-green text-2xl mr-3"></i>
+            <span class="font-semibold text-xl">审慎盈利模型</span>
+          </div>
+          <p class="text-lg">
+            设定<strong class="custom-text-green">极低初始本金</strong>（测试用小额资金），强制设置严格&#34;熔断&#34;机制：当累计亏损达到<strong class="custom-text-green">5%阈值</strong>时立即暂停所有交易。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" id="section-6-3">6.3 法律与合规挑战：全球监管的复杂性</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">
+        加密货币交易机器人的合法性高度依赖于运营所在的司法管辖区。忽视这一挑战可能导致项目因触及法律红线而被迫终止。全球主要国家和地区对加密货币交易机器人的监管态度存在显著差异<sup><a href="https://www.163.com/dy/article/K4EOD3U40518SQLC.html" target="_blank">36</a></sup>。
+      </p>
+      
+      <div class="table-title">全球主要司法管辖区监管现状对比</div>
+      <table>
+        <thead>
+          <tr>
+            <th>国家/地区</th>
+            <th>主要监管机构</th>
+            <th>核心法规/框架</th>
+            <th>对加密货币交易机器人的主要态度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>欧盟 (EU)</td>
+            <td>欧洲证券和市场管理局 (ESMA)</td>
+            <td>加密资产市场法规 (MiCA)</td>
+            <td>允许使用，但需遵守市场滥用法规<sup><a href="https://vocal.media/journal/is-it-legal-to-automate-crypto-trading-a-guide-to-crypto-trading-bots-and-regulations" target="_blank">37</a></sup></td>
+          </tr>
+          <tr>
+            <td>美国</td>
+            <td>证券交易委员会 (SEC)、商品期货交易委员会 (CFTC)</td>
+            <td>证券法、商品交易法</td>
+            <td>允许个人使用，操作必须符合金融法规<sup><a href="https://vocal.media/journal/is-it-legal-to-automate-crypto-trading-a-guide-to-crypto-trading-bots-and-regulations" target="_blank">37</a></sup></td>
+          </tr>
+          <tr>
+            <td>中国</td>
+            <td>中国人民银行、中国证监会等</td>
+            <td>《关于防范比特币风险的通知》等</td>
+            <td>严格禁止境内个人参与加密货币交易<sup><a href="https://www.renrendoc.com/paper/432466051.html" target="_blank">38</a></sup></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p class="text-lg mt-6">
+        在项目启动前，必须进行全面的法律合规性审查，明确自身地理位置并深入了解当地关于加密货币交易、自动化交易软件的具体法律规定。
+      </p>
+      <p class="text-sm italic mt-2">数据来源：根据公开信息整理</p>
+    </div>
+  </div><div class="line-bar"></div><div class="main-content-board" data-page-id="7">
+    <!-- 章节标题 -->
+    <div class="chapter-title" id="chapter-7">7. 结论与展望：通往AI驱动自动化交易的可行路径与现实挑战</div>
+    
+    <!-- 章节描述 -->
+    <p class="text-lg mb-6">本报告系统性地探讨了基于DeepSeek API与GMGN市场数据，为个人用户开发一个完全由AI驱动的加密货币自动化交易工具的可行性。通过对系统架构、核心技术、风险管理及潜在挑战的深入分析，我们旨在为该项目的开发与实施提供一份全面、务实的技术蓝图与风险评估。</p>
+    
+    <!-- 7.1 核心发现 -->
+    <div class="section-title" id="section-7-1">7.1 核心发现：技术可行性与架构优势</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">研究明确指出，构建一个完全依赖AI决策的自动化交易工具在<strong class="custom-text-blue">技术上是可行的</strong>。</p>
+      
+      <div class="content-card">
+        <p class="text-lg mb-3">其核心优势在于采用了分层、模块化的&#34;管道-过滤器&#34;架构：</p>
+        <ul class="list-disc space-y-2 text-lg pl-6">
+          <li>将数据采集、特征工程、AI决策等功能解耦，形成清晰数据流</li>
+          <li>提升系统<strong class="custom-text-green">灵活性与可扩展性</strong>，适应未来先进模型</li>
+          <li>显著<strong class="custom-text-orange">降低开发与维护复杂性</strong>，奠定长期演进基础</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- 7.2 关键挑战 -->
+    <div class="section-title" id="section-7-2">7.2 关键挑战：数据、技术与合规的三重考验</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">尽管技术架构清晰可行，但项目的成功落地仍面临严峻挑战。</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-database custom-icon-purple text-xl mr-2"></i>
+            <span class="font-semibold text-lg">数据挑战</span>
+          </div>
+          <p class="text-lg">单一依赖GMGN平台存在<strong class="custom-text-purple">显著风险</strong>，需构建多元化数据源体系保障稳定性。</p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-microchip custom-icon-cyan text-xl mr-2"></i>
+            <span class="font-semibold text-lg">技术挑战</span>
+          </div>
+          <p class="text-lg">LLM的<strong class="custom-text-cyan">随机性与幻觉问题</strong>需严格输出校验与人机协同验证机制应对。</p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-gavel custom-icon-blue text-xl mr-2"></i>
+            <span class="font-semibold text-lg">合规挑战</span>
+          </div>
+          <p class="text-lg">全球监管环境<strong class="custom-text-blue">复杂且差异巨大</strong>，需全面审查当地法律法规。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 7.3 结论与展望 -->
+    <div class="section-title" id="section-7-3">7.3 结论与展望：审慎前行，聚焦核心价值</div>
+    <div class="section-content-container">
+      <p class="text-lg mb-6">综合全文分析，我们得出以下结论：</p>
+      
+      <div class="highlight-container custom-bg-green mb-6">
+        <div class="flex items-center mb-2">
+          <i class="fas fa-lightbulb custom-icon-green text-2xl mr-3"></i>
+          <span class="font-semibold text-xl">核心结论</span>
+        </div>
+        <p class="text-xl font-bold custom-text-green">本项目是极具挑战性与探索价值的技术实践，成功高度依赖系统性应对多重挑战。</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-compass custom-icon-orange text-xl mr-2"></i>
+            <span class="font-semibold text-lg">定位策略</span>
+          </div>
+          <p class="text-lg">坚持&#34;<strong class="custom-text-orange">业余兴趣探索</strong>&#34;定位，专注技术学习与实践验证。</p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-bullseye custom-icon-purple text-xl mr-2"></i>
+            <span class="font-semibold text-lg">资源聚焦</span>
+          </div>
+          <p class="text-lg">核心资源投入<strong class="custom-text-purple">AI决策与风险管理</strong>，利用开源框架加速开发。</p>
+        </div>
+        
+        <div class="content-card">
+          <div class="flex items-center mb-2">
+            <i class="fas fa-shield-alt custom-icon-cyan text-xl mr-2"></i>
+            <span class="font-semibold text-lg">风险框架</span>
+          </div>
+          <p class="text-lg">建立全面<strong class="custom-text-cyan">风险评估与缓解框架</strong>，包含数据多元化与成本控制。</p>
+        </div>
+      </div>
+      
+      <p class="text-lg">展望未来，随着大型语言模型技术的持续演进和金融监管环境的逐步明朗，AI在量化交易领域的应用将展现出巨大的潜力。本项目的探索，不仅是对前沿技术的一次实践，更是为未来更智能、更合规的自动化交易工具的诞生，积累宝贵的经验与洞察。</p>
+    </div>
+  </div><div class="reference-board" data-page-id="ref" id="reference"><div class="reference-board-title">来源</div><div class="reference-list-board"><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">1</div>
+				<a href="https://arxiv.org/pdf/2503.18265" target="_blank" class="ref-title">[2503.18265v1] Risk Management for Distributed Arbitrage Systems: Integrating Artificial ...</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">arXiv</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">2</div>
+				<a href="https://link.springer.com/chapter/10.1007/978-3-031-88304-0_94" target="_blank" class="ref-title">Towards an Architecture for an Automated Cryptocurrency Algorithmic Trading System ...</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">Springer</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">3</div>
+				<a href="https://blog.csdn.net/vitasoy2055/article/details/145175907" target="_blank" class="ref-title">DeepSeek-V3 API 调用+代码（流式输出切换+持续交互chat）</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">4</div>
+				<a href="https://blog.csdn.net/weixin_41429382/article/details/145436262" target="_blank" class="ref-title">基于DeepSeek AI和Dexscreener API构建AI加密交易机器人的分步指南</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">5</div>
+				<a href="https://segmentfault.com/a/1190000046137837" target="_blank" class="ref-title">DeepSeek爆火全网！清华团队104页教程+1000个神级提示词，手把手教你玩转AI神器</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">思否开发者社区</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">6</div>
+				<a href="https://blog.csdn.net/weixin_61514920/article/details/144950687" target="_blank" class="ref-title">全网最强 AI 接入教程：DeepSeek-V3 API全流程详解 （支持与OpenAI无缝兼容）</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">7</div>
+				<a href="https://blog.csdn.net/sjsndy/article/details/150527637" target="_blank" class="ref-title">实战案例：AI应用架构师如何解决金融风险AI系统的高并发问题</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">8</div>
+				<a href="https://blog.csdn.net/qq871325148/article/details/145969278" target="_blank" class="ref-title">【DeepThinking】DeepSeek 服务成本研究报告</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">9</div>
+				<a href="https://www.51cto.com/article/798017.html" target="_blank" class="ref-title">如何开发加密人工智能量化交易机器人</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">51CTO</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">10</div>
+				<a href="https://rk.51cto.com/article/368051.html" target="_blank" class="ref-title">软考软件设计师考试：管道-过滤器架构风格深度教学 </a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">rk.51cto.com</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">11</div>
+				<a href="https://developer.aliyun.com/article/1636515" target="_blank" class="ref-title">量化交易机器人系统开发逻辑策略及源码示例</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">阿里云开发者社区</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">12</div>
+				<a href="https://www.bilibili.com/video/BV1ZSj5zAES7/" target="_blank" class="ref-title">Pipes and Filters (管道与过滤器) 架构模式深度解析--告别烧脑！复杂系统设计，就靠这招“软件流水线”！</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">哔哩哔哩</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">13</div>
+				<a href="https://cn.cointelegraph.com/news/how-to-develop-an-ai-agent-for-crypto-trading" target="_blank" class="ref-title">如何为加密货币交易开发AI代理</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">Cointelegraph</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">14</div>
+				<a href="https://www.theblockbeats.info/news/54622" target="_blank" class="ref-title">专访「百倍币发现平台」GMGN：meme是资产发行的「新零售时代」</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">theblockbeats.info</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">15</div>
+				<a href="https://news.qq.com/rain/a/20241120A040GY00" target="_blank" class="ref-title">一夜百倍？如何使用GMGN玩转Meme币（入门篇）</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">腾讯网</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">16</div>
+				<a href="https://www.jb51.net/blockchain/978152.html" target="_blank" class="ref-title">GMGN暴雷了？收入暴跌97%，链上Meme币交易工具的生死赌局</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">脚本之家</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">17</div>
+				<a href="https://blog.csdn.net/m0_73054711/article/details/145411443" target="_blank" class="ref-title">如何使用 DeepSeek 和 Dexscreener 构建免费的 AI 加密交易机器人？</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">18</div>
+				<a href="https://blog.csdn.net/sanshi0007/article/details/145378900" target="_blank" class="ref-title">DeepSeek R1和V3区别</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">19</div>
+				<a href="https://blog.csdn.net/ChailangCompany/article/details/146778194" target="_blank" class="ref-title">DeepSeek V3 与 DeepSeek R1的主要区别是什么？</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">20</div>
+				<a href="https://feeds-drcn.cloud.huawei.com.cn/landingpage/latest?docid=1051057d_JPSKII2L0511N33R&amp;to_app=hiboard&amp;dy_scenario=recomm&amp;tn=cf47ac568430cdb64a4d03c10611179916f277ce41e1143189368a1d1eb0df1c&amp;ctype=news" target="_blank" class="ref-title">DeepSeek前实习生魔改MoE，用迭代机制把内存需求砍了42%，团队：“免费午餐”优化方法</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">硅星人-华为浏览器</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">21</div>
+				<a href="https://feeds-drcn.cloud.huawei.com.cn/landingpage/latest?docid=105102131707423&amp;to_app=hiboard&amp;dy_scenario=recomm&amp;tn=a40f8f2cfbeacddce619bb94814cf1c7fb6bb8692b5f042cf4ee9078598ccaa7&amp;ctype=news" target="_blank" class="ref-title">DeepSeek新模型降价：优化推理效率，API价格降超50%</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">澎湃新闻-华为浏览器</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">22</div>
+				<a href="https://dev.to/sayed_ali_alkamel/deepseek-and-the-power-of-mixture-of-experts-moe-ham" target="_blank" class="ref-title">DeepSeek and the Power of Mixture of Experts (MoE) - DEV Community</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">DEV Community</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">23</div>
+				<a href="https://blog.csdn.net/weixin_56435870/article/details/145823254" target="_blank" class="ref-title">DeepSeek R1 与 V3的区别</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">24</div>
+				<a href="https://blog.csdn.net/weixin_60180674/article/details/148305652" target="_blank" class="ref-title">DeepSeek官方API地址及使用指南</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">25</div>
+				<a href="https://finance.sina.com.cn/wm/2025-09-29/doc-infseiwm1702621.shtml" target="_blank" class="ref-title">Deepseek API大降价，开发者成本可降超50%</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">新浪财经</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">26</div>
+				<a href="https://baijiahao.baidu.com/s?id=1846480972806737702" target="_blank" class="ref-title">赚钱，DeepSeek果然第一！全球六大顶级AI实盘厮杀，人手1万刀开局</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">百家号</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">27</div>
+				<a href="https://news.sohu.com/a/946272914_114760" target="_blank" class="ref-title">全球 6 大顶级 AI 实盘厮杀，Deepseek 三天收益爆赚36%傲视群雄</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">搜狐网</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">28</div>
+				<a href="https://www.toutiao.com/w/1823630468900876/" target="_blank" class="ref-title">德育：DeepSeek于2025年2月9日正式调整了其API服务的收费标准，结束了自2024年12月26日开始的45天优惠期。以下是主要调整内容及影响分析： ### 一、价格调整详情 1. **输入Token费用** - **优惠期**（至2025年2月8日）： - 缓存命中：0.1元/百万tokens - 缓存未命中：1元/百万tokens - **调整后**（2月9日起）： - 缓存命中：0.5元/百万tokens（涨幅400%） - 缓存未命中：2元</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">今日头条</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">29</div>
+				<a href="https://news.sohu.com/a/939974416_639898" target="_blank" class="ref-title">DeepSeek又上新！API价格大幅下降</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">搜狐网</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">30</div>
+				<a href="https://www.21jingji.com/article/20250929/herald/d59b29e90267d7aafd3d1553e107eeb5.html" target="_blank" class="ref-title">Deepseek API大降价，开发者成本可降超50%</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">21经济网</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">31</div>
+				<a href="https://www.woshipm.com/operate/6180016.html" target="_blank" class="ref-title">Deepseek官方提示词教程</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">人人都是产品经理</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">32</div>
+				<a href="https://blog.csdn.net/weixin_70955880/article/details/147188775" target="_blank" class="ref-title">让交易机器人学会自我进化：我的AI量化实战新体验</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">33</div>
+				<a href="https://blog.csdn.net/j8267643/article/details/147318384" target="_blank" class="ref-title">【GitHub项目推荐--AI 股票量化交易工具】【转载】</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">CSDN博客</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">34</div>
+				<a href="https://github.com/asaltrader/RobinTrader" target="_blank" class="ref-title">GitHub - asaltrader/RobinTrader: Free, open source crypto trading bot</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">GitHub</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">35</div>
+				<a href="https://segmentfault.com/a/1190000047262188" target="_blank" class="ref-title">腾讯云 DeepSeek API 半价时段取消：开发者成本优化实践指南</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">思否开发者社区</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">36</div>
+				<a href="https://www.163.com/dy/article/K4EOD3U40518SQLC.html" target="_blank" class="ref-title">华安处置|加密货币司法处置：直面技术迷雾与法律滞后性的挑战</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">网易</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">37</div>
+				<a href="https://vocal.media/journal/is-it-legal-to-automate-crypto-trading-a-guide-to-crypto-trading-bots-and-regulations" target="_blank" class="ref-title">Is it Legal to Automate Crypto Trading? A Guide to Crypto Trading Bots and Regulations ...</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">Vocal</div>
+				</div>
+			</div>
+		</div><div class="single-ref-board common-template">
+			<div class="info">
+				<div class="ref-num">38</div>
+				<a href="https://www.renrendoc.com/paper/432466051.html" target="_blank" class="ref-title">加密货币交易合规</a>
+			</div>
+			<div class="site-name">
+				<div class="site">
+					<div class="site-name-position">人人文库</div>
+				</div>
+			</div>
+		</div></div></div></div><script>
+        let isResizing = false;
+        let startX = 0;
+        let startWidth = 0;
+
+        try {
+            function toggleToc() {
+                const body = document.body;
+                const toggleBtn = document.querySelector('.toggle-btn');
+                body.classList.toggle('open-catalog');
+                if (body.classList.contains('open-catalog')) {
+                    toggleBtn.textContent = '✕';
+                } else {
+                    toggleBtn.textContent = '☰';
+                }
+            }
+        }
+        catch (error) {}
+
+
+        function setNavWidth(percentage) {
+            percentage = Math.max(10, Math.min(40, percentage));
+            document.documentElement.style.setProperty('--nav-width', percentage + '%');
+        }
+
+        function getNavWidthPercentage() {
+            const currentWidth = getComputedStyle(document.documentElement)
+                .getPropertyValue('--nav-width');
+            return parseFloat(currentWidth);
+        }
+
+        function initResize() {
+            const resizeHandle = document.getElementById('resizeHandle');
+            const resizeOverlay = document.getElementById('resizeOverlay');
+
+            if (!resizeHandle) {
+                console.error('Resize handle not found!');
+                return;
+            }
+
+            resizeHandle.addEventListener('mousedown', function(e) {
+                if (!document.body.classList.contains('open-catalog')) {
+                    return;
+                }
+
+                isResizing = true;
+                startX = e.clientX;
+                startWidth = getNavWidthPercentage();
+
+                resizeHandle.classList.add('dragging');
+                resizeOverlay.classList.add('active');
+                document.body.classList.add('no-select');
+
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!isResizing) return;
+
+                const deltaX = e.clientX - startX;
+                const windowWidth = window.innerWidth;
+                const deltaPercentage = (deltaX / windowWidth) * 100;
+                const newWidth = startWidth + deltaPercentage;
+
+                setNavWidth(newWidth);
+                e.preventDefault();
+            });
+
+            document.addEventListener('mouseup', function(e) {
+                if (isResizing) {
+                    isResizing = false;
+
+                    resizeHandle.classList.remove('dragging');
+                    resizeOverlay.classList.remove('active');
+                    document.body.classList.remove('no-select');
+                }
+            });
+
+            document.addEventListener('mouseleave', function() {
+                if (isResizing) {
+                    isResizing = false;
+                    resizeHandle.classList.remove('dragging');
+                    resizeOverlay.classList.remove('active');
+                    document.body.classList.remove('no-select');
+                }
+            });
+
+            resizeOverlay.addEventListener('mousemove', function(e) {
+                if (!isResizing) return;
+
+                const deltaX = e.clientX - startX;
+                const windowWidth = window.innerWidth;
+                const deltaPercentage = (deltaX / windowWidth) * 100;
+                const newWidth = startWidth + deltaPercentage;
+
+                setNavWidth(newWidth);
+                e.preventDefault();
+            });
+
+            resizeOverlay.addEventListener('mouseup', function() {
+                if (isResizing) {
+                    isResizing = false;
+                    resizeHandle.classList.remove('dragging');
+                    resizeOverlay.classList.remove('active');
+                    document.body.classList.remove('no-select');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initResize();
+            setNavWidth(20);
+        });
+
+        window.addEventListener('resize', function() {
+            const currentPercentage = getNavWidthPercentage();
+            setNavWidth(currentPercentage);
+        });
+    </script><script>
+    // 3.1 价格变化图表
+    const priceChart_3 = echarts.init(document.getElementById('priceChart_3'));
+    const priceOption_3 = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'shadow' }
+      },
+      legend: {
+        data: ['输入 (缓存命中)', '输入 (缓存未命中)', '输出'],
+        bottom: 0
+      },
+      grid: {
+        left: '5%',
+        right: '4%',
+        bottom: '15%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        data: ['优惠期', '调整后', 'V3.2-Exp', '优惠期', '调整后', 'V3.2-Exp', '优惠期', '调整后', 'V3.2-Exp'],
+        axisLabel: { interval: 0, rotate: 30 }
+      },
+      yAxis: {
+        type: 'value',
+        name: '价格 (元/百万tokens)',
+        min: 0,
+        max: 9
+      },
+      series: [
+        {
+          name: '输入 (缓存命中)',
+          type: 'bar',
+          data: [0.1, 0.5, 0.2, null, null, null, null, null, null],
+          itemStyle: { color: '#5470C6' }
+        },
+        {
+          name: '输入 (缓存未命中)',
+          type: 'bar',
+          data: [null, null, null, 1, 2, 2, null, null, null],
+          itemStyle: { color: '#91CC75' }
+        },
+        {
+          name: '输出',
+          type: 'bar',
+          data: [null, null, null, null, null, null, 2, 8, 3],
+          itemStyle: { color: '#FAC858' }
+        }
+      ]
+    };
+    priceChart_3.setOption(priceOption_3);
+  </script><script src="https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js"></script><script>
+		window.onload = function () {
+			new Viewer(document.body, {
+			filter(image) {
+				return image.tagName.toLowerCase() === 'img';
+			},
+			toolbar: true,
+			navbar: false
+			});
+		};
+	</script></body></html>

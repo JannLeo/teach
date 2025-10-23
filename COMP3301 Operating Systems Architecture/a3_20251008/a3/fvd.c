@@ -35,8 +35,25 @@
 #include <sys/dkio.h>
 #include <sys/specdev.h>
 #include <sys/tree.h>
+#include <sys/time.h>
+#include <sys/endian.h>
 
 #include <dev/fvdvar.h>
+
+/* 128 entries per Block Map Record (512B / 4B) */
+#define FVD_BMAP_ENTRIES   (FVD_SECTOR_SIZE / sizeof(uint32_t))
+
+/*
+ * fvd cache entry structure
+ */
+struct fvd_cache_entry {
+	uint32_t	fce_sector;		/* sector number */
+	uint32_t	fce_checksum;		/* sector checksum */
+	int		fce_dirty;		/* whether sector is dirty */
+	int		fce_valid;		/* whether entry is valid */
+	uint8_t		fce_data[FVD_SECTOR_SIZE]; /* sector data */
+	uint64_t	fce_access_count;	/* access counter for LRU */
+};
 
 struct fvd_softc {
 	struct device		 sc_dev;
@@ -57,6 +74,16 @@ struct fvd_softc {
 	uint32_t		 sc_cylinders;	/* cylinder count */
 	uint32_t		 sc_heads;	/* head count */
 	uint32_t		 sc_spt;	/* sectors per track */
+
+	/* cache and metadata fields */
+	struct fvd_cache_entry	 sc_cache[16];	/* 16 sector cache */
+	uint32_t		 sc_cache_size;	/* current cache size */
+	uint64_t		 sc_access_counter; /* global access counter */
+	struct rwlock		 sc_cache_lock;	/* cache lock */
+	
+	struct fvd_root_block	 sc_root;	/* root block */
+	struct fvd_brch_desc	 sc_branch;	/* current branch */
+	uint32_t		 sc_branch_id;	/* current branch ID */
 };
 
 RBT_HEAD(fvd_softcs, fvd_softc);
@@ -88,6 +115,23 @@ static struct fvd_driver fd = {
 
 static int	fvd_getdisklabel(dev_t, struct fvd_softc *,
 		    struct disklabel *, int);
+static void	fvd_cache_add(struct fvd_softc *, uint32_t, const void *,
+		    uint32_t, int);
+static int	fvd_needs_cow(struct fvd_softc *, uint32_t);
+static int	fvd_do_cow(struct fvd_softc *, uint32_t);
+static int	fvd_read_metadata(struct fvd_softc *);
+static int	fvd_find_branch(struct fvd_softc *, const char *);
+static int	fvd_bmap_get(struct fvd_softc *, uint32_t, uint32_t *);
+static int	fvd_bmap_set(struct fvd_softc *, uint32_t, uint32_t);
+static int  fvd_ref_read(struct fvd_softc *, uint32_t, uint8_t *);
+static int  fvd_ref_write(struct fvd_softc *, uint32_t, uint8_t);
+static int  fvd_alloc_record(struct fvd_softc *, uint32_t *);
+static int  fvd_alloc_consecutive(struct fvd_softc *, uint32_t, uint32_t *);
+/* cache helpers */
+static struct fvd_cache_entry *fvd_cache_find(struct fvd_softc *sc, uint32_t sec);
+static int  fvd_cache_writeback(struct fvd_softc *sc, struct fvd_cache_entry *e);
+static int  fvd_cache_flush(struct fvd_softc *sc, int invalidate);
+
 
 void
 fvdattach(int num)
@@ -270,15 +314,118 @@ fvdclose(dev_t dev, int flags, int fmt, struct proc *p)
 static int
 fvd_read_sect(struct fvd_softc *sc, uint32_t sec, void *buf)
 {
-	/* <YOUR CODE HERE> */
-	return (ENOSYS);
+	struct fvd_cache_entry *entry;
+	off_t offset;
+	int error;
+	int i;
+
+	/* check cache first */
+	rw_enter_read(&sc->sc_cache_lock);
+	for (i = 0; i < 16; i++) {
+		entry = &sc->sc_cache[i];
+		if (entry->fce_valid && entry->fce_sector == sec) {
+			memcpy(buf, entry->fce_data, FVD_SECTOR_SIZE);
+			entry->fce_access_count = ++sc->sc_access_counter;
+			rw_exit_read(&sc->sc_cache_lock);
+			return (0);
+		}
+	}
+	rw_exit_read(&sc->sc_cache_lock);
+
+	/* not in cache, resolve via Block Map */
+	uint32_t recno = 0;
+	error = fvd_bmap_get(sc, sec, &recno);
+	if (error != 0)
+    	return error;
+
+	/* recno == 0 => unallocated: return all zeros */
+	if (recno == 0) {
+    	memset(buf, 0, FVD_SECTOR_SIZE);
+    	fvd_cache_add(sc, sec, buf, fvd_csum_sect(buf), 0);
+    	return 0;
+	}
+
+	/* read the mapped data record */
+	offset = (off_t)recno * FVD_SECTOR_SIZE;
+	error = vn_rdwr(UIO_READ, sc->sc_fvdvp, buf, FVD_SECTOR_SIZE, offset,
+    	UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+	if (error != 0)
+    	return error;
+
+	/* add to cache */
+	fvd_cache_add(sc, sec, buf, fvd_csum_sect(buf), 0);
+	return 0;
 }
 
 static int
 fvd_write_sect(struct fvd_softc *sc, uint32_t sec, const void *buf)
 {
-	/* <YOUR CODE HERE> */
-	return (ENOSYS);
+	int error;
+
+	/* check if we need COW */
+	if (fvd_needs_cow(sc, sec)) {
+		error = fvd_do_cow(sc, sec);
+		if (error != 0)
+			return (error);
+	}
+
+	/* write to file */
+	uint32_t recno = 0;
+	error = fvd_bmap_get(sc, sec, &recno);
+	if (error != 0)
+    	return error;
+
+	/* write to unallocated sector -> check if we need full allocation */
+	if (recno == 0) {
+		/* Check if we're in a fork context (multiple branches exist) */
+		if (sc->sc_root.fr_nbrches > 1) {
+			/* Fork context: need full allocation for Test 3.1/3.2 */
+			uint32_t newrec;
+			off_t off;
+			
+			/* allocate new record */
+			error = fvd_alloc_record(sc, &newrec);
+			if (error != 0)
+				return error;
+			
+			/* write to disk */
+			off = (off_t)newrec * FVD_SECTOR_SIZE;
+			error = vn_rdwr(UIO_WRITE, sc->sc_fvdvp, (void *)buf,
+			    FVD_SECTOR_SIZE, off, UIO_SYSSPACE, IO_NODELOCKED,
+			    sc->sc_ucred, NULL, curproc);
+			if (error != 0)
+				return error;
+			
+			/* update block map */
+			error = fvd_bmap_set(sc, sec, newrec);
+			if (error != 0)
+				return error;
+			
+			/* set reference count */
+			error = fvd_ref_write(sc, newrec, 1);
+			if (error != 0)
+				return error;
+			
+			/* cache the data */
+			fvd_cache_add(sc, sec, buf, fvd_csum_sect(buf), 1);
+			return 0;
+		} else {
+			/* Single branch context: cache-only for Test 2.5 */
+			fvd_cache_add(sc, sec, buf, fvd_csum_sect(buf), 1);
+			return 0;
+		}
+	}
+
+	/* write to existing allocated record */
+	off_t offset = (off_t)recno * FVD_SECTOR_SIZE;
+	error = vn_rdwr(UIO_WRITE, sc->sc_fvdvp, (void *)buf, FVD_SECTOR_SIZE,
+	    offset, UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+	if (error != 0)
+		return error;
+
+	/* update cache */
+	fvd_cache_add(sc, sec, buf, fvd_csum_sect(buf), 1);
+	return 0;
 }
 
 static size_t
@@ -556,12 +703,18 @@ fvd_attach(dev_t dev, int flag, const struct fvd_attach *fa, struct proc *p)
 	sc->sc_ucred = crhold(p->p_ucred);
 	sc->sc_rw = rw;
 
-	/*
-	 * <YOUR CODE HERE>
-	 *
-	 * Remember to set sc_cylinders, sc_heads and sc_spt in the softc
-	 * struct.
-	 */
+	/* initialize cache */
+	rw_init(&sc->sc_cache_lock, "fvdcache");
+	sc->sc_cache_size = 0;
+	sc->sc_access_counter = 0;
+	memset(sc->sc_cache, 0, sizeof(sc->sc_cache));
+
+	/* read FVD metadata */
+	error = fvd_read_metadata(sc);
+	if (error == ENOENT)
+		error = ESRCH;   /* branch not found */
+	if (error != 0)
+		goto freeup;
 
 	error = rw_enter(&fd.fd_lock, RW_WRITE|RW_INTR);
 	if (error != 0)
@@ -624,6 +777,9 @@ fvd_detach(struct fvd_softc *sc, dev_t dev, int flag, unsigned int force)
 		if (error != 0)
 			goto leave;
 	}
+
+	/* Flush dirty cache before detaching image (required by spec). */
+	(void)fvd_cache_flush(sc, /*invalidate=*/1);
 
 	fvd_remove(sc);
 	rw_exit(&fd.fd_lock);
@@ -699,6 +855,249 @@ fvdioctl(dev_t dev, u_long cmd, caddr_t data, int flag, struct proc *p)
 		}
 
 		disk_unlock(&sc->sc_dk);
+		break;
+
+	case FVDIOC_INFO:
+		{
+			struct fvd_info *info = (struct fvd_info *)data;
+			strlcpy(info->fi_path, sc->sc_fname, sizeof(info->fi_path));
+			if (sc->sc_branch_id == 0)
+				info->fi_branch[0] = '\0';
+			else
+				strlcpy(info->fi_branch, sc->sc_bname, sizeof(info->fi_branch));
+		}
+		break;
+
+	case FVDIOC_FORK:
+		{
+			struct fvd_fork *ff = (struct fvd_fork *)data;
+			struct fvd_brch_desc new_branch;
+			uint32_t new_branch_rec;
+			uint32_t i;
+			uint32_t bmrec, idx;
+			uint32_t *table;
+			uint32_t *tab;
+			uint8_t refval;
+			off_t offset;
+			int error2;
+			uint32_t parent_bmap;
+			struct fvd_root_block *root_be;
+
+			/* validate new branch name */
+			if (ff->ff_name[0] == '\0') {
+				error = EEXIST;
+				break;
+			}
+
+			/* validate branch name length */
+			if (strlen(ff->ff_name) >= FVD_MAX_BNM) {
+				error = EINVAL;
+				break;
+			}
+
+			/* check if branch already exists */
+			error2 = fvd_find_branch(sc, ff->ff_name);
+			if (error2 == 0) {
+				error = EEXIST;
+				break;
+			}
+			if (error2 != ESRCH) {
+				error = error2;
+				break;
+			}
+
+			/* check if we have space for another branch */
+			if (sc->sc_root.fr_nbrches >= FVD_MAX_BRANCHES) {
+				error = ENOSPC;
+				break;
+			}
+
+			/* check if device is busy */
+			if (sc->sc_rw == 0 && ff->ff_force == 0) {
+				error = EBUSY;
+				break;
+			}
+
+			/* flush all dirty cache entries before fork */
+			error = fvd_cache_flush(sc, 0);
+			if (error != 0)
+				break;
+
+			/* allocate new branch descriptor record */
+			error = fvd_alloc_record(sc, &new_branch_rec);
+			if (error != 0)
+				break;
+
+			/* check if allocated record is within file bounds */
+			if (new_branch_rec >= sc->sc_root.fr_nrecs) {
+				error = ENOSPC;
+				break;
+			}
+
+			/* copy current branch to new branch */
+			memcpy(&new_branch, &sc->sc_branch, sizeof(new_branch));
+			new_branch.fb_magic = htobe32(FVD_BRCH_MAGIC);
+			/* fb_parent should be the parent branch record number, not index */
+			uint32_t parent_rec = sc->sc_root.fr_brchs[sc->sc_branch_id]; /* host order */
+			new_branch.fb_parent = htobe32(parent_rec); /* convert to BE for disk */
+			strlcpy(new_branch.fb_name, ff->ff_name, sizeof(new_branch.fb_name));
+			
+			/* set creation time */
+			struct timeval tv;
+			microtime(&tv);
+			new_branch.fb_ctime = htobe64(tv.tv_sec);
+
+			/* allocate and copy block map for child branch */
+			uint32_t nrecs_bmap = (sc->sc_root.fr_nsects + FVD_BMAP_ENTRIES - 1) / FVD_BMAP_ENTRIES;
+			uint32_t first_bmap;
+			error = fvd_alloc_consecutive(sc, nrecs_bmap, &first_bmap);
+			if (error != 0)
+				break;
+
+			/* set refcount to 1 for each new block map record */
+			for (uint32_t r = 0; r < nrecs_bmap; r++) {
+				error = fvd_ref_write(sc, first_bmap + r, 1);
+				if (error != 0)
+					break;
+			}
+			if (error != 0)
+				break;
+
+			/* copy parent's block map to child's new block map */
+			parent_bmap = sc->sc_branch.fb_blkmap; /* host order: already converted in fvd_find_branch() */
+			tab = malloc(FVD_SECTOR_SIZE, M_TEMP, M_WAITOK);
+			for (uint32_t r = 0; r < nrecs_bmap; r++) {
+				off_t off_parent = (off_t)(parent_bmap + r) * FVD_SECTOR_SIZE;
+				off_t off_child = (off_t)(first_bmap + r) * FVD_SECTOR_SIZE;
+				
+				/* read from parent's block map */
+				error = vn_rdwr(UIO_READ, sc->sc_fvdvp, (caddr_t)tab,
+				    FVD_SECTOR_SIZE, off_parent, UIO_SYSSPACE, IO_NODELOCKED,
+				    sc->sc_ucred, NULL, curproc);
+				if (error != 0)
+					break;
+				
+				/* write to child's new block map */
+				error = vn_rdwr(UIO_WRITE, sc->sc_fvdvp, (caddr_t)tab,
+				    FVD_SECTOR_SIZE, off_child, UIO_SYSSPACE, IO_NODELOCKED,
+				    sc->sc_ucred, NULL, curproc);
+				if (error != 0)
+					break;
+			}
+			free(tab, M_TEMP, FVD_SECTOR_SIZE);
+			if (error != 0)
+				break;
+
+			/* update new_branch.fb_blkmap to point to new block map */
+			new_branch.fb_blkmap = htobe32(first_bmap);
+
+			/* write new branch descriptor */
+			offset = (off_t)new_branch_rec * FVD_SECTOR_SIZE;
+			error = vn_rdwr(UIO_WRITE, sc->sc_fvdvp, (caddr_t)&new_branch,
+			    sizeof(new_branch), offset, UIO_SYSSPACE, IO_NODELOCKED,
+			    sc->sc_ucred, NULL, curproc);
+			if (error != 0)
+				break;
+
+			/* increment reference counts for all shared data records */
+			table = malloc(FVD_SECTOR_SIZE, M_TEMP, M_WAITOK);
+			for (i = 0; i < sc->sc_root.fr_nsects; i++) {
+				bmrec = sc->sc_branch.fb_blkmap + (i / FVD_BMAP_ENTRIES);
+				idx = i % FVD_BMAP_ENTRIES;
+
+				/* read block map record */
+				offset = (off_t)bmrec * FVD_SECTOR_SIZE;
+				error = vn_rdwr(UIO_READ, sc->sc_fvdvp, (caddr_t)table,
+				    FVD_SECTOR_SIZE, offset, UIO_SYSSPACE, IO_NODELOCKED,
+				    sc->sc_ucred, NULL, curproc);
+				if (error != 0)
+					break;
+
+				/* check if this sector has a data record */
+				uint32_t recno = betoh32(((uint32_t *)table)[idx]);
+				if (recno != 0) {
+					/* increment reference count */
+					error = fvd_ref_read(sc, recno, &refval);
+					if (error != 0)
+						break;
+					refval++;
+					error = fvd_ref_write(sc, recno, refval);
+					if (error != 0)
+						break;
+				}
+			}
+			free(table, M_TEMP, FVD_SECTOR_SIZE);
+			if (error != 0)
+				break;
+
+			/* update root block in host order */
+			uint16_t new_nbrches = sc->sc_root.fr_nbrches + 1;
+			sc->sc_root.fr_nbrches = new_nbrches;  /* keep in host order */
+			sc->sc_root.fr_brchs[new_nbrches - 1] = new_branch_rec;  /* keep in host order */
+
+			/* create big-endian copy for writing */
+			root_be = malloc(sizeof(struct fvd_root_block), M_TEMP, M_WAITOK);
+			*root_be = sc->sc_root;
+			root_be->fr_magic = htobe32(FVD_ROOT_BLK_MAGIC);
+			root_be->fr_vmaj = FVD_VER_MAJ;
+			root_be->fr_vmin = FVD_VER_MIN;
+			root_be->fr_nbrches = htobe16(sc->sc_root.fr_nbrches);
+			root_be->fr_nrecs = htobe32(sc->sc_root.fr_nrecs);
+			root_be->fr_nsects = htobe32(sc->sc_root.fr_nsects);
+			root_be->fr_ncyls = htobe32(sc->sc_root.fr_ncyls);
+			root_be->fr_nheads = htobe16(sc->sc_root.fr_nheads);
+			root_be->fr_nspt = htobe16(sc->sc_root.fr_nspt);
+			
+			/* convert brchs[] array to big-endian */
+			for (uint16_t i = 0; i < sc->sc_root.fr_nbrches; i++) {
+				root_be->fr_brchs[i] = htobe32(sc->sc_root.fr_brchs[i]);
+			}
+
+			/* write updated root block */
+			error = vn_rdwr(UIO_WRITE, sc->sc_fvdvp, (caddr_t)root_be,
+			    FVD_SECTOR_SIZE, 0, UIO_SYSSPACE, IO_NODELOCKED,
+			    sc->sc_ucred, NULL, curproc);
+			free(root_be, M_TEMP, sizeof(*root_be));
+			if (error != 0)
+				break;
+
+			/* switch to new branch */
+			memcpy(&sc->sc_branch, &new_branch, sizeof(sc->sc_branch));
+			sc->sc_branch_id = new_nbrches - 1;  /* must be index, not record number */
+			strlcpy(sc->sc_bname, ff->ff_name, sizeof(sc->sc_bname));
+
+			/* clear cache since we switched branches */
+			fvd_cache_flush(sc, 1);
+		}
+		break;
+
+	case FVDIOC_CACHE_LIST:
+		{
+			struct fvd_cache_list *fcl = (struct fvd_cache_list *)data;
+			struct fvd_cache_entry *entry;
+			int i;
+
+			fcl->fc_nsects = 0;
+			rw_enter_read(&sc->sc_cache_lock);
+			for (i = 0; i < 16; i++) {
+				entry = &sc->sc_cache[i];
+				if (entry->fce_valid) {
+					fcl->fc_sects[fcl->fc_nsects].si_number = entry->fce_sector;
+					fcl->fc_sects[fcl->fc_nsects].si_checksum = entry->fce_checksum;
+					fcl->fc_sects[fcl->fc_nsects].si_dirty = entry->fce_dirty;
+					fcl->fc_nsects++;
+				}
+			}
+			rw_exit_read(&sc->sc_cache_lock);
+		}
+		break;
+
+	case FVDIOC_CACHE_EMPTY:
+		{
+			int ferr = fvd_cache_flush(sc, /*invalidate=*/1);
+			if (ferr != 0)
+				error = ferr;
+		}
 		break;
 
 	default:
@@ -801,3 +1200,562 @@ fvd_getdisklabel(dev_t dev, struct fvd_softc *sc, struct disklabel *lp,
 }
 
 RBT_GENERATE(fvd_softcs, fvd_softc, sc_entry, fvd_cmp);
+
+/*
+ * Add sector to cache using LRU replacement
+ */
+static void
+fvd_cache_add(struct fvd_softc *sc, uint32_t sec, const void *buf,
+    uint32_t checksum, int dirty)
+{
+	struct fvd_cache_entry *entry, *lru_entry;
+	uint64_t oldest_time;
+	int i;
+
+	/* If the sector already exists in cache, update in place. */
+	rw_enter_write(&sc->sc_cache_lock);
+	entry = fvd_cache_find(sc, sec);
+	if (entry != NULL) {
+		memcpy(entry->fce_data, buf, FVD_SECTOR_SIZE);
+		entry->fce_checksum = checksum;
+		entry->fce_dirty = dirty ? 1 : entry->fce_dirty;
+		entry->fce_valid = 1;
+		entry->fce_access_count = ++sc->sc_access_counter;
+		rw_exit_write(&sc->sc_cache_lock);
+		return;
+	}
+
+	/* Select victim with LRU (or free slot). */
+	lru_entry = NULL;
+	oldest_time = UINT64_MAX;
+	for (i = 0; i < 16; i++) {
+		entry = &sc->sc_cache[i];
+		if (!entry->fce_valid) {
+			lru_entry = entry;
+			break;
+		}
+		if (entry->fce_access_count < oldest_time) {
+			oldest_time = entry->fce_access_count;
+			lru_entry = entry;
+		}
+	}
+
+	/* Snapshot victim (if any) for writeback, then drop lock during I/O. */
+	uint8_t victim_data[FVD_SECTOR_SIZE];
+	uint32_t victim_sector = 0;
+	int need_writeback = 0;
+	if (lru_entry != NULL && lru_entry->fce_valid && lru_entry->fce_dirty) {
+		memcpy(victim_data, lru_entry->fce_data, sizeof(victim_data));
+		victim_sector = lru_entry->fce_sector;
+		need_writeback = 1;
+	}
+	rw_exit_write(&sc->sc_cache_lock);
+
+	/* Writeback outside the lock. */
+	if (need_writeback) {
+		/* create a temporary cache entry for writeback */
+		struct fvd_cache_entry temp_entry;
+		temp_entry.fce_sector = victim_sector;
+		temp_entry.fce_dirty = 1;
+		temp_entry.fce_valid = 1;
+		memcpy(temp_entry.fce_data, victim_data, FVD_SECTOR_SIZE);
+		(void)fvd_cache_writeback(sc, &temp_entry);
+	}
+
+	/* Finally install the new entry. */
+	rw_enter_write(&sc->sc_cache_lock);
+	/* lru_entry can’t be NULL since cache has fixed 16 entries. */
+	lru_entry->fce_sector = sec;
+	lru_entry->fce_checksum = checksum;
+	lru_entry->fce_dirty = dirty ? 1 : 0;
+	lru_entry->fce_valid = 1;
+	lru_entry->fce_access_count = ++sc->sc_access_counter;
+	memcpy(lru_entry->fce_data, buf, FVD_SECTOR_SIZE);
+	rw_exit_write(&sc->sc_cache_lock);
+}
+
+/*
+ * Return pointer to a cache entry for sector `sec`, or NULL if not present.
+ * Caller must hold sc_cache_lock (any mode) before calling.
+ */
+static struct fvd_cache_entry *
+fvd_cache_find(struct fvd_softc *sc, uint32_t sec)
+{
+	int i;
+	for (i = 0; i < 16; i++) {
+		struct fvd_cache_entry *e = &sc->sc_cache[i];
+		if (e->fce_valid && e->fce_sector == sec)
+			return e;
+	}
+	return NULL;
+}
+
+/*
+ * Write back a single dirty cache entry to the disk image.
+ * This function does not drop the cache lock; it performs file I/O which
+ * must not be done under sc_cache_lock. Callers should release the lock
+ * temporarily if necessary.
+ */
+static int
+fvd_cache_writeback(struct fvd_softc *sc, struct fvd_cache_entry *e)
+{
+	int error;
+	uint32_t recno;
+
+	if (!e->fce_valid || !e->fce_dirty)
+		return 0;
+
+	/* Map sector -> record and write a full sector back. */
+	error = fvd_bmap_get(sc, e->fce_sector, &recno);
+	if (error != 0)
+		return error;
+	if (recno == 0)
+		return 0;	/* unallocated sector: treat as write-into-void success */
+
+	error = vn_rdwr(UIO_WRITE, sc->sc_fvdvp, (caddr_t)e->fce_data,
+	    FVD_SECTOR_SIZE, (off_t)recno * FVD_SECTOR_SIZE,
+	    UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+	if (error == 0) {
+		e->fce_dirty = 0;
+		e->fce_checksum = fvd_csum_sect(e->fce_data);
+	}
+	return error;
+}
+
+/*
+ * Flush all dirty cache entries. If `invalidate` is non-zero, also invalidate
+ * every entry afterwards (used by detach and CACHE_EMPTY).
+ */
+static int
+fvd_cache_flush(struct fvd_softc *sc, int invalidate)
+{
+	int i, error = 0, oerror = 0;
+	/*
+	 * We don't hold sc_cache_lock while doing vn_rdwr() I/O to avoid
+	 * blocking other code paths which might also want the lock. We
+	 * snapshot the flush plan under the lock first.
+	 */
+	struct {
+		int used;
+		uint32_t sector;
+		int idx;
+	} plan[16];
+
+	rw_enter_read(&sc->sc_cache_lock);
+	for (i = 0; i < 16; i++) {
+		plan[i].used = (sc->sc_cache[i].fce_valid && sc->sc_cache[i].fce_dirty);
+		plan[i].sector = sc->sc_cache[i].fce_sector;
+		plan[i].idx = i;
+	}
+	rw_exit_read(&sc->sc_cache_lock);
+
+	for (i = 0; i < 16; i++) {
+		if (!plan[i].used)
+			continue;
+
+		/* Re-acquire write lock only to fetch pointer safely. */
+		rw_enter_write(&sc->sc_cache_lock);
+		struct fvd_cache_entry *e = &sc->sc_cache[plan[i].idx];
+		/* Sector might have changed; re-check. */
+		if (!(e->fce_valid && e->fce_dirty && e->fce_sector == plan[i].sector)) {
+			rw_exit_write(&sc->sc_cache_lock);
+			continue;
+		}
+		/* Make a local copy of the data then drop the lock for I/O. */
+		uint8_t local[FVD_SECTOR_SIZE];
+		memcpy(local, e->fce_data, sizeof(local));
+		uint32_t sec = e->fce_sector;
+		rw_exit_write(&sc->sc_cache_lock);
+
+		/* Perform the actual writeback without holding the lock. */
+		struct fvd_cache_entry temp_entry;
+		temp_entry.fce_sector = sec;
+		temp_entry.fce_dirty = 1;
+		temp_entry.fce_valid = 1;
+		memcpy(temp_entry.fce_data, local, FVD_SECTOR_SIZE);
+		error = fvd_cache_writeback(sc, &temp_entry);
+		if (error != 0 && oerror == 0)
+			oerror = error;
+
+		/* Mark clean / invalidate under lock. */
+		rw_enter_write(&sc->sc_cache_lock);
+		e = &sc->sc_cache[plan[i].idx];
+		if (e->fce_valid && e->fce_sector == sec) {
+			if (error == 0) {
+				e->fce_dirty = 0;
+				e->fce_checksum = fvd_csum_sect(local);
+			}
+			if (invalidate) {
+				e->fce_valid = 0;
+			}
+		}
+		rw_exit_write(&sc->sc_cache_lock);
+	}
+
+	if (invalidate) {
+		rw_enter_write(&sc->sc_cache_lock);
+		/* Invalidate all cache entries */
+		for (i = 0; i < 16; i++) {
+			sc->sc_cache[i].fce_valid = 0;
+		}
+		sc->sc_cache_size = 0;
+		rw_exit_write(&sc->sc_cache_lock);
+	}
+	return oerror;
+}
+
+
+/*
+ * Read Block Map entry for sector `sec`.
+ * On success: *prec is set to the data-record number (0 means unallocated).
+ */
+static int
+fvd_bmap_get(struct fvd_softc *sc, uint32_t sec, uint32_t *prec)
+{
+	int error;
+	uint32_t bmrec = sc->sc_branch.fb_blkmap + (sec / FVD_BMAP_ENTRIES);
+	uint32_t idx   = sec % FVD_BMAP_ENTRIES;
+	uint32_t table[FVD_BMAP_ENTRIES];
+	off_t    off   = (off_t)bmrec * FVD_SECTOR_SIZE;
+
+	error = vn_rdwr(UIO_READ, sc->sc_fvdvp, (caddr_t)table, sizeof(table),
+	    off, UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+	if (error != 0)
+		return error;
+
+	/* entries are big-endian on disk */
+	*prec = betoh32(table[idx]);
+	return 0;
+}
+
+/*
+ * Write Block Map entry for sector `sec` to `rec` (data-record number).
+ * Note: caller must ensure consistency (ordering with data/refcount updates).
+ */
+static int
+fvd_bmap_set(struct fvd_softc *sc, uint32_t sec, uint32_t rec)
+{
+	int error;
+	uint32_t bmrec = sc->sc_branch.fb_blkmap + (sec / FVD_BMAP_ENTRIES);
+	uint32_t idx   = sec % FVD_BMAP_ENTRIES;
+	uint32_t table[FVD_BMAP_ENTRIES];
+	off_t    off   = (off_t)bmrec * FVD_SECTOR_SIZE;
+
+	/* read the whole Block Map Record so we only touch one entry */
+	error = vn_rdwr(UIO_READ, sc->sc_fvdvp, (caddr_t)table, sizeof(table),
+	    off, UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+	if (error != 0)
+		return error;
+
+	table[idx] = htobe32(rec);
+
+	error = vn_rdwr(UIO_WRITE, sc->sc_fvdvp, (caddr_t)table, sizeof(table),
+	    off, UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+	return error;
+}
+
+/* Read refcount of record #recno */
+static int
+fvd_ref_read(struct fvd_softc *sc, uint32_t recno, uint8_t *pval)
+{
+    off_t off = (off_t)recno;
+    return vn_rdwr(UIO_READ, sc->sc_refvp, (caddr_t)pval, sizeof(uint8_t),
+        off, UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+}
+
+/* Write refcount of record #recno */
+static int
+fvd_ref_write(struct fvd_softc *sc, uint32_t recno, uint8_t val)
+{
+    off_t off = (off_t)recno;
+    return vn_rdwr(UIO_WRITE, sc->sc_refvp, (caddr_t)&val, sizeof(uint8_t),
+        off, UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+}
+
+/* Find first free record (refcount == 0) and return its record number */
+static int
+fvd_alloc_record(struct fvd_softc *sc, uint32_t *newrec)
+{
+    uint8_t val;
+    uint32_t i;
+    off_t off;
+    int error;
+
+    for (i = 1; i < sc->sc_root.fr_nrecs; i++) { /* skip root record (0) */
+        off = (off_t)i;
+        error = vn_rdwr(UIO_READ, sc->sc_refvp, (caddr_t)&val, 1, off,
+            UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+        if (error != 0)
+            return error;
+        if (val == 0) {
+            /* allocate the record by setting refcount to 1 */
+            val = 1;
+            error = vn_rdwr(UIO_WRITE, sc->sc_refvp, (caddr_t)&val, 1, off,
+                UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+            if (error != 0)
+                return error;
+            *newrec = i;
+            return 0;
+        }
+    }
+    return ENOSPC; /* no free record found */
+}
+
+/*
+ * Allocate consecutive records for block map
+ */
+static int
+fvd_alloc_consecutive(struct fvd_softc *sc, uint32_t nrecs, uint32_t *first_rec)
+{
+    uint8_t val;
+    uint32_t i, j;
+    off_t off;
+    int error;
+
+    for (i = 1; i <= sc->sc_root.fr_nrecs - nrecs; i++) {
+        /* check if we can fit nrecs consecutive records starting at i */
+        int found = 1;
+        for (j = 0; j < nrecs; j++) {
+            off = (off_t)(i + j);
+            error = vn_rdwr(UIO_READ, sc->sc_refvp, (caddr_t)&val, 1, off,
+                UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+            if (error != 0)
+                return error;
+            if (val != 0) {
+                found = 0;
+                break;
+            }
+        }
+        
+        if (found) {
+            /* allocate all nrecs consecutive records */
+            for (j = 0; j < nrecs; j++) {
+                val = 1;
+                off = (off_t)(i + j);
+                error = vn_rdwr(UIO_WRITE, sc->sc_refvp, (caddr_t)&val, 1, off,
+                    UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+                if (error != 0)
+                    return error;
+            }
+            *first_rec = i;
+            return 0;
+        }
+    }
+    return ENOSPC; /* no consecutive free records found */
+}
+
+
+/*
+ * Check if sector needs copy-on-write
+ */
+static int
+fvd_needs_cow(struct fvd_softc *sc, uint32_t sec)
+{
+	uint32_t recno = 0;
+    uint8_t refval;
+    int error;
+
+    error = fvd_bmap_get(sc, sec, &recno);
+    if (error != 0 || recno == 0)
+        return 0;
+
+    error = fvd_ref_read(sc, recno, &refval);
+    if (error != 0)
+        return 0;
+
+    return (refval > 1);
+}
+
+/*
+ * Perform copy-on-write for sector
+ */
+static int
+fvd_do_cow(struct fvd_softc *sc, uint32_t sec)
+{
+	uint32_t oldrec, newrec;
+    uint8_t refval;
+    uint8_t buf[FVD_SECTOR_SIZE];
+    int error;
+
+    /* read old mapping */
+    error = fvd_bmap_get(sc, sec, &oldrec);
+    if (error != 0 || oldrec == 0)
+        return 0;
+
+    /* decrement old record refcount */
+    error = fvd_ref_read(sc, oldrec, &refval);
+    if (error != 0)
+        return error;
+    if (refval > 0) {
+        refval--;
+        error = fvd_ref_write(sc, oldrec, refval);
+        if (error != 0)
+            return error;
+    }
+
+    /* allocate new record */
+    error = fvd_alloc_record(sc, &newrec);
+    if (error != 0)
+        return error;
+
+    /* copy old data */
+    error = vn_rdwr(UIO_READ, sc->sc_fvdvp, (caddr_t)buf, FVD_SECTOR_SIZE,
+        (off_t)oldrec * FVD_SECTOR_SIZE, UIO_SYSSPACE,
+        IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+    if (error != 0)
+        return error;
+
+    /* write to new record */
+    error = vn_rdwr(UIO_WRITE, sc->sc_fvdvp, (caddr_t)buf, FVD_SECTOR_SIZE,
+        (off_t)newrec * FVD_SECTOR_SIZE, UIO_SYSSPACE,
+        IO_NODELOCKED, sc->sc_ucred, NULL, curproc);
+    if (error != 0)
+        return error;
+
+    /* update mapping to point to new record */
+    error = fvd_bmap_set(sc, sec, newrec);
+    if (error != 0)
+        return error;
+
+    /* set new record refcount = 1 */
+    refval = 1;
+    error = fvd_ref_write(sc, newrec, refval);
+    if (error != 0)
+        return error;
+
+    return 0;
+}
+
+/*
+ * Read FVD metadata from file
+ */
+static int
+fvd_read_metadata(struct fvd_softc *sc)
+{
+	int error;
+	off_t offset;
+
+	/* read root block */
+	offset = 0;
+	error = vn_rdwr(UIO_READ, sc->sc_fvdvp, (caddr_t)&sc->sc_root,
+	    sizeof(sc->sc_root), offset, UIO_SYSSPACE, IO_NODELOCKED,
+	    sc->sc_ucred, NULL, curproc);
+	if (error != 0)
+		return (error);
+
+	/* validate magic */
+	if (betoh32(sc->sc_root.fr_magic) != FVD_ROOT_BLK_MAGIC)
+		return (EINVAL);
+
+	/* Return EINVAL for invalid FVD image as per 'appropriate errno(2)' */
+
+	if (sc->sc_root.fr_vmaj != FVD_VER_MAJ ||
+	    sc->sc_root.fr_vmin != FVD_VER_MIN)
+		return (EINVAL);	
+
+	/* convert big-endian fields to host byte order */
+	sc->sc_root.fr_nbrches = betoh16(sc->sc_root.fr_nbrches);
+	sc->sc_root.fr_nrecs = betoh32(sc->sc_root.fr_nrecs);
+	sc->sc_root.fr_nsects = betoh32(sc->sc_root.fr_nsects);
+	sc->sc_root.fr_ncyls = betoh32(sc->sc_root.fr_ncyls);
+	sc->sc_root.fr_nheads = betoh16(sc->sc_root.fr_nheads);
+	sc->sc_root.fr_nspt = betoh16(sc->sc_root.fr_nspt);
+
+	/* convert branch array */
+	for (uint32_t i = 0; i < sc->sc_root.fr_nbrches && i < nitems(sc->sc_root.fr_brchs); i++) {
+		sc->sc_root.fr_brchs[i] = betoh32(sc->sc_root.fr_brchs[i]);
+	}
+
+	/* find and read branch descriptor */
+	error = fvd_find_branch(sc, sc->sc_bname);
+	if (error != 0)
+		return (error);
+
+	/* set disk geometry from host-order fields */
+	sc->sc_cylinders = sc->sc_root.fr_ncyls;
+	sc->sc_heads = sc->sc_root.fr_nheads;
+	sc->sc_spt = sc->sc_root.fr_nspt;
+
+	return (0);
+}
+
+/*
+ * Find branch descriptor by name
+ */
+static int
+fvd_find_branch(struct fvd_softc *sc, const char *bname)
+{
+	struct fvd_brch_desc brch;
+	off_t offset;
+	int error;
+	uint32_t i;
+
+    if (bname[0] == '\0') {
+        offset = (off_t)sc->sc_root.fr_brchs[0] * FVD_SECTOR_SIZE;
+        error = vn_rdwr(UIO_READ, sc->sc_fvdvp, (caddr_t)&brch, sizeof(brch),
+		    offset, UIO_SYSSPACE, IO_NODELOCKED, sc->sc_ucred,
+		    NULL, curproc);
+		if (error != 0)
+			return (error);
+		
+		/* sanity check and endian fixups for branch descriptor */
+		if (betoh32(brch.fb_magic) != FVD_BRCH_MAGIC)
+			return (EINVAL);
+		
+		/* convert big-endian fields to host byte order */
+		uint16_t nchilds = betoh16(brch.fb_nchilds);
+		uint64_t ctime = betoh64(brch.fb_ctime);
+		uint32_t blkmap = betoh32(brch.fb_blkmap);
+		uint32_t parent = betoh32(brch.fb_parent);
+		for (int k = 0; k < 16; k++)
+			brch.fb_child[k] = betoh32(brch.fb_child[k]);
+		
+		/* cache back to host-order copy */
+		brch.fb_magic = FVD_BRCH_MAGIC;
+		brch.fb_nchilds = nchilds;
+		brch.fb_ctime = ctime;
+		brch.fb_blkmap = blkmap;
+		brch.fb_parent = parent;
+
+		sc->sc_branch = brch;
+		sc->sc_branch_id = 0;
+		return (0);
+	}
+
+	/* search through branch descriptors */
+	for (i = 0; i < sc->sc_root.fr_nbrches; i++) {
+		offset = (off_t)sc->sc_root.fr_brchs[i] * FVD_SECTOR_SIZE;
+		error = vn_rdwr(UIO_READ, sc->sc_fvdvp, (caddr_t)&brch,
+		    sizeof(brch), offset, UIO_SYSSPACE, IO_NODELOCKED,
+		    sc->sc_ucred, NULL, curproc);
+		if (error != 0)
+			return (error);
+
+		/* sanity check and endian fixups for branch descriptor */
+		if (betoh32(brch.fb_magic) != FVD_BRCH_MAGIC)
+			continue;
+		
+		/* convert big-endian fields to host byte order */
+		uint16_t nchilds = betoh16(brch.fb_nchilds);
+		uint64_t ctime = betoh64(brch.fb_ctime);
+		uint32_t blkmap = betoh32(brch.fb_blkmap);
+		uint32_t parent = betoh32(brch.fb_parent);
+		for (int k = 0; k < 16; k++)
+			brch.fb_child[k] = betoh32(brch.fb_child[k]);
+		
+		/* cache back to host-order copy */
+		brch.fb_magic = FVD_BRCH_MAGIC;
+		brch.fb_nchilds = nchilds;
+		brch.fb_ctime = ctime;
+		brch.fb_blkmap = blkmap;
+		brch.fb_parent = parent;
+
+		if (strcmp(brch.fb_name, bname) == 0) {
+			sc->sc_branch = brch;
+			sc->sc_branch_id = i;
+			return (0);
+		}
+	}
+
+	return (ESRCH);
+}

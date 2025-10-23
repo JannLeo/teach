@@ -1,0 +1,66 @@
+# AI驱动加密货币自动化交易系统配置文件
+
+# 系统基本配置
+system:
+  name: "AI Crypto Trading System"
+  version: "1.0.0"
+  mode: "development"  # development, production, paper_trading
+  log_level: "INFO"
+  
+# 数据源配置
+data_sources:
+  gmgn:
+    base_url: "https://gmgn.ai"
+    api_key: ""  # 需要从GMGN获取
+    enabled: true
+    
+  exchange:
+    name: "binance"  # 支持多个交易所
+    api_key: ""      # 交易所API密钥
+    secret_key: ""   # 交易所密钥
+    testnet: true    # 使用测试网
+    
+# AI模型配置
+ai_model:
+  provider: "deepseek"  # deepseek, openai等
+  api_key: ""           # AI服务API密钥
+  model_name: "deepseek-chat"
+  max_tokens: 2000
+  temperature: 0.1      # 降低随机性，提高决策一致性
+  
+# 风险管理配置
+risk_management:
+  max_position_size: 0.1      # 最大仓位比例
+  stop_loss_percentage: 0.05  # 止损百分比
+  take_profit_percentage: 0.1 # 止盈百分比
+  max_daily_loss: 0.02       # 最大日亏损比例
+  max_drawdown: 0.05         # 最大回撤比例
+  
+# 交易配置
+trading:
+  base_currency: "USDT"
+  trading_pairs:
+    - "BTC/USDT"
+    - "ETH/USDT"
+    - "SOL/USDT"
+  order_type: "limit"  # limit, market
+  order_timeout: 60    # 订单超时时间（秒）
+  
+# 监控配置
+monitoring:
+  enabled: true
+  metrics_port: 8080
+  web_interface_port: 8081
+  performance_update_interval: 300  # 性能更新间隔（秒）
+  
+# 数据库配置
+database:
+  type: "sqlite"  # sqlite, mysql, postgresql
+  connection_string: "sqlite:///data/trading_system.db"
+  
+# 通知配置
+notifications:
+  enabled: false
+  telegram:
+    bot_token: ""
+    chat_id: ""
