@@ -566,6 +566,11 @@ def wait_for_latest_answer(drv, timeout, last_fp: str = "") -> dict:
                 md = (pyperclip.paste() or "").strip()
             except Exception:
                 md = ""
+        if not md:
+            print(f"[copy] 复制按钮已点击，但剪贴板为空")  # ✅ 复制成功但无内容
+    else:
+        print(f"[copy] 复制按钮点击失败，准备读DOM")         # ✅ 复制未成功
+
     if not md:
         # 兜底：直接读 DOM
         try:
@@ -573,10 +578,9 @@ def wait_for_latest_answer(drv, timeout, last_fp: str = "") -> dict:
             md = (md_nodes[-1].text if md_nodes else turn.text).strip()
         except Exception:
             md = ""
+        if not md:
+            print(f"[copy] DOM 也未读到内容")                # ✅ DOM 也无内容
 
-    # 4. ✅ 如果内容为空，**直接返回 empty**，**不再检查限流**
-    if not md:
-        return {"kind": "empty"}
 
     # 5. ✅ 内容非空，再检查是否有限流提示（避免残留误报）
     err_nodes = turn.find_elements(By.CSS_SELECTOR, "div.text-token-text-error")
@@ -874,7 +878,11 @@ def main():
                 sys.exit(1)
 
             append_to_md(notes_md, rel_img, answer, page_no)
-
+            
+        # ===== 3. 每本 PDF 结束后重启会话 =====
+        print(f'[session] {pdf_path.name} 已处理完，重启浏览器会话...')
+        drv.quit()
+        drv = None          # 强制下一份 PDF 重新开浏览器
         # # ===== 单本 PDF 已跑完：生成讲解视频 =====
         # print(f"[VIDEO] 开始生成 {notes_md.stem} 的讲解视频…")
         # try:
