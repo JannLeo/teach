@@ -443,6 +443,17 @@ def wait_until_idle(drv, timeout: int = None):
         if state != last_state:
             print(f"[idle] {state}")
             last_state = state
+        if not has_stop and has_send:
+            turns = drv.find_elements(*SELECTORS.ASSISTANT_TURN)
+            if turns:
+                txt = turns[-1].text or ""
+                if len(txt.strip()) > 30:          # 简单阈值，可再调
+                    print(f"[idle] 检测到回答文本长度 {len(txt)}，认为真正空闲")
+                    return
+            # 文本太短 → 继续等
+            print("[idle] 回答文本过短（可能仅“已思考”），继续等待…")
+            time.sleep(1)
+            continue
         if has_stop:
             time.sleep(0.35); continue
         if has_send or prompt_ready:
@@ -477,6 +488,13 @@ def type_prompt_and_send(drv, text):
         pass
 
 def click_copy_button_in_last_turn(drv) -> bool:
+    try:
+        WebDriverWait(drv, 60).until(lambda d: not is_generating(d))
+        time.sleep(1.0)          # 给浏览器 1 s 把最后一段渲染进剪贴板
+    except TimeoutException:
+        print("[copy] 生成迟迟未结束，放弃复制，改走 DOM")
+        return False             # 直接走 DOM 兜底
+    
     # 1. 清空剪贴板缓存
     try:
         drv.execute_script("window.__lastCopiedText = '';")
@@ -555,7 +573,7 @@ def wait_for_latest_answer(drv, timeout, last_fp: str = "") -> dict:
     turn = turns[-1]
     drv.execute_script("arguments[0].scrollIntoView({block:'center'});", turn)
 
-    # 3. ✅ 优先获取内容（复制或 DOM）
+        # 3. ✅ 优先获取内容（复制或 DOM）
     copied = click_copy_button_in_last_turn(drv)
     md = ""
     if copied:
@@ -566,10 +584,14 @@ def wait_for_latest_answer(drv, timeout, last_fp: str = "") -> dict:
                 md = (pyperclip.paste() or "").strip()
             except Exception:
                 md = ""
-        if not md:
-            print(f"[copy] 复制按钮已点击，但剪贴板为空")  # ✅ 复制成功但无内容
+        # ✅ 长度校验：复制字数明显少于 DOM 时，用 DOM 补全
+        if md:
+            dom_txt = turn.text or ""
+            if len(md) < len(dom_txt) * 0.7:   # 70% 阈值，可再调
+                print(f"[copy] 复制片段过短（{len(md)} < {len(dom_txt)}），用 DOM 补全")
+                md = dom_txt
     else:
-        print(f"[copy] 复制按钮点击失败，准备读DOM")         # ✅ 复制未成功
+        print(f"[copy] 复制按钮点击失败，准备读DOM")
 
     if not md:
         # 兜底：直接读 DOM
@@ -878,7 +900,7 @@ def main():
                 sys.exit(1)
 
             append_to_md(notes_md, rel_img, answer, page_no)
-            
+
         # ===== 3. 每本 PDF 结束后重启会话 =====
         print(f'[session] {pdf_path.name} 已处理完，重启浏览器会话...')
         drv.quit()
