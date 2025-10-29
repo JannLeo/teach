@@ -114,6 +114,10 @@ class SELECTORS:
     ERROR_BUBBLE = (By.CSS_SELECTOR, "div.text-token-text-error")  # 红色错误提示容器
     REGENERATE_ERROR_BTN = (By.CSS_SELECTOR, "button[data-testid='regenerate-thread-error-button']")
 
+
+class ShortAnswerError(RuntimeError):
+    """模型仅返回“已思考”等框架文字，无实质内容。"""
+
 def extract_wait_seconds(text: str) -> int | None:
     """从错误提示中提取等待秒数；只在 wait/等待 的语境里取数，避免命中 3h0m0s。"""
     if not text:
@@ -617,6 +621,11 @@ def wait_for_latest_answer(drv, timeout, last_fp: str = "") -> dict:
     if last_fp and fp == last_fp:
         return {"kind": "empty"}
 
+    # 7. 若内容明显过短，视为可恢复异常
+    if len(md.strip()) <= 30 or "已思考" in md:
+        print(f"[copy] 内容过短（{len(md)} 字符），疑似仅“已思考”框架，触发刷新重试")
+        raise ShortAnswerError("answer too short")
+    
     return {"kind": "answer", "md": md, "fp": fp}
 
 def compact_blank_lines(text: str) -> str:
@@ -684,6 +693,13 @@ def ask_with_retries(drv, img_path: Path, prompt: str, base_timeout: int, max_at
         try:
             _upload_and_ask()
             res = wait_for_latest_answer(drv, timeout, last_fp=last_fp)
+
+            # 新增：内容过短 → 刷新后同页重试
+            if res.get("kind") == "answer" and len(res["md"].strip()) <= 30:
+                print(f"[ask] 第 {attempt} 次仅拿到框架文本，刷新后重试当前页…")
+                refresh_and_prepare(drv, reason="short answer")
+                time.sleep(1)
+                continue          # 不增加 attempt，继续本页
 
             if res.get("kind") == "rate_limit":
                 wait_sec = max(5, min(600, int(res.get("wait", 30))))
@@ -903,6 +919,8 @@ def main():
 
         # ===== 3. 每本 PDF 结束后重启会话 =====
         print(f'[session] {pdf_path.name} 已处理完，重启浏览器会话...')
+        # ===== 每本 PDF 处理完后立即记录（不管有没有视频） =====
+        done_list.append((pdf_path, notes_md, None))   # None 表示无视频
         drv.quit()
         drv = None          # 强制下一份 PDF 重新开浏览器
         # # ===== 单本 PDF 已跑完：生成讲解视频 =====
