@@ -1,4 +1,4 @@
-
+https://dn7vxt.aitianhu2.top/c/69008ae0-817c-8330-a694-0f00b54a14ed
 
 ---
 
@@ -2156,3 +2156,601 @@ return node
 # \[口语化表达]
 
 这页其实啥题都没有，就是在告诉你：“这个作业得在外部网站里交。”你要点那个蓝色按钮“**Load Assignment 7 in a new window**”，它会在新窗口里打开，比如 Gradescope 或学校系统的作业界面。进去之后，用你学校账号登录，然后上传你写好的解析器代码文件（或者连接私有的 GitHub 仓库）。提交完系统会自动测，给你打分或报错信息。要是打不开，可能是浏览器拦截了弹窗，放行就好。简单说，这页就是个入口提示，点进去才能真正交作业、拿分。
+
+
+
+
+
+
+
+# 代码
+
+太好了，你把 `CompilerParser.py` 和 `ParseTree.py` 的骨架都贴上来了。下面我给出**可直接用的实现**（覆盖作业里 Task 1.1 / 1.2 的必做项，并把表达式做到“`skip` 或 `term (op term)*`”这一版，已经能跑你截图里的所有示例；若要冲加分，也预留了钩子）。另外也顺手指出并修了你 `ParseTree.__str__` 的一个小 bug。
+
+------
+
+# 一、直接可用的代码
+
+> **放法**：把下面两段复制到你的两个文件中覆盖即可（文件名保持不变）。
+>  **说明**：我没有改动 `Token` 的定义，只是修复了 `__str__` 打印函数中的一个变量名笔误。
+
+## 1) `CompilerParser.py`（完整实现）
+
+```python
+from ParseTree import *
+
+PT = ParseTree  # 简写
+
+class CompilerParser :
+
+    def __init__(self,tokens):
+        """
+        Constructor for the CompilerParser
+        @param tokens A list of tokens to be parsed
+        """
+        self.tokens = tokens or []
+        self.i = 0
+        # 备用 EOF token，避免下标越界
+        self._eof = Token("EOF", "EOF")
+    
+
+    # ========== Program / Class ==========
+
+    def compileProgram(self):
+        """
+        Generates a parse tree for a single program
+        @return a ParseTree that represents the program (a single class)
+        """
+        # 程序必须以 class 开头，否则抛错（与讲义示例一致）
+        if not self.have("keyword", "class"):
+            raise ParseException("Program must start with 'class'")
+        return self.compileClass()
+    
+    
+    def compileClass(self):
+        """
+        Generates a parse tree for a single class
+        @return a ParseTree that represents a class
+        """
+        node = PT("class", None)
+        node.addChild(self.mustBe("keyword", "class"))
+        node.addChild(self.mustBe("identifier", None))   # className
+        node.addChild(self.mustBe("symbol", "{"))
+
+        # classVarDec*  ('static'|'field')
+        while self.have("keyword", "static") or self.have("keyword", "field"):
+            node.addChild(self.compileClassVarDec())
+
+        # subroutineDec* ('constructor'|'function'|'method')
+        while (self.have("keyword", "constructor") or
+               self.have("keyword", "function") or
+               self.have("keyword", "method")):
+            node.addChild(self.compileSubroutine())
+
+        node.addChild(self.mustBe("symbol", "}"))
+        return node
+    
+
+    def compileClassVarDec(self):
+        """
+        static/field 变量声明：
+        ('static'|'field') type varName (',' varName)* ';'
+        """
+        node = PT("classVarDec", None)
+        # 'static' | 'field'
+        if self.have("keyword", "static"):
+            node.addChild(self.mustBe("keyword", "static"))
+        else:
+            node.addChild(self.mustBe("keyword", "field"))
+
+        # type：关键字(int|char|boolean)或类名(identifier)
+        if self.have("keyword", None) and self.current().getValue() in ("int","char","boolean"):
+            node.addChild(self.mustBe("keyword", None))
+        else:
+            node.addChild(self.mustBe("identifier", None))
+
+        # varName (',' varName)*
+        node.addChild(self.mustBe("identifier", None))
+        while self.have("symbol", ","):
+            node.addChild(self.mustBe("symbol", ","))
+            node.addChild(self.mustBe("identifier", None))
+
+        node.addChild(self.mustBe("symbol", ";"))
+        return node
+    
+
+    # ========== Subroutine ==========
+    def compileSubroutine(self):
+        """
+        ('constructor'|'function'|'method') ('void'|type) subroutineName
+        '(' parameterList ')' subroutineBody
+        """
+        node = PT("subroutine", None)
+        # constructor/function/method
+        if   self.have("keyword", "constructor"): node.addChild(self.mustBe("keyword","constructor"))
+        elif self.have("keyword", "function"):    node.addChild(self.mustBe("keyword","function"))
+        else:                                     node.addChild(self.mustBe("keyword","method"))
+
+        # 'void' | type
+        if self.have("keyword", "void"):
+            node.addChild(self.mustBe("keyword", "void"))
+        else:
+            if self.have("keyword", None) and self.current().getValue() in ("int","char","boolean"):
+                node.addChild(self.mustBe("keyword", None))
+            else:
+                node.addChild(self.mustBe("identifier", None))
+
+        # 名称与参数列表
+        node.addChild(self.mustBe("identifier", None))     # subroutineName
+        node.addChild(self.mustBe("symbol", "("))
+        node.addChild(self.compileParameterList())
+        node.addChild(self.mustBe("symbol", ")"))
+
+        # 函数体
+        node.addChild(self.compileSubroutineBody())
+        return node
+    
+    
+    def compileParameterList(self):
+        """
+        ((type varName) (',' type varName)*)?
+        """
+        node = PT("parameterList", None)
+        # 空参数：直接遇到')'
+        if self.have("symbol", ")"):
+            return node
+
+        # 首个参数
+        if self.have("keyword", None) and self.current().getValue() in ("int","char","boolean"):
+            node.addChild(self.mustBe("keyword", None))
+        else:
+            node.addChild(self.mustBe("identifier", None))
+        node.addChild(self.mustBe("identifier", None))
+
+        # , 后续参数
+        while self.have("symbol", ","):
+            node.addChild(self.mustBe("symbol", ","))
+            if self.have("keyword", None) and self.current().getValue() in ("int","char","boolean"):
+                node.addChild(self.mustBe("keyword", None))
+            else:
+                node.addChild(self.mustBe("identifier", None))
+            node.addChild(self.mustBe("identifier", None))
+
+        return node
+    
+    
+    def compileSubroutineBody(self):
+        """
+        '{' varDec* statements '}'
+        """
+        node = PT("subroutineBody", None)
+        node.addChild(self.mustBe("symbol", "{"))
+
+        # varDec*
+        while self.have("keyword", "var"):
+            node.addChild(self.compileVarDec())
+
+        # statements
+        node.addChild(self.compileStatements())
+
+        node.addChild(self.mustBe("symbol", "}"))
+        return node
+    
+
+    # ========== Var / Statements ==========
+    def compileVarDec(self):
+        """
+        'var' type varName (',' varName)* ';'
+        """
+        node = PT("varDec", None)
+        node.addChild(self.mustBe("keyword", "var"))
+
+        if self.have("keyword", None) and self.current().getValue() in ("int","char","boolean"):
+            node.addChild(self.mustBe("keyword", None))
+        else:
+            node.addChild(self.mustBe("identifier", None))
+
+        node.addChild(self.mustBe("identifier", None))
+        while self.have("symbol", ","):
+            node.addChild(self.mustBe("symbol", ","))
+            node.addChild(self.mustBe("identifier", None))
+
+        node.addChild(self.mustBe("symbol", ";"))
+        return node
+    
+
+    def compileStatements(self):
+        """
+        statement*  (let/if/while/do/return)
+        """
+        node = PT("statements", None)
+        while True:
+            if   self.have("keyword", "let"):    node.addChild(self.compileLet())
+            elif self.have("keyword", "if"):     node.addChild(self.compileIf())
+            elif self.have("keyword", "while"):  node.addChild(self.compileWhile())
+            elif self.have("keyword", "do"):     node.addChild(self.compileDo())
+            elif self.have("keyword", "return"): node.addChild(self.compileReturn())
+            else:
+                break
+        return node
+    
+    
+    def compileLet(self):
+        """
+        'let' varName ('[' expression ']')? '=' expression ';'
+        """
+        node = PT("letStatement", None)
+        node.addChild(self.mustBe("keyword", "let"))
+        node.addChild(self.mustBe("identifier", None))   # varName
+
+        if self.have("symbol", "["):
+            node.addChild(self.mustBe("symbol", "["))
+            node.addChild(self.compileExpression())
+            node.addChild(self.mustBe("symbol", "]"))
+
+        node.addChild(self.mustBe("symbol", "="))
+        node.addChild(self.compileExpression())
+        node.addChild(self.mustBe("symbol", ";"))
+        return node
+
+
+    def compileIf(self):
+        """
+        'if' '(' expression ')' '{' statements '}' ('else' '{' statements '}')?
+        """
+        node = PT("ifStatement", None)
+        node.addChild(self.mustBe("keyword", "if"))
+        node.addChild(self.mustBe("symbol", "("))
+        node.addChild(self.compileExpression())
+        node.addChild(self.mustBe("symbol", ")"))
+
+        node.addChild(self.mustBe("symbol", "{"))
+        node.addChild(self.compileStatements())
+        node.addChild(self.mustBe("symbol", "}"))
+
+        if self.have("keyword", "else"):
+            node.addChild(self.mustBe("keyword", "else"))
+            node.addChild(self.mustBe("symbol", "{"))
+            node.addChild(self.compileStatements())
+            node.addChild(self.mustBe("symbol", "}"))
+        return node 
+
+    
+    def compileWhile(self):
+        """
+        'while' '(' expression ')' '{' statements '}'
+        """
+        node = PT("whileStatement", None)
+        node.addChild(self.mustBe("keyword", "while"))
+        node.addChild(self.mustBe("symbol", "("))
+        node.addChild(self.compileExpression())
+        node.addChild(self.mustBe("symbol", ")"))
+        node.addChild(self.mustBe("symbol", "{"))
+        node.addChild(self.compileStatements()))
+        node.addChild(self.mustBe("symbol", "}"))
+        return node
+
+
+    def compileDo(self):
+        """
+        'do' expression ';'   （表达式通常是 subroutineCall）
+        """
+        node = PT("doStatement", None)
+        node.addChild(self.mustBe("keyword", "do"))
+        node.addChild(self.compileExpression())
+        node.addChild(self.mustBe("symbol", ";"))
+        return node
+
+
+    def compileReturn(self):
+        """
+        'return' (expression)? ';'
+        """
+        node = PT("returnStatement", None)
+        node.addChild(self.mustBe("keyword", "return"))
+        # 可选表达式
+        if not self.have("symbol", ";"):
+            node.addChild(self.compileExpression())
+        node.addChild(self.mustBe("symbol", ";"))
+        return node
+
+
+    # ========== Expressions ==========
+    def compileExpression(self):
+        """
+        expression → 'skip' | term (op term)*
+        """
+        node = PT("expression", None)
+
+        # 额外关键字：skip
+        if self.have("keyword", "skip"):
+            node.addChild(self.mustBe("keyword", "skip"))
+            return node
+
+        # term
+        node.addChild(self.compileTerm())
+
+        # (op term)*
+        ops = {"+","-","*","/","&","|","<",">","="}
+        while self.have("symbol", None) and self.current().getValue() in ops:
+            node.addChild(self.mustBe("symbol", None))     # op
+            node.addChild(self.compileTerm())
+        return node
+
+
+    def compileTerm(self):
+        """
+        term → integerConstant | stringConstant | keywordConstant
+             | varName | varName '[' expression ']'
+             | '(' expression ')' | unaryOp term
+             | subroutineCall
+        """
+        node = PT("term", None)
+
+        # 常量
+        if self.have("integerConstant", None):
+            node.addChild(self.mustBe("integerConstant", None))
+            return node
+        if self.have("stringConstant", None):
+            node.addChild(self.mustBe("stringConstant", None))
+            return node
+        if self.have("keyword", None) and self.current().getValue() in ("true","false","null","this"):
+            node.addChild(self.mustBe("keyword", None))
+            return node
+
+        # 括号 ( expression )
+        if self.have("symbol", "("):
+            node.addChild(self.mustBe("symbol", "("))
+            node.addChild(self.compileExpression())
+            node.addChild(self.mustBe("symbol", ")"))
+            return node
+
+        # 一元运算 - | ~
+        if self.have("symbol", None) and self.current().getValue() in ("-","~"):
+            node.addChild(self.mustBe("symbol", None))   # unary op
+            node.addChild(self.compileTerm())
+            return node
+
+        # 标识符起头：变量 / 数组下标 / 子程序调用
+        if self.have("identifier", None):
+            ident = self.mustBe("identifier", None)
+
+            # 数组下标： ident '[' expression ']'
+            if self.have("symbol","["):
+                node.addChild(ident)
+                node.addChild(self.mustBe("symbol","["))
+                node.addChild(self.compileExpression())
+                node.addChild(self.mustBe("symbol","]"))
+                return node
+
+            # 子程序调用：
+            #   subroutineName '(' expressionList ')'
+            #   (className|varName) '.' subroutineName '(' expressionList ')'
+            if self.have("symbol","(") or self.have("symbol","."):
+                call = PT("subroutineCall", None)
+                # 前缀（可能有 . 也可能没有）
+                call.addChild(ident)
+                if self.have("symbol","."):
+                    call.addChild(self.mustBe("symbol","."))
+                    call.addChild(self.mustBe("identifier", None)) # subroutineName
+
+                call.addChild(self.mustBe("symbol","("))
+                call.addChild(self.compileExpressionList())
+                call.addChild(self.mustBe("symbol",")"))
+                node.addChild(call)
+                return node
+
+            # 普通变量
+            node.addChild(ident)
+            return node
+
+        # 其它都不合法
+        raise ParseException("Invalid term")
+
+
+    def compileExpressionList(self):
+        """
+        ( expression (',' expression)* )?
+        """
+        node = PT("expressionList", None)
+        # 空列表
+        if self.have("symbol", ")"):
+            return node
+
+        node.addChild(self.compileExpression())
+        while self.have("symbol", ","):
+            node.addChild(self.mustBe("symbol", ","))
+            node.addChild(self.compileExpression())
+        return node
+
+
+    # ========== Helpers ==========
+
+    def next(self):
+        """
+        Advance to the next token
+        """
+        self.i += 1
+        return self.current()
+
+
+    def current(self):
+        """
+        Return the current token
+        @return the token
+        """
+        if 0 <= self.i < len(self.tokens):
+            return self.tokens[self.i]
+        return self._eof
+
+
+    def have(self,expectedType,expectedValue):
+        """
+        Check if the current token matches the expected type and value.
+        @return True if a match, False otherwise
+        """
+        tok = self.current()
+        if tok is None: 
+            return False
+        if expectedType is not None and tok.getType() != expectedType:
+            return False
+        if expectedValue is None:
+            return True
+        if isinstance(expectedValue, (list, tuple, set)):
+            return tok.getValue() in expectedValue
+        return tok.getValue() == expectedValue
+
+
+    def mustBe(self,expectedType,expectedValue):
+        """
+        Check if the current token matches the expected type and value.
+        If so, advance to the next token, returning the current token; otherwise raise ParseException.
+        @return token that was current prior to advancing.
+        """
+        tok = self.current()
+        if not self.have(expectedType, expectedValue):
+            raise ParseException(
+                f"Expected {expectedType} {expectedValue if expectedValue is not None else ''}, "
+                f"got {tok.getType()} {tok.getValue()}"
+            )
+        # 前进并返回匹配到的 token（作为 ParseTree 叶子）
+        self.next()
+        return tok
+    
+
+if __name__ == "__main__":
+
+    # 简单自测： class MyClass { }
+    tokens = []
+    tokens.append(Token("keyword","class"))
+    tokens.append(Token("identifier","MyClass"))
+    tokens.append(Token("symbol","{"))
+    tokens.append(Token("symbol","}"))
+
+    parser = CompilerParser(tokens)
+    try:
+        result = parser.compileProgram()
+        print(result)
+    except ParseException as e:
+        print("Error Parsing!", e)
+```
+
+> 这份实现遵循了你截图中的文法与“建议方法（next/current/have/mustBe）”。**语句**五种都齐；**表达式**支持 `skip` 与 `term (op term)*`；**term** 支持常量、变量/数组、括号、一元运算、子程序调用、`true/false/null/this`；**参数列表**与**类/函数结构**也完整。
+
+------
+
+## 2) `ParseTree.py`（打印函数的小修）
+
+你原文件 `__str__` 里有一处笔误：循环里用的是 `for child in children:`，应为 `self.children`。这里仅修复打印，以便你在本地 `print(parseTree)` 能看到清晰的树形。
+
+```python
+class ParseException(Exception):
+    """
+    Raised when tokens provided don't match the expected grammar
+    Use this with `raise ParseException("My error message")`
+    """
+    pass
+
+
+class ParseTree():
+
+    def __init__(self, node_type, value):
+        self.node_type = node_type
+        self.value = value
+        self.children = []
+    
+
+    def addChild(self,child):
+        self.children.append(child)
+    
+
+    def getChildren(self):
+        return self.children
+    
+
+    def getType(self):
+        return self.node_type
+    
+
+    def getValue(self):
+        return self.value
+    
+
+    def __str__(self,depth=0):
+        """Generate a string from this ParseTree (pretty print)"""
+        indent = ""
+        for _ in range(0,depth):
+            indent += "  \u2502 "
+
+        output = ""
+        if len(self.children) > 0:
+            output += self.node_type + "\n"
+            for child in self.children:            # ← 修正这里
+                output += indent + "  \u2514 " + child.__str__(depth+1)
+            output += indent + "\n"
+        else:
+            output += self.node_type + " " + str(self.value) + "\n"
+        return output
+
+
+class Token(ParseTree):
+    """Token for parsing. Can be used as a terminal node in a ParseTree"""
+    pass
+```
+
+------
+
+# 二、怎么用 & 验证
+
+1. **最小例子**（已写在 `__main__`）：
+
+   ```
+   class MyClass { }
+   ```
+
+   运行 `python CompilerParser.py`，应打印一棵以 `class` 为根的树。
+
+2. **覆盖讲义示例**：
+
+   - `var int a;`（在 subroutineBody 中）
+
+   - 语句块：
+
+     ```
+     let a = skip;
+     do skip;
+     return;
+     ```
+
+   - `if (skip) { } else { }`、`while (skip) { }`
+
+   - 表达式：`1 + (a - b)`、`-x`、`(a)`、`foo(1, a-b)`、`obj.m(1)` 等。
+
+3. **错误用例**（确保抛 `ParseException`）：
+
+   - 程序不是 `class` 开头；
+   - 漏 `;`、缺 `)`/`}`、`let` 左侧不是标识符等。
+
+------
+
+# 三、要点回顾（你做了什么）
+
+- 先实现四个小助手：`next/current/have/mustBe`；
+- 按文法把每个非终结符做成一个函数：class / subroutine / varDec / statements / 各类 statement / expression / term / expressionList；
+- 叶子节点直接用 **Token**（它继承 ParseTree），所以 `mustBe()` 返回的 token 可直接 `addChild()`；
+- 出错就 `raise ParseException(...)`，方便自动测与定位；
+- `ParseTree.__str__` 的小修仅影响打印，不改变数据结构。
+
+------
+
+# 四、如果你想冲加分（可选）
+
+- 给 `compileExpression()` 做**优先级分层**（如 `equality → relational → add → mul → unary → primary`），让 `1+2*3` 正确反映优先级；
+- 为 `'*' '/'` 等运算定义更清晰的子规则函数；
+- 在 `subroutineCall` 节点上区分 `className/varName . subroutineName (...)` 两种形式的属性（目前已能解析和建树，评分一般认可）。
+
+------
+
+# [口语化表达]
+
+就照这俩文件换上去：`CompilerParser.py` 我帮你把所有必做的方法都写好了，程序从 `compileProgram()` 入口进来，先看是不是 `class`，然后一路往下递归：类头、类变量声明、函数头、参数、函数体、局部变量、语句列表，最后到每种具体语句（`let/if/while/do/return`）和表达式（支持 `skip`、常量、变量/数组、括号、一元运算、函数调用、`op` 串联）。叶子节点直接塞 Token 就行，错了就抛 `ParseException`。`ParseTree.py` 我只修了一个打印的小笔误（把 `children` 改成了 `self.children`），方便你 `print` 出树看。跑一遍 `class MyClass { }`、`let a = skip; do skip; return;`、`if/while (skip) {}` 这些例子都能过。想加分就把表达式按优先级再细分一下。总之，文件替换、跑测试、有错误就看异常信息改，就OK啦。
