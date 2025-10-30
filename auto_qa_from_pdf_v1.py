@@ -945,24 +945,24 @@ def main():
    # ===== 全部 PDF 跑完：发邮件（只发通知，不附带视频） =====
     if done_list:
         mp4_lines = [f"{pdf.name} → {mp4}" for pdf, _, mp4 in done_list if mp4]
-        if mp4_lines:
+        # if mp4_lines:
             # 邮件正文：只包含视频生成的路径说明，不附带文件
-            body = (
-                "以下完整讲解视频已生成：\n\n"
-                + "\n".join(mp4_lines)
-                + "\n\n视频文件已保存在本地，请手动查看或上传云盘。"
+        body = (
+            "以下完整讲解视频已生成：\n\n"
+            + "\n".join(mp4_lines)
+            + "\n\n视频文件已保存在本地，请手动查看或上传云盘。"
+        )
+        try:
+            send_qq_mail(
+                "1144097453@qq.com",
+                "PDF 讲解视频全部完成（无附件）",
+                body
             )
-            try:
-                send_qq_mail(
-                    "1144097453@qq.com",
-                    "PDF 讲解视频全部完成（无附件）",
-                    body
-                )
-                print("[mail] 已发送完成通知（不包含视频附件）")
-            except Exception as e:
-                print(f"[mail] 邮件发送失败：{e}")
-        else:
-            print("[mail] 无成功生成的 MP4，跳过邮件。")
+            print("[mail] 已发送完成通知（不包含视频附件）")
+        except Exception as e:
+            print(f"[mail] 邮件发送失败：{e}")
+        # else:
+            # print("[mail] 无成功生成的 MP4，跳过邮件。")
 
 
     # 退出浏览器
