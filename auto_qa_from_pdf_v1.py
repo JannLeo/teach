@@ -953,14 +953,14 @@ def main():
             + "\n\n视频文件已保存在本地，请手动查看或上传云盘。"
         )
         try:
-            send_qq_mail(
-                "1144097453@qq.com",
-                "PDF 讲解视频全部完成（无附件）",
-                body
-            )
-            print("[mail] 已发送完成通知（不包含视频附件）")
+            send_qq_mail("1144097453@qq.com", subject, body)
+            print("[mail] 完成通知已发送")
         except Exception as e:
-            print(f"[mail] 邮件发送失败：{e}")
+            # 只要报错里出现 -1 或 \x00 就认为“已发出”
+            if b"\x00\x00\x00" in str(e).encode() or "(-1" in str(e):
+                print("[mail] 邮件已发出（出现假失败，忽略）")
+            else:
+                print(f"[mail] 真正发送失败：{e}")
         # else:
             # print("[mail] 无成功生成的 MP4，跳过邮件。")
 
